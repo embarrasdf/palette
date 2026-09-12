@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" />
-                <data android:host="palette.alexrdclement.com" />
+                <data android:host="palette.embarrasdf.com" />
                 <data android:pathPrefix="/" />
             </intent-filter>
             <intent-filter>

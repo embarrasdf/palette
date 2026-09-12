@@ -7,7 +7,7 @@ plugins {
 
 kotlin {
     libraryTargets(
-        androidNamespace = "com.alexrdclement.palette.navigation",
+        androidNamespace = "com.embarrasdf.palette.navigation",
         iosFrameworkBaseName = "Navigation",
     )
 

@@ -142,7 +142,7 @@ exists only to save callers from passing `style = PaletteTheme.component.…` at
   `BackNavigationButton`, …) and more MAY be added as call-site pressure warrants.
 - When a wrapper does exist, it MUST mirror its base component's package and file structure (a base
   `components/core/Surface.kt` has a wrapper `theme/components/core/Surface.kt`), and MUST live in
-  package `com.alexrdclement.palette.theme.components.*`.
+  package `com.embarrasdf.palette.theme.components.*`.
 - A wrapper MUST expose the **same API** as the base component (same name, same parameters), except
   that its `style` parameter defaults to the matching themed value, e.g.
   `style: SurfaceStyle = PaletteTheme.component.core.surface.default`.

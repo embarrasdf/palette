@@ -1,0 +1,25 @@
+package com.embarrasdf.palette.components.demo.subject
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.embarrasdf.palette.components.core.TextField
+import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.components.core.TextStyle
+
+@Composable
+fun DemoTextField(
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = PaletteTheme.component.core.text.labelLarge,
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+        TextField(
+            state = rememberTextFieldState(),
+            style = PaletteTheme.component.core.textField.copy(textStyle = textStyle),
+            modifier = modifier.align(Alignment.Center)
+        )
+    }
+}

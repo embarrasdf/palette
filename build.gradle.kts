@@ -24,7 +24,7 @@ subprojects {
 
 githubRelease {
     githubToken = System.getenv("GITHUB_TOKEN")
-    repository = "alexrdclement/palette"
+    repository = "embarrasdf/palette"
     enabled = !version.toString().endsWith("SNAPSHOT")
     newTagRevision = System.getenv("GITHUB_SHA")
 }

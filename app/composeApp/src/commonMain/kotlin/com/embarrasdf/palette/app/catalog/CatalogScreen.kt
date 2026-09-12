@@ -1,0 +1,80 @@
+package com.embarrasdf.palette.app.catalog
+
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.embarrasdf.palette.app.main.MainCatalogItem
+import com.embarrasdf.palette.components.core.Text
+import com.embarrasdf.palette.theme.components.layout.Scaffold
+import com.embarrasdf.palette.theme.components.layout.TopBar
+import com.embarrasdf.palette.components.layout.catalog.Catalog
+import com.embarrasdf.palette.components.layout.catalog.CatalogItem
+import com.embarrasdf.palette.theme.components.navigation.BackNavigationButton
+import com.embarrasdf.palette.components.util.horizontalPaddingValues
+import com.embarrasdf.palette.components.util.plus
+import com.embarrasdf.palette.theme.PaletteTheme
+import com.alexrdclement.trace.ReportDrawn
+
+@Composable
+fun <T : CatalogItem> CatalogScreen(
+    items: List<T>,
+    onItemClick: (T) -> Unit,
+    title: String? = null,
+    onNavigateUp: (() -> Unit)? = null,
+    actions: @Composable () -> Unit = {}
+) {
+    ReportDrawn()
+
+    Scaffold(
+        topBar = {
+            TopBar(
+                title = title?.let {
+                    { Text(title, style = PaletteTheme.component.core.text.titleMedium) }
+                },
+                navButton = onNavigateUp?.let {
+                    { BackNavigationButton(onNavigateUp) }
+                },
+                actions = actions,
+            )
+        },
+    ) { innerPadding ->
+        Catalog(
+            style = PaletteTheme.component.layout.catalog,
+            items = items,
+            onItemClick = onItemClick,
+            contentPadding = innerPadding.plus(WindowInsets.safeDrawing.horizontalPaddingValues()),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = PaletteTheme.semantic.dimension.spacing.medium)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    PaletteTheme {
+        CatalogScreen(
+            items = MainCatalogItem.entries.toList(),
+            onItemClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun WithNavPreview() {
+    PaletteTheme {
+        CatalogScreen(
+            items = MainCatalogItem.entries.toList(),
+            onItemClick = {},
+            title = "Components",
+            onNavigateUp = {},
+        )
+    }
+}
+

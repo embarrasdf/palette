@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.alexrdclement.palette"
+    namespace = "com.embarrasdf.palette"
 
     buildTypes {
         release {

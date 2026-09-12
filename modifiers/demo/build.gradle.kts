@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     libraryTargets(
-        androidNamespace = "com.alexrdclement.palette.modifiers.demo",
+        androidNamespace = "com.embarrasdf.palette.modifiers.demo",
         iosFrameworkBaseName = "ModifiersDemo",
     )
 

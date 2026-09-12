@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.alexrdclement.palette.formats.baselineprofile"
+    namespace = "com.embarrasdf.palette.formats.baselineprofile"
 
     targetProjectPath = ":app:androidApp"
 }
@@ -24,7 +24,7 @@ firebaseTestLab {
         serviceAccountCredentials.set(file(serviceAccountJson))
     }
     testOptions {
-        results.cloudStorageBucket = "firebase-test-lab-palette"
+        results.cloudStorageBucket = providers.gradleProperty("palette.ftl.bucket").get()
     }
 }
 

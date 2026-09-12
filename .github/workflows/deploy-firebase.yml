@@ -62,31 +62,29 @@ jobs:
 
       - name: Get commits
         id: get_commits
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+          PUSH_COMMITS: ${{ join(github.event.commits.*.message, '\n') }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-            git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
-            COMMITS=$(git log ${{ github.base_ref }}..${{ github.head_ref }} --pretty=format:"%h %s")
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git fetch origin "$BASE_REF:$BASE_REF"
+            git fetch origin "$HEAD_REF:$HEAD_REF"
+            COMMITS=$(git log "$BASE_REF..$HEAD_REF" --pretty=format:"%h %s")
           else
             # Convert literal \n to real newlines
-            COMMITS=$(echo -e "${{ join(github.event.commits.*.message, '\n') }}")
+            COMMITS=$(printf '%b' "$PUSH_COMMITS")
           fi
           # Add asterisks before each commit line
-          COMMITS=$(echo "$COMMITS" | sed 's/^/* /')
-          echo "commits<<EOF" >> $GITHUB_OUTPUT
-          echo "$COMMITS" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          COMMITS=$(printf '%s\n' "$COMMITS" | sed 's/^/* /')
+          {
+            echo "commits<<EOF"
+            echo "$COMMITS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Build and Distribute Android App
-        run: |
-          BRANCH_NAME="${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
-          COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-8)
-          COMMITS="${{ steps.get_commits.outputs.commits }}"
-          RELEASE_NOTES="Branch: $BRANCH_NAME\nCommit: $COMMIT_SHORT\nCommits:\n$COMMITS"
-          RELEASE_NOTES=$(echo -e "$RELEASE_NOTES")
-          bundle exec fastlane distribute_to_firebase \
-            firebase_app_id:${{ secrets.FIREBASE_ANDROID_APP_ID }} \
-            release_notes:"$RELEASE_NOTES"
         working-directory: app/androidApp
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/service_account.json
@@ -94,6 +92,24 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          BRANCH_NAME: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMITS: ${{ steps.get_commits.outputs.commits }}
+        run: |
+          set -euo pipefail
+          # Strip any stray whitespace/newlines that a mis-pasted secret may carry,
+          # so it can't truncate the fastlane invocation.
+          app_id=$(printf '%s' "$FIREBASE_APP_ID" | tr -d '[:space:]')
+          notes_file=$(mktemp)
+          {
+            printf 'Branch: %s\n' "$BRANCH_NAME"
+            printf 'Commit: %s\n' "${COMMIT_SHA:0:8}"
+            printf 'Commits:\n%s\n' "$COMMITS"
+          } > "$notes_file"
+          bundle exec fastlane distribute_to_firebase \
+            firebase_app_id:"$app_id" \
+            release_notes_file:"$notes_file"
 
   ios_distribute:
     runs-on: macos-26
@@ -136,33 +152,49 @@ jobs:
 
       - name: Get commits
         id: get_commits
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+          PUSH_COMMITS: ${{ join(github.event.commits.*.message, '\n') }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-            git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
-            COMMITS=$(git log ${{ github.base_ref }}..${{ github.head_ref }} --pretty=format:"%h %s")
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git fetch origin "$BASE_REF:$BASE_REF"
+            git fetch origin "$HEAD_REF:$HEAD_REF"
+            COMMITS=$(git log "$BASE_REF..$HEAD_REF" --pretty=format:"%h %s")
           else
             # Convert literal \n to real newlines before adding asterisks
-            COMMITS=$(echo -e "${{ join(github.event.commits.*.message, '\n') }}")
+            COMMITS=$(printf '%b' "$PUSH_COMMITS")
           fi
           # Add asterisks before each commit line
-          COMMITS=$(echo "$COMMITS" | sed 's/^/* /')
-          echo "commits<<EOF" >> $GITHUB_OUTPUT
-          echo "$COMMITS" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          COMMITS=$(printf '%s\n' "$COMMITS" | sed 's/^/* /')
+          {
+            echo "commits<<EOF"
+            echo "$COMMITS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Build and Distribute iOS App
-        run: |
-          BRANCH_NAME="${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
-          COMMIT_SHORT=$(echo "${{ github.sha }}" | cut -c1-8)
-          COMMITS="${{ steps.get_commits.outputs.commits }}"
-          RELEASE_NOTES="Branch: $BRANCH_NAME\nCommit: $COMMIT_SHORT\nCommits:\n$COMMITS"
-          RELEASE_NOTES=$(echo -e "$RELEASE_NOTES")
-          bundle exec fastlane distribute_to_firebase \
-            firebase_app_id:${{ secrets.FIREBASE_IOS_APP_ID }} \
-            release_notes:"$RELEASE_NOTES"
         working-directory: app/iosApp
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/service_account.json
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          BRANCH_NAME: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMITS: ${{ steps.get_commits.outputs.commits }}
+        run: |
+          set -euo pipefail
+          # Strip any stray whitespace/newlines that a mis-pasted secret may carry,
+          # so it can't truncate the fastlane invocation.
+          app_id=$(printf '%s' "$FIREBASE_APP_ID" | tr -d '[:space:]')
+          notes_file=$(mktemp)
+          {
+            printf 'Branch: %s\n' "$BRANCH_NAME"
+            printf 'Commit: %s\n' "${COMMIT_SHA:0:8}"
+            printf 'Commits:\n%s\n' "$COMMITS"
+          } > "$notes_file"
+          bundle exec fastlane distribute_to_firebase \
+            firebase_app_id:"$app_id" \
+            release_notes_file:"$notes_file"

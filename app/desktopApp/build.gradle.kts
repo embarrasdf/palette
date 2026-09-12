@@ -7,7 +7,7 @@ plugins {
 
 kotlin {
     desktopAppTarget(
-        mainClass = "com.alexrdclement.palette.MainKt",
+        mainClass = "com.embarrasdf.palette.MainKt",
     )
     sourceSets {
         jvmMain.dependencies {
@@ -20,7 +20,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.alexrdclement.palette.MainKt"
+        mainClass = "com.embarrasdf.palette.MainKt"
 
         nativeDistributions {
             packageName = "palette"

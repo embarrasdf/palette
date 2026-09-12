@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.alexrdclement.palette.modifiers"
+    namespace = "com.embarrasdf.palette.modifiers"
 }
 
 dependencies {

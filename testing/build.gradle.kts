@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.alexrdclement.palette.testing"
+    namespace = "com.embarrasdf.palette.testing"
 
     buildTypes {
         release {

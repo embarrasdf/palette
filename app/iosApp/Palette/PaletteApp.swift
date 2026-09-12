@@ -2,7 +2,7 @@
 //  PaletteApp.swift
 //  Palette
 //
-//  Created by Alex Clement on 10/18/24.
+//  Created by embarrasdf on 10/18/24.
 //
 
 import SwiftUI

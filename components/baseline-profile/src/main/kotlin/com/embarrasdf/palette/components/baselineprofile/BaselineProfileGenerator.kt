@@ -1,0 +1,78 @@
+package com.embarrasdf.palette.components.baselineprofile
+
+import androidx.benchmark.macro.junit4.BaselineProfileRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import com.embarrasdf.palette.MainCatalogPage
+import com.embarrasdf.palette.appPackageName
+import com.embarrasdf.palette.components.ComponentsPage
+import com.embarrasdf.palette.components.core.ButtonPage
+import com.embarrasdf.palette.components.core.CoreComponentsPage
+import com.embarrasdf.palette.components.core.TextFieldPage
+import com.embarrasdf.palette.components.core.TextPage
+import com.embarrasdf.palette.components.media.MediaComponentsPage
+import com.embarrasdf.palette.components.media.MediaControlSheetPage
+import com.embarrasdf.palette.componentsPackageName
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+@LargeTest
+class BaselineProfileGenerator {
+
+    @get:Rule
+    val rule = BaselineProfileRule()
+
+    @Test
+    fun generateCoreComponentsProfile() {
+        rule.collect(
+            packageName = appPackageName,
+            filterPredicate = { packageFilterPredicate(componentsPackageName, it) },
+        ) {
+            pressHome()
+            startActivityAndWait()
+
+            MainCatalogPage(device).navigateToComponents()
+
+            ComponentsPage(device).navigateToCoreComponents()
+
+            CoreComponentsPage(device).navigateToButton()
+            ButtonPage(device).button.click()
+            device.pressBack()
+
+            CoreComponentsPage(device).navigateToText()
+            TextPage(device).textField.text = "Hello world edited"
+            device.pressBack()
+
+            CoreComponentsPage(device).navigateToTextField()
+            TextFieldPage(device).textField.text = "Hello world edited"
+            device.pressBack()
+        }
+    }
+
+    @Test
+    fun generateMediaComponentsProfile() {
+        rule.collect(
+            packageName = appPackageName,
+            filterPredicate = { packageFilterPredicate(componentsPackageName, it) },
+        ) {
+            pressHome()
+            startActivityAndWait()
+
+            MainCatalogPage(device).navigateToComponents()
+
+            ComponentsPage(device).navigateToMediaComponents()
+            MediaComponentsPage(device).navigateToMediaControlSheet()
+            MediaControlSheetPage(device).mediaControlBar.click()
+        }
+    }
+
+    private fun packageFilterPredicate(packageName: String, rule: String): Boolean {
+        // Only capture rules in the library's package, excluding test app code
+        // Rules are prefixed by tag characters, followed by JVM method signature,
+        // e.g. `HSPLcom/mylibrary/LibraryClass;-><init>()V`, where `L`
+        // signifies the start of the package/class, and '/' is divider instead of '.'
+        return rule.contains("^.*L${packageName.replace(".", "/")}".toRegex())
+    }
+}

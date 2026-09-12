@@ -1,0 +1,2867 @@
+{
+    "context": {
+        "build": {
+            "brand": "google",
+            "device": "akita",
+            "fingerprint": "google/akita/akita:15/BP1A.250405.007.B1/13240308:user/release-keys",
+            "id": "BP1A.250405.007.B1",
+            "model": "Pixel 8a",
+            "type": "user",
+            "version": {
+                "codename": "REL",
+                "sdk": 35
+            }
+        },
+        "cpuCoreCount": 9,
+        "cpuLocked": false,
+        "cpuMaxFreqHz": 2914000000,
+        "memTotalBytes": 7925252096,
+        "sustainedPerformanceModeEnabled": false,
+        "artMainlineVersion": 351110180,
+        "osCodenameAbbreviated": "REL",
+        "compilationMode": "verify",
+        "payload": {}
+    },
+    "benchmarks": [
+        {
+            "name": "startupCompilationBaselineProfiles",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.StartupBenchmark",
+            "totalRunTimeNs": 31295380102,
+            "metrics": {
+                "timeToFullDisplayMs": {
+                    "minimum": 202.577148,
+                    "maximum": 234.610189,
+                    "median": 223.3614095,
+                    "coefficientOfVariation": 0.04086180040065212,
+                    "runs": [
+                        229.83195,
+                        226.247193,
+                        234.610189,
+                        227.251464,
+                        214.956259,
+                        215.600098,
+                        221.016805,
+                        224.222372,
+                        202.577148,
+                        222.500447
+                    ]
+                },
+                "timeToInitialDisplayMs": {
+                    "minimum": 202.577148,
+                    "maximum": 234.610189,
+                    "median": 223.3614095,
+                    "coefficientOfVariation": 0.04086180040065212,
+                    "runs": [
+                        229.83195,
+                        226.247193,
+                        234.610189,
+                        227.251464,
+                        214.956259,
+                        215.600098,
+                        221.016805,
+                        224.222372,
+                        202.577148,
+                        222.500447
+                    ]
+                }
+            },
+            "sampledMetrics": {},
+            "warmupIterations": 0,
+            "repeatIterations": 10,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter000_2026-01-05-13-35-06.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter001_2026-01-05-13-35-09.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter002_2026-01-05-13-35-11.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter003_2026-01-05-13-35-14.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter004_2026-01-05-13-35-16.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 5",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter005_2026-01-05-13-35-19.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 6",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter006_2026-01-05-13-35-22.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 7",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter007_2026-01-05-13-35-24.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 8",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter008_2026-01-05-13-35-27.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 9",
+                    "filename": "StartupBenchmark_startupCompilationBaselineProfiles_iter009_2026-01-05-13-35-30.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "startupCompilationNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.StartupBenchmark",
+            "totalRunTimeNs": 35862831520,
+            "metrics": {
+                "timeToFullDisplayMs": {
+                    "minimum": 214.61145,
+                    "maximum": 248.19104,
+                    "median": 233.53786250000002,
+                    "coefficientOfVariation": 0.04906088917830855,
+                    "runs": [
+                        246.652059,
+                        227.654256,
+                        228.569336,
+                        218.151083,
+                        237.967651,
+                        232.368612,
+                        248.19104,
+                        214.61145,
+                        244.32841,
+                        234.707113
+                    ]
+                },
+                "timeToInitialDisplayMs": {
+                    "minimum": 214.61145,
+                    "maximum": 248.19104,
+                    "median": 233.53786250000002,
+                    "coefficientOfVariation": 0.04906088917830855,
+                    "runs": [
+                        246.652059,
+                        227.654256,
+                        228.569336,
+                        218.151083,
+                        237.967651,
+                        232.368612,
+                        248.19104,
+                        214.61145,
+                        244.32841,
+                        234.707113
+                    ]
+                }
+            },
+            "sampledMetrics": {},
+            "warmupIterations": 0,
+            "repeatIterations": 10,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter000_2026-01-05-13-35-38.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter001_2026-01-05-13-35-41.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter002_2026-01-05-13-35-45.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter003_2026-01-05-13-35-48.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter004_2026-01-05-13-35-51.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 5",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter005_2026-01-05-13-35-54.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 6",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter006_2026-01-05-13-35-58.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 7",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter007_2026-01-05-13-36-01.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 8",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter008_2026-01-05-13-36-04.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 9",
+                    "filename": "StartupBenchmark_startupCompilationNone_iter009_2026-01-05-13-36-08.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.components.media.MediaControlSheetBenchmark",
+            "totalRunTimeNs": 36600830787,
+            "metrics": {
+                "MediaControlBar:MediaItemArtwork:layoutCount": {
+                    "minimum": 23.0,
+                    "maximum": 28.0,
+                    "median": 26.0,
+                    "coefficientOfVariation": 0.07455575217702072,
+                    "runs": [
+                        23.0,
+                        26.0,
+                        28.0,
+                        27.0,
+                        25.0
+                    ]
+                },
+                "MediaControlBar:MediaItemArtwork:layoutSumMs": {
+                    "minimum": 8.707885,
+                    "maximum": 13.407311,
+                    "median": 9.394656,
+                    "coefficientOfVariation": 0.18965316116278017,
+                    "runs": [
+                        9.394656,
+                        11.435713,
+                        13.407311,
+                        8.707885,
+                        9.128661
+                    ]
+                },
+                "MediaControlBarCount": {
+                    "minimum": 1.0,
+                    "maximum": 1.0,
+                    "median": 1.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "MediaControlBarSumMs": {
+                    "minimum": 0.009766,
+                    "maximum": 0.088298,
+                    "median": 0.01713,
+                    "coefficientOfVariation": 0.8958553556028078,
+                    "runs": [
+                        0.088298,
+                        0.058757,
+                        0.016479,
+                        0.01713,
+                        0.009766
+                    ]
+                },
+                "MediaControlSheetCount": {
+                    "minimum": 1.0,
+                    "maximum": 1.0,
+                    "median": 1.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "MediaControlSheetSumMs": {
+                    "minimum": 0.005087,
+                    "maximum": 0.024333,
+                    "median": 0.00769,
+                    "coefficientOfVariation": 0.7781190734905719,
+                    "runs": [
+                        0.024333,
+                        0.005208,
+                        0.00769,
+                        0.009277,
+                        0.005087
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 20.0,
+                    "maximum": 26.0,
+                    "median": 25.0,
+                    "coefficientOfVariation": 0.10289173221478291,
+                    "runs": [
+                        20.0,
+                        24.0,
+                        26.0,
+                        26.0,
+                        25.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 19.490885,
+                    "P90": 26.53361,
+                    "P95": 28.98291,
+                    "P99": 63.080412199999955,
+                    "runs": [
+                        [
+                            3.248779,
+                            76.872599,
+                            66.195435,
+                            12.578654,
+                            17.664062,
+                            23.476562,
+                            20.778931,
+                            22.652873,
+                            27.269856,
+                            20.747681,
+                            23.53125,
+                            23.313598,
+                            26.743246,
+                            20.345744,
+                            23.783691,
+                            22.576457,
+                            21.253947,
+                            25.856364,
+                            23.913167,
+                            22.069173
+                        ],
+                        [
+                            3.069132,
+                            31.099488,
+                            13.081584,
+                            16.059774,
+                            19.899781,
+                            24.655192,
+                            21.838094,
+                            21.147339,
+                            23.390381,
+                            21.747681,
+                            23.377848,
+                            26.187988,
+                            24.916667,
+                            29.409262,
+                            26.12675,
+                            24.007772,
+                            21.82544,
+                            23.36678,
+                            24.101481,
+                            26.818563,
+                            23.534953,
+                            22.294393,
+                            26.937785,
+                            6.8066
+                        ],
+                        [
+                            2.241007,
+                            50.620321,
+                            28.98291,
+                            18.723877,
+                            24.415812,
+                            21.717081,
+                            24.846232,
+                            19.958089,
+                            23.545003,
+                            22.673258,
+                            24.672485,
+                            21.679484,
+                            27.243856,
+                            20.634114,
+                            24.972453,
+                            21.396199,
+                            22.105184,
+                            19.970052,
+                            23.547648,
+                            25.353882,
+                            21.4941,
+                            21.899658,
+                            23.254151,
+                            6.184285,
+                            5.727255,
+                            4.434895
+                        ],
+                        [
+                            2.821289,
+                            26.53361,
+                            14.033936,
+                            7.439575,
+                            3.217936,
+                            5.208984,
+                            4.947429,
+                            6.223226,
+                            7.498169,
+                            3.836955,
+                            5.302897,
+                            6.779501,
+                            5.447225,
+                            8.546793,
+                            6.317586,
+                            3.132731,
+                            6.145833,
+                            2.631755,
+                            6.009522,
+                            6.569092,
+                            5.470011,
+                            4.412069,
+                            4.53243,
+                            7.892618,
+                            5.861694,
+                            3.602865
+                        ],
+                        [
+                            3.135458,
+                            30.734701,
+                            19.490885,
+                            7.25708,
+                            3.073202,
+                            6.130127,
+                            4.45284,
+                            7.213867,
+                            5.475626,
+                            4.862996,
+                            5.124146,
+                            6.869914,
+                            6.978597,
+                            4.660237,
+                            5.754558,
+                            7.381551,
+                            5.229981,
+                            8.137369,
+                            4.383178,
+                            6.007975,
+                            5.100423,
+                            4.525838,
+                            4.233765,
+                            6.293864,
+                            4.517619
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 8.205164,
+                    "P90": 14.587521,
+                    "P95": 22.621742,
+                    "P99": 51.81046199999998,
+                    "runs": [
+                        [
+                            -10.908579,
+                            62.677796,
+                            53.519803,
+                            44.973098,
+                            6.46087,
+                            9.444316,
+                            9.111315,
+                            11.202911,
+                            14.174956,
+                            8.046009,
+                            10.961536,
+                            15.268095,
+                            14.028329,
+                            8.284275,
+                            11.030505,
+                            11.399061,
+                            9.936386,
+                            11.661428,
+                            12.345689,
+                            10.09018
+                        ],
+                        [
+                            -9.926692,
+                            22.621742,
+                            9.685376,
+                            7.1835,
+                            5.738508,
+                            12.045469,
+                            9.3766,
+                            10.003953,
+                            11.403164,
+                            11.170538,
+                            11.78622,
+                            12.931239,
+                            11.81417,
+                            21.0078,
+                            13.511563,
+                            12.029001,
+                            9.507064,
+                            10.96819,
+                            12.237502,
+                            14.475278,
+                            11.218204,
+                            10.659136,
+                            15.582828,
+                            -6.079627
+                        ],
+                        [
+                            -11.470932,
+                            36.658461,
+                            24.498838,
+                            25.332583,
+                            10.184968,
+                            9.192134,
+                            13.034871,
+                            8.205164,
+                            10.869348,
+                            11.843265,
+                            12.760583,
+                            9.408491,
+                            14.587521,
+                            12.968898,
+                            12.649713,
+                            10.020293,
+                            9.926888,
+                            8.675679,
+                            11.132005,
+                            13.539818,
+                            8.895207,
+                            10.738852,
+                            11.075146,
+                            -6.228173,
+                            -6.459445,
+                            -7.320019
+                        ],
+                        [
+                            -10.633983,
+                            15.123611,
+                            -0.274764,
+                            -6.254844,
+                            -10.461324,
+                            -8.595782,
+                            -7.789255,
+                            -6.313263,
+                            -5.068878,
+                            -7.624787,
+                            -8.266552,
+                            -6.018758,
+                            -7.06324,
+                            -3.355641,
+                            -1.578212,
+                            -9.091727,
+                            -6.007501,
+                            -11.736361,
+                            -7.670785,
+                            -7.124391,
+                            -6.762617,
+                            -7.462041,
+                            -7.219722,
+                            -5.743454,
+                            -8.614672,
+                            -10.199786
+                        ],
+                        [
+                            -10.95209,
+                            15.969137,
+                            5.833823,
+                            -6.225726,
+                            -10.40649,
+                            -7.651261,
+                            -8.176295,
+                            -5.602524,
+                            -6.988023,
+                            -8.913275,
+                            -7.141425,
+                            -6.234163,
+                            -5.676781,
+                            -7.707393,
+                            -2.460287,
+                            -3.810895,
+                            -8.426933,
+                            -4.804233,
+                            -8.747732,
+                            -5.975209,
+                            -7.696445,
+                            -7.66705,
+                            -7.133423,
+                            -7.009216,
+                            -8.058616
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "MediaControlSheetBenchmark_compilationModePartial_iter000_2026-01-05-13-36-20.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "MediaControlSheetBenchmark_compilationModePartial_iter001_2026-01-05-13-36-25.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "MediaControlSheetBenchmark_compilationModePartial_iter002_2026-01-05-13-36-30.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "MediaControlSheetBenchmark_compilationModePartial_iter003_2026-01-05-13-36-38.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "MediaControlSheetBenchmark_compilationModePartial_iter004_2026-01-05-13-36-45.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.components.media.MediaControlSheetBenchmark",
+            "totalRunTimeNs": 35839071225,
+            "metrics": {
+                "MediaControlBar:MediaItemArtwork:layoutCount": {
+                    "minimum": 24.0,
+                    "maximum": 27.0,
+                    "median": 26.0,
+                    "coefficientOfVariation": 0.04453810254293507,
+                    "runs": [
+                        26.0,
+                        24.0,
+                        26.0,
+                        25.0,
+                        27.0
+                    ]
+                },
+                "MediaControlBar:MediaItemArtwork:layoutSumMs": {
+                    "minimum": 9.760011,
+                    "maximum": 11.805376,
+                    "median": 11.059407,
+                    "coefficientOfVariation": 0.07559534104114429,
+                    "runs": [
+                        11.059407,
+                        11.805376,
+                        11.702191,
+                        9.760011,
+                        10.705731
+                    ]
+                },
+                "MediaControlBarCount": {
+                    "minimum": 1.0,
+                    "maximum": 1.0,
+                    "median": 1.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "MediaControlBarSumMs": {
+                    "minimum": 0.009766,
+                    "maximum": 0.133422,
+                    "median": 0.012899,
+                    "coefficientOfVariation": 1.327431960972335,
+                    "runs": [
+                        0.133422,
+                        0.031087,
+                        0.012329,
+                        0.012899,
+                        0.009766
+                    ]
+                },
+                "MediaControlSheetCount": {
+                    "minimum": 1.0,
+                    "maximum": 1.0,
+                    "median": 1.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "MediaControlSheetSumMs": {
+                    "minimum": 0.004557,
+                    "maximum": 0.022176,
+                    "median": 0.008463,
+                    "coefficientOfVariation": 0.7177471778671567,
+                    "runs": [
+                        0.022176,
+                        0.004557,
+                        0.009155,
+                        0.008463,
+                        0.00529
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 22.0,
+                    "maximum": 25.0,
+                    "median": 23.0,
+                    "coefficientOfVariation": 0.048725445517057174,
+                    "runs": [
+                        25.0,
+                        22.0,
+                        23.0,
+                        23.0,
+                        24.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 22.792928,
+                    "P90": 26.8788738,
+                    "P95": 44.598437799999985,
+                    "P99": 65.11256840000003,
+                    "runs": [
+                        [
+                            4.179199,
+                            42.423788,
+                            19.241292,
+                            14.336385,
+                            21.624349,
+                            21.692993,
+                            20.496541,
+                            23.361531,
+                            20.760173,
+                            20.983276,
+                            24.140502,
+                            22.352986,
+                            21.776489,
+                            27.07902,
+                            21.885091,
+                            22.17867,
+                            22.846151,
+                            19.757242,
+                            25.541341,
+                            22.22111,
+                            25.660767,
+                            19.959269,
+                            22.815104,
+                            6.756632,
+                            4.089071
+                        ],
+                        [
+                            2.35791,
+                            86.383586,
+                            59.484863,
+                            18.376872,
+                            20.256144,
+                            22.591023,
+                            22.773071,
+                            22.800252,
+                            23.047648,
+                            24.075398,
+                            24.78894,
+                            23.662516,
+                            21.875448,
+                            21.726481,
+                            24.733846,
+                            23.163737,
+                            22.328654,
+                            22.168416,
+                            24.534952,
+                            22.433919,
+                            25.11731,
+                            6.478963
+                        ],
+                        [
+                            2.334838,
+                            66.142334,
+                            44.419678,
+                            20.778849,
+                            24.275187,
+                            21.280681,
+                            25.272217,
+                            23.274902,
+                            25.211426,
+                            19.360555,
+                            21.585408,
+                            24.778035,
+                            25.848592,
+                            22.792928,
+                            23.368653,
+                            23.190959,
+                            24.828084,
+                            21.99882,
+                            28.445475,
+                            20.246663,
+                            21.058064,
+                            24.049805,
+                            22.082275
+                        ],
+                        [
+                            2.300415,
+                            59.706299,
+                            48.369791,
+                            12.08488,
+                            15.873616,
+                            23.407023,
+                            23.278564,
+                            22.307862,
+                            21.645589,
+                            25.770752,
+                            20.810425,
+                            20.86735,
+                            24.604899,
+                            21.528076,
+                            21.017497,
+                            28.825318,
+                            20.589803,
+                            23.37203,
+                            20.522908,
+                            24.62504,
+                            24.85555,
+                            23.671631,
+                            6.020467
+                        ],
+                        [
+                            3.067789,
+                            45.313477,
+                            31.39327,
+                            10.458048,
+                            20.100505,
+                            20.428385,
+                            19.587158,
+                            23.099487,
+                            22.285808,
+                            20.85319,
+                            23.314291,
+                            24.817343,
+                            22.529704,
+                            24.854371,
+                            23.64274,
+                            23.966349,
+                            26.243734,
+                            24.777792,
+                            25.564534,
+                            24.523926,
+                            24.89738,
+                            24.697551,
+                            26.745443,
+                            22.285157
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 10.602118,
+                    "P90": 17.7697972,
+                    "P95": 41.499000399999986,
+                    "P99": 59.06081000000002,
+                    "runs": [
+                        [
+                            -8.067658,
+                            31.429048,
+                            15.627991,
+                            11.801381,
+                            7.6169,
+                            7.546149,
+                            8.037003,
+                            11.18349,
+                            8.207538,
+                            8.48659,
+                            11.492043,
+                            9.96124,
+                            9.313195,
+                            14.448294,
+                            14.221088,
+                            9.43223,
+                            10.637423,
+                            5.847177,
+                            10.448378,
+                            8.299056,
+                            14.267806,
+                            7.371397,
+                            10.551204,
+                            -8.470958,
+                            -9.869344
+                        ],
+                        [
+                            -11.145933,
+                            72.112811,
+                            60.110502,
+                            44.151985,
+                            6.785763,
+                            10.163173,
+                            10.596329,
+                            10.565595,
+                            10.686933,
+                            12.181236,
+                            11.537762,
+                            15.545249,
+                            9.586175,
+                            9.632387,
+                            12.804414,
+                            11.274053,
+                            9.905762,
+                            9.927775,
+                            12.1965,
+                            10.83126,
+                            12.93323,
+                            -4.302443
+                        ],
+                        [
+                            -10.979441,
+                            53.549927,
+                            41.240968,
+                            42.53113,
+                            10.424322,
+                            9.020067,
+                            12.757332,
+                            10.92634,
+                            13.221913,
+                            9.428537,
+                            8.939238,
+                            12.491769,
+                            17.602276,
+                            11.07422,
+                            10.602118,
+                            12.006767,
+                            11.832719,
+                            9.430543,
+                            15.617552,
+                            8.911107,
+                            8.804106,
+                            14.462568,
+                            9.842201
+                        ],
+                        [
+                            -11.017557,
+                            47.040968,
+                            35.500162,
+                            27.779547,
+                            6.942564,
+                            8.890609,
+                            9.778107,
+                            10.007036,
+                            9.685014,
+                            14.267086,
+                            8.011959,
+                            6.763016,
+                            12.001598,
+                            14.506968,
+                            8.68266,
+                            17.680594,
+                            7.375486,
+                            9.226026,
+                            8.407078,
+                            11.939329,
+                            13.332946,
+                            12.090895,
+                            -6.879878
+                        ],
+                        [
+                            -8.758585,
+                            33.43059,
+                            17.903602,
+                            10.175604,
+                            6.000992,
+                            6.081222,
+                            6.565016,
+                            10.512147,
+                            9.440613,
+                            8.680481,
+                            11.02301,
+                            11.609802,
+                            14.9942,
+                            12.088677,
+                            11.144802,
+                            12.510149,
+                            13.396535,
+                            9.921128,
+                            12.452042,
+                            11.810965,
+                            14.337463,
+                            14.109077,
+                            14.410049,
+                            9.787173
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "MediaControlSheetBenchmark_compilationModeNone_iter000_2026-01-05-13-36-55.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "MediaControlSheetBenchmark_compilationModeNone_iter001_2026-01-05-13-37-01.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "MediaControlSheetBenchmark_compilationModeNone_iter002_2026-01-05-13-37-08.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "MediaControlSheetBenchmark_compilationModeNone_iter003_2026-01-05-13-37-13.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "MediaControlSheetBenchmark_compilationModeNone_iter004_2026-01-05-13-37-18.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.ColorInvertBenchmark",
+            "totalRunTimeNs": 39850790587,
+            "metrics": {
+                "colorInvertCount": {
+                    "minimum": 2.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.23570226039551587,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        4.0,
+                        3.0,
+                        2.0
+                    ]
+                },
+                "colorInvertSumMs": {
+                    "minimum": 0.898927,
+                    "maximum": 1.598756,
+                    "median": 1.199218,
+                    "coefficientOfVariation": 0.2134391144876785,
+                    "runs": [
+                        1.452271,
+                        1.180136,
+                        1.598756,
+                        1.199218,
+                        0.898927
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 3.0,
+                    "maximum": 6.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.2608202654786505,
+                    "runs": [
+                        4.0,
+                        4.0,
+                        6.0,
+                        4.0,
+                        3.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 19.880208,
+                    "P90": 37.832194,
+                    "P95": 39.499838,
+                    "P99": 39.7680012,
+                    "runs": [
+                        [
+                            35.980795,
+                            25.880981,
+                            37.832194,
+                            6.678711
+                        ],
+                        [
+                            18.779826,
+                            10.317993,
+                            37.317831,
+                            18.656413
+                        ],
+                        [
+                            39.499838,
+                            12.779297,
+                            24.985433,
+                            8.808228,
+                            5.820434,
+                            4.655924
+                        ],
+                        [
+                            36.776734,
+                            12.688314,
+                            25.85555,
+                            14.07255
+                        ],
+                        [
+                            39.835042,
+                            19.880208,
+                            21.473715
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 12.958839,
+                    "P90": 28.004641,
+                    "P95": 28.02204,
+                    "P99": 28.5018248,
+                    "runs": [
+                        [
+                            28.02204,
+                            12.534553,
+                            28.004641,
+                            15.849149
+                        ],
+                        [
+                            14.451343,
+                            -1.180807,
+                            26.393485,
+                            14.970146
+                        ],
+                        [
+                            28.621771,
+                            12.958839,
+                            10.685104,
+                            2.841352,
+                            -3.35962,
+                            -5.815108
+                        ],
+                        [
+                            24.14081,
+                            8.609502,
+                            17.214738,
+                            5.193602
+                        ],
+                        [
+                            27.010736,
+                            12.465743,
+                            11.878665
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "ColorInvertBenchmark_compilationModePartial_iter000_2026-01-05-13-37-34.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "ColorInvertBenchmark_compilationModePartial_iter001_2026-01-05-13-37-40.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "ColorInvertBenchmark_compilationModePartial_iter002_2026-01-05-13-37-48.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "ColorInvertBenchmark_compilationModePartial_iter003_2026-01-05-13-37-53.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "ColorInvertBenchmark_compilationModePartial_iter004_2026-01-05-13-37-58.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.ColorInvertBenchmark",
+            "totalRunTimeNs": 39247528868,
+            "metrics": {
+                "colorInvertCount": {
+                    "minimum": 3.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.16109486985446062,
+                    "runs": [
+                        4.0,
+                        4.0,
+                        3.0,
+                        3.0,
+                        3.0
+                    ]
+                },
+                "colorInvertSumMs": {
+                    "minimum": 0.729208,
+                    "maximum": 1.598919,
+                    "median": 1.221639,
+                    "coefficientOfVariation": 0.33642246203813136,
+                    "runs": [
+                        1.221639,
+                        1.598919,
+                        1.29952,
+                        0.743449,
+                        0.729208
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 3.0,
+                    "maximum": 5.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.19920476822239894,
+                    "runs": [
+                        5.0,
+                        5.0,
+                        4.0,
+                        3.0,
+                        4.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 17.781372,
+                    "P90": 35.269857,
+                    "P95": 43.755737,
+                    "P99": 44.0828202,
+                    "runs": [
+                        [
+                            9.669026,
+                            2.058756,
+                            43.755737,
+                            23.895223,
+                            10.443481
+                        ],
+                        [
+                            18.419393,
+                            7.553792,
+                            44.164591,
+                            24.513142,
+                            10.465983
+                        ],
+                        [
+                            30.856975,
+                            22.900146,
+                            27.192709,
+                            14.746297
+                        ],
+                        [
+                            22.576863,
+                            15.216634,
+                            11.677694
+                        ],
+                        [
+                            35.269857,
+                            7.145833,
+                            17.781372,
+                            5.352661
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 12.968893,
+                    "P90": 28.100327,
+                    "P95": 28.478545,
+                    "P99": 29.5011194,
+                    "runs": [
+                        [
+                            1.22116,
+                            -11.744054,
+                            28.478545,
+                            19.911361,
+                            12.968893
+                        ],
+                        [
+                            11.758917,
+                            -3.787925,
+                            29.756763,
+                            21.300215,
+                            13.061766
+                        ],
+                        [
+                            28.100327,
+                            13.117134,
+                            16.82765,
+                            4.652634
+                        ],
+                        [
+                            15.02925,
+                            1.581547,
+                            2.973963
+                        ],
+                        [
+                            23.265539,
+                            7.8065,
+                            8.406046,
+                            -3.79087
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "ColorInvertBenchmark_compilationModeNone_iter000_2026-01-05-13-38-12.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "ColorInvertBenchmark_compilationModeNone_iter001_2026-01-05-13-38-18.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "ColorInvertBenchmark_compilationModeNone_iter002_2026-01-05-13-38-26.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "ColorInvertBenchmark_compilationModeNone_iter003_2026-01-05-13-38-32.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "ColorInvertBenchmark_compilationModeNone_iter004_2026-01-05-13-38-40.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.ColorSplitBenchmark",
+            "totalRunTimeNs": 38274175637,
+            "metrics": {
+                "colorSplitCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "colorSplitSumMs": {
+                    "minimum": 0.528767,
+                    "maximum": 0.899861,
+                    "median": 0.767456,
+                    "coefficientOfVariation": 0.19913173840730597,
+                    "runs": [
+                        0.808187,
+                        0.528767,
+                        0.643147,
+                        0.767456,
+                        0.899861
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 3.0,
+                    "maximum": 3.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        3.0,
+                        3.0,
+                        3.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 21.521403,
+                    "P90": 31.0174156,
+                    "P95": 32.447111199999995,
+                    "P99": 34.581609439999994,
+                    "runs": [
+                        [
+                            14.002442,
+                            1.75297,
+                            31.30363
+                        ],
+                        [
+                            21.521403,
+                            4.4729,
+                            30.588094
+                        ],
+                        [
+                            20.798828,
+                            5.281454,
+                            12.137696
+                        ],
+                        [
+                            35.115234,
+                            29.500733,
+                            27.600342
+                        ],
+                        [
+                            22.028646,
+                            2.939046,
+                            24.139242
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 11.977262,
+                    "P90": 19.3414742,
+                    "P95": 23.82760319999999,
+                    "P99": 30.285071839999993,
+                    "runs": [
+                        [
+                            -0.431925,
+                            -11.360952,
+                            16.696393
+                        ],
+                        [
+                            11.30238,
+                            -3.889857,
+                            20.368245
+                        ],
+                        [
+                            11.977262,
+                            -3.48973,
+                            4.021294
+                        ],
+                        [
+                            31.899439,
+                            17.801318,
+                            16.154982
+                        ],
+                        [
+                            12.940318,
+                            -2.403664,
+                            13.999632
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "ColorSplitBenchmark_compilationModePartial_iter000_2026-01-05-13-38-53.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "ColorSplitBenchmark_compilationModePartial_iter001_2026-01-05-13-38-59.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "ColorSplitBenchmark_compilationModePartial_iter002_2026-01-05-13-39-07.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "ColorSplitBenchmark_compilationModePartial_iter003_2026-01-05-13-39-13.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "ColorSplitBenchmark_compilationModePartial_iter004_2026-01-05-13-39-19.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.ColorSplitBenchmark",
+            "totalRunTimeNs": 36396935361,
+            "metrics": {
+                "colorSplitCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "colorSplitSumMs": {
+                    "minimum": 0.765707,
+                    "maximum": 1.328572,
+                    "median": 1.149333,
+                    "coefficientOfVariation": 0.18787914230358835,
+                    "runs": [
+                        1.328572,
+                        1.156455,
+                        1.149333,
+                        0.765707,
+                        1.083618
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 3.0,
+                    "maximum": 3.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        3.0,
+                        3.0,
+                        3.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 22.325928,
+                    "P90": 31.6031902,
+                    "P95": 34.2980798,
+                    "P99": 37.72862636,
+                    "runs": [
+                        [
+                            30.317545,
+                            5.148193,
+                            38.586263
+                        ],
+                        [
+                            29.468465,
+                            16.667236,
+                            11.840821
+                        ],
+                        [
+                            32.460287,
+                            23.824422,
+                            28.849446
+                        ],
+                        [
+                            10.794759,
+                            1.870931,
+                            24.139201
+                        ],
+                        [
+                            17.406372,
+                            4.21932,
+                            22.325928
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 14.057695,
+                    "P90": 27.3996936,
+                    "P95": 29.4240899,
+                    "P99": 31.76678998,
+                    "runs": [
+                        [
+                            15.358004,
+                            6.048482,
+                            28.169072
+                        ],
+                        [
+                            32.352465,
+                            4.482426,
+                            0.958599
+                        ],
+                        [
+                            26.245626,
+                            10.907404,
+                            14.704887
+                        ],
+                        [
+                            -3.388439,
+                            -11.571368,
+                            14.057695
+                        ],
+                        [
+                            16.413149,
+                            0.923004,
+                            15.701464
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "ColorSplitBenchmark_compilationModeNone_iter000_2026-01-05-13-39-30.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "ColorSplitBenchmark_compilationModeNone_iter001_2026-01-05-13-39-35.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "ColorSplitBenchmark_compilationModeNone_iter002_2026-01-05-13-39-43.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "ColorSplitBenchmark_compilationModeNone_iter003_2026-01-05-13-39-49.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "ColorSplitBenchmark_compilationModeNone_iter004_2026-01-05-13-39-54.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.FadeBenchmark",
+            "totalRunTimeNs": 37229376930,
+            "metrics": {
+                "fadeCount": {
+                    "minimum": 27.0,
+                    "maximum": 36.0,
+                    "median": 36.0,
+                    "coefficientOfVariation": 0.15214515486254615,
+                    "runs": [
+                        27.0,
+                        36.0,
+                        27.0,
+                        36.0,
+                        36.0
+                    ]
+                },
+                "fadeSumMs": {
+                    "minimum": 3.617028,
+                    "maximum": 5.001021,
+                    "median": 4.353428,
+                    "coefficientOfVariation": 0.13720054046357655,
+                    "runs": [
+                        3.617028,
+                        4.353428,
+                        4.715291,
+                        5.001021,
+                        3.793499
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 5.0,
+                    "median": 5.0,
+                    "coefficientOfVariation": 0.11907012119677526,
+                    "runs": [
+                        4.0,
+                        5.0,
+                        4.0,
+                        5.0,
+                        5.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 26.129923,
+                    "P90": 50.4714764,
+                    "P95": 52.973966700000005,
+                    "P99": 69.84377706000004,
+                    "runs": [
+                        [
+                            24.223796,
+                            8.231201,
+                            37.887411,
+                            26.129923
+                        ],
+                        [
+                            50.836833,
+                            24.088094,
+                            39.04895,
+                            27.026896,
+                            11.553874
+                        ],
+                        [
+                            74.534953,
+                            45.187825,
+                            46.227133,
+                            25.818237
+                        ],
+                        [
+                            18.711629,
+                            2.750488,
+                            53.211426,
+                            32.149373,
+                            13.645508
+                        ],
+                        [
+                            29.912801,
+                            7.348633,
+                            49.01005,
+                            25.051229,
+                            19.06014
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 24.688391,
+                    "P90": 40.169699200000004,
+                    "P95": 46.91919299999999,
+                    "P99": 57.30603014000002,
+                    "runs": [
+                        [
+                            10.915406,
+                            -4.639757,
+                            27.428995,
+                            13.99258
+                        ],
+                        [
+                            36.747548,
+                            23.599539,
+                            27.378052,
+                            19.678683,
+                            10.148584
+                        ],
+                        [
+                            60.05094,
+                            47.574077,
+                            31.466776,
+                            22.69905
+                        ],
+                        [
+                            6.44239,
+                            -9.50003,
+                            41.025237,
+                            32.587232,
+                            26.031958
+                        ],
+                        [
+                            15.388988,
+                            2.614824,
+                            36.274297,
+                            24.688391,
+                            25.572659
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "FadeBenchmark_compilationModePartial_iter000_2026-01-05-13-40-08.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "FadeBenchmark_compilationModePartial_iter001_2026-01-05-13-40-13.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "FadeBenchmark_compilationModePartial_iter002_2026-01-05-13-40-19.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "FadeBenchmark_compilationModePartial_iter003_2026-01-05-13-40-24.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "FadeBenchmark_compilationModePartial_iter004_2026-01-05-13-40-32.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.FadeBenchmark",
+            "totalRunTimeNs": 35957084368,
+            "metrics": {
+                "fadeCount": {
+                    "minimum": 27.0,
+                    "maximum": 36.0,
+                    "median": 27.0,
+                    "coefficientOfVariation": 0.16109486985446062,
+                    "runs": [
+                        36.0,
+                        27.0,
+                        36.0,
+                        27.0,
+                        27.0
+                    ]
+                },
+                "fadeSumMs": {
+                    "minimum": 2.401445,
+                    "maximum": 4.715861,
+                    "median": 3.893027,
+                    "coefficientOfVariation": 0.22717841204907527,
+                    "runs": [
+                        3.893027,
+                        4.715861,
+                        4.182897,
+                        2.401445,
+                        3.722492
+                    ]
+                },
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 5.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.1244823994329923,
+                    "runs": [
+                        5.0,
+                        4.0,
+                        5.0,
+                        4.0,
+                        4.0
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 21.2128905,
+                    "P90": 38.85077720000001,
+                    "P95": 40.720141749999996,
+                    "P99": 42.31070254,
+                    "runs": [
+                        [
+                            29.701823,
+                            8.399333,
+                            29.926391,
+                            14.404216,
+                            21.924032
+                        ],
+                        [
+                            40.801229,
+                            9.65857,
+                            39.179484,
+                            9.798339
+                        ],
+                        [
+                            32.066325,
+                            7.690796,
+                            23.183309,
+                            8.644205,
+                            6.642334
+                        ],
+                        [
+                            29.203329,
+                            7.523356,
+                            31.176188,
+                            19.470011
+                        ],
+                        [
+                            35.892416,
+                            20.501749,
+                            42.711955,
+                            15.135702
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 14.089568499999999,
+                    "P90": 25.29487110000001,
+                    "P95": 28.04003535,
+                    "P99": 28.84868257,
+                    "runs": [
+                        [
+                            16.115107,
+                            2.572623,
+                            20.895267,
+                            8.261814,
+                            9.806135
+                        ],
+                        [
+                            29.032072,
+                            13.276343,
+                            25.783716,
+                            14.100024
+                        ],
+                        [
+                            19.306321,
+                            3.582188,
+                            14.079113,
+                            0.014029,
+                            -5.929799
+                        ],
+                        [
+                            16.459633,
+                            0.710979,
+                            18.719609,
+                            6.643994
+                        ],
+                        [
+                            20.606546,
+                            7.151553,
+                            28.158789,
+                            16.970566
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "FadeBenchmark_compilationModeNone_iter000_2026-01-05-13-40-43.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "FadeBenchmark_compilationModeNone_iter001_2026-01-05-13-40-49.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "FadeBenchmark_compilationModeNone_iter002_2026-01-05-13-40-55.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "FadeBenchmark_compilationModeNone_iter003_2026-01-05-13-41-00.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "FadeBenchmark_compilationModeNone_iter004_2026-01-05-13-41-08.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.NoiseBenchmark",
+            "totalRunTimeNs": 36030116838,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 5.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.1244823994329923,
+                    "runs": [
+                        4.0,
+                        5.0,
+                        4.0,
+                        4.0,
+                        5.0
+                    ]
+                },
+                "noiseCount": {
+                    "minimum": 3.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.13975424859373684,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        3.0,
+                        3.0,
+                        4.0
+                    ]
+                },
+                "noiseSumMs": {
+                    "minimum": 0.869588,
+                    "maximum": 3.11438,
+                    "median": 1.476359,
+                    "coefficientOfVariation": 0.4836703482628316,
+                    "runs": [
+                        1.476114,
+                        0.869588,
+                        1.476359,
+                        3.11438,
+                        1.692424
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 19.0424195,
+                    "P90": 31.905786500000005,
+                    "P95": 37.4457505,
+                    "P99": 42.027788959999995,
+                    "runs": [
+                        [
+                            30.830444,
+                            6.987915,
+                            29.180705,
+                            17.761841
+                        ],
+                        [
+                            21.551433,
+                            3.17277,
+                            13.722656,
+                            3.067302,
+                            5.18335
+                        ],
+                        [
+                            22.317872,
+                            1.58016,
+                            20.322998,
+                            10.779622
+                        ],
+                        [
+                            32.025269,
+                            17.183594,
+                            43.169963,
+                            24.265422
+                        ],
+                        [
+                            23.865723,
+                            2.784586,
+                            37.731039,
+                            25.150147,
+                            16.530192
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 12.640659,
+                    "P90": 20.9317561,
+                    "P95": 28.211949649999994,
+                    "P99": 30.851500389999998,
+                    "runs": [
+                        [
+                            19.225055,
+                            3.930897,
+                            14.842096,
+                            11.334166
+                        ],
+                        [
+                            12.74806,
+                            -2.804906,
+                            -1.446335,
+                            -9.354568,
+                            -4.423851
+                        ],
+                        [
+                            12.81235,
+                            -2.490348,
+                            13.932647,
+                            2.539193
+                        ],
+                        [
+                            21.00321,
+                            5.49122,
+                            31.452298,
+                            20.288671
+                        ],
+                        [
+                            14.096274,
+                            -1.34105,
+                            28.591357,
+                            19.661388,
+                            12.533258
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "NoiseBenchmark_compilationModePartial_iter000_2026-01-05-13-41-22.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "NoiseBenchmark_compilationModePartial_iter001_2026-01-05-13-41-27.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "NoiseBenchmark_compilationModePartial_iter002_2026-01-05-13-41-33.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "NoiseBenchmark_compilationModePartial_iter003_2026-01-05-13-41-38.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "NoiseBenchmark_compilationModePartial_iter004_2026-01-05-13-41-44.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.NoiseBenchmark",
+            "totalRunTimeNs": 33913185807,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 5.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.1244823994329923,
+                    "runs": [
+                        4.0,
+                        4.0,
+                        5.0,
+                        4.0,
+                        5.0
+                    ]
+                },
+                "noiseCount": {
+                    "minimum": 3.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.16109486985446062,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        4.0,
+                        3.0,
+                        4.0
+                    ]
+                },
+                "noiseSumMs": {
+                    "minimum": 0.716715,
+                    "maximum": 1.912233,
+                    "median": 1.107545,
+                    "coefficientOfVariation": 0.3715027036386113,
+                    "runs": [
+                        1.213297,
+                        1.107545,
+                        1.011596,
+                        0.716715,
+                        1.912233
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 16.7935795,
+                    "P90": 33.991992100000004,
+                    "P95": 36.2271284,
+                    "P99": 36.92050981,
+                    "runs": [
+                        [
+                            21.125489,
+                            5.42098,
+                            14.492472,
+                            3.937866
+                        ],
+                        [
+                            36.329875,
+                            24.156047,
+                            15.742676,
+                            5.221192
+                        ],
+                        [
+                            23.086304,
+                            11.539957,
+                            28.705323,
+                            16.669068,
+                            3.864258
+                        ],
+                        [
+                            9.083008,
+                            1.921997,
+                            37.077514,
+                            25.994019
+                        ],
+                        [
+                            31.445434,
+                            18.02657,
+                            34.274943,
+                            13.318685,
+                            16.918091
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 9.320886999999999,
+                    "P90": 27.46614200000001,
+                    "P95": 28.492573999999998,
+                    "P99": 29.14039964,
+                    "runs": [
+                        [
+                            10.362524,
+                            -5.157786,
+                            7.153579,
+                            -4.183637
+                        ],
+                        [
+                            29.304203,
+                            23.634077,
+                            8.27925,
+                            -3.258271
+                        ],
+                        [
+                            14.681852,
+                            -0.836441,
+                            14.426744,
+                            7.03388,
+                            -3.454931
+                        ],
+                        [
+                            2.152101,
+                            -12.049523,
+                            27.891927,
+                            16.72049
+                        ],
+                        [
+                            17.353303,
+                            6.846694,
+                            28.524187,
+                            17.304563,
+                            13.928038
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "NoiseBenchmark_compilationModeNone_iter000_2026-01-05-13-41-55.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "NoiseBenchmark_compilationModeNone_iter001_2026-01-05-13-42-01.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "NoiseBenchmark_compilationModeNone_iter002_2026-01-05-13-42-07.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "NoiseBenchmark_compilationModeNone_iter003_2026-01-05-13-42-12.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "NoiseBenchmark_compilationModeNone_iter004_2026-01-05-13-42-18.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.PixelateBenchmark",
+            "totalRunTimeNs": 47129843854,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 6.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.1944406936956339,
+                    "runs": [
+                        4.0,
+                        4.0,
+                        6.0,
+                        4.0,
+                        5.0
+                    ]
+                },
+                "pixelateCount": {
+                    "minimum": 3.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.16109486985446062,
+                    "runs": [
+                        3.0,
+                        3.0,
+                        4.0,
+                        3.0,
+                        4.0
+                    ]
+                },
+                "pixelateSumMs": {
+                    "minimum": 0.851318,
+                    "maximum": 1.497762,
+                    "median": 1.014852,
+                    "coefficientOfVariation": 0.2257111772505279,
+                    "runs": [
+                        0.998454,
+                        1.497762,
+                        1.244751,
+                        1.014852,
+                        0.851318
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 18.543945,
+                    "P90": 30.882910600000002,
+                    "P95": 35.56746429999999,
+                    "P99": 42.660323000000005,
+                    "runs": [
+                        [
+                            15.383179,
+                            1.592855,
+                            27.481893,
+                            12.542684
+                        ],
+                        [
+                            44.520467,
+                            19.110433,
+                            26.320882,
+                            12.479899
+                        ],
+                        [
+                            27.697103,
+                            13.026448,
+                            30.065593,
+                            18.543945,
+                            4.525024,
+                            4.707438
+                        ],
+                        [
+                            10.726196,
+                            2.383423,
+                            20.90503,
+                            10.742879
+                        ],
+                        [
+                            36.065267,
+                            19.810669,
+                            31.08724,
+                            22.129395,
+                            6.205485
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 9.140175,
+                    "P90": 19.697494,
+                    "P95": 21.435414299999998,
+                    "P99": 29.50306054000001,
+                    "runs": [
+                        [
+                            7.093199,
+                            -8.556167,
+                            19.729602,
+                            7.666632
+                        ],
+                        [
+                            31.725092,
+                            16.213575,
+                            19.569062,
+                            7.247147
+                        ],
+                        [
+                            15.846791,
+                            0.2834,
+                            14.978592,
+                            9.895764,
+                            -5.612399,
+                            -5.517412
+                        ],
+                        [
+                            -1.520246,
+                            -11.604631,
+                            14.98722,
+                            2.898817
+                        ],
+                        [
+                            21.624949,
+                            9.140175,
+                            16.695735,
+                            13.941719,
+                            1.626141
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "PixelateBenchmark_compilationModePartial_iter000_2026-01-05-13-42-31.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "PixelateBenchmark_compilationModePartial_iter001_2026-01-05-13-42-39.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "PixelateBenchmark_compilationModePartial_iter002_2026-01-05-13-42-47.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "PixelateBenchmark_compilationModePartial_iter003_2026-01-05-13-42-55.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "PixelateBenchmark_compilationModePartial_iter004_2026-01-05-13-43-03.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.PixelateBenchmark",
+            "totalRunTimeNs": 36070327248,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 4.0,
+                    "maximum": 5.0,
+                    "median": 4.0,
+                    "coefficientOfVariation": 0.10647942749998998,
+                    "runs": [
+                        4.0,
+                        5.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ]
+                },
+                "pixelateCount": {
+                    "minimum": 3.0,
+                    "maximum": 4.0,
+                    "median": 3.0,
+                    "coefficientOfVariation": 0.13975424859373684,
+                    "runs": [
+                        3.0,
+                        4.0,
+                        3.0,
+                        3.0,
+                        3.0
+                    ]
+                },
+                "pixelateSumMs": {
+                    "minimum": 0.657877,
+                    "maximum": 1.434367,
+                    "median": 1.246216,
+                    "coefficientOfVariation": 0.27484755602615374,
+                    "runs": [
+                        1.246216,
+                        1.434367,
+                        1.063314,
+                        1.414429,
+                        0.657877
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 13.70699,
+                    "P90": 28.60376,
+                    "P95": 37.019857,
+                    "P99": 43.7516602,
+                    "runs": [
+                        [
+                            11.396565,
+                            4.184408,
+                            26.907389,
+                            13.017375
+                        ],
+                        [
+                            37.019857,
+                            13.442098,
+                            45.434611,
+                            24.172038,
+                            6.435751
+                        ],
+                        [
+                            24.311605,
+                            13.409098,
+                            28.054972,
+                            12.397176
+                        ],
+                        [
+                            28.60376,
+                            11.935058,
+                            24.718302,
+                            6.916301
+                        ],
+                        [
+                            21.887451,
+                            15.02242,
+                            13.70699,
+                            5.298828
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 10.21367,
+                    "P90": 21.993293,
+                    "P95": 25.832843,
+                    "P99": 32.168562200000004,
+                    "runs": [
+                        [
+                            9.75429,
+                            -6.084201,
+                            11.727826,
+                            2.287127
+                        ],
+                        [
+                            25.832843,
+                            10.21367,
+                            33.752492,
+                            21.993293,
+                            11.141973
+                        ],
+                        [
+                            15.281277,
+                            -0.360838,
+                            13.20868,
+                            4.243253
+                        ],
+                        [
+                            14.096429,
+                            1.8506,
+                            17.288432,
+                            5.137338
+                        ],
+                        [
+                            15.026415,
+                            1.647475,
+                            -1.535803,
+                            -3.833526
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "PixelateBenchmark_compilationModeNone_iter000_2026-01-05-13-43-17.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "PixelateBenchmark_compilationModeNone_iter001_2026-01-05-13-43-22.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "PixelateBenchmark_compilationModeNone_iter002_2026-01-05-13-43-30.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "PixelateBenchmark_compilationModeNone_iter003_2026-01-05-13-43-35.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "PixelateBenchmark_compilationModeNone_iter004_2026-01-05-13-43-41.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModePartial",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.WarpBenchmark",
+            "totalRunTimeNs": 31251468236,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "warpCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "warpSumMs": {
+                    "minimum": 0.242472,
+                    "maximum": 0.651001,
+                    "median": 0.34265,
+                    "coefficientOfVariation": 0.3929436449581475,
+                    "runs": [
+                        0.326417,
+                        0.651001,
+                        0.34265,
+                        0.242472,
+                        0.490194
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 11.01534,
+                    "P90": 33.45098899999999,
+                    "P95": 37.443145999999984,
+                    "P99": 40.6368716,
+                    "runs": [
+                        [
+                            5.229981,
+                            28.823242
+                        ],
+                        [
+                            5.2028,
+                            41.435303
+                        ],
+                        [
+                            8.734049,
+                            32.563843
+                        ],
+                        [
+                            4.615519,
+                            13.296631
+                        ],
+                        [
+                            4.537435,
+                            14.371541
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": -0.1660379999999999,
+                    "P90": 24.6769735,
+                    "P95": 26.809246749999993,
+                    "P99": 28.515065350000004,
+                    "runs": [
+                        [
+                            -6.062169,
+                            20.795469
+                        ],
+                        [
+                            -5.617469,
+                            28.94152
+                        ],
+                        [
+                            -3.020686,
+                            24.203135
+                        ],
+                        [
+                            -6.375223,
+                            2.68861
+                        ],
+                        [
+                            -6.285566,
+                            8.506353
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "WarpBenchmark_compilationModePartial_iter000_2026-01-05-13-43-53.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "WarpBenchmark_compilationModePartial_iter001_2026-01-05-13-43-57.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "WarpBenchmark_compilationModePartial_iter002_2026-01-05-13-44-01.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "WarpBenchmark_compilationModePartial_iter003_2026-01-05-13-44-08.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "WarpBenchmark_compilationModePartial_iter004_2026-01-05-13-44-13.perfetto-trace"
+                }
+            ]
+        },
+        {
+            "name": "compilationModeNone",
+            "params": {},
+            "className": "com.embarrasdf.palette.benchmark.modifiers.WarpBenchmark",
+            "totalRunTimeNs": 32786131812,
+            "metrics": {
+                "frameCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "warpCount": {
+                    "minimum": 2.0,
+                    "maximum": 2.0,
+                    "median": 2.0,
+                    "coefficientOfVariation": 0.0,
+                    "runs": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ]
+                },
+                "warpSumMs": {
+                    "minimum": 0.444865,
+                    "maximum": 0.780191,
+                    "median": 0.732666,
+                    "coefficientOfVariation": 0.23041509966568907,
+                    "runs": [
+                        0.732666,
+                        0.740845,
+                        0.444865,
+                        0.529582,
+                        0.780191
+                    ]
+                }
+            },
+            "sampledMetrics": {
+                "frameDurationCpuMs": {
+                    "P50": 10.23466,
+                    "P90": 35.876038199999996,
+                    "P95": 37.28183009999999,
+                    "P99": 38.40646362,
+                    "runs": [
+                        [
+                            5.100912,
+                            29.074544
+                        ],
+                        [
+                            4.402588,
+                            35.56364
+                        ],
+                        [
+                            4.685221,
+                            14.737508
+                        ],
+                        [
+                            5.731812,
+                            17.579387
+                        ],
+                        [
+                            5.236654,
+                            38.687622
+                        ]
+                    ]
+                },
+                "frameOverrunMs": {
+                    "P50": 0.9682110000000002,
+                    "P90": 23.859872099999997,
+                    "P95": 25.264835549999997,
+                    "P99": 26.38880631,
+                    "runs": [
+                        [
+                            -6.098566,
+                            14.674933
+                        ],
+                        [
+                            -6.045292,
+                            23.547658
+                        ],
+                        [
+                            -6.04834,
+                            15.448634
+                        ],
+                        [
+                            -5.454009,
+                            7.390431
+                        ],
+                        [
+                            -5.721642,
+                            26.669799
+                        ]
+                    ]
+                }
+            },
+            "warmupIterations": 0,
+            "repeatIterations": 5,
+            "thermalThrottleSleepSeconds": 0,
+            "profilerOutputs": [
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 0",
+                    "filename": "WarpBenchmark_compilationModeNone_iter000_2026-01-05-13-44-22.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 1",
+                    "filename": "WarpBenchmark_compilationModeNone_iter001_2026-01-05-13-44-29.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 2",
+                    "filename": "WarpBenchmark_compilationModeNone_iter002_2026-01-05-13-44-34.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 3",
+                    "filename": "WarpBenchmark_compilationModeNone_iter003_2026-01-05-13-44-38.perfetto-trace"
+                },
+                {
+                    "type": "PerfettoTrace",
+                    "label": "Trace Iteration 4",
+                    "filename": "WarpBenchmark_compilationModeNone_iter004_2026-01-05-13-44-45.perfetto-trace"
+                }
+            ]
+        }
+    ]
+}

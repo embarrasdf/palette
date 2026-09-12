@@ -2,7 +2,7 @@
 //  ComposeViewController.swift
 //  Palette
 //
-//  Created by Alex Clement on 10/20/24.
+//  Created by embarrasdf on 10/20/24.
 //
 
 import SwiftUI
