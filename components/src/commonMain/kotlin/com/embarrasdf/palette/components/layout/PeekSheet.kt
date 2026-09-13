@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.util.Spacer
-import com.alexrdclement.trace.trace
+import com.embarrasdf.trace.trace
 import kotlin.math.max
 
 private const val TraceName = "PeekSheet"

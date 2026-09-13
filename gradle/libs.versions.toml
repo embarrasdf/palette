@@ -21,8 +21,8 @@ paparazzi = "2.0.0-SNAPSHOT"
 profileinstaller = "1.4.1"
 test-parameter-injector = "1.22"
 uiautomator = "2.4.0"
-trace = "0.0.14"
-uievent = "0.0.16"
+trace = "0.0.17"
+uievent = "0.0.19"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
@@ -50,8 +50,8 @@ navigation3-ui = { group = "org.jetbrains.androidx.navigation3", name = "navigat
 navigationevent = { group = "org.jetbrains.androidx.navigationevent", name = "navigationevent-compose", version.ref = "navigationevent" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
 test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "test-parameter-injector" }
-trace = { group = "com.alexrdclement.trace", name = "trace", version.ref = "trace" }
-uievent = { group = "com.alexrdclement.uievent", name = "uievent", version.ref = "uievent" }
+trace = { group = "com.embarrasdf.trace", name = "trace", version.ref = "trace" }
+uievent = { group = "com.embarrasdf.uievent", name = "uievent", version.ref = "uievent" }
 
 [plugins]
 embarrasdf-android-application = { id = "com.embarrasdf.gradle.plugin.android.application", version.ref = "embarrasdf-gradle-plugins" }

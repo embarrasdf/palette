@@ -17,7 +17,7 @@ import com.embarrasdf.palette.theme.components.navigation.BackNavigationButton
 import com.embarrasdf.palette.components.util.horizontalPaddingValues
 import com.embarrasdf.palette.components.util.plus
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.alexrdclement.trace.ReportDrawn
+import com.embarrasdf.trace.ReportDrawn
 
 @Composable
 fun <T : CatalogItem> CatalogScreen(

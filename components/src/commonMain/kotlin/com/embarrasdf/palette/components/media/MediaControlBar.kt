@@ -44,7 +44,7 @@ import com.embarrasdf.palette.components.util.calculateVerticalPadding
 import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.util.toIntSize
 import com.embarrasdf.palette.components.util.toPx
-import com.alexrdclement.trace.trace
+import com.embarrasdf.trace.trace
 import kotlin.math.roundToInt
 
 private const val TraceName = "MediaControlBar"
