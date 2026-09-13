@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.IntSize
 import com.embarrasdf.palette.modifiers.util.useGraphicsLayer
-import com.alexrdclement.trace.trace
+import com.embarrasdf.trace.trace
 
 data class ShaderElement<T: Shader>(
     val shader: T,
