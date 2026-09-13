@@ -6059,7 +6059,7 @@ PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->access$getUsePathForClip$p(
 PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->addSubLayer(Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->configureOutlineAndClip()V
 HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->draw$ui_graphics(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
+HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getAlpha()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getShadowElevation()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->obtainAndroidOutline()Landroid/graphics/Outline;
@@ -7238,7 +7238,6 @@ HSPLandroidx/compose/ui/node/NodeCoordinator;->access$headNode(Landroidx/compose
 HSPLandroidx/compose/ui/node/NodeCoordinator;->access$setMeasurementConstraints-BRTryo0(Landroidx/compose/ui/node/NodeCoordinator;J)V
 HPLandroidx/compose/ui/node/NodeCoordinator;->draw(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getAlignmentLinesOwner()Landroidx/compose/ui/node/AlignmentLinesOwner;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getCoordinates()Landroidx/compose/ui/layout/LayoutCoordinates;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getDensity()F
@@ -10985,8 +10984,6 @@ Landroidx/tracing/TraceApi29Impl;
 HSPLandroidx/tracing/TraceApi29Impl;-><clinit>()V
 HSPLandroidx/tracing/TraceApi29Impl;-><init>()V
 HSPLandroidx/tracing/TraceApi29Impl;->isEnabled()Z
-Lcom/alexrdclement/trace/ReportDrawn_androidKt;
-HSPLcom/alexrdclement/trace/ReportDrawn_androidKt;->ReportDrawn(Landroidx/compose/runtime/Composer;I)V
 Lcom/embarrasdf/palette/MainActivity;
 HSPLcom/embarrasdf/palette/MainActivity;-><clinit>()V
 HSPLcom/embarrasdf/palette/MainActivity;-><init>()V
@@ -13784,6 +13781,8 @@ HSPLcom/embarrasdf/palette/theme/semantic/typography/TypographyTokenSet;->getLet
 HSPLcom/embarrasdf/palette/theme/semantic/typography/TypographyTokenSet;->getLineHeight-XSAIIZE()J
 Lcom/embarrasdf/palette/theme/semantic/typography/TypographyTokenSetKt;
 HSPLcom/embarrasdf/palette/theme/semantic/typography/TypographyTokenSetKt;->toComposeTextStyle(Lcom/embarrasdf/palette/theme/semantic/typography/TypographyTokenSet;Lcom/embarrasdf/palette/theme/primitive/PrimitiveTokens;)Landroidx/compose/ui/text/TextStyle;
+Lcom/embarrasdf/trace/ReportDrawn_androidKt;
+HSPLcom/embarrasdf/trace/ReportDrawn_androidKt;->ReportDrawn(Landroidx/compose/runtime/Composer;I)V
 Lio/ktor/utils/io/pool/DefaultPool$$ExternalSyntheticBackportWithForwarding0;
 HSPLio/ktor/utils/io/pool/DefaultPool$$ExternalSyntheticBackportWithForwarding0;->m(Ljava/util/concurrent/atomic/AtomicReferenceArray;ILjava/lang/Object;Ljava/lang/Object;)Z
 Lkotlin/Function;
@@ -14711,8 +14710,8 @@ PLkotlinx/coroutines/JobSupport;->isScopedCoroutine()Z
 PLkotlinx/coroutines/JobSupport;->makeCancelling(Ljava/lang/Object;)Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport;->makeCompletingOnce$kotlinx_coroutines_core(Ljava/lang/Object;)Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport;->minusKey(Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext;
-HPLkotlinx/coroutines/JobSupport;->nextChild(Lkotlinx/coroutines/internal/LockFreeLinkedListNode;)Lkotlinx/coroutines/ChildHandleNode;
-HPLkotlinx/coroutines/JobSupport;->notifyCancelling(Lkotlinx/coroutines/NodeList;Ljava/lang/Throwable;)V
+PLkotlinx/coroutines/JobSupport;->nextChild(Lkotlinx/coroutines/internal/LockFreeLinkedListNode;)Lkotlinx/coroutines/ChildHandleNode;
+PLkotlinx/coroutines/JobSupport;->notifyCancelling(Lkotlinx/coroutines/NodeList;Ljava/lang/Throwable;)V
 PLkotlinx/coroutines/JobSupport;->notifyCompletion(Lkotlinx/coroutines/NodeList;Ljava/lang/Throwable;)V
 PLkotlinx/coroutines/JobSupport;->onCancelling(Ljava/lang/Throwable;)V
 PLkotlinx/coroutines/JobSupport;->onCompletionInternal(Ljava/lang/Object;)V
