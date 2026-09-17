@@ -2923,6 +2923,7 @@ HSPLandroidx/compose/runtime/GapComposer;->endRestartGroup()Landroidx/compose/ru
 HSPLandroidx/compose/runtime/GapComposer;->endReusableGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endRoot()V
 HSPLandroidx/compose/runtime/GapComposer;->ensureWriter()V
+HSPLandroidx/compose/runtime/GapComposer;->enterGroup(ZLandroidx/compose/runtime/GapPending;)V
 HSPLandroidx/compose/runtime/GapComposer;->enterRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)V
 HSPLandroidx/compose/runtime/GapComposer;->exitGroup(IZ)V
 HSPLandroidx/compose/runtime/GapComposer;->exitRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)Lkotlin/jvm/functions/Function1;
@@ -3872,6 +3873,7 @@ HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup$default(L
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup(I)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveFrom(Landroidx/compose/runtime/composer/gapbuffer/SlotTable;IZ)Ljava/util/List;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveGroupGapTo(I)V
+HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveSlotGapTo(II)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(I)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(Landroidx/compose/runtime/composer/gapbuffer/GapAnchor;)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->nodeIndex([II)I
