@@ -12,10 +12,9 @@ import coil3.compose.AsyncImage
 import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.core.TextStyle
 
-private const val DisabledAlpha = 0.35f
-
 data class MediaItemArtworkStyle(
     val fallbackTextStyle: TextStyle = TextStyle(),
+    val disabledContentAlpha: Float = 1f,
 )
 
 @Composable
@@ -30,7 +29,7 @@ fun MediaItemArtwork(
             model = imageUrl,
             contentDescription = null,
             modifier = modifier
-                .alpha(if (isEnabled) 1f else DisabledAlpha)
+                .alpha(if (isEnabled) 1f else style.disabledContentAlpha)
         )
     } else {
         // TODO: fallback image

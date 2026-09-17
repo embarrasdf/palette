@@ -53,6 +53,7 @@ object MediaStyles {
     val mediaItemArtwork: MediaItemArtworkStyle
         @Composable get() = MediaItemArtworkStyle(
             fallbackTextStyle = TextStyles.labelLarge,
+            disabledContentAlpha = PaletteTheme.semantic.color.disabledContentAlpha,
         )
 
     val mediaControlBar: MediaControlBarStyle
