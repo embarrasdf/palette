@@ -39,10 +39,10 @@ HSPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2;->create(Lj
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2;->invokeSuspend$lambda$0(Landroidx/compose/animation/core/Animatable;)F
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$$ExternalSyntheticLambda0;-><init>(Landroidx/compose/animation/core/Animatable;)V
-HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$$ExternalSyntheticLambda0;->invoke()Ljava/lang/Object;
+PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$$ExternalSyntheticLambda0;->invoke()Ljava/lang/Object;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$2;-><init>(Lcom/embarrasdf/palette/modifiers/ShaderIndicationNode;)V
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$2;->emit(FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$2;->emit(Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$2$2;->emit(Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$3$1;-><init>(Landroidx/compose/animation/core/Animatable;FLcom/embarrasdf/palette/modifiers/ColorSplitIndication;Lkotlin/coroutines/Continuation;)V
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$3$1;->create(Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Lkotlin/coroutines/Continuation;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$3$1;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
@@ -183,7 +183,6 @@ PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lamb
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$5(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
-PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 HPLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt$$ExternalSyntheticLambda0;-><init>()V
@@ -393,6 +392,7 @@ PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$2$0
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/PixelateState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$5(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
+PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 HPLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/PixelateState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt$$ExternalSyntheticLambda0;-><init>()V

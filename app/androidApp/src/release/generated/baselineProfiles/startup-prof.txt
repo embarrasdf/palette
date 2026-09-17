@@ -2923,8 +2923,8 @@ HSPLandroidx/compose/runtime/GapComposer;->endRestartGroup()Landroidx/compose/ru
 HSPLandroidx/compose/runtime/GapComposer;->endReusableGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endRoot()V
 HSPLandroidx/compose/runtime/GapComposer;->ensureWriter()V
+HSPLandroidx/compose/runtime/GapComposer;->enterGroup(ZLandroidx/compose/runtime/GapPending;)V
 HSPLandroidx/compose/runtime/GapComposer;->enterRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)V
-HSPLandroidx/compose/runtime/GapComposer;->exitGroup(IZ)V
 HSPLandroidx/compose/runtime/GapComposer;->exitRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)Lkotlin/jvm/functions/Function1;
 HSPLandroidx/compose/runtime/GapComposer;->finalizeCompose()V
 HSPLandroidx/compose/runtime/GapComposer;->forceFreshInsertTable()V
@@ -3872,6 +3872,7 @@ HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup$default(L
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup(I)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveFrom(Landroidx/compose/runtime/composer/gapbuffer/SlotTable;IZ)Ljava/util/List;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveGroupGapTo(I)V
+HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveSlotGapTo(II)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(I)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(Landroidx/compose/runtime/composer/gapbuffer/GapAnchor;)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->nodeIndex([II)I
@@ -6057,7 +6058,7 @@ PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->access$getUsePathForClip$p(
 PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->addSubLayer(Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->configureOutlineAndClip()V
 HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->draw$ui_graphics(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
+PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getAlpha()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getShadowElevation()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->obtainAndroidOutline()Landroid/graphics/Outline;
@@ -7236,6 +7237,7 @@ HSPLandroidx/compose/ui/node/NodeCoordinator;->access$headNode(Landroidx/compose
 HSPLandroidx/compose/ui/node/NodeCoordinator;->access$setMeasurementConstraints-BRTryo0(Landroidx/compose/ui/node/NodeCoordinator;J)V
 HPLandroidx/compose/ui/node/NodeCoordinator;->draw(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
+HPLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getAlignmentLinesOwner()Landroidx/compose/ui/node/AlignmentLinesOwner;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getCoordinates()Landroidx/compose/ui/layout/LayoutCoordinates;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getDensity()F
@@ -15722,6 +15724,13 @@ HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->isSupported()Z
+Lokhttp3/internal/platform/android/Android17SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter;-><clinit>()V
+Lokhttp3/internal/platform/android/Android17SocketAdapter$Companion;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>()V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->isSupported()Z
 Lokhttp3/internal/platform/android/AndroidLog;
 HSPLokhttp3/internal/platform/android/AndroidLog;-><clinit>()V
 HSPLokhttp3/internal/platform/android/AndroidLog;-><init>()V
