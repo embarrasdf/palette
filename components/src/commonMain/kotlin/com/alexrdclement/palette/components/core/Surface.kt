@@ -1,8 +1,11 @@
 package com.alexrdclement.palette.components.core
 
 import androidx.compose.foundation.Indication
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.MutableStyleState
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.styleable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.semantics.isTraversalGroup
@@ -150,15 +152,31 @@ private fun ShapeContent(
     }
 }
 
+@OptIn(ExperimentalFoundationStyleApi::class)
 @Composable
 private fun Modifier.surface(
     composeShape: androidx.compose.ui.graphics.Shape,
     backgroundColor: Color,
     borderStyle: BorderStyle?,
-) = this
-    .graphicsLayer(shape = composeShape, clip = true)
-    .then(if (borderStyle != null) Modifier.border(style = borderStyle) else Modifier)
-    .background(color = backgroundColor, shape = composeShape)
+): Modifier {
+    // Static draw (shape + clip + border + background) expressed as a foundation
+    // Style and applied via the styleable modifier, replacing the hand-rolled
+    // graphicsLayer/border/background chain. No interaction state is used, so a
+    // throwaway StyleState backs it.
+    val styleState = remember { MutableStyleState(MutableInteractionSource()) }
+    val style = remember(composeShape, backgroundColor, borderStyle) {
+        Style {
+            shape(composeShape)
+            clip(true)
+            background(backgroundColor)
+            borderStyle?.let {
+                borderWidth(it.width)
+                borderColor(it.color)
+            }
+        }
+    }
+    return this.styleable(styleState, style)
+}
 
 @Preview
 @Composable
