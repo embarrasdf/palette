@@ -1,5 +1,6 @@
 package com.embarrasdf.palette.theme.primitive
 
+import androidx.compose.animation.core.Easing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily as ComposeFontFamily
 import androidx.compose.ui.text.font.FontStyle as ComposeFontStyle
@@ -26,4 +27,8 @@ object Primitive {
     val indication: Map<IndicationPrimitiveToken, IndicationTokenSet>
         @Composable
         get() = LocalPrimitiveTokens.current.indication
+
+    val easing: Map<EasingPrimitiveToken, Easing>
+        @Composable
+        get() = LocalPrimitiveTokens.current.easing
 }
