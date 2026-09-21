@@ -22,6 +22,7 @@ import com.embarrasdf.palette.navigation.navGraph
 import com.embarrasdf.palette.navigation.rememberNavController
 import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.control.ThemeController
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -45,6 +46,8 @@ fun PaletteNav(
     themeController: ThemeController,
     navController: NavController = rememberPaletteNavController(),
 ) {
+    val transition = PaletteTheme.semantic.animation.transition
+    val easings = PaletteTheme.primitive.easing
     NavDisplay(
         backStack = navController.state.backStack,
         entryProvider = entryProvider {
@@ -54,6 +57,8 @@ fun PaletteNav(
             )
         },
         onBack = navController::goBack,
+        transitionSpec = { transition.toEnterExit(easings, forward = true) },
+        popTransitionSpec = { transition.toEnterExit(easings, forward = false) },
     )
 }
 

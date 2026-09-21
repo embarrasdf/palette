@@ -9,6 +9,7 @@ enum class SemanticItem : CatalogItem {
     Dimension,
     Interaction,
     Format,
+    Animation,
     ;
 
     override val title = name

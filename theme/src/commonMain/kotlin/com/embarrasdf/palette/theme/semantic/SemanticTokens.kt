@@ -1,5 +1,7 @@
 package com.embarrasdf.palette.theme.semantic
 
+import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
+import com.embarrasdf.palette.theme.semantic.animation.PaletteAnimationScheme
 import com.embarrasdf.palette.theme.semantic.color.ColorTokens
 import com.embarrasdf.palette.theme.semantic.dimension.Dimension
 import com.embarrasdf.palette.theme.semantic.dimension.PaletteDimension
@@ -18,4 +20,5 @@ data class SemanticTokens(
     val dimension: Dimension = PaletteDimension,
     val interaction: InteractionScheme = PaletteInteractionScheme,
     val formats: Formats = PaletteFormats,
+    val animation: AnimationScheme = PaletteAnimationScheme,
 )
