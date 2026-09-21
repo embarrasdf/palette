@@ -40,7 +40,7 @@ class AnimationSpecState(
     var easing by mutableStateOf(easingInitial)
         internal set
 
-    val spec: AnimationSpec
+    val spec: AnimationSpec.Finite
         get() = when (type) {
             AnimationSpecType.Spring -> AnimationSpec.Spring(
                 dampingRatio = dampingRatio,
@@ -59,9 +59,9 @@ class AnimationSpecState(
         }
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec], keeping sensible defaults for the
-         *  parameters that variant does not carry. */
-        fun from(spec: AnimationSpec): AnimationSpecState {
+        /** Builds a state seeded from an existing [AnimationSpec.Finite], keeping sensible defaults
+         *  for the parameters that variant does not carry. */
+        fun from(spec: AnimationSpec.Finite): AnimationSpecState {
             val springDefaults = AnimationSpec.Spring()
             val tweenDefaults = AnimationSpec.Tween()
             return AnimationSpecState(

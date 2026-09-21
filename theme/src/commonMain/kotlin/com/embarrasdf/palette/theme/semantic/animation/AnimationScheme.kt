@@ -1,7 +1,7 @@
 package com.embarrasdf.palette.theme.semantic.animation
 
 data class AnimationScheme(
-    val transition: AnimationSpec,
+    val transition: AnimationSpec.Finite,
 )
 
 val PaletteAnimationScheme = AnimationScheme(
@@ -10,7 +10,7 @@ val PaletteAnimationScheme = AnimationScheme(
 
 fun AnimationScheme.copy(
     token: AnimationToken,
-    spec: AnimationSpec,
+    spec: AnimationSpec.Finite,
 ) = this.copy(
     transition = if (token == AnimationToken.Transition) spec else this.transition,
 )
