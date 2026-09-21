@@ -2944,6 +2944,7 @@ HSPLandroidx/compose/runtime/GapComposer;->endRoot()V
 HSPLandroidx/compose/runtime/GapComposer;->ensureWriter()V
 HSPLandroidx/compose/runtime/GapComposer;->enterGroup(ZLandroidx/compose/runtime/GapPending;)V
 HSPLandroidx/compose/runtime/GapComposer;->enterRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)V
+HSPLandroidx/compose/runtime/GapComposer;->exitGroup(IZ)V
 HSPLandroidx/compose/runtime/GapComposer;->exitRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)Lkotlin/jvm/functions/Function1;
 HSPLandroidx/compose/runtime/GapComposer;->finalizeCompose()V
 HSPLandroidx/compose/runtime/GapComposer;->forceFreshInsertTable()V
@@ -3251,7 +3252,6 @@ PLandroidx/compose/runtime/PausableMonotonicFrameClock$withFrameNanos$1;->invoke
 Landroidx/compose/runtime/PersistentCompositionLocalMap;
 HSPLandroidx/compose/runtime/PersistentCompositionLocalMap;->getCurrentValue(Landroidx/compose/runtime/CompositionLocal;)Ljava/lang/Object;
 Landroidx/compose/runtime/PersistentCompositionLocalMap$Builder;
-Landroidx/compose/runtime/PreconditionsKt;
 Landroidx/compose/runtime/PrimitiveSnapshotStateKt;
 HSPLandroidx/compose/runtime/PrimitiveSnapshotStateKt;->mutableFloatStateOf(F)Landroidx/compose/runtime/MutableFloatState;
 Landroidx/compose/runtime/PrimitiveSnapshotStateKt__SnapshotFloatStateKt;
@@ -10637,7 +10637,6 @@ Landroidx/navigation3/ui/NavDisplayKt;
 HSPLandroidx/navigation3/ui/NavDisplayKt;->NavDisplay(Landroidx/navigation3/scene/SceneState;Landroidx/navigationevent/compose/NavigationEventState;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;Landroidx/compose/animation/SizeTransform;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 HSPLandroidx/navigation3/ui/NavDisplayKt;->NavDisplay(Ljava/util/List;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;Ljava/util/List;Ljava/util/List;Landroidx/compose/animation/SharedTransitionScope;Landroidx/compose/animation/SizeTransform;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 HSPLandroidx/navigation3/ui/NavDisplayKt;->NavDisplay(Ljava/util/List;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;Lkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Ljava/util/List;Landroidx/compose/animation/SharedTransitionScope;Landroidx/compose/animation/SizeTransform;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
-HSPLandroidx/navigation3/ui/NavDisplayKt;->defaultPredictivePopTransitionSpec()Lkotlin/jvm/functions/Function2;
 Landroidx/navigation3/ui/NavDisplayKt__NavDisplayKt;
 HSPLandroidx/navigation3/ui/NavDisplayKt__NavDisplayKt;->$r8$lambda$B3EsPJ2UcN5rFiT1hwPM6eyshdE(Landroidx/navigation3/scene/Scene;)Ljava/lang/Object;
 HSPLandroidx/navigation3/ui/NavDisplayKt__NavDisplayKt;->$r8$lambda$T2VraHF3jYSTTQfBR1orvDTSn98(ZLandroidx/navigation3/scene/Scene;ILkotlin/jvm/functions/Function2;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/animation/AnimatedContentTransitionScope;)Landroidx/compose/animation/ContentTransform;
@@ -10706,10 +10705,6 @@ PLandroidx/navigation3/ui/NavDisplayKt__NavDisplayKt$NavDisplay$16$1$invokeSuspe
 PLandroidx/navigation3/ui/NavDisplayKt__NavDisplayKt$NavDisplay$16$1$invokeSuspend$$inlined$filter$1$2$1;-><init>(Landroidx/navigation3/ui/NavDisplayKt__NavDisplayKt$NavDisplay$16$1$invokeSuspend$$inlined$filter$1$2;Lkotlin/coroutines/Continuation;)V
 Landroidx/navigation3/ui/NavDisplayKt__NavDisplayKt$NavDisplay$lambda$18$0$$inlined$sortedByDescending$1;
 HSPLandroidx/navigation3/ui/NavDisplayKt__NavDisplayKt$NavDisplay$lambda$18$0$$inlined$sortedByDescending$1;-><init>(Landroidx/collection/MutableObjectFloatMap;)V
-Landroidx/navigation3/ui/NavDisplayKt__NavDisplay_androidKt;
-HSPLandroidx/navigation3/ui/NavDisplayKt__NavDisplay_androidKt;->defaultPredictivePopTransitionSpec()Lkotlin/jvm/functions/Function2;
-Landroidx/navigation3/ui/NavDisplayKt__NavDisplay_androidKt$$ExternalSyntheticLambda1;
-HSPLandroidx/navigation3/ui/NavDisplayKt__NavDisplay_androidKt$$ExternalSyntheticLambda1;-><init>()V
 Landroidx/navigationevent/NavigationEventDispatcher;
 HSPLandroidx/navigationevent/NavigationEventDispatcher;-><clinit>()V
 HSPLandroidx/navigationevent/NavigationEventDispatcher;-><init>(Landroidx/navigationevent/NavigationEventDispatcher;Landroidx/navigationevent/OnBackCompletedFallback;Landroidx/navigationevent/OnForwardCompletedFallback;)V
@@ -11836,7 +11831,7 @@ HSPLcom/embarrasdf/palette/app/main/navigation/MainNavKt$mainNavGraph$lambda$0$$
 HSPLcom/embarrasdf/palette/app/main/navigation/MainNavKt$mainNavGraph$lambda$0$$inlined$route$default$1;->invoke-cwiI0Ik(Ljava/lang/String;)Lcom/embarrasdf/palette/navigation/NavKey;
 Lcom/embarrasdf/palette/app/main/navigation/MainRoute;
 Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt;
-HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt;->toEnterExit(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec;Ljava/util/Map;Z)Landroidx/compose/animation/ContentTransform;
+HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt;->toSharedAxisTransition(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec;Ljava/util/Map;Z)Landroidx/compose/animation/ContentTransform;
 Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda0;
 HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda0;-><init>(I)V
 Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda1;
@@ -11869,9 +11864,11 @@ HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda0
 HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda0;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
 Lcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda1;
 HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda1;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec;Ljava/util/Map;)V
-Lcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda5;
-HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda5;-><init>()V
-HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda5;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
+Lcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda2;
+HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda2;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec;Ljava/util/Map;)V
+Lcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda6;
+HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda6;-><init>()V
+HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$$ExternalSyntheticLambda6;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
 Lcom/embarrasdf/palette/app/navigation/PaletteNavKt$PaletteNav$$inlined$entryProvider$default$1;
 HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$PaletteNav$$inlined$entryProvider$default$1;-><clinit>()V
 HSPLcom/embarrasdf/palette/app/navigation/PaletteNavKt$PaletteNav$$inlined$entryProvider$default$1;-><init>()V
