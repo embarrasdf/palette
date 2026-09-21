@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.embarrasdf.palette.theme.primitive.LocalPrimitiveTokens
+import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
 import com.embarrasdf.palette.theme.semantic.color.ColorScheme
 import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.interaction.IndicationToken
@@ -57,6 +58,10 @@ object Semantic {
     val format: Formats
         @Composable
         get() = LocalSemanticTokens.current.formats
+
+    val animation: AnimationScheme
+        @Composable
+        get() = LocalSemanticTokens.current.animation
 }
 
 val LocalSemanticTokens = staticCompositionLocalOf { SemanticTokens() }
