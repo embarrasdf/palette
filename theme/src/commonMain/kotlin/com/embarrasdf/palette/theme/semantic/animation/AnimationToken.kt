@@ -7,13 +7,13 @@ enum class AnimationToken {
     Transition,
 }
 
-fun AnimationToken.toSpec(animationScheme: AnimationScheme): AnimationSpec {
+fun AnimationToken.toSpec(animationScheme: AnimationScheme): AnimationSpec.Finite {
     return when (this) {
         AnimationToken.Transition -> animationScheme.transition
     }
 }
 
 @Composable
-fun AnimationToken.toSpec(): AnimationSpec {
+fun AnimationToken.toSpec(): AnimationSpec.Finite {
     return toSpec(PaletteTheme.semantic.animation)
 }

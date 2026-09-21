@@ -33,7 +33,7 @@ private const val SlideDivisor = 5
  * A symmetric shared-axis transition. [forward] chooses the slide direction; back navigation passes
  * `forward = false` to mirror it as a slide-out.
  */
-fun AnimationSpec.toSharedAxisTransition(
+fun AnimationSpec.Finite.toSharedAxisTransition(
     easings: Map<EasingPrimitiveToken, Easing>,
     forward: Boolean,
 ): ContentTransform {

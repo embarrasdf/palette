@@ -38,7 +38,7 @@ private const val HoldMillis = 600L
 @Composable
 fun AnimationDemoSubject(
     subject: AnimationDemoSubject,
-    spec: AnimationSpec,
+    spec: AnimationSpec.Finite,
     modifier: Modifier = Modifier,
 ) {
     val easings = PaletteTheme.primitive.easing
