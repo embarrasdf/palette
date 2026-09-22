@@ -1,4 +1,4 @@
-package com.embarrasdf.palette.theme.semantic.animation.transition
+package com.embarrasdf.palette.theme.semantic.animation.finite.transition
 
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -20,5 +20,5 @@ fun TransitionToken.toSpec(scheme: TransitionScheme): AnimationSpec.Finite {
 
 @Composable
 fun TransitionToken.toSpec(): AnimationSpec.Finite {
-    return toSpec(PaletteTheme.semantic.animation.transition)
+    return toSpec(PaletteTheme.semantic.animation.finite.transition)
 }

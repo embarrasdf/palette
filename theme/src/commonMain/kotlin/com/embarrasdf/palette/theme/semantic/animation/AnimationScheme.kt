@@ -1,12 +1,19 @@
 package com.embarrasdf.palette.theme.semantic.animation
 
-import com.embarrasdf.palette.theme.semantic.animation.transition.PaletteTransitionScheme
-import com.embarrasdf.palette.theme.semantic.animation.transition.TransitionScheme
+import com.embarrasdf.palette.theme.semantic.animation.finite.FiniteAnimationScheme
+import com.embarrasdf.palette.theme.semantic.animation.finite.PaletteFiniteAnimationScheme
+import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimationScheme
 
+/**
+ * The animation umbrella, grouped by spec family: [finite] holds terminating-spec schemes (screen
+ * transitions today), [infinite] holds non-terminating-spec schemes (none yet).
+ */
 data class AnimationScheme(
-    val transition: TransitionScheme = PaletteTransitionScheme,
+    val finite: FiniteAnimationScheme = PaletteFiniteAnimationScheme,
+    val infinite: InfiniteAnimationScheme = InfiniteAnimationScheme,
 )
 
 val PaletteAnimationScheme = AnimationScheme(
-    transition = PaletteTransitionScheme,
+    finite = PaletteFiniteAnimationScheme,
+    infinite = InfiniteAnimationScheme,
 )
