@@ -3,7 +3,9 @@ package com.embarrasdf.palette.app.theme.semantic.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.semantic.SemanticItem
-import com.embarrasdf.palette.app.theme.semantic.animation.AnimationScreen
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.AnimationGraph
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.animationEntryProvider
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.animationNavGraph
 import com.embarrasdf.palette.app.theme.semantic.color.ColorScreen
 import com.embarrasdf.palette.app.theme.semantic.dimension.navigation.DimensionGraph
 import com.embarrasdf.palette.app.theme.semantic.dimension.navigation.dimensionEntryProvider
@@ -29,7 +31,7 @@ fun NavGraphBuilder.semanticNavGraph() = navGraph(
     route(ColorRoute)
     route(ShapeRoute)
     route(TypographyRoute)
-    route(AnimationRoute)
+    animationNavGraph()
     dimensionNavGraph()
     interactionNavGraph()
     formatNavGraph()
@@ -48,7 +50,7 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
                 SemanticItem.Dimension -> navController.navigate(DimensionGraph)
                 SemanticItem.Interaction -> navController.navigate(InteractionGraph)
                 SemanticItem.Format -> navController.navigate(FormatsGraph)
-                SemanticItem.Animation -> navController.navigate(AnimationRoute)
+                SemanticItem.Animation -> navController.navigate(AnimationGraph)
             }
         },
         title = "Semantic",
@@ -76,13 +78,7 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
         )
     }
 
-    entry<AnimationRoute> {
-        AnimationScreen(
-            themeController = themeController,
-            onNavigateUp = navController::goBack,
-        )
-    }
-
+    animationEntryProvider(navController, themeController)
     dimensionEntryProvider(navController, themeController)
     interactionEntryProvider(navController, themeController)
     formatsEntryProvider(navController, themeController)
