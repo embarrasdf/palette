@@ -57,16 +57,16 @@ sealed interface AnimationSpec {
     }
 }
 
-enum class AnimationSpecType {
+enum class FiniteAnimationSpecType {
     Spring,
     Tween,
     Snap,
 }
 
-fun AnimationSpec.Finite.type(): AnimationSpecType = when (this) {
-    is AnimationSpec.Spring -> AnimationSpecType.Spring
-    is AnimationSpec.Tween -> AnimationSpecType.Tween
-    is AnimationSpec.Snap -> AnimationSpecType.Snap
+fun AnimationSpec.Finite.type(): FiniteAnimationSpecType = when (this) {
+    is AnimationSpec.Spring -> FiniteAnimationSpecType.Spring
+    is AnimationSpec.Tween -> FiniteAnimationSpecType.Tween
+    is AnimationSpec.Snap -> FiniteAnimationSpecType.Snap
 }
 
 /**

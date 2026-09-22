@@ -14,9 +14,9 @@ class AnimationSpecTest {
 
     @Test
     fun typeMatchesTheVariant() {
-        assertEquals(AnimationSpecType.Spring, AnimationSpec.Spring().type())
-        assertEquals(AnimationSpecType.Tween, AnimationSpec.Tween().type())
-        assertEquals(AnimationSpecType.Snap, AnimationSpec.Snap().type())
+        assertEquals(FiniteAnimationSpecType.Spring, AnimationSpec.Spring().type())
+        assertEquals(FiniteAnimationSpecType.Tween, AnimationSpec.Tween().type())
+        assertEquals(FiniteAnimationSpecType.Snap, AnimationSpec.Snap().type())
     }
 
     @Test

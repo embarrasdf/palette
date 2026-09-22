@@ -9,7 +9,7 @@ import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
-import com.embarrasdf.palette.theme.semantic.animation.AnimationSpecType
+import com.embarrasdf.palette.theme.semantic.animation.FiniteAnimationSpecType
 import com.embarrasdf.palette.theme.semantic.animation.type
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -19,8 +19,8 @@ import kotlinx.collections.immutable.persistentListOf
  * `GridScaleState`) so toggling between spring/tween/snap doesn't lose values.
  */
 @Stable
-class AnimationSpecState(
-    typeInitial: AnimationSpecType = AnimationSpecType.Tween,
+class FiniteAnimationSpecState(
+    typeInitial: FiniteAnimationSpecType = FiniteAnimationSpecType.Tween,
     dampingRatioInitial: Float = AnimationSpec.Spring().dampingRatio,
     stiffnessInitial: Float = AnimationSpec.Spring().stiffness,
     durationMillisInitial: Int = AnimationSpec.DefaultDurationMillis,
@@ -42,18 +42,18 @@ class AnimationSpecState(
 
     val spec: AnimationSpec.Finite
         get() = when (type) {
-            AnimationSpecType.Spring -> AnimationSpec.Spring(
+            FiniteAnimationSpecType.Spring -> AnimationSpec.Spring(
                 dampingRatio = dampingRatio,
                 stiffness = stiffness,
             )
 
-            AnimationSpecType.Tween -> AnimationSpec.Tween(
+            FiniteAnimationSpecType.Tween -> AnimationSpec.Tween(
                 durationMillis = durationMillis,
                 delayMillis = delayMillis,
                 easing = easing,
             )
 
-            AnimationSpecType.Snap -> AnimationSpec.Snap(
+            FiniteAnimationSpecType.Snap -> AnimationSpec.Snap(
                 delayMillis = delayMillis,
             )
         }
@@ -61,10 +61,10 @@ class AnimationSpecState(
     companion object {
         /** Builds a state seeded from an existing [AnimationSpec.Finite], keeping sensible defaults
          *  for the parameters that variant does not carry. */
-        fun from(spec: AnimationSpec.Finite): AnimationSpecState {
+        fun from(spec: AnimationSpec.Finite): FiniteAnimationSpecState {
             val springDefaults = AnimationSpec.Spring()
             val tweenDefaults = AnimationSpec.Tween()
-            return AnimationSpecState(
+            return FiniteAnimationSpecState(
                 typeInitial = spec.type(),
                 dampingRatioInitial = (spec as? AnimationSpec.Spring)?.dampingRatio
                     ?: springDefaults.dampingRatio,
@@ -90,7 +90,7 @@ private const val durationMillisKey = "durationMillis"
 private const val delayMillisKey = "delayMillis"
 private const val easingKey = "easing"
 
-val AnimationSpecStateSaver = mapSaverSafe(
+val FiniteAnimationSpecStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
             typeKey to value.type,
@@ -102,8 +102,8 @@ val AnimationSpecStateSaver = mapSaverSafe(
         )
     },
     restore = { value ->
-        AnimationSpecState(
-            typeInitial = value[typeKey] as AnimationSpecType,
+        FiniteAnimationSpecState(
+            typeInitial = value[typeKey] as FiniteAnimationSpecType,
             dampingRatioInitial = value[dampingRatioKey] as Float,
             stiffnessInitial = value[stiffnessKey] as Float,
             durationMillisInitial = value[durationMillisKey] as Int,
@@ -114,17 +114,17 @@ val AnimationSpecStateSaver = mapSaverSafe(
 )
 
 /**
- * Exposes controls for an [AnimationSpecState]. The type selector is always shown; the remaining
+ * Exposes controls for an [FiniteAnimationSpecState]. The type selector is always shown; the remaining
  * controls are those relevant to the currently selected type (the `GridScaleControl` pattern).
  */
 @Stable
-class AnimationSpecControl(
-    val state: AnimationSpecState,
+class FiniteAnimationSpecControl(
+    val state: FiniteAnimationSpecState,
     val onChanged: (() -> Unit)? = null,
 ) {
     val typeControl = enumControl(
         name = "Type",
-        values = { AnimationSpecType.entries },
+        values = { FiniteAnimationSpecType.entries },
         selectedValue = { state.type },
         onValueChange = {
             state.type = it
@@ -186,20 +186,20 @@ class AnimationSpecControl(
 
     val controls: PersistentList<Control>
         get() = when (state.type) {
-            AnimationSpecType.Spring -> persistentListOf(
+            FiniteAnimationSpecType.Spring -> persistentListOf(
                 typeControl,
                 dampingRatioControl,
                 stiffnessControl,
             )
 
-            AnimationSpecType.Tween -> persistentListOf(
+            FiniteAnimationSpecType.Tween -> persistentListOf(
                 typeControl,
                 durationControl,
                 delayControl,
                 easingControl,
             )
 
-            AnimationSpecType.Snap -> persistentListOf(
+            FiniteAnimationSpecType.Snap -> persistentListOf(
                 typeControl,
                 delayControl,
             )

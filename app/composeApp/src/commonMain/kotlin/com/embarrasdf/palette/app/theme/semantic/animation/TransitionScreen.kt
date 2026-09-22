@@ -17,9 +17,9 @@ import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubject
 import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectControl
 import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectState
 import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectStateSaver
-import com.embarrasdf.palette.components.demo.subject.AnimationSpecControl
-import com.embarrasdf.palette.components.demo.subject.AnimationSpecState
-import com.embarrasdf.palette.components.demo.subject.AnimationSpecStateSaver
+import com.embarrasdf.palette.components.demo.subject.FiniteAnimationSpecControl
+import com.embarrasdf.palette.components.demo.subject.FiniteAnimationSpecState
+import com.embarrasdf.palette.components.demo.subject.FiniteAnimationSpecStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
@@ -77,9 +77,9 @@ fun rememberTransitionScreenState(
         val transition = themeState.semantic.animation.transition
         TransitionScreenState(
             themeState = themeState,
-            enterState = AnimationSpecState.from(transition.enter),
-            exitState = AnimationSpecState.from(transition.exit),
-            predictiveExitState = AnimationSpecState.from(transition.predictiveExit),
+            enterState = FiniteAnimationSpecState.from(transition.enter),
+            exitState = FiniteAnimationSpecState.from(transition.exit),
+            predictiveExitState = FiniteAnimationSpecState.from(transition.predictiveExit),
             tokenInitial = TransitionToken.Enter,
             demoSubjectState = AnimationDemoSubjectState(),
         )
@@ -89,22 +89,22 @@ fun rememberTransitionScreenState(
 @Stable
 class TransitionScreenState(
     val themeState: ThemeState,
-    val enterState: AnimationSpecState,
-    val exitState: AnimationSpecState,
-    val predictiveExitState: AnimationSpecState,
+    val enterState: FiniteAnimationSpecState,
+    val exitState: FiniteAnimationSpecState,
+    val predictiveExitState: FiniteAnimationSpecState,
     tokenInitial: TransitionToken,
     val demoSubjectState: AnimationDemoSubjectState,
 ) {
     var token by mutableStateOf(tokenInitial)
         internal set
 
-    fun specState(token: TransitionToken): AnimationSpecState = when (token) {
+    fun specState(token: TransitionToken): FiniteAnimationSpecState = when (token) {
         TransitionToken.Enter -> enterState
         TransitionToken.Exit -> exitState
         TransitionToken.PredictiveExit -> predictiveExitState
     }
 
-    val activeSpecState: AnimationSpecState
+    val activeSpecState: FiniteAnimationSpecState
         get() = specState(token)
 }
 
@@ -117,9 +117,9 @@ private const val demoSubjectKey = "demoSubject"
 fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            enterKey to save(state.enterState, AnimationSpecStateSaver, this),
-            exitKey to save(state.exitState, AnimationSpecStateSaver, this),
-            predictiveExitKey to save(state.predictiveExitState, AnimationSpecStateSaver, this),
+            enterKey to save(state.enterState, FiniteAnimationSpecStateSaver, this),
+            exitKey to save(state.exitState, FiniteAnimationSpecStateSaver, this),
+            predictiveExitKey to save(state.predictiveExitState, FiniteAnimationSpecStateSaver, this),
             tokenKey to state.token,
             demoSubjectKey to save(state.demoSubjectState, AnimationDemoSubjectStateSaver, this),
         )
@@ -127,9 +127,9 @@ fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     restore = { map ->
         TransitionScreenState(
             themeState = themeState,
-            enterState = restore(map[enterKey], AnimationSpecStateSaver)!!,
-            exitState = restore(map[exitKey], AnimationSpecStateSaver)!!,
-            predictiveExitState = restore(map[predictiveExitKey], AnimationSpecStateSaver)!!,
+            enterState = restore(map[enterKey], FiniteAnimationSpecStateSaver)!!,
+            exitState = restore(map[exitKey], FiniteAnimationSpecStateSaver)!!,
+            predictiveExitState = restore(map[predictiveExitKey], FiniteAnimationSpecStateSaver)!!,
             tokenInitial = map[tokenKey] as TransitionToken,
             demoSubjectState = restore(map[demoSubjectKey], AnimationDemoSubjectStateSaver)!!,
         )
@@ -151,9 +151,9 @@ class TransitionScreenControl(
     val state: TransitionScreenState,
     val themeController: ThemeController,
 ) {
-    private fun specControl(token: TransitionToken): AnimationSpecControl {
+    private fun specControl(token: TransitionToken): FiniteAnimationSpecControl {
         val specState = state.specState(token)
-        return AnimationSpecControl(
+        return FiniteAnimationSpecControl(
             state = specState,
             onChanged = {
                 themeController.updateSemantic {
@@ -170,7 +170,7 @@ class TransitionScreenControl(
         )
     }
 
-    private val specControls: Map<TransitionToken, AnimationSpecControl> =
+    private val specControls: Map<TransitionToken, FiniteAnimationSpecControl> =
         TransitionToken.entries.associateWith { specControl(it) }
 
     val tokenControl = enumControl(
