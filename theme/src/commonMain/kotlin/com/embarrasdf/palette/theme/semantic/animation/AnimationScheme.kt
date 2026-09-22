@@ -1,16 +1,12 @@
 package com.embarrasdf.palette.theme.semantic.animation
 
+import com.embarrasdf.palette.theme.semantic.animation.transition.PaletteTransitionScheme
+import com.embarrasdf.palette.theme.semantic.animation.transition.TransitionScheme
+
 data class AnimationScheme(
-    val transition: AnimationSpec.Finite,
+    val transition: TransitionScheme = PaletteTransitionScheme,
 )
 
 val PaletteAnimationScheme = AnimationScheme(
-    transition = AnimationSpec.Tween(),
-)
-
-fun AnimationScheme.copy(
-    token: AnimationToken,
-    spec: AnimationSpec.Finite,
-) = this.copy(
-    transition = if (token == AnimationToken.Transition) spec else this.transition,
+    transition = PaletteTransitionScheme,
 )

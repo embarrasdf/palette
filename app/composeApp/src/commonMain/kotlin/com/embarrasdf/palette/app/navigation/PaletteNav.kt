@@ -57,9 +57,11 @@ fun PaletteNav(
             )
         },
         onBack = navController::goBack,
-        transitionSpec = { transition.toSharedAxisTransition(easings, forward = true) },
-        popTransitionSpec = { transition.toSharedAxisTransition(easings, forward = false) },
-        predictivePopTransitionSpec = { transition.toSharedAxisTransition(easings, forward = false) },
+        transitionSpec = { transition.enter.toSharedAxisTransition(easings, forward = true) },
+        popTransitionSpec = { transition.exit.toSharedAxisTransition(easings, forward = false) },
+        predictivePopTransitionSpec = {
+            transition.predictiveExit.toSharedAxisTransition(easings, forward = false)
+        },
     )
 }
 

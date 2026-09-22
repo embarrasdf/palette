@@ -24,8 +24,8 @@ import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
-import com.embarrasdf.palette.theme.semantic.animation.copy
+import com.embarrasdf.palette.theme.semantic.animation.transition.TransitionToken
+import com.embarrasdf.palette.theme.semantic.animation.transition.copy
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -55,7 +55,7 @@ fun AnimationScreen(
         ) {
             AnimationDemoSubject(
                 subject = state.subject,
-                spec = state.specState.spec,
+                spec = state.activeSpecState.spec,
                 modifier = Modifier.fillMaxSize(),
             )
         }
@@ -70,9 +70,13 @@ fun rememberAnimationScreenState(
         themeState,
         saver = AnimationScreenStateSaver(themeState),
     ) {
+        val transition = themeState.semantic.animation.transition
         AnimationScreenState(
             themeState = themeState,
-            specState = AnimationSpecState.from(themeState.semantic.animation.transition),
+            enterState = AnimationSpecState.from(transition.enter),
+            exitState = AnimationSpecState.from(transition.exit),
+            predictiveExitState = AnimationSpecState.from(transition.predictiveExit),
+            tokenInitial = TransitionToken.Enter,
             subjectInitial = AnimationDemoSubject.Ball,
         )
     }
@@ -81,27 +85,50 @@ fun rememberAnimationScreenState(
 @Stable
 class AnimationScreenState(
     val themeState: ThemeState,
-    val specState: AnimationSpecState,
+    val enterState: AnimationSpecState,
+    val exitState: AnimationSpecState,
+    val predictiveExitState: AnimationSpecState,
+    tokenInitial: TransitionToken,
     subjectInitial: AnimationDemoSubject,
 ) {
+    var token by mutableStateOf(tokenInitial)
+        internal set
     var subject by mutableStateOf(subjectInitial)
         internal set
+
+    fun specState(token: TransitionToken): AnimationSpecState = when (token) {
+        TransitionToken.Enter -> enterState
+        TransitionToken.Exit -> exitState
+        TransitionToken.PredictiveExit -> predictiveExitState
+    }
+
+    val activeSpecState: AnimationSpecState
+        get() = specState(token)
 }
 
-private const val specStateKey = "specState"
+private const val enterKey = "enter"
+private const val exitKey = "exit"
+private const val predictiveExitKey = "predictiveExit"
+private const val tokenKey = "token"
 private const val subjectKey = "subject"
 
 fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            specStateKey to save(state.specState, AnimationSpecStateSaver, this),
+            enterKey to save(state.enterState, AnimationSpecStateSaver, this),
+            exitKey to save(state.exitState, AnimationSpecStateSaver, this),
+            predictiveExitKey to save(state.predictiveExitState, AnimationSpecStateSaver, this),
+            tokenKey to state.token,
             subjectKey to state.subject,
         )
     },
     restore = { map ->
         AnimationScreenState(
             themeState = themeState,
-            specState = restore(map[specStateKey], AnimationSpecStateSaver)!!,
+            enterState = restore(map[enterKey], AnimationSpecStateSaver)!!,
+            exitState = restore(map[exitKey], AnimationSpecStateSaver)!!,
+            predictiveExitState = restore(map[predictiveExitKey], AnimationSpecStateSaver)!!,
+            tokenInitial = map[tokenKey] as TransitionToken,
             subjectInitial = map[subjectKey] as AnimationDemoSubject,
         )
     }
@@ -122,18 +149,33 @@ class AnimationScreenControl(
     val state: AnimationScreenState,
     val themeController: ThemeController,
 ) {
-    val specControl = AnimationSpecControl(
-        state = state.specState,
-        onChanged = {
-            themeController.updateSemantic {
-                it.copy(
-                    animation = it.animation.copy(
-                        token = AnimationToken.Transition,
-                        spec = state.specState.spec,
+    private fun specControl(token: TransitionToken): AnimationSpecControl {
+        val specState = state.specState(token)
+        return AnimationSpecControl(
+            state = specState,
+            onChanged = {
+                themeController.updateSemantic {
+                    it.copy(
+                        animation = it.animation.copy(
+                            transition = it.animation.transition.copy(
+                                token = token,
+                                spec = specState.spec,
+                            ),
+                        ),
                     )
-                )
-            }
-        },
+                }
+            },
+        )
+    }
+
+    private val specControls: Map<TransitionToken, AnimationSpecControl> =
+        TransitionToken.entries.associateWith { specControl(it) }
+
+    val tokenControl = enumControl(
+        name = "Token",
+        values = { TransitionToken.entries },
+        selectedValue = { state.token },
+        onValueChange = { state.token = it },
     )
 
     val subjectControl = enumControl(
@@ -145,7 +187,8 @@ class AnimationScreenControl(
 
     val controls: PersistentList<Control>
         get() = persistentListOf(
+            tokenControl,
             subjectControl,
-            *specControl.controls.toTypedArray(),
+            *specControls.getValue(state.token).controls.toTypedArray(),
         )
 }
