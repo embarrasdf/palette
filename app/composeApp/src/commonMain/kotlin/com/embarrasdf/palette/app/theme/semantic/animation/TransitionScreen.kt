@@ -27,8 +27,8 @@ import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.semantic.animation.transition.TransitionToken
-import com.embarrasdf.palette.theme.semantic.animation.transition.copy
+import com.embarrasdf.palette.theme.semantic.animation.finite.transition.TransitionToken
+import com.embarrasdf.palette.theme.semantic.animation.finite.transition.copy
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -74,7 +74,7 @@ fun rememberTransitionScreenState(
         themeState,
         saver = TransitionScreenStateSaver(themeState),
     ) {
-        val transition = themeState.semantic.animation.transition
+        val transition = themeState.semantic.animation.finite.transition
         TransitionScreenState(
             themeState = themeState,
             enterState = FiniteAnimationSpecState.from(transition.enter),
@@ -159,9 +159,11 @@ class TransitionScreenControl(
                 themeController.updateSemantic {
                     it.copy(
                         animation = it.animation.copy(
-                            transition = it.animation.transition.copy(
-                                token = token,
-                                spec = specState.spec,
+                            finite = it.animation.finite.copy(
+                                transition = it.animation.finite.transition.copy(
+                                    token = token,
+                                    spec = specState.spec,
+                                ),
                             ),
                         ),
                     )

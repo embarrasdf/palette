@@ -1,4 +1,4 @@
-package com.embarrasdf.palette.theme.semantic.animation.transition
+package com.embarrasdf.palette.theme.semantic.animation.finite.transition
 
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 

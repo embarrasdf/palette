@@ -46,7 +46,7 @@ fun PaletteNav(
     themeController: ThemeController,
     navController: NavController = rememberPaletteNavController(),
 ) {
-    val transition = PaletteTheme.semantic.animation.transition
+    val transition = PaletteTheme.semantic.animation.finite.transition
     val easings = PaletteTheme.primitive.easing
     NavDisplay(
         backStack = navController.state.backStack,
