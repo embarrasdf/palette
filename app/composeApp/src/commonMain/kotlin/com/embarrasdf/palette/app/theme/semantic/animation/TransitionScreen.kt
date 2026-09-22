@@ -30,17 +30,17 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun AnimationScreen(
+fun TransitionScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
 ) {
-    val state = rememberAnimationScreenState(themeState = themeController)
-    val control = rememberAnimationScreenControl(state = state, themeController = themeController)
+    val state = rememberTransitionScreenState(themeState = themeController)
+    val control = rememberTransitionScreenControl(state = state, themeController = themeController)
 
     Scaffold(
         topBar = {
             DemoTopBar(
-                title = "Animation",
+                title = "Transition",
                 onNavigateUp = onNavigateUp,
                 onThemeClick = {},
                 actions = {},
@@ -63,15 +63,15 @@ fun AnimationScreen(
 }
 
 @Composable
-fun rememberAnimationScreenState(
+fun rememberTransitionScreenState(
     themeState: ThemeState,
-): AnimationScreenState {
+): TransitionScreenState {
     return rememberSaveable(
         themeState,
-        saver = AnimationScreenStateSaver(themeState),
+        saver = TransitionScreenStateSaver(themeState),
     ) {
         val transition = themeState.semantic.animation.transition
-        AnimationScreenState(
+        TransitionScreenState(
             themeState = themeState,
             enterState = AnimationSpecState.from(transition.enter),
             exitState = AnimationSpecState.from(transition.exit),
@@ -83,7 +83,7 @@ fun rememberAnimationScreenState(
 }
 
 @Stable
-class AnimationScreenState(
+class TransitionScreenState(
     val themeState: ThemeState,
     val enterState: AnimationSpecState,
     val exitState: AnimationSpecState,
@@ -112,7 +112,7 @@ private const val predictiveExitKey = "predictiveExit"
 private const val tokenKey = "token"
 private const val subjectKey = "subject"
 
-fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
             enterKey to save(state.enterState, AnimationSpecStateSaver, this),
@@ -123,7 +123,7 @@ fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         )
     },
     restore = { map ->
-        AnimationScreenState(
+        TransitionScreenState(
             themeState = themeState,
             enterState = restore(map[enterKey], AnimationSpecStateSaver)!!,
             exitState = restore(map[exitKey], AnimationSpecStateSaver)!!,
@@ -135,18 +135,18 @@ fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
 )
 
 @Composable
-fun rememberAnimationScreenControl(
-    state: AnimationScreenState,
+fun rememberTransitionScreenControl(
+    state: TransitionScreenState,
     themeController: ThemeController,
-): AnimationScreenControl {
+): TransitionScreenControl {
     return remember(state, themeController) {
-        AnimationScreenControl(state = state, themeController = themeController)
+        TransitionScreenControl(state = state, themeController = themeController)
     }
 }
 
 @Stable
-class AnimationScreenControl(
-    val state: AnimationScreenState,
+class TransitionScreenControl(
+    val state: TransitionScreenState,
     val themeController: ThemeController,
 ) {
     private fun specControl(token: TransitionToken): AnimationSpecControl {
@@ -185,10 +185,16 @@ class AnimationScreenControl(
         onValueChange = { state.subject = it },
     )
 
+    private val demoControl = Control.ControlColumn(
+        name = "Demo Control",
+        expandedInitial = false,
+        controls = { persistentListOf(subjectControl) },
+    )
+
     val controls: PersistentList<Control>
         get() = persistentListOf(
             tokenControl,
-            subjectControl,
             *specControls.getValue(state.token).controls.toTypedArray(),
+            demoControl,
         )
 }
