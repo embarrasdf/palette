@@ -6,15 +6,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.util.lerp
+import com.embarrasdf.palette.components.demo.control.Control
+import com.embarrasdf.palette.components.demo.control.enumControl
+import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.toComposeSpec
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -33,27 +42,88 @@ enum class AnimationDemoSubject {
     Fade,
 }
 
-private const val HoldMillis = 600L
+/**
+ * State for an [AnimationDemoSubject]: which subject to show, and how long to hold at each end of
+ * the loop before reversing.
+ */
+@Stable
+class AnimationDemoSubjectState(
+    subjectInitial: AnimationDemoSubject = AnimationDemoSubject.Ball,
+    holdMillisInitial: Long = DefaultHoldMillis,
+) {
+    var subject by mutableStateOf(subjectInitial)
+        internal set
+    var holdMillis by mutableStateOf(holdMillisInitial)
+        internal set
+
+    companion object {
+        const val DefaultHoldMillis: Long = 600L
+    }
+}
+
+private const val subjectKey = "subject"
+private const val holdMillisKey = "holdMillis"
+
+val AnimationDemoSubjectStateSaver = mapSaverSafe(
+    save = { value ->
+        mapOf(
+            subjectKey to value.subject,
+            holdMillisKey to value.holdMillis,
+        )
+    },
+    restore = { value ->
+        AnimationDemoSubjectState(
+            subjectInitial = value[subjectKey] as AnimationDemoSubject,
+            holdMillisInitial = value[holdMillisKey] as Long,
+        )
+    },
+)
+
+@Stable
+class AnimationDemoSubjectControl(
+    val state: AnimationDemoSubjectState,
+) {
+    val subjectControl = enumControl(
+        name = "Subject",
+        values = { AnimationDemoSubject.entries },
+        selectedValue = { state.subject },
+        onValueChange = { state.subject = it },
+    )
+
+    val holdControl = Control.Slider(
+        name = "Hold (ms)",
+        value = { state.holdMillis.toFloat() },
+        onValueChange = { state.holdMillis = it.toLong() },
+        valueRange = { 0f..2000f },
+        stepIncrement = 50f,
+    )
+
+    val controls: PersistentList<Control> = persistentListOf(
+        subjectControl,
+        holdControl,
+    )
+}
 
 @Composable
 fun AnimationDemoSubject(
     subject: AnimationDemoSubject,
     spec: AnimationSpec.Finite,
     modifier: Modifier = Modifier,
+    holdMillis: Long = AnimationDemoSubjectState.DefaultHoldMillis,
 ) {
     val easings = PaletteTheme.primitive.easing
     val progress = remember { Animatable(0f) }
 
-    // Keyed on the spec value (data-class equality), so edits restart the loop but recompositions
-    // that leave the spec unchanged do not.
-    LaunchedEffect(subject, spec, easings) {
+    // Keyed on the spec value (data-class equality) and hold, so edits restart the loop but
+    // recompositions that leave them unchanged do not.
+    LaunchedEffect(subject, spec, easings, holdMillis) {
         val composeSpec = spec.toComposeSpec<Float>(easings)
         progress.snapTo(0f)
         while (isActive) {
             progress.animateTo(1f, composeSpec)
-            delay(HoldMillis)
+            delay(holdMillis)
             progress.animateTo(0f, composeSpec)
-            delay(HoldMillis)
+            delay(holdMillis)
         }
     }
 

@@ -14,6 +14,9 @@ import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubject
+import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectControl
+import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectState
+import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubjectStateSaver
 import com.embarrasdf.palette.components.demo.subject.AnimationSpecControl
 import com.embarrasdf.palette.components.demo.subject.AnimationSpecState
 import com.embarrasdf.palette.components.demo.subject.AnimationSpecStateSaver
@@ -54,9 +57,10 @@ fun TransitionScreen(
                 .padding(paddingValues)
         ) {
             AnimationDemoSubject(
-                subject = state.subject,
+                subject = state.demoSubjectState.subject,
                 spec = state.activeSpecState.spec,
                 modifier = Modifier.fillMaxSize(),
+                holdMillis = state.demoSubjectState.holdMillis,
             )
         }
     }
@@ -77,7 +81,7 @@ fun rememberTransitionScreenState(
             exitState = AnimationSpecState.from(transition.exit),
             predictiveExitState = AnimationSpecState.from(transition.predictiveExit),
             tokenInitial = TransitionToken.Enter,
-            subjectInitial = AnimationDemoSubject.Ball,
+            demoSubjectState = AnimationDemoSubjectState(),
         )
     }
 }
@@ -89,11 +93,9 @@ class TransitionScreenState(
     val exitState: AnimationSpecState,
     val predictiveExitState: AnimationSpecState,
     tokenInitial: TransitionToken,
-    subjectInitial: AnimationDemoSubject,
+    val demoSubjectState: AnimationDemoSubjectState,
 ) {
     var token by mutableStateOf(tokenInitial)
-        internal set
-    var subject by mutableStateOf(subjectInitial)
         internal set
 
     fun specState(token: TransitionToken): AnimationSpecState = when (token) {
@@ -110,7 +112,7 @@ private const val enterKey = "enter"
 private const val exitKey = "exit"
 private const val predictiveExitKey = "predictiveExit"
 private const val tokenKey = "token"
-private const val subjectKey = "subject"
+private const val demoSubjectKey = "demoSubject"
 
 fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
@@ -119,7 +121,7 @@ fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             exitKey to save(state.exitState, AnimationSpecStateSaver, this),
             predictiveExitKey to save(state.predictiveExitState, AnimationSpecStateSaver, this),
             tokenKey to state.token,
-            subjectKey to state.subject,
+            demoSubjectKey to save(state.demoSubjectState, AnimationDemoSubjectStateSaver, this),
         )
     },
     restore = { map ->
@@ -129,7 +131,7 @@ fun TransitionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             exitState = restore(map[exitKey], AnimationSpecStateSaver)!!,
             predictiveExitState = restore(map[predictiveExitKey], AnimationSpecStateSaver)!!,
             tokenInitial = map[tokenKey] as TransitionToken,
-            subjectInitial = map[subjectKey] as AnimationDemoSubject,
+            demoSubjectState = restore(map[demoSubjectKey], AnimationDemoSubjectStateSaver)!!,
         )
     }
 )
@@ -178,17 +180,12 @@ class TransitionScreenControl(
         onValueChange = { state.token = it },
     )
 
-    val subjectControl = enumControl(
-        name = "Subject",
-        values = { AnimationDemoSubject.entries },
-        selectedValue = { state.subject },
-        onValueChange = { state.subject = it },
-    )
+    private val demoSubjectControl = AnimationDemoSubjectControl(state.demoSubjectState)
 
     private val demoControl = Control.ControlColumn(
         name = "Demo Control",
         expandedInitial = false,
-        controls = { persistentListOf(subjectControl) },
+        controls = { demoSubjectControl.controls },
     )
 
     val controls: PersistentList<Control>
