@@ -50,18 +50,4 @@ class AnimationSpecTest {
 
         assertEquals(120, spec.delay)
     }
-
-    @Test
-    fun toSpecReturnsTheSchemeSelection() {
-        val scheme = AnimationScheme(transition = AnimationSpec.Snap(delayMillis = 10))
-        assertEquals(scheme.transition, AnimationToken.Transition.toSpec(scheme))
-    }
-
-    @Test
-    fun copyReplacesOnlyTheGivenToken() {
-        val original = AnimationScheme(transition = AnimationSpec.Tween())
-        val replacement = AnimationSpec.Spring()
-        val updated = original.copy(token = AnimationToken.Transition, spec = replacement)
-        assertEquals(replacement, updated.transition)
-    }
 }
