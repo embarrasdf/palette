@@ -19,9 +19,3 @@ data object AnimationGraph : AnimationRoute, NavGraphRoute {
 data object AnimationCatalogRoute : AnimationRoute {
     override val pathSegment = "catalog".toPathSegment()
 }
-
-@Serializable
-@SerialName("transition")
-data object TransitionRoute : AnimationRoute {
-    override val pathSegment = "transition".toPathSegment()
-}

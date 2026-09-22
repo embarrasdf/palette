@@ -2,7 +2,12 @@ package com.embarrasdf.palette.app.theme.semantic.animation.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
-import com.embarrasdf.palette.app.theme.semantic.animation.TransitionScreen
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.finite.FiniteGraph
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.finite.finiteEntryProvider
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.finite.finiteNavGraph
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.InfiniteGraph
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteEntryProvider
+import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteNavGraph
 import com.embarrasdf.palette.navigation.NavController
 import com.embarrasdf.palette.navigation.NavGraphBuilder
 import com.embarrasdf.palette.navigation.NavKey
@@ -13,7 +18,8 @@ fun NavGraphBuilder.animationNavGraph() = navGraph(
     start = AnimationCatalogRoute,
 ) {
     route(AnimationCatalogRoute)
-    route(TransitionRoute)
+    finiteNavGraph()
+    infiniteNavGraph()
 }
 
 fun EntryProviderScope<NavKey>.animationEntryProvider(
@@ -23,17 +29,14 @@ fun EntryProviderScope<NavKey>.animationEntryProvider(
     catalogEntry<AnimationCatalogRoute, Animation>(
         onItemClick = { item ->
             when (item) {
-                Animation.Transition -> navController.navigate(TransitionRoute)
+                Animation.Finite -> navController.navigate(FiniteGraph)
+                Animation.Infinite -> navController.navigate(InfiniteGraph)
             }
         },
         title = "Animation",
         onNavigateUp = navController::goBack,
     )
 
-    entry<TransitionRoute> {
-        TransitionScreen(
-            themeController = themeController,
-            onNavigateUp = navController::goBack,
-        )
-    }
+    finiteEntryProvider(navController, themeController)
+    infiniteEntryProvider(navController)
 }
