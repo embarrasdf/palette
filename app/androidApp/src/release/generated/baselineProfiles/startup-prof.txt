@@ -6993,7 +6993,7 @@ HSPLandroidx/compose/ui/node/LayoutNodeDrawScope;-><clinit>()V
 HSPLandroidx/compose/ui/node/LayoutNodeDrawScope;-><init>(Landroidx/compose/ui/graphics/drawscope/CanvasDrawScope;)V
 HSPLandroidx/compose/ui/node/LayoutNodeDrawScope;-><init>(Landroidx/compose/ui/graphics/drawscope/CanvasDrawScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 PLandroidx/compose/ui/node/LayoutNodeDrawScope;->draw-eZhPAX0$ui(Landroidx/compose/ui/graphics/Canvas;JLandroidx/compose/ui/node/NodeCoordinator;Landroidx/compose/ui/Modifier$Node;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/node/LayoutNodeDrawScope;->drawContent()V
+PLandroidx/compose/ui/node/LayoutNodeDrawScope;->drawContent()V
 HPLandroidx/compose/ui/node/LayoutNodeDrawScope;->drawDirect-eZhPAX0$ui(Landroidx/compose/ui/graphics/Canvas;JLandroidx/compose/ui/node/NodeCoordinator;Landroidx/compose/ui/node/DrawModifierNode;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/LayoutNodeDrawScope;->drawRect-AsUm42w(Landroidx/compose/ui/graphics/Brush;JJFLandroidx/compose/ui/graphics/drawscope/DrawStyle;Landroidx/compose/ui/graphics/ColorFilter;I)V
 PLandroidx/compose/ui/node/LayoutNodeDrawScope;->drawRect-n-J9OG0(JJJFLandroidx/compose/ui/graphics/drawscope/DrawStyle;Landroidx/compose/ui/graphics/ColorFilter;I)V
@@ -7257,7 +7257,6 @@ HSPLandroidx/compose/ui/node/NodeCoordinator;->access$headNode(Landroidx/compose
 HSPLandroidx/compose/ui/node/NodeCoordinator;->access$setMeasurementConstraints-BRTryo0(Landroidx/compose/ui/node/NodeCoordinator;J)V
 HPLandroidx/compose/ui/node/NodeCoordinator;->draw(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getAlignmentLinesOwner()Landroidx/compose/ui/node/AlignmentLinesOwner;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getCoordinates()Landroidx/compose/ui/layout/LayoutCoordinates;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getDensity()F
@@ -10107,6 +10106,7 @@ PLandroidx/emoji2/text/flatbuffer/MetadataList;->__assign(ILjava/nio/ByteBuffer;
 PLandroidx/emoji2/text/flatbuffer/MetadataList;->__init(ILjava/nio/ByteBuffer;)V
 PLandroidx/emoji2/text/flatbuffer/MetadataList;->getRootAsMetadataList(Ljava/nio/ByteBuffer;)Landroidx/emoji2/text/flatbuffer/MetadataList;
 PLandroidx/emoji2/text/flatbuffer/MetadataList;->getRootAsMetadataList(Ljava/nio/ByteBuffer;Landroidx/emoji2/text/flatbuffer/MetadataList;)Landroidx/emoji2/text/flatbuffer/MetadataList;
+HPLandroidx/emoji2/text/flatbuffer/MetadataList;->list(Landroidx/emoji2/text/flatbuffer/MetadataItem;I)Landroidx/emoji2/text/flatbuffer/MetadataItem;
 PLandroidx/emoji2/text/flatbuffer/MetadataList;->listLength()I
 PLandroidx/emoji2/text/flatbuffer/Table;-><init>()V
 HPLandroidx/emoji2/text/flatbuffer/Table;->__indirect(I)I
@@ -11831,12 +11831,6 @@ HSPLcom/embarrasdf/palette/app/main/navigation/MainNavKt$mainNavGraph$lambda$0$$
 HSPLcom/embarrasdf/palette/app/main/navigation/MainNavKt$mainNavGraph$lambda$0$$inlined$route$default$1;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
 HSPLcom/embarrasdf/palette/app/main/navigation/MainNavKt$mainNavGraph$lambda$0$$inlined$route$default$1;->invoke-cwiI0Ik(Ljava/lang/String;)Lcom/embarrasdf/palette/navigation/NavKey;
 Lcom/embarrasdf/palette/app/main/navigation/MainRoute;
-Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt;
-HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt;->toSharedAxisTransition(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Ljava/util/Map;Z)Landroidx/compose/animation/ContentTransform;
-Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda0;
-HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda0;-><init>(I)V
-Lcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda1;
-HSPLcom/embarrasdf/palette/app/navigation/AnimationTransitionsKt$$ExternalSyntheticLambda1;-><init>(I)V
 Lcom/embarrasdf/palette/app/navigation/CatalogEntryKt$catalogEntry$1;
 HSPLcom/embarrasdf/palette/app/navigation/CatalogEntryKt$catalogEntry$1;-><clinit>()V
 HSPLcom/embarrasdf/palette/app/navigation/CatalogEntryKt$catalogEntry$1;-><init>()V
@@ -13702,6 +13696,12 @@ HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme
 Lcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationSchemeKt;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationSchemeKt;-><clinit>()V
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationSchemeKt;->getPaletteFiniteAnimationScheme()Lcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme;
+Lcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt;->toSharedAxisTransition(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Ljava/util/Map;Z)Landroidx/compose/animation/ContentTransform;
+Lcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt$$ExternalSyntheticLambda0;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt$$ExternalSyntheticLambda0;-><init>(I)V
+Lcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt$$ExternalSyntheticLambda1;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/transition/SharedAxisTransitionKt$$ExternalSyntheticLambda1;-><init>(I)V
 Lcom/embarrasdf/palette/theme/semantic/animation/finite/transition/TransitionScheme;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/transition/TransitionScheme;-><clinit>()V
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/transition/TransitionScheme;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;)V
@@ -14923,7 +14923,7 @@ PLkotlinx/coroutines/JobSupport$Finishing;->addExceptionLocked(Ljava/lang/Throwa
 PLkotlinx/coroutines/JobSupport$Finishing;->allocateList()Ljava/util/ArrayList;
 PLkotlinx/coroutines/JobSupport$Finishing;->getExceptionsHolder()Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport$Finishing;->getList()Lkotlinx/coroutines/NodeList;
-PLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
+HPLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_exceptionsHolder$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_isCompleting$volatile$FU()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_rootCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
