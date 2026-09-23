@@ -24,6 +24,7 @@ import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.control.ThemeController
+import com.embarrasdf.palette.theme.semantic.animation.finite.transition.toSharedAxisTransition
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
