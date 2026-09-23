@@ -1,4 +1,4 @@
-package com.embarrasdf.palette.app.navigation
+package com.embarrasdf.palette.theme.semantic.animation.finite.transition
 
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.Easing
@@ -13,25 +13,13 @@ import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.toComposeSpec
 
 /**
- * Screen transitions are built from a single semantic [AnimationSpec]. This is the one place the
- * v1 choreography lives; splitting enter/exit into separate tokens later changes only this file.
+ * Builds a symmetric shared-axis [ContentTransform] from a finite animation spec (Material's pattern
+ * for peer navigation): the transition leans on the fade and slides only a fraction of the width
+ * rather than edge-to-edge, so back mirrors forward as a slide-out without an exaggerated full-width
+ * push. It returns a plain [ContentTransform], so it is usable with any `AnimatedContent` — a
+ * `NavDisplay` transition slot, a tab switcher, etc. — and does not depend on any navigation library.
  *
- * All navigation uses a symmetric shared-axis motion (Material's pattern for peer navigation): the
- * transition leans on the fade and slides only a fraction of the width rather than edge-to-edge, so
- * back mirrors forward as a slide-out without an exaggerated full-width push. Predictive back uses
- * the same mirrored slide, driven by the gesture.
- */
-
-/**
- * Denominator applied to the full width for the shared-axis slide. A larger value means less
- * travel; the fade carries most of the transition (Material reduces motion by not sliding the full
- * width of the screen).
- */
-private const val SlideDivisor = 5
-
-/**
- * A symmetric shared-axis transition. [forward] chooses the slide direction; back navigation passes
- * `forward = false` to mirror it as a slide-out.
+ * @param forward chooses the slide direction; back navigation passes `forward = false` to mirror it.
  */
 fun AnimationSpec.Finite.toSharedAxisTransition(
     easings: Map<EasingPrimitiveToken, Easing>,
@@ -48,3 +36,10 @@ fun AnimationSpec.Finite.toSharedAxisTransition(
 
     return enter togetherWith exit
 }
+
+/**
+ * Denominator applied to the full width for the shared-axis slide. A larger value means less travel;
+ * the fade carries most of the transition (Material reduces motion by not sliding the full width of
+ * the screen).
+ */
+private const val SlideDivisor = 5
