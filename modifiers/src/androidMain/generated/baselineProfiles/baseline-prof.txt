@@ -352,6 +352,7 @@ PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo$lambda$2$0(Lcom/
 PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/NoiseState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo$lambda$8(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
+PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 HPLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt;->NoiseStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/NoiseState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/NoiseDemoKt$$ExternalSyntheticLambda0;-><init>()V
