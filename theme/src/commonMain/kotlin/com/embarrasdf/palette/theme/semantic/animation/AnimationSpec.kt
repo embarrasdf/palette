@@ -17,8 +17,8 @@ import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
  * The hierarchy mirrors the platform's own capability boundaries, and each boundary is a constraint
  * some consumer relies on:
  *
- * - [Finite] — the spec terminates. One-shot animations (screen transitions, demo subjects) require
- *   a [Finite] spec so the value actually settles.
+ * - [Finite] — the spec terminates. One-shot animations require a [Finite] spec so the value
+ *   actually settles.
  * - [Finite.DurationBased] — a [Finite] spec with an explicit duration. Only these may be wrapped
  *   by a repeat (you cannot repeat a spring), so a future `Repeatable` would take a [DurationBased].
  * - [Infinite] — the spec never terminates (loops / ambient motion). No variants yet.

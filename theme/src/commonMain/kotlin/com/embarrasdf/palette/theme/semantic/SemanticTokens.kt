@@ -16,12 +16,12 @@ import com.embarrasdf.palette.theme.semantic.shape.ShapeScheme
 import com.embarrasdf.palette.theme.semantic.typography.SemanticTypography
 
 data class SemanticTokens(
-    val colors: ColorTokens = ColorTokens(),
-    val typography: SemanticTypography = SemanticTypography(),
-    val shapeScheme: ShapeScheme = PaletteShapeScheme,
-    val dimension: Dimension = PaletteDimension,
-    val interaction: InteractionScheme = PaletteInteractionScheme,
-    val formats: Formats = PaletteFormats,
     val animation: AnimationScheme = PaletteAnimationScheme,
+    val colors: ColorTokens = ColorTokens(),
+    val dimension: Dimension = PaletteDimension,
+    val formats: Formats = PaletteFormats,
+    val interaction: InteractionScheme = PaletteInteractionScheme,
     val motion: MotionScheme = PaletteMotionScheme,
+    val shapeScheme: ShapeScheme = PaletteShapeScheme,
+    val typography: SemanticTypography = SemanticTypography(),
 )

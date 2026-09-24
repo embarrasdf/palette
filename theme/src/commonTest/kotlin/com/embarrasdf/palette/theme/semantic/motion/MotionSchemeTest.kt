@@ -1,15 +1,14 @@
 package com.embarrasdf.palette.theme.semantic.motion
 
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MotionSchemeTest {
 
     private val scheme = MotionScheme(
-        enter = Transition(MotionPattern.SharedAxis(), AnimationToken.Default),
-        exit = Transition(MotionPattern.Fade, AnimationToken.Default),
-        predictiveExit = Transition(MotionPattern.Scale(), AnimationToken.Default),
+        enter = Transition.SharedAxis(),
+        exit = Transition.Fade(),
+        predictiveExit = Transition.Scale(),
     )
 
     @Test
@@ -21,7 +20,7 @@ class MotionSchemeTest {
 
     @Test
     fun copyReplacesOnlyTheGivenToken() {
-        val replacement = Transition(MotionPattern.Fade)
+        val replacement = Transition.None
         val updated = scheme.copy(token = MotionToken.Enter, transition = replacement)
 
         assertEquals(replacement, updated.enter)
@@ -30,9 +29,10 @@ class MotionSchemeTest {
     }
 
     @Test
-    fun patternTypeMatchesTheVariant() {
-        assertEquals(MotionPatternType.SharedAxis, MotionPattern.SharedAxis().type())
-        assertEquals(MotionPatternType.Fade, MotionPattern.Fade.type())
-        assertEquals(MotionPatternType.Scale, MotionPattern.Scale().type())
+    fun typeMatchesTheVariant() {
+        assertEquals(TransitionType.SharedAxis, Transition.SharedAxis().type())
+        assertEquals(TransitionType.Fade, Transition.Fade().type())
+        assertEquals(TransitionType.Scale, Transition.Scale().type())
+        assertEquals(TransitionType.None, Transition.None.type())
     }
 }
