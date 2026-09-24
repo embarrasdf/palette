@@ -1,13 +1,5 @@
 package com.embarrasdf.palette.theme.semantic.motion
 
-/**
- * The motion (enter/exit choreography) tokens, one per navigation slot. Each is a [Transition]
- * (pattern + referenced animation preset):
- *
- * - [enter] — forward navigation.
- * - [exit] — backward navigation.
- * - [predictiveExit] — the predictive-back gesture.
- */
 data class MotionScheme(
     val enter: Transition,
     val exit: Transition,
@@ -15,9 +7,9 @@ data class MotionScheme(
 )
 
 val PaletteMotionScheme = MotionScheme(
-    enter = Transition(MotionPattern.SharedAxis()),
-    exit = Transition(MotionPattern.SharedAxis()),
-    predictiveExit = Transition(MotionPattern.SharedAxis()),
+    enter = Transition.SharedAxis(),
+    exit = Transition.SharedAxis(),
+    predictiveExit = Transition.SharedAxis(),
 )
 
 fun MotionScheme.copy(

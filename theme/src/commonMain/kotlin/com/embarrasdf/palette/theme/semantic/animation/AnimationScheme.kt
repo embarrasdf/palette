@@ -5,8 +5,8 @@ import com.embarrasdf.palette.theme.semantic.animation.finite.PaletteFiniteAnima
 import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimationScheme
 
 /**
- * The animation umbrella, grouped by spec family: [finite] holds terminating-spec schemes (screen
- * transitions today), [infinite] holds non-terminating-spec schemes (none yet).
+ * Value-animation tokens, grouped by spec family: [finite] holds terminating-spec presets, [infinite]
+ * holds non-terminating-spec presets.
  */
 data class AnimationScheme(
     val finite: FiniteAnimationScheme = PaletteFiniteAnimationScheme,

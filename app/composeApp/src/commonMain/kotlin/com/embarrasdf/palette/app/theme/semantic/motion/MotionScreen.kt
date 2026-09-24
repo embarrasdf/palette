@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.components.demo.subject.MotionPatternControl
-import com.embarrasdf.palette.components.demo.subject.MotionPatternState
-import com.embarrasdf.palette.components.demo.subject.MotionPatternStateSaver
+import com.embarrasdf.palette.components.demo.subject.TransitionControl
+import com.embarrasdf.palette.components.demo.subject.TransitionState
+import com.embarrasdf.palette.components.demo.subject.TransitionStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
@@ -32,9 +32,7 @@ import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
 import com.embarrasdf.palette.theme.semantic.motion.MotionToken
-import com.embarrasdf.palette.theme.semantic.motion.Transition
 import com.embarrasdf.palette.theme.semantic.motion.copy
 import com.embarrasdf.palette.theme.semantic.motion.toEnter
 import com.embarrasdf.palette.theme.semantic.motion.toExit
@@ -67,7 +65,7 @@ fun MotionScreen(
         ) {
             val animation = PaletteTheme.semantic.animation
             val easings = PaletteTheme.primitive.easing
-            val pattern = state.activePatternState.pattern
+            val transition = state.activeTransitionState.transition
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -76,8 +74,8 @@ fun MotionScreen(
             ) {
                 AnimatedVisibility(
                     visible = state.visible,
-                    enter = pattern.toEnter(animation.finite.default, easings, forward = true),
-                    exit = pattern.toExit(animation.finite.default, easings, forward = false),
+                    enter = transition.toEnter(animation, easings, forward = true),
+                    exit = transition.toExit(animation, easings, forward = false),
                 ) {
                     Box(
                         modifier = Modifier
@@ -102,9 +100,9 @@ fun rememberMotionScreenState(
         val motion = themeState.semantic.motion
         MotionScreenState(
             themeState = themeState,
-            enterPatternState = MotionPatternState.from(motion.enter.pattern),
-            exitPatternState = MotionPatternState.from(motion.exit.pattern),
-            predictiveExitPatternState = MotionPatternState.from(motion.predictiveExit.pattern),
+            enterTransitionState = TransitionState.from(motion.enter),
+            exitTransitionState = TransitionState.from(motion.exit),
+            predictiveExitTransitionState = TransitionState.from(motion.predictiveExit),
             tokenInitial = MotionToken.Enter,
             visibleInitial = true,
         )
@@ -114,9 +112,9 @@ fun rememberMotionScreenState(
 @Stable
 class MotionScreenState(
     val themeState: ThemeState,
-    val enterPatternState: MotionPatternState,
-    val exitPatternState: MotionPatternState,
-    val predictiveExitPatternState: MotionPatternState,
+    val enterTransitionState: TransitionState,
+    val exitTransitionState: TransitionState,
+    val predictiveExitTransitionState: TransitionState,
     tokenInitial: MotionToken,
     visibleInitial: Boolean,
 ) {
@@ -125,14 +123,14 @@ class MotionScreenState(
     var visible by mutableStateOf(visibleInitial)
         internal set
 
-    fun patternState(token: MotionToken): MotionPatternState = when (token) {
-        MotionToken.Enter -> enterPatternState
-        MotionToken.Exit -> exitPatternState
-        MotionToken.PredictiveExit -> predictiveExitPatternState
+    fun transitionState(token: MotionToken): TransitionState = when (token) {
+        MotionToken.Enter -> enterTransitionState
+        MotionToken.Exit -> exitTransitionState
+        MotionToken.PredictiveExit -> predictiveExitTransitionState
     }
 
-    val activePatternState: MotionPatternState
-        get() = patternState(token)
+    val activeTransitionState: TransitionState
+        get() = transitionState(token)
 }
 
 private const val enterKey = "enter"
@@ -144,9 +142,9 @@ private const val visibleKey = "visible"
 fun MotionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            enterKey to save(state.enterPatternState, MotionPatternStateSaver, this),
-            exitKey to save(state.exitPatternState, MotionPatternStateSaver, this),
-            predictiveExitKey to save(state.predictiveExitPatternState, MotionPatternStateSaver, this),
+            enterKey to save(state.enterTransitionState, TransitionStateSaver, this),
+            exitKey to save(state.exitTransitionState, TransitionStateSaver, this),
+            predictiveExitKey to save(state.predictiveExitTransitionState, TransitionStateSaver, this),
             tokenKey to state.token,
             visibleKey to state.visible,
         )
@@ -154,9 +152,9 @@ fun MotionScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     restore = { map ->
         MotionScreenState(
             themeState = themeState,
-            enterPatternState = restore(map[enterKey], MotionPatternStateSaver)!!,
-            exitPatternState = restore(map[exitKey], MotionPatternStateSaver)!!,
-            predictiveExitPatternState = restore(map[predictiveExitKey], MotionPatternStateSaver)!!,
+            enterTransitionState = restore(map[enterKey], TransitionStateSaver)!!,
+            exitTransitionState = restore(map[exitKey], TransitionStateSaver)!!,
+            predictiveExitTransitionState = restore(map[predictiveExitKey], TransitionStateSaver)!!,
             tokenInitial = map[tokenKey] as MotionToken,
             visibleInitial = map[visibleKey] as Boolean,
         )
@@ -178,19 +176,16 @@ class MotionScreenControl(
     val state: MotionScreenState,
     val themeController: ThemeController,
 ) {
-    private fun patternControl(token: MotionToken): MotionPatternControl {
-        val patternState = state.patternState(token)
-        return MotionPatternControl(
-            state = patternState,
+    private fun transitionControl(token: MotionToken): TransitionControl {
+        val transitionState = state.transitionState(token)
+        return TransitionControl(
+            state = transitionState,
             onChanged = {
                 themeController.updateSemantic {
                     it.copy(
                         motion = it.motion.copy(
                             token = token,
-                            transition = Transition(
-                                pattern = patternState.pattern,
-                                animation = AnimationToken.Default,
-                            ),
+                            transition = transitionState.transition,
                         ),
                     )
                 }
@@ -198,8 +193,8 @@ class MotionScreenControl(
         )
     }
 
-    private val patternControls: Map<MotionToken, MotionPatternControl> =
-        MotionToken.entries.associateWith { patternControl(it) }
+    private val transitionControls: Map<MotionToken, TransitionControl> =
+        MotionToken.entries.associateWith { transitionControl(it) }
 
     val tokenControl = enumControl(
         name = "Token",
@@ -208,16 +203,22 @@ class MotionScreenControl(
         onValueChange = { state.token = it },
     )
 
-    val visibleControl = Control.Toggle(
-        name = "Show",
+    private val enterExitControl = Control.Toggle(
+        name = "Enter/Exit",
         value = { state.visible },
         onValueChange = { state.visible = it },
+    )
+
+    private val demoControl = Control.ControlColumn(
+        name = "Demo Control",
+        expandedInitial = true,
+        controls = { persistentListOf(enterExitControl) },
     )
 
     val controls: PersistentList<Control>
         get() = persistentListOf(
             tokenControl,
-            *patternControls.getValue(state.token).controls.toTypedArray(),
-            visibleControl,
+            *transitionControls.getValue(state.token).controls.toTypedArray(),
+            demoControl,
         )
 }
