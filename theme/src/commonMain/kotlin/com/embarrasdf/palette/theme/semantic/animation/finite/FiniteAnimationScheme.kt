@@ -1,16 +1,14 @@
 package com.embarrasdf.palette.theme.semantic.animation.finite
 
-import com.embarrasdf.palette.theme.semantic.animation.finite.transition.PaletteTransitionScheme
-import com.embarrasdf.palette.theme.semantic.animation.finite.transition.TransitionScheme
+import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 
 /**
- * Animation schemes built from finite (terminating) specs. Screen transitions live here; other
- * finite-spec groups (e.g. component/surface motion) would be added alongside [transition].
+ * Value-animation tokens built from finite (terminating) specs. Holds the reusable timing presets
+ * that motion transitions and other value animations reference. For now there is a single
+ * [default] preset.
  */
 data class FiniteAnimationScheme(
-    val transition: TransitionScheme = PaletteTransitionScheme,
+    val default: AnimationSpec.Finite = AnimationSpec.Tween(),
 )
 
-val PaletteFiniteAnimationScheme = FiniteAnimationScheme(
-    transition = PaletteTransitionScheme,
-)
+val PaletteFiniteAnimationScheme = FiniteAnimationScheme()
