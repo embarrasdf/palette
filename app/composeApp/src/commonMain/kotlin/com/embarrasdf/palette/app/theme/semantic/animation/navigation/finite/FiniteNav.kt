@@ -2,7 +2,7 @@ package com.embarrasdf.palette.app.theme.semantic.animation.navigation.finite
 
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
-import com.embarrasdf.palette.app.theme.semantic.animation.TransitionScreen
+import com.embarrasdf.palette.app.theme.semantic.animation.AnimationDefaultScreen
 import com.embarrasdf.palette.navigation.NavController
 import com.embarrasdf.palette.navigation.NavGraphBuilder
 import com.embarrasdf.palette.navigation.NavKey
@@ -13,7 +13,7 @@ fun NavGraphBuilder.finiteNavGraph() = navGraph(
     start = FiniteCatalogRoute,
 ) {
     route(FiniteCatalogRoute)
-    route(TransitionRoute)
+    route(DefaultRoute)
 }
 
 fun EntryProviderScope<NavKey>.finiteEntryProvider(
@@ -23,15 +23,15 @@ fun EntryProviderScope<NavKey>.finiteEntryProvider(
     catalogEntry<FiniteCatalogRoute, FiniteItem>(
         onItemClick = { item ->
             when (item) {
-                FiniteItem.Transition -> navController.navigate(TransitionRoute)
+                FiniteItem.Default -> navController.navigate(DefaultRoute)
             }
         },
         title = "Finite",
         onNavigateUp = navController::goBack,
     )
 
-    entry<TransitionRoute> {
-        TransitionScreen(
+    entry<DefaultRoute> {
+        AnimationDefaultScreen(
             themeController = themeController,
             onNavigateUp = navController::goBack,
         )

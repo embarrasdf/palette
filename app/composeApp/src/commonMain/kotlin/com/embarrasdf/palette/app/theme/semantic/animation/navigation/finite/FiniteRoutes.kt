@@ -21,7 +21,7 @@ data object FiniteCatalogRoute : FiniteRoute {
 }
 
 @Serializable
-@SerialName("transition")
-data object TransitionRoute : FiniteRoute {
-    override val pathSegment = "transition".toPathSegment()
+@SerialName("animation-default")
+data object DefaultRoute : FiniteRoute {
+    override val pathSegment = "default".toPathSegment()
 }

@@ -24,7 +24,7 @@ import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.semantic.animation.finite.transition.toSharedAxisTransition
+import com.embarrasdf.palette.theme.semantic.motion.toContentTransform
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -47,7 +47,8 @@ fun PaletteNav(
     themeController: ThemeController,
     navController: NavController = rememberPaletteNavController(),
 ) {
-    val transition = PaletteTheme.semantic.animation.finite.transition
+    val motion = PaletteTheme.semantic.motion
+    val animation = PaletteTheme.semantic.animation
     val easings = PaletteTheme.primitive.easing
     NavDisplay(
         backStack = navController.state.backStack,
@@ -58,10 +59,10 @@ fun PaletteNav(
             )
         },
         onBack = navController::goBack,
-        transitionSpec = { transition.enter.toSharedAxisTransition(easings, forward = true) },
-        popTransitionSpec = { transition.exit.toSharedAxisTransition(easings, forward = false) },
+        transitionSpec = { motion.enter.toContentTransform(animation, easings, forward = true) },
+        popTransitionSpec = { motion.exit.toContentTransform(animation, easings, forward = false) },
         predictivePopTransitionSpec = {
-            transition.predictiveExit.toSharedAxisTransition(easings, forward = false)
+            motion.predictiveExit.toContentTransform(animation, easings, forward = false)
         },
     )
 }
