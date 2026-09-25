@@ -7,9 +7,9 @@ data class MotionScheme(
 )
 
 val PaletteMotionScheme = MotionScheme(
-    enter = Transition.SharedAxis(),
-    exit = Transition.SharedAxis(),
-    predictiveExit = Transition.SharedAxis(),
+    enter = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
+    exit = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
+    predictiveExit = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
 )
 
 fun MotionScheme.copy(

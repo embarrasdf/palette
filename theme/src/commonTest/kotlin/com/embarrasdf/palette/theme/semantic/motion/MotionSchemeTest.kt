@@ -6,9 +6,9 @@ import kotlin.test.assertEquals
 class MotionSchemeTest {
 
     private val scheme = MotionScheme(
-        enter = Transition.SharedAxis(),
-        exit = Transition.Fade(),
-        predictiveExit = Transition.Scale(),
+        enter = listOf(TransitionEffect.Fade()),
+        exit = listOf(TransitionEffect.Translate()),
+        predictiveExit = listOf(TransitionEffect.Scale()),
     )
 
     @Test
@@ -20,7 +20,7 @@ class MotionSchemeTest {
 
     @Test
     fun copyReplacesOnlyTheGivenToken() {
-        val replacement = Transition.None
+        val replacement = listOf(TransitionEffect.Fade(), TransitionEffect.Scale())
         val updated = scheme.copy(token = MotionToken.Enter, transition = replacement)
 
         assertEquals(replacement, updated.enter)
@@ -30,9 +30,8 @@ class MotionSchemeTest {
 
     @Test
     fun typeMatchesTheVariant() {
-        assertEquals(TransitionType.SharedAxis, Transition.SharedAxis().type())
-        assertEquals(TransitionType.Fade, Transition.Fade().type())
-        assertEquals(TransitionType.Scale, Transition.Scale().type())
-        assertEquals(TransitionType.None, Transition.None.type())
+        assertEquals(TransitionEffectType.Fade, TransitionEffect.Fade().type())
+        assertEquals(TransitionEffectType.Scale, TransitionEffect.Scale().type())
+        assertEquals(TransitionEffectType.Translate, TransitionEffect.Translate().type())
     }
 }
