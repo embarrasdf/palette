@@ -22,116 +22,119 @@ import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
 import com.embarrasdf.palette.theme.semantic.animation.toComposeSpec
 import com.embarrasdf.palette.theme.semantic.animation.toSpec
 
-/** The axis a [Transition.SharedAxis] slides along. */
+/** The axis a [TransitionEffect.Translate] moves along. */
 enum class Axis {
     X,
     Y,
 }
 
 /**
- * How an element appears and disappears. Each variant composes property animations (fade, slide,
- * scale) timed by the value-animation preset it references through [AnimationToken], and resolves to
- * Compose [EnterTransition]/[ExitTransition]/[ContentTransform] for use with any `AnimatedVisibility`,
- * `AnimatedContent`, or navigation host.
+ * A single property animation. Each effect references the value-animation preset that times it, so
+ * effects composed into one [Transition] can run at independent speeds.
  */
-sealed interface Transition {
-    data class SharedAxis(
-        val axis: Axis = Axis.X,
-        val fraction: Float = 0.2f,
-        val animation: AnimationToken = AnimationToken.Default,
-    ) : Transition
+sealed interface TransitionEffect {
+    val animation: AnimationToken
 
     data class Fade(
-        val animation: AnimationToken = AnimationToken.Default,
-    ) : Transition
+        override val animation: AnimationToken = AnimationToken.Default,
+    ) : TransitionEffect
 
     data class Scale(
         val from: Float = 0.9f,
-        val animation: AnimationToken = AnimationToken.Default,
-    ) : Transition
+        val to: Float = 0.9f,
+        override val animation: AnimationToken = AnimationToken.Default,
+    ) : TransitionEffect
 
-    data object None : Transition
+    data class Translate(
+        val axis: Axis = Axis.X,
+        val fraction: Float = 0.2f,
+        override val animation: AnimationToken = AnimationToken.Default,
+    ) : TransitionEffect
 }
 
-enum class TransitionType {
-    SharedAxis,
+enum class TransitionEffectType {
     Fade,
     Scale,
-    None,
+    Translate,
 }
 
-fun Transition.type(): TransitionType = when (this) {
-    is Transition.SharedAxis -> TransitionType.SharedAxis
-    is Transition.Fade -> TransitionType.Fade
-    is Transition.Scale -> TransitionType.Scale
-    Transition.None -> TransitionType.None
+fun TransitionEffect.type(): TransitionEffectType = when (this) {
+    is TransitionEffect.Fade -> TransitionEffectType.Fade
+    is TransitionEffect.Scale -> TransitionEffectType.Scale
+    is TransitionEffect.Translate -> TransitionEffectType.Translate
 }
+
+/** An ordered list of [TransitionEffect]s composited into one enter/exit animation. */
+typealias Transition = List<TransitionEffect>
 
 fun Transition.toEnter(
     animationScheme: AnimationScheme,
     easings: Map<EasingPrimitiveToken, Easing>,
     forward: Boolean,
-): EnterTransition {
-    val direction = if (forward) 1 else -1
-    return when (this) {
-        is Transition.SharedAxis -> {
-            val spec = animation.toSpec(animationScheme)
-            val floatSpec = spec.toComposeSpec<Float>(easings)
-            val offsetSpec = spec.toComposeSpec<IntOffset>(easings)
-            val slide = when (axis) {
-                Axis.X -> slideInHorizontally(offsetSpec) { size -> (direction * size * fraction).toInt() }
-                Axis.Y -> slideInVertically(offsetSpec) { size -> (direction * size * fraction).toInt() }
-            }
-            fadeIn(floatSpec) + slide
-        }
-        is Transition.Fade -> fadeIn(animation.toSpec(animationScheme).toComposeSpec<Float>(easings))
-        is Transition.Scale -> {
-            val floatSpec = animation.toSpec(animationScheme).toComposeSpec<Float>(easings)
-            fadeIn(floatSpec) + scaleIn(floatSpec, initialScale = from)
-        }
-        Transition.None -> EnterTransition.None
-    }
+): EnterTransition = fold(EnterTransition.None) { acc, effect ->
+    acc + effect.toEnter(animationScheme, easings, forward)
 }
 
 fun Transition.toExit(
     animationScheme: AnimationScheme,
     easings: Map<EasingPrimitiveToken, Easing>,
     forward: Boolean,
-): ExitTransition {
-    val direction = if (forward) 1 else -1
-    return when (this) {
-        is Transition.SharedAxis -> {
-            val spec = animation.toSpec(animationScheme)
-            val floatSpec = spec.toComposeSpec<Float>(easings)
-            val offsetSpec = spec.toComposeSpec<IntOffset>(easings)
-            val slide = when (axis) {
-                Axis.X -> slideOutHorizontally(offsetSpec) { size -> (-direction * size * fraction).toInt() }
-                Axis.Y -> slideOutVertically(offsetSpec) { size -> (-direction * size * fraction).toInt() }
-            }
-            fadeOut(floatSpec) + slide
-        }
-        is Transition.Fade -> fadeOut(animation.toSpec(animationScheme).toComposeSpec<Float>(easings))
-        is Transition.Scale -> {
-            val floatSpec = animation.toSpec(animationScheme).toComposeSpec<Float>(easings)
-            fadeOut(floatSpec) + scaleOut(floatSpec, targetScale = from)
-        }
-        Transition.None -> ExitTransition.None
-    }
+): ExitTransition = fold(ExitTransition.None) { acc, effect ->
+    acc + effect.toExit(animationScheme, easings, forward)
 }
 
 fun Transition.toContentTransform(
     animationScheme: AnimationScheme,
     easings: Map<EasingPrimitiveToken, Easing>,
     forward: Boolean,
-): ContentTransform {
-    return toEnter(animationScheme, easings, forward) togetherWith toExit(animationScheme, easings, forward)
-}
+): ContentTransform =
+    toEnter(animationScheme, easings, forward) togetherWith toExit(animationScheme, easings, forward)
 
 @Composable
-fun Transition.toContentTransform(forward: Boolean): ContentTransform {
-    return toContentTransform(
-        animationScheme = PaletteTheme.semantic.animation,
-        easings = PaletteTheme.primitive.easing,
-        forward = forward,
-    )
+fun Transition.toContentTransform(forward: Boolean): ContentTransform = toContentTransform(
+    animationScheme = PaletteTheme.semantic.animation,
+    easings = PaletteTheme.primitive.easing,
+    forward = forward,
+)
+
+private fun TransitionEffect.toEnter(
+    animationScheme: AnimationScheme,
+    easings: Map<EasingPrimitiveToken, Easing>,
+    forward: Boolean,
+): EnterTransition {
+    val spec = animation.toSpec(animationScheme)
+    val floatSpec = spec.toComposeSpec<Float>(easings)
+    return when (this) {
+        is TransitionEffect.Fade -> fadeIn(floatSpec)
+        is TransitionEffect.Scale -> scaleIn(floatSpec, initialScale = from)
+        is TransitionEffect.Translate -> {
+            val offsetSpec = spec.toComposeSpec<IntOffset>(easings)
+            val direction = if (forward) 1 else -1
+            when (axis) {
+                Axis.X -> slideInHorizontally(offsetSpec) { size -> (direction * size * fraction).toInt() }
+                Axis.Y -> slideInVertically(offsetSpec) { size -> (direction * size * fraction).toInt() }
+            }
+        }
+    }
+}
+
+private fun TransitionEffect.toExit(
+    animationScheme: AnimationScheme,
+    easings: Map<EasingPrimitiveToken, Easing>,
+    forward: Boolean,
+): ExitTransition {
+    val spec = animation.toSpec(animationScheme)
+    val floatSpec = spec.toComposeSpec<Float>(easings)
+    return when (this) {
+        is TransitionEffect.Fade -> fadeOut(floatSpec)
+        is TransitionEffect.Scale -> scaleOut(floatSpec, targetScale = to)
+        is TransitionEffect.Translate -> {
+            val offsetSpec = spec.toComposeSpec<IntOffset>(easings)
+            val direction = if (forward) 1 else -1
+            when (axis) {
+                Axis.X -> slideOutHorizontally(offsetSpec) { size -> (-direction * size * fraction).toInt() }
+                Axis.Y -> slideOutVertically(offsetSpec) { size -> (-direction * size * fraction).toInt() }
+            }
+        }
+    }
 }
