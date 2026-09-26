@@ -6059,7 +6059,7 @@ PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->access$getUsePathForClip$p(
 PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->addSubLayer(Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->configureOutlineAndClip()V
 HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->draw$ui_graphics(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
+PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getAlpha()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getShadowElevation()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->obtainAndroidOutline()Landroid/graphics/Outline;
@@ -7238,6 +7238,7 @@ HSPLandroidx/compose/ui/node/NodeCoordinator;->access$headNode(Landroidx/compose
 HSPLandroidx/compose/ui/node/NodeCoordinator;->access$setMeasurementConstraints-BRTryo0(Landroidx/compose/ui/node/NodeCoordinator;J)V
 HPLandroidx/compose/ui/node/NodeCoordinator;->draw(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
+HPLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getAlignmentLinesOwner()Landroidx/compose/ui/node/AlignmentLinesOwner;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getCoordinates()Landroidx/compose/ui/layout/LayoutCoordinates;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getDensity()F
@@ -14737,7 +14738,7 @@ PLkotlinx/coroutines/JobSupport$Finishing;->addExceptionLocked(Ljava/lang/Throwa
 PLkotlinx/coroutines/JobSupport$Finishing;->allocateList()Ljava/util/ArrayList;
 PLkotlinx/coroutines/JobSupport$Finishing;->getExceptionsHolder()Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport$Finishing;->getList()Lkotlinx/coroutines/NodeList;
-PLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
+HPLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_exceptionsHolder$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_isCompleting$volatile$FU()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_rootCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
@@ -15722,6 +15723,13 @@ HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->isSupported()Z
+Lokhttp3/internal/platform/android/Android17SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter;-><clinit>()V
+Lokhttp3/internal/platform/android/Android17SocketAdapter$Companion;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>()V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->isSupported()Z
 Lokhttp3/internal/platform/android/AndroidLog;
 HSPLokhttp3/internal/platform/android/AndroidLog;-><clinit>()V
 HSPLokhttp3/internal/platform/android/AndroidLog;-><init>()V
