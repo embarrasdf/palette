@@ -72,7 +72,7 @@ HSPLcom/embarrasdf/palette/modifiers/ColorSplit_androidKt;->createColorSplitShad
 PLcom/embarrasdf/palette/modifiers/FadeKt;->bottomFade-V5MJSes(Landroidx/compose/ui/Modifier;FLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
 PLcom/embarrasdf/palette/modifiers/FadeKt;->fade-ddyKRco(Landroidx/compose/ui/Modifier;IFLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
 PLcom/embarrasdf/palette/modifiers/FadeKt;->fade-ddyKRco(Landroidx/compose/ui/Modifier;Lcom/embarrasdf/palette/modifiers/FadeSide;FLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
-PLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$0(Landroidx/compose/ui/graphics/GraphicsLayerScope;)Lkotlin/Unit;
+HPLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$0(Landroidx/compose/ui/graphics/GraphicsLayerScope;)Lkotlin/Unit;
 HPLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$1(IFLandroidx/compose/ui/graphics/Color;Landroidx/compose/ui/graphics/drawscope/ContentDrawScope;)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/FadeKt$$ExternalSyntheticLambda0;-><init>()V
 PLcom/embarrasdf/palette/modifiers/FadeKt$$ExternalSyntheticLambda0;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
@@ -133,7 +133,7 @@ PLcom/embarrasdf/palette/modifiers/ShaderElement;-><clinit>()V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;-><init>(Lcom/embarrasdf/palette/modifiers/Shader;Ljava/lang/String;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Landroidx/compose/ui/Modifier$Node;
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Lcom/embarrasdf/palette/modifiers/ShaderNode;
-HPLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
+PLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Landroidx/compose/ui/Modifier$Node;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Lcom/embarrasdf/palette/modifiers/ShaderNode;)V
 Lcom/embarrasdf/palette/modifiers/ShaderIndicationNode;
