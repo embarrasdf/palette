@@ -15,6 +15,8 @@ kotlin {
             dependencies {
                 api(projects.components)
                 api(projects.theme)
+                api(libs.navigation3.ui)
+                api(libs.navigation3.runtime)
             }
         }
     }

@@ -3,7 +3,6 @@ package com.embarrasdf.palette.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.ui.NavDisplay
 import com.embarrasdf.palette.app.demo.components.navigation.componentsEntryProvider
 import com.embarrasdf.palette.app.demo.components.navigation.componentsNavGraph
 import com.embarrasdf.palette.app.demo.formats.navigation.formatsEntryProvider
@@ -22,9 +21,8 @@ import com.embarrasdf.palette.navigation.navGraph
 import com.embarrasdf.palette.navigation.rememberNavController
 import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
-import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.navigation.NavDisplay
 import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.semantic.motion.toContentTransform
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -47,9 +45,6 @@ fun PaletteNav(
     themeController: ThemeController,
     navController: NavController = rememberPaletteNavController(),
 ) {
-    val motion = PaletteTheme.semantic.motion
-    val animation = PaletteTheme.semantic.animation
-    val easings = PaletteTheme.primitive.easing
     NavDisplay(
         backStack = navController.state.backStack,
         entryProvider = entryProvider {
@@ -59,11 +54,6 @@ fun PaletteNav(
             )
         },
         onBack = navController::goBack,
-        transitionSpec = { motion.enter.toContentTransform(animation, easings, forward = true) },
-        popTransitionSpec = { motion.exit.toContentTransform(animation, easings, forward = false) },
-        predictivePopTransitionSpec = {
-            motion.predictiveExit.toContentTransform(animation, easings, forward = false)
-        },
     )
 }
 
