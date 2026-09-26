@@ -3,7 +3,6 @@ package com.embarrasdf.palette.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.ui.NavDisplay
 import com.embarrasdf.palette.app.demo.components.navigation.componentsEntryProvider
 import com.embarrasdf.palette.app.demo.components.navigation.componentsNavGraph
 import com.embarrasdf.palette.app.demo.formats.navigation.formatsEntryProvider
@@ -22,6 +21,7 @@ import com.embarrasdf.palette.navigation.navGraph
 import com.embarrasdf.palette.navigation.rememberNavController
 import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
+import com.embarrasdf.palette.theme.components.navigation.NavDisplay
 import com.embarrasdf.palette.theme.control.ThemeController
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

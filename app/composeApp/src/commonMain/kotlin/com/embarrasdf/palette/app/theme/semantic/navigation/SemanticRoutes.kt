@@ -37,3 +37,9 @@ data object ShapeRoute : SemanticRoute {
 data object TypographyRoute : SemanticRoute {
     override val pathSegment = "typography".toPathSegment()
 }
+
+@Serializable
+@SerialName("motion")
+data object MotionRoute : SemanticRoute {
+    override val pathSegment = "motion".toPathSegment()
+}
