@@ -2929,6 +2929,7 @@ HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope()Landroi
 HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope(I)Landroidx/compose/runtime/PersistentCompositionLocalMap;
 HSPLandroidx/compose/runtime/GapComposer;->doCompose-aFTiNEg(Landroidx/collection/MutableScatterMap;Lkotlin/jvm/functions/Function2;)V
 PLandroidx/compose/runtime/GapComposer;->doRecordDownsFor(II)V
+HSPLandroidx/compose/runtime/GapComposer;->end(Z)V
 HSPLandroidx/compose/runtime/GapComposer;->endDefaults()V
 HSPLandroidx/compose/runtime/GapComposer;->endGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endMovableGroup()V
@@ -2941,6 +2942,7 @@ HSPLandroidx/compose/runtime/GapComposer;->endRestartGroup()Landroidx/compose/ru
 HSPLandroidx/compose/runtime/GapComposer;->endReusableGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endRoot()V
 HSPLandroidx/compose/runtime/GapComposer;->ensureWriter()V
+HSPLandroidx/compose/runtime/GapComposer;->enterGroup(ZLandroidx/compose/runtime/GapPending;)V
 HSPLandroidx/compose/runtime/GapComposer;->enterRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)V
 HSPLandroidx/compose/runtime/GapComposer;->exitGroup(IZ)V
 HSPLandroidx/compose/runtime/GapComposer;->exitRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)Lkotlin/jvm/functions/Function1;
@@ -3918,6 +3920,7 @@ HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->sourceInformationOf
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startData(ILjava/lang/Object;Ljava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup()V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup(ILjava/lang/Object;)V
+HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup(ILjava/lang/Object;ZLjava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startNode(ILjava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->update(Ljava/lang/Object;)Ljava/lang/Object;
 PLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->updateAnchors(II)V
@@ -10106,11 +10109,13 @@ PLandroidx/emoji2/text/MetadataRepo;->put(Landroidx/emoji2/text/TypefaceEmojiRas
 PLandroidx/emoji2/text/MetadataRepo$Node;-><init>()V
 PLandroidx/emoji2/text/MetadataRepo$Node;-><init>(I)V
 HPLandroidx/emoji2/text/MetadataRepo$Node;->get(I)Landroidx/emoji2/text/MetadataRepo$Node;
+HPLandroidx/emoji2/text/MetadataRepo$Node;->put(Landroidx/emoji2/text/TypefaceEmojiRasterizer;II)V
 PLandroidx/emoji2/text/TypefaceEmojiRasterizer;-><clinit>()V
 HPLandroidx/emoji2/text/TypefaceEmojiRasterizer;-><init>(Landroidx/emoji2/text/MetadataRepo;I)V
 HPLandroidx/emoji2/text/TypefaceEmojiRasterizer;->getCodepointAt(I)I
 HPLandroidx/emoji2/text/TypefaceEmojiRasterizer;->getCodepointsLength()I
 PLandroidx/emoji2/text/TypefaceEmojiRasterizer;->getId()I
+HPLandroidx/emoji2/text/TypefaceEmojiRasterizer;->getMetadataItem()Landroidx/emoji2/text/flatbuffer/MetadataItem;
 PLandroidx/emoji2/text/flatbuffer/MetadataItem;-><init>()V
 HPLandroidx/emoji2/text/flatbuffer/MetadataItem;->__assign(ILjava/nio/ByteBuffer;)Landroidx/emoji2/text/flatbuffer/MetadataItem;
 HPLandroidx/emoji2/text/flatbuffer/MetadataItem;->__init(ILjava/nio/ByteBuffer;)V
@@ -13700,6 +13705,11 @@ HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationSchemeKt;->getPalet
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec;
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite$DurationBased;
+Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;
+Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Repeatable;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Repeatable;-><clinit>()V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Repeatable;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite$DurationBased;Lcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;)V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Repeatable;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite$DurationBased;Lcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Spring;
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Tween;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Tween;-><clinit>()V
@@ -13719,6 +13729,10 @@ Lcom/embarrasdf/palette/theme/semantic/animation/AnimationTokenKt;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationTokenKt;->toSpec(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationToken;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationScheme;)Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;
 Lcom/embarrasdf/palette/theme/semantic/animation/AnimationTokenKt$WhenMappings;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/AnimationTokenKt$WhenMappings;-><clinit>()V
+Lcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;->$values()[Lcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;-><clinit>()V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/RepeatMode;-><init>(Ljava/lang/String;I)V
 Lcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme;-><clinit>()V
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Finite;)V
@@ -13729,7 +13743,11 @@ HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme
 HSPLcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationSchemeKt;->getPaletteFiniteAnimationScheme()Lcom/embarrasdf/palette/theme/semantic/animation/finite/FiniteAnimationScheme;
 Lcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;
 HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;-><clinit>()V
-HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;-><init>()V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;)V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;-><init>(Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;Lcom/embarrasdf/palette/theme/semantic/animation/AnimationSpec$Infinite;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+Lcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationSchemeKt;
+HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationSchemeKt;-><clinit>()V
+HSPLcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationSchemeKt;->getPaletteInfiniteAnimationScheme()Lcom/embarrasdf/palette/theme/semantic/animation/infinite/InfiniteAnimationScheme;
 Lcom/embarrasdf/palette/theme/semantic/color/ColorScheme;
 HSPLcom/embarrasdf/palette/theme/semantic/color/ColorScheme;-><clinit>()V
 HSPLcom/embarrasdf/palette/theme/semantic/color/ColorScheme;-><init>(JJJJJJJJJFF)V
@@ -14951,7 +14969,7 @@ PLkotlinx/coroutines/JobSupport;->isScopedCoroutine()Z
 PLkotlinx/coroutines/JobSupport;->makeCancelling(Ljava/lang/Object;)Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport;->makeCompletingOnce$kotlinx_coroutines_core(Ljava/lang/Object;)Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport;->minusKey(Lkotlin/coroutines/CoroutineContext$Key;)Lkotlin/coroutines/CoroutineContext;
-HPLkotlinx/coroutines/JobSupport;->nextChild(Lkotlinx/coroutines/internal/LockFreeLinkedListNode;)Lkotlinx/coroutines/ChildHandleNode;
+PLkotlinx/coroutines/JobSupport;->nextChild(Lkotlinx/coroutines/internal/LockFreeLinkedListNode;)Lkotlinx/coroutines/ChildHandleNode;
 PLkotlinx/coroutines/JobSupport;->notifyCancelling(Lkotlinx/coroutines/NodeList;Ljava/lang/Throwable;)V
 PLkotlinx/coroutines/JobSupport;->notifyCompletion(Lkotlinx/coroutines/NodeList;Ljava/lang/Throwable;)V
 PLkotlinx/coroutines/JobSupport;->onCancelling(Ljava/lang/Throwable;)V
