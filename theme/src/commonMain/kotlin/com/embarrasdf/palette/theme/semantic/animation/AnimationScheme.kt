@@ -3,6 +3,7 @@ package com.embarrasdf.palette.theme.semantic.animation
 import com.embarrasdf.palette.theme.semantic.animation.finite.FiniteAnimationScheme
 import com.embarrasdf.palette.theme.semantic.animation.finite.PaletteFiniteAnimationScheme
 import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimationScheme
+import com.embarrasdf.palette.theme.semantic.animation.infinite.PaletteInfiniteAnimationScheme
 
 /**
  * Value-animation tokens, grouped by spec family: [finite] holds terminating-spec presets, [infinite]
@@ -10,10 +11,10 @@ import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimatio
  */
 data class AnimationScheme(
     val finite: FiniteAnimationScheme = PaletteFiniteAnimationScheme,
-    val infinite: InfiniteAnimationScheme = InfiniteAnimationScheme,
+    val infinite: InfiniteAnimationScheme = PaletteInfiniteAnimationScheme,
 )
 
 val PaletteAnimationScheme = AnimationScheme(
     finite = PaletteFiniteAnimationScheme,
-    infinite = InfiniteAnimationScheme,
+    infinite = PaletteInfiniteAnimationScheme,
 )
