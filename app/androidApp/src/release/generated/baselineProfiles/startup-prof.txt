@@ -2929,7 +2929,6 @@ HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope()Landroi
 HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope(I)Landroidx/compose/runtime/PersistentCompositionLocalMap;
 HSPLandroidx/compose/runtime/GapComposer;->doCompose-aFTiNEg(Landroidx/collection/MutableScatterMap;Lkotlin/jvm/functions/Function2;)V
 PLandroidx/compose/runtime/GapComposer;->doRecordDownsFor(II)V
-HSPLandroidx/compose/runtime/GapComposer;->end(Z)V
 HSPLandroidx/compose/runtime/GapComposer;->endDefaults()V
 HSPLandroidx/compose/runtime/GapComposer;->endGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endMovableGroup()V
@@ -2942,7 +2941,6 @@ HSPLandroidx/compose/runtime/GapComposer;->endRestartGroup()Landroidx/compose/ru
 HSPLandroidx/compose/runtime/GapComposer;->endReusableGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endRoot()V
 HSPLandroidx/compose/runtime/GapComposer;->ensureWriter()V
-HSPLandroidx/compose/runtime/GapComposer;->enterGroup(ZLandroidx/compose/runtime/GapPending;)V
 HSPLandroidx/compose/runtime/GapComposer;->enterRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)V
 HSPLandroidx/compose/runtime/GapComposer;->exitRecomposeScope(Landroidx/compose/runtime/RecomposeScopeImpl;)Lkotlin/jvm/functions/Function1;
 HSPLandroidx/compose/runtime/GapComposer;->finalizeCompose()V
@@ -3890,7 +3888,6 @@ HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup$default(L
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->markGroup(I)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveFrom(Landroidx/compose/runtime/composer/gapbuffer/SlotTable;IZ)Ljava/util/List;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveGroupGapTo(I)V
-HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->moveSlotGapTo(II)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(I)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->node(Landroidx/compose/runtime/composer/gapbuffer/GapAnchor;)Ljava/lang/Object;
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->nodeIndex([II)I
@@ -10872,15 +10869,6 @@ Landroidx/profileinstaller/ProfileInstallerInitializer$Handler28Impl;
 HSPLandroidx/profileinstaller/ProfileInstallerInitializer$Handler28Impl;->createAsync(Landroid/os/Looper;)Landroid/os/Handler;
 Landroidx/profileinstaller/ProfileInstallerInitializer$Result;
 HSPLandroidx/profileinstaller/ProfileInstallerInitializer$Result;-><init>()V
-PLandroidx/profileinstaller/ProfileVerifier;-><clinit>()V
-PLandroidx/profileinstaller/ProfileVerifier;->getPackageLastUpdateTime(Landroid/content/Context;)J
-PLandroidx/profileinstaller/ProfileVerifier;->setCompilationStatus(IZZZ)Landroidx/profileinstaller/ProfileVerifier$CompilationStatus;
-PLandroidx/profileinstaller/ProfileVerifier;->writeProfileVerification(Landroid/content/Context;Z)Landroidx/profileinstaller/ProfileVerifier$CompilationStatus;
-PLandroidx/profileinstaller/ProfileVerifier$Cache;-><init>(IIJJ)V
-PLandroidx/profileinstaller/ProfileVerifier$Cache;->equals(Ljava/lang/Object;)Z
-PLandroidx/profileinstaller/ProfileVerifier$Cache;->readFromFile(Ljava/io/File;)Landroidx/profileinstaller/ProfileVerifier$Cache;
-PLandroidx/profileinstaller/ProfileVerifier$Cache;->writeOnFile(Ljava/io/File;)V
-PLandroidx/profileinstaller/ProfileVerifier$CompilationStatus;-><init>(IZZZ)V
 Landroidx/savedstate/R$id;
 Landroidx/savedstate/Recreator;
 HSPLandroidx/savedstate/Recreator;-><clinit>()V
@@ -14781,7 +14769,7 @@ PLkotlinx/coroutines/JobSupport$Finishing;->addExceptionLocked(Ljava/lang/Throwa
 PLkotlinx/coroutines/JobSupport$Finishing;->allocateList()Ljava/util/ArrayList;
 PLkotlinx/coroutines/JobSupport$Finishing;->getExceptionsHolder()Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport$Finishing;->getList()Lkotlinx/coroutines/NodeList;
-PLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
+HPLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_exceptionsHolder$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_isCompleting$volatile$FU()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_rootCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
