@@ -14,7 +14,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.demo.control.Control
@@ -24,8 +23,6 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
-import com.embarrasdf.palette.theme.semantic.shape.toComposeShape
 import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimationToken
 import com.embarrasdf.palette.theme.semantic.motion.infinite.InfiniteEffect
 import com.embarrasdf.palette.theme.semantic.motion.infinite.InfiniteEffectType
@@ -72,7 +69,6 @@ fun InfiniteScreen(
                     modifier = Modifier
                         .size(96.dp)
                         .then(effectModifier)
-                        .clip(ShapeToken.Secondary.toComposeShape())
                         .background(PaletteTheme.semantic.color.primary),
                 )
             }
