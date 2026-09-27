@@ -50,7 +50,7 @@ private fun <T : Any> rememberEnterTransitionSpec(): AnimatedContentTransitionSc
     val motion = PaletteTheme.semantic.motion
     val animation = PaletteTheme.semantic.animation
     val easings = PaletteTheme.primitive.easing
-    return { motion.enter.toContentTransform(animation, easings, forward = true) }
+    return { motion.transition.enter.toContentTransform(animation, easings, forward = true) }
 }
 
 @Composable
@@ -58,7 +58,7 @@ private fun <T : Any> rememberExitTransitionSpec(): AnimatedContentTransitionSco
     val motion = PaletteTheme.semantic.motion
     val animation = PaletteTheme.semantic.animation
     val easings = PaletteTheme.primitive.easing
-    return { motion.exit.toContentTransform(animation, easings, forward = false) }
+    return { motion.transition.exit.toContentTransform(animation, easings, forward = false) }
 }
 
 @Composable
@@ -66,5 +66,5 @@ private fun <T : Any> rememberPredictiveExitTransitionSpec(): AnimatedContentTra
     val motion = PaletteTheme.semantic.motion
     val animation = PaletteTheme.semantic.animation
     val easings = PaletteTheme.primitive.easing
-    return { motion.predictiveExit.toContentTransform(animation, easings, forward = false) }
+    return { motion.transition.predictiveExit.toContentTransform(animation, easings, forward = false) }
 }

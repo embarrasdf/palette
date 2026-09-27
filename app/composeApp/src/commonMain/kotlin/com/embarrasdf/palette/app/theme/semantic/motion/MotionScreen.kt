@@ -28,11 +28,11 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.semantic.motion.MotionToken
-import com.embarrasdf.palette.theme.semantic.motion.copy
 import com.embarrasdf.palette.theme.semantic.motion.toEnter
 import com.embarrasdf.palette.theme.semantic.motion.toExit
-import com.embarrasdf.palette.theme.semantic.motion.toTransition
+import com.embarrasdf.palette.theme.semantic.motion.transition.TransitionToken
+import com.embarrasdf.palette.theme.semantic.motion.transition.copy
+import com.embarrasdf.palette.theme.semantic.motion.transition.toTransition
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -62,7 +62,7 @@ fun MotionScreen(
         ) {
             val animation = PaletteTheme.semantic.animation
             val easings = PaletteTheme.primitive.easing
-            val transition = state.token.toTransition(PaletteTheme.semantic.motion)
+            val transition = state.token.toTransition(PaletteTheme.semantic.motion.transition)
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -90,7 +90,7 @@ fun MotionScreen(
 fun rememberMotionScreenState(): MotionScreenState {
     return rememberSaveable(saver = MotionScreenStateSaver) {
         MotionScreenState(
-            tokenInitial = MotionToken.Enter,
+            tokenInitial = TransitionToken.Enter,
             visibleInitial = true,
         )
     }
@@ -98,7 +98,7 @@ fun rememberMotionScreenState(): MotionScreenState {
 
 @Stable
 class MotionScreenState(
-    tokenInitial: MotionToken,
+    tokenInitial: TransitionToken,
     visibleInitial: Boolean,
 ) {
     var token by mutableStateOf(tokenInitial)
@@ -119,7 +119,7 @@ val MotionScreenStateSaver = mapSaverSafe(
     },
     restore = { map ->
         MotionScreenState(
-            tokenInitial = map[tokenKey] as MotionToken,
+            tokenInitial = map[tokenKey] as TransitionToken,
             visibleInitial = map[visibleKey] as Boolean,
         )
     }
@@ -142,20 +142,22 @@ class MotionScreenControl(
 ) {
     val tokenControl = enumControl(
         name = "Token",
-        values = { MotionToken.entries },
+        values = { TransitionToken.entries },
         selectedValue = { state.token },
         onValueChange = { state.token = it },
     )
 
     private val effectsControl = Control.DynamicList(
         name = "Transition Effects",
-        items = { state.token.toTransition(themeController.semantic.motion) },
+        items = { state.token.toTransition(themeController.semantic.motion.transition) },
         onItemsChange = { effects ->
             themeController.updateSemantic {
                 it.copy(
                     motion = it.motion.copy(
-                        token = state.token,
-                        transition = effects,
+                        transition = it.motion.transition.copy(
+                            token = state.token,
+                            transition = effects,
+                        ),
                     ),
                 )
             }
