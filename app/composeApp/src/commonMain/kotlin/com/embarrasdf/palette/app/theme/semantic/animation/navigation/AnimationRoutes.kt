@@ -25,3 +25,9 @@ data object AnimationCatalogRoute : AnimationRoute {
 data object FiniteRoute : AnimationRoute {
     override val pathSegment = "finite".toPathSegment()
 }
+
+@Serializable
+@SerialName("animation-infinite")
+data object InfiniteRoute : AnimationRoute {
+    override val pathSegment = "infinite".toPathSegment()
+}

@@ -14,6 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.util.lerp
 import com.embarrasdf.palette.components.demo.control.Control
@@ -133,34 +135,43 @@ fun AnimationDemoSubject(
             .fillMaxSize()
             .background(PaletteTheme.semantic.color.surface)
     ) {
-        val p = progress.value
-        when (subject) {
-            AnimationDemoSubject.Ball -> {
-                val radius = size.minDimension * 0.08f
-                val cx = lerp(radius, size.width - radius, p)
-                drawCircle(color = color, radius = radius, center = Offset(cx, size.height / 2f))
-            }
+        drawAnimationSubject(subject, progress.value, color)
+    }
+}
 
-            AnimationDemoSubject.Scale -> {
-                val minSide = size.minDimension * 0.12f
-                val maxSide = size.minDimension * 0.6f
-                val side = lerp(minSide, maxSide, p)
-                drawRect(
-                    color = color,
-                    topLeft = Offset((size.width - side) / 2f, (size.height - side) / 2f),
-                    size = Size(side, side),
-                )
-            }
+/** Draws an [AnimationDemoSubject] for the given 0f..1f [progress]. Shared by the finite and
+ *  infinite demo subjects. */
+internal fun DrawScope.drawAnimationSubject(
+    subject: AnimationDemoSubject,
+    progress: Float,
+    color: Color,
+) {
+    when (subject) {
+        AnimationDemoSubject.Ball -> {
+            val radius = size.minDimension * 0.08f
+            val cx = lerp(radius, size.width - radius, progress)
+            drawCircle(color = color, radius = radius, center = Offset(cx, size.height / 2f))
+        }
 
-            AnimationDemoSubject.Fade -> {
-                val side = size.minDimension * 0.4f
-                drawRect(
-                    color = color,
-                    topLeft = Offset((size.width - side) / 2f, (size.height - side) / 2f),
-                    size = Size(side, side),
-                    alpha = p,
-                )
-            }
+        AnimationDemoSubject.Scale -> {
+            val minSide = size.minDimension * 0.12f
+            val maxSide = size.minDimension * 0.6f
+            val side = lerp(minSide, maxSide, progress)
+            drawRect(
+                color = color,
+                topLeft = Offset((size.width - side) / 2f, (size.height - side) / 2f),
+                size = Size(side, side),
+            )
+        }
+
+        AnimationDemoSubject.Fade -> {
+            val side = size.minDimension * 0.4f
+            drawRect(
+                color = color,
+                topLeft = Offset((size.width - side) / 2f, (size.height - side) / 2f),
+                size = Size(side, side),
+                alpha = progress,
+            )
         }
     }
 }

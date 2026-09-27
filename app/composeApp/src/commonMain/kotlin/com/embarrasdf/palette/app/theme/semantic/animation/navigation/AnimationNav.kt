@@ -3,9 +3,7 @@ package com.embarrasdf.palette.app.theme.semantic.animation.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.semantic.animation.FiniteAnimationScreen
-import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.InfiniteGraph
-import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteEntryProvider
-import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteNavGraph
+import com.embarrasdf.palette.app.theme.semantic.animation.InfiniteAnimationScreen
 import com.embarrasdf.palette.navigation.NavController
 import com.embarrasdf.palette.navigation.NavGraphBuilder
 import com.embarrasdf.palette.navigation.NavKey
@@ -17,7 +15,7 @@ fun NavGraphBuilder.animationNavGraph() = navGraph(
 ) {
     route(AnimationCatalogRoute)
     route(FiniteRoute)
-    infiniteNavGraph()
+    route(InfiniteRoute)
 }
 
 fun EntryProviderScope<NavKey>.animationEntryProvider(
@@ -28,7 +26,7 @@ fun EntryProviderScope<NavKey>.animationEntryProvider(
         onItemClick = { item ->
             when (item) {
                 Animation.Finite -> navController.navigate(FiniteRoute)
-                Animation.Infinite -> navController.navigate(InfiniteGraph)
+                Animation.Infinite -> navController.navigate(InfiniteRoute)
             }
         },
         title = "Animation",
@@ -42,5 +40,10 @@ fun EntryProviderScope<NavKey>.animationEntryProvider(
         )
     }
 
-    infiniteEntryProvider(navController)
+    entry<InfiniteRoute> {
+        InfiniteAnimationScreen(
+            themeController = themeController,
+            onNavigateUp = navController::goBack,
+        )
+    }
 }

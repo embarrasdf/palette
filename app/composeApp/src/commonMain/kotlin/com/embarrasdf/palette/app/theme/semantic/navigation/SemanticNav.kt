@@ -16,7 +16,9 @@ import com.embarrasdf.palette.app.theme.semantic.format.navigation.formatsEntryP
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.InteractionGraph
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.interactionEntryProvider
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.interactionNavGraph
-import com.embarrasdf.palette.app.theme.semantic.motion.MotionScreen
+import com.embarrasdf.palette.app.theme.semantic.motion.navigation.MotionGraph
+import com.embarrasdf.palette.app.theme.semantic.motion.navigation.motionEntryProvider
+import com.embarrasdf.palette.app.theme.semantic.motion.navigation.motionNavGraph
 import com.embarrasdf.palette.app.theme.semantic.shape.ShapeScreen
 import com.embarrasdf.palette.app.theme.semantic.typography.TypographyScreen
 import com.embarrasdf.palette.navigation.NavController
@@ -34,7 +36,7 @@ fun NavGraphBuilder.semanticNavGraph() = navGraph(
     dimensionNavGraph()
     formatNavGraph()
     interactionNavGraph()
-    route(MotionRoute)
+    motionNavGraph()
     route(ShapeRoute)
     route(TypographyRoute)
 }
@@ -51,7 +53,7 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
                 SemanticItem.Dimension -> navController.navigate(DimensionGraph)
                 SemanticItem.Format -> navController.navigate(FormatsGraph)
                 SemanticItem.Interaction -> navController.navigate(InteractionGraph)
-                SemanticItem.Motion -> navController.navigate(MotionRoute)
+                SemanticItem.Motion -> navController.navigate(MotionGraph)
                 SemanticItem.Shape -> navController.navigate(ShapeRoute)
                 SemanticItem.Typography -> navController.navigate(TypographyRoute)
             }
@@ -75,12 +77,7 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
 
     interactionEntryProvider(navController, themeController)
 
-    entry<MotionRoute> {
-        MotionScreen(
-            themeController = themeController,
-            onNavigateUp = navController::goBack,
-        )
-    }
+    motionEntryProvider(navController, themeController)
 
     entry<ShapeRoute> {
         ShapeScreen(
