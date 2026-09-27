@@ -5,12 +5,12 @@ import com.embarrasdf.palette.components.layout.catalog.CatalogItem
 enum class SemanticItem : CatalogItem {
     Animation,
     Color,
-    Typography,
-    Shape,
     Dimension,
-    Interaction,
     Format,
+    Interaction,
     Motion,
+    Shape,
+    Typography,
     ;
 
     override val title = name

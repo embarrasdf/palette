@@ -7,7 +7,6 @@ import com.embarrasdf.palette.app.theme.semantic.animation.navigation.AnimationG
 import com.embarrasdf.palette.app.theme.semantic.animation.navigation.animationEntryProvider
 import com.embarrasdf.palette.app.theme.semantic.animation.navigation.animationNavGraph
 import com.embarrasdf.palette.app.theme.semantic.color.ColorScreen
-import com.embarrasdf.palette.app.theme.semantic.motion.MotionScreen
 import com.embarrasdf.palette.app.theme.semantic.dimension.navigation.DimensionGraph
 import com.embarrasdf.palette.app.theme.semantic.dimension.navigation.dimensionEntryProvider
 import com.embarrasdf.palette.app.theme.semantic.dimension.navigation.dimensionNavGraph
@@ -17,6 +16,7 @@ import com.embarrasdf.palette.app.theme.semantic.format.navigation.formatsEntryP
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.InteractionGraph
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.interactionEntryProvider
 import com.embarrasdf.palette.app.theme.semantic.interaction.navigation.interactionNavGraph
+import com.embarrasdf.palette.app.theme.semantic.motion.MotionScreen
 import com.embarrasdf.palette.app.theme.semantic.shape.ShapeScreen
 import com.embarrasdf.palette.app.theme.semantic.typography.TypographyScreen
 import com.embarrasdf.palette.navigation.NavController
@@ -29,14 +29,14 @@ fun NavGraphBuilder.semanticNavGraph() = navGraph(
     start = SemanticCatalogRoute,
 ) {
     route(SemanticCatalogRoute)
+    animationNavGraph()
     route(ColorRoute)
+    dimensionNavGraph()
+    formatNavGraph()
+    interactionNavGraph()
+    route(MotionRoute)
     route(ShapeRoute)
     route(TypographyRoute)
-    route(MotionRoute)
-    animationNavGraph()
-    dimensionNavGraph()
-    interactionNavGraph()
-    formatNavGraph()
 }
 
 fun EntryProviderScope<NavKey>.semanticEntryProvider(
@@ -46,22 +46,37 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
     catalogEntry<SemanticCatalogRoute, SemanticItem>(
         onItemClick = { item ->
             when (item) {
-                SemanticItem.Color -> navController.navigate(ColorRoute)
-                SemanticItem.Typography -> navController.navigate(TypographyRoute)
-                SemanticItem.Shape -> navController.navigate(ShapeRoute)
-                SemanticItem.Dimension -> navController.navigate(DimensionGraph)
-                SemanticItem.Interaction -> navController.navigate(InteractionGraph)
-                SemanticItem.Format -> navController.navigate(FormatsGraph)
                 SemanticItem.Animation -> navController.navigate(AnimationGraph)
+                SemanticItem.Color -> navController.navigate(ColorRoute)
+                SemanticItem.Dimension -> navController.navigate(DimensionGraph)
+                SemanticItem.Format -> navController.navigate(FormatsGraph)
+                SemanticItem.Interaction -> navController.navigate(InteractionGraph)
                 SemanticItem.Motion -> navController.navigate(MotionRoute)
+                SemanticItem.Shape -> navController.navigate(ShapeRoute)
+                SemanticItem.Typography -> navController.navigate(TypographyRoute)
             }
         },
         title = "Semantic",
         onNavigateUp = navController::goBack,
     )
 
+    animationEntryProvider(navController, themeController)
+
     entry<ColorRoute> {
         ColorScreen(
+            themeController = themeController,
+            onNavigateUp = navController::goBack,
+        )
+    }
+
+    dimensionEntryProvider(navController, themeController)
+
+    formatsEntryProvider(navController, themeController)
+
+    interactionEntryProvider(navController, themeController)
+
+    entry<MotionRoute> {
+        MotionScreen(
             themeController = themeController,
             onNavigateUp = navController::goBack,
         )
@@ -80,16 +95,4 @@ fun EntryProviderScope<NavKey>.semanticEntryProvider(
             onNavigateUp = navController::goBack,
         )
     }
-
-    entry<MotionRoute> {
-        MotionScreen(
-            themeController = themeController,
-            onNavigateUp = navController::goBack,
-        )
-    }
-
-    animationEntryProvider(navController, themeController)
-    dimensionEntryProvider(navController, themeController)
-    interactionEntryProvider(navController, themeController)
-    formatsEntryProvider(navController, themeController)
 }
