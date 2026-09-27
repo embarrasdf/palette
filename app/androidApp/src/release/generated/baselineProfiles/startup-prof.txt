@@ -3249,6 +3249,7 @@ PLandroidx/compose/runtime/PausableMonotonicFrameClock$withFrameNanos$1;->invoke
 Landroidx/compose/runtime/PersistentCompositionLocalMap;
 HSPLandroidx/compose/runtime/PersistentCompositionLocalMap;->getCurrentValue(Landroidx/compose/runtime/CompositionLocal;)Ljava/lang/Object;
 Landroidx/compose/runtime/PersistentCompositionLocalMap$Builder;
+Landroidx/compose/runtime/PreconditionsKt;
 Landroidx/compose/runtime/PrimitiveSnapshotStateKt;
 HSPLandroidx/compose/runtime/PrimitiveSnapshotStateKt;->mutableFloatStateOf(F)Landroidx/compose/runtime/MutableFloatState;
 Landroidx/compose/runtime/PrimitiveSnapshotStateKt__SnapshotFloatStateKt;
@@ -3915,7 +3916,6 @@ HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->sourceInformationOf
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startData(ILjava/lang/Object;Ljava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup()V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup(ILjava/lang/Object;)V
-HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startGroup(ILjava/lang/Object;ZLjava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->startNode(ILjava/lang/Object;)V
 HSPLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->update(Ljava/lang/Object;)Ljava/lang/Object;
 PLandroidx/compose/runtime/composer/gapbuffer/SlotWriter;->updateAnchors(II)V
@@ -6073,7 +6073,7 @@ PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->access$getUsePathForClip$p(
 PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->addSubLayer(Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->configureOutlineAndClip()V
 HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->draw$ui_graphics(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-PLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
+HPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->drawWithChildTracking(Landroidx/compose/ui/graphics/drawscope/DrawScope;)V
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getAlpha()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->getShadowElevation()F
 HSPLandroidx/compose/ui/graphics/layer/GraphicsLayer;->obtainAndroidOutline()Landroid/graphics/Outline;
@@ -7252,7 +7252,6 @@ HSPLandroidx/compose/ui/node/NodeCoordinator;->access$headNode(Landroidx/compose
 HSPLandroidx/compose/ui/node/NodeCoordinator;->access$setMeasurementConstraints-BRTryo0(Landroidx/compose/ui/node/NodeCoordinator;J)V
 HPLandroidx/compose/ui/node/NodeCoordinator;->draw(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 PLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
-HPLandroidx/compose/ui/node/NodeCoordinator;->drawContainedDrawModifiers(Landroidx/compose/ui/graphics/Canvas;Landroidx/compose/ui/graphics/layer/GraphicsLayer;)V
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getAlignmentLinesOwner()Landroidx/compose/ui/node/AlignmentLinesOwner;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getCoordinates()Landroidx/compose/ui/layout/LayoutCoordinates;
 HSPLandroidx/compose/ui/node/NodeCoordinator;->getDensity()F
@@ -15298,7 +15297,7 @@ HSPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->get_prev$volatile$FU()L
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->get_removedRef$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 HSPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->isRemoved()Z
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->remove()Z
-HPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removeOrNext()Lkotlinx/coroutines/internal/LockFreeLinkedListNode;
+PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removeOrNext()Lkotlinx/coroutines/internal/LockFreeLinkedListNode;
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removed()Lkotlinx/coroutines/internal/Removed;
 Lkotlinx/coroutines/internal/LockFreeTaskQueue;
 HSPLkotlinx/coroutines/internal/LockFreeTaskQueue;-><clinit>()V
