@@ -2,7 +2,7 @@ package com.embarrasdf.palette.app.theme.semantic.animation.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
-import com.embarrasdf.palette.app.theme.semantic.animation.AnimationScreen
+import com.embarrasdf.palette.app.theme.semantic.animation.FiniteAnimationScreen
 import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.InfiniteGraph
 import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteEntryProvider
 import com.embarrasdf.palette.app.theme.semantic.animation.navigation.infinite.infiniteNavGraph
@@ -36,7 +36,7 @@ fun EntryProviderScope<NavKey>.animationEntryProvider(
     )
 
     entry<FiniteRoute> {
-        AnimationScreen(
+        FiniteAnimationScreen(
             themeController = themeController,
             onNavigateUp = navController::goBack,
         )

@@ -33,12 +33,12 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun AnimationScreen(
+fun FiniteAnimationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
 ) {
-    val state = rememberAnimationScreenState(themeState = themeController)
-    val control = rememberAnimationScreenControl(state = state, themeController = themeController)
+    val state = rememberFiniteAnimationScreenState(themeState = themeController)
+    val control = rememberFiniteAnimationScreenControl(state = state, themeController = themeController)
 
     Scaffold(
         topBar = {
@@ -67,15 +67,15 @@ fun AnimationScreen(
 }
 
 @Composable
-fun rememberAnimationScreenState(
+fun rememberFiniteAnimationScreenState(
     themeState: ThemeState,
-): AnimationScreenState {
+): FiniteAnimationScreenState {
     return rememberSaveable(
         themeState,
-        saver = AnimationScreenStateSaver(themeState),
+        saver = FiniteAnimationScreenStateSaver(themeState),
     ) {
         val finite = themeState.semantic.animation.finite
-        AnimationScreenState(
+        FiniteAnimationScreenState(
             themeState = themeState,
             defaultState = FiniteAnimationSpecState.from(finite.default),
             fastState = FiniteAnimationSpecState.from(finite.fast),
@@ -87,7 +87,7 @@ fun rememberAnimationScreenState(
 }
 
 @Stable
-class AnimationScreenState(
+class FiniteAnimationScreenState(
     val themeState: ThemeState,
     val defaultState: FiniteAnimationSpecState,
     val fastState: FiniteAnimationSpecState,
@@ -114,7 +114,7 @@ private const val slowKey = "slow"
 private const val tokenKey = "token"
 private const val demoSubjectKey = "demoSubject"
 
-fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun FiniteAnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
             defaultKey to save(state.defaultState, FiniteAnimationSpecStateSaver, this),
@@ -125,7 +125,7 @@ fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         )
     },
     restore = { map ->
-        AnimationScreenState(
+        FiniteAnimationScreenState(
             themeState = themeState,
             defaultState = restore(map[defaultKey], FiniteAnimationSpecStateSaver)!!,
             fastState = restore(map[fastKey], FiniteAnimationSpecStateSaver)!!,
@@ -137,18 +137,18 @@ fun AnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
 )
 
 @Composable
-fun rememberAnimationScreenControl(
-    state: AnimationScreenState,
+fun rememberFiniteAnimationScreenControl(
+    state: FiniteAnimationScreenState,
     themeController: ThemeController,
-): AnimationScreenControl {
+): FiniteAnimationScreenControl {
     return remember(state, themeController) {
-        AnimationScreenControl(state = state, themeController = themeController)
+        FiniteAnimationScreenControl(state = state, themeController = themeController)
     }
 }
 
 @Stable
-class AnimationScreenControl(
-    val state: AnimationScreenState,
+class FiniteAnimationScreenControl(
+    val state: FiniteAnimationScreenState,
     val themeController: ThemeController,
 ) {
     private fun specControl(token: AnimationToken): FiniteAnimationSpecControl {
