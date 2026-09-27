@@ -4,7 +4,7 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -41,17 +41,21 @@ fun InfiniteEffect.toModifier(
     animationScheme: AnimationScheme,
     easings: Map<EasingPrimitiveToken, Easing>,
 ): Modifier {
-    val spec = animation.toSpec(animationScheme).toComposeSpec<Float>(easings)
+    val infiniteSpec = animation.toSpec(animationScheme)
     return when (this) {
         is InfiniteEffect.Spin -> {
-            val transition = rememberInfiniteTransition(label = "Spin")
-            val angle by transition.animateFloat(
-                initialValue = 0f,
-                targetValue = 360f,
-                animationSpec = spec,
-                label = "Spin.angle",
-            )
-            Modifier.graphicsLayer { rotationZ = angle }
+            // Key on the spec value so a tempo/spec change restarts the transition;
+            // InfiniteTransition.animateFloat otherwise ignores later animationSpec changes.
+            val angle = key(infiniteSpec) {
+                val transition = rememberInfiniteTransition(label = "Spin")
+                transition.animateFloat(
+                    initialValue = 0f,
+                    targetValue = 360f,
+                    animationSpec = infiniteSpec.toComposeSpec<Float>(easings),
+                    label = "Spin.angle",
+                )
+            }
+            Modifier.graphicsLayer { rotationZ = angle.value }
         }
     }
 }

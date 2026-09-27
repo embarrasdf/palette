@@ -6,7 +6,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
@@ -23,13 +23,17 @@ fun InfiniteAnimationDemoSubject(
     modifier: Modifier = Modifier,
 ) {
     val easings = PaletteTheme.primitive.easing
-    val transition = rememberInfiniteTransition(label = "InfiniteAnimationDemo")
-    val progress by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = spec.toComposeSpec(easings),
-        label = "progress",
-    )
+    // Key on the spec value so edits restart the transition; InfiniteTransition.animateFloat
+    // otherwise ignores later animationSpec changes.
+    val progress = key(spec) {
+        val transition = rememberInfiniteTransition(label = "InfiniteAnimationDemo")
+        transition.animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = spec.toComposeSpec<Float>(easings),
+            label = "progress",
+        )
+    }
 
     val color = PaletteTheme.semantic.color.primary
     Canvas(
@@ -37,6 +41,6 @@ fun InfiniteAnimationDemoSubject(
             .fillMaxSize()
             .background(PaletteTheme.semantic.color.surface)
     ) {
-        drawAnimationSubject(subject, progress, color)
+        drawAnimationSubject(subject, progress.value, color)
     }
 }
