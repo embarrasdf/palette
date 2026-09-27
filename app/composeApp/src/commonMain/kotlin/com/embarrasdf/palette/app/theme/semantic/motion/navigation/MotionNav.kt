@@ -1,47 +1,47 @@
-package com.embarrasdf.palette.app.theme.semantic.animation.navigation
+package com.embarrasdf.palette.app.theme.semantic.motion.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
-import com.embarrasdf.palette.app.theme.semantic.animation.FiniteAnimationScreen
-import com.embarrasdf.palette.app.theme.semantic.animation.InfiniteAnimationScreen
+import com.embarrasdf.palette.app.theme.semantic.motion.InfiniteScreen
+import com.embarrasdf.palette.app.theme.semantic.motion.TransitionScreen
 import com.embarrasdf.palette.navigation.NavController
 import com.embarrasdf.palette.navigation.NavGraphBuilder
 import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.theme.control.ThemeController
 
-fun NavGraphBuilder.animationNavGraph() = navGraph(
-    root = AnimationGraph,
-    start = AnimationCatalogRoute,
+fun NavGraphBuilder.motionNavGraph() = navGraph(
+    root = MotionGraph,
+    start = MotionCatalogRoute,
 ) {
-    route(AnimationCatalogRoute)
-    route(FiniteRoute)
+    route(MotionCatalogRoute)
     route(InfiniteRoute)
+    route(TransitionRoute)
 }
 
-fun EntryProviderScope<NavKey>.animationEntryProvider(
+fun EntryProviderScope<NavKey>.motionEntryProvider(
     navController: NavController,
     themeController: ThemeController,
 ) {
-    catalogEntry<AnimationCatalogRoute, Animation>(
+    catalogEntry<MotionCatalogRoute, Motion>(
         onItemClick = { item ->
             when (item) {
-                Animation.Finite -> navController.navigate(FiniteRoute)
-                Animation.Infinite -> navController.navigate(InfiniteRoute)
+                Motion.Infinite -> navController.navigate(InfiniteRoute)
+                Motion.Transition -> navController.navigate(TransitionRoute)
             }
         },
-        title = "Animation",
+        title = "Motion",
         onNavigateUp = navController::goBack,
     )
 
-    entry<FiniteRoute> {
-        FiniteAnimationScreen(
+    entry<InfiniteRoute> {
+        InfiniteScreen(
             themeController = themeController,
             onNavigateUp = navController::goBack,
         )
     }
 
-    entry<InfiniteRoute> {
-        InfiniteAnimationScreen(
+    entry<TransitionRoute> {
+        TransitionScreen(
             themeController = themeController,
             onNavigateUp = navController::goBack,
         )

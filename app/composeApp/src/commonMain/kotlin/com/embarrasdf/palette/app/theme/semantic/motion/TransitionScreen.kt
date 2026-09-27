@@ -37,17 +37,17 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun MotionScreen(
+fun TransitionScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
 ) {
-    val state = rememberMotionScreenState()
-    val control = rememberMotionScreenControl(state = state, themeController = themeController)
+    val state = rememberTransitionScreenState()
+    val control = rememberTransitionScreenControl(state = state, themeController = themeController)
 
     Scaffold(
         topBar = {
             DemoTopBar(
-                title = "Motion",
+                title = "Transition",
                 onNavigateUp = onNavigateUp,
                 onThemeClick = {},
                 actions = {},
@@ -87,9 +87,9 @@ fun MotionScreen(
 }
 
 @Composable
-fun rememberMotionScreenState(): MotionScreenState {
-    return rememberSaveable(saver = MotionScreenStateSaver) {
-        MotionScreenState(
+fun rememberTransitionScreenState(): TransitionScreenState {
+    return rememberSaveable(saver = TransitionScreenStateSaver) {
+        TransitionScreenState(
             tokenInitial = TransitionToken.Enter,
             visibleInitial = true,
         )
@@ -97,7 +97,7 @@ fun rememberMotionScreenState(): MotionScreenState {
 }
 
 @Stable
-class MotionScreenState(
+class TransitionScreenState(
     tokenInitial: TransitionToken,
     visibleInitial: Boolean,
 ) {
@@ -110,7 +110,7 @@ class MotionScreenState(
 private const val tokenKey = "token"
 private const val visibleKey = "visible"
 
-val MotionScreenStateSaver = mapSaverSafe(
+val TransitionScreenStateSaver = mapSaverSafe(
     save = { state ->
         mapOf(
             tokenKey to state.token,
@@ -118,7 +118,7 @@ val MotionScreenStateSaver = mapSaverSafe(
         )
     },
     restore = { map ->
-        MotionScreenState(
+        TransitionScreenState(
             tokenInitial = map[tokenKey] as TransitionToken,
             visibleInitial = map[visibleKey] as Boolean,
         )
@@ -126,18 +126,18 @@ val MotionScreenStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberMotionScreenControl(
-    state: MotionScreenState,
+fun rememberTransitionScreenControl(
+    state: TransitionScreenState,
     themeController: ThemeController,
-): MotionScreenControl {
+): TransitionScreenControl {
     return remember(state, themeController) {
-        MotionScreenControl(state = state, themeController = themeController)
+        TransitionScreenControl(state = state, themeController = themeController)
     }
 }
 
 @Stable
-class MotionScreenControl(
-    val state: MotionScreenState,
+class TransitionScreenControl(
+    val state: TransitionScreenState,
     val themeController: ThemeController,
 ) {
     val tokenControl = enumControl(
