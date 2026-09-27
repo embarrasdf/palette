@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -28,6 +27,8 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
+import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
+import com.embarrasdf.palette.theme.semantic.shape.toComposeShape
 import com.embarrasdf.palette.theme.semantic.motion.toEnter
 import com.embarrasdf.palette.theme.semantic.motion.toExit
 import com.embarrasdf.palette.theme.semantic.motion.transition.TransitionToken
@@ -77,7 +78,7 @@ fun TransitionScreen(
                     Box(
                         modifier = Modifier
                             .size(96.dp)
-                            .clip(RoundedCornerShape(16.dp))
+                            .clip(ShapeToken.Secondary.toComposeShape())
                             .background(PaletteTheme.semantic.color.primary),
                     )
                 }
