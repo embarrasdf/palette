@@ -51,7 +51,7 @@ fun transitionEffectControl(
     return Control.ControlColumn(
         name = "Transition",
         expandedInitial = true,
-        indent = false,
+        indent = true,
         controls = {
             buildList<Control> {
                 add(typeControl)
