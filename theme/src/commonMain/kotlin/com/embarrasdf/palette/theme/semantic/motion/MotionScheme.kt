@@ -1,22 +1,17 @@
 package com.embarrasdf.palette.theme.semantic.motion
 
+import com.embarrasdf.palette.theme.semantic.motion.infinite.InfiniteMotionScheme
+import com.embarrasdf.palette.theme.semantic.motion.infinite.PaletteInfiniteMotionScheme
+import com.embarrasdf.palette.theme.semantic.motion.transition.PaletteTransitionScheme
+import com.embarrasdf.palette.theme.semantic.motion.transition.TransitionScheme
+
+/**
+ * Motion choreography, grouped by family: [transition] holds one-shot navigation transitions,
+ * [infinite] holds continuous looping effects.
+ */
 data class MotionScheme(
-    val enter: Transition,
-    val exit: Transition,
-    val predictiveExit: Transition,
+    val transition: TransitionScheme = PaletteTransitionScheme,
+    val infinite: InfiniteMotionScheme = PaletteInfiniteMotionScheme,
 )
 
-val PaletteMotionScheme = MotionScheme(
-    enter = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
-    exit = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
-    predictiveExit = listOf(TransitionEffect.Fade(), TransitionEffect.Translate()),
-)
-
-fun MotionScheme.copy(
-    token: MotionToken,
-    transition: Transition,
-) = this.copy(
-    enter = if (token == MotionToken.Enter) transition else this.enter,
-    exit = if (token == MotionToken.Exit) transition else this.exit,
-    predictiveExit = if (token == MotionToken.PredictiveExit) transition else this.predictiveExit,
-)
+val PaletteMotionScheme = MotionScheme()
