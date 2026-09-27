@@ -6,15 +6,16 @@ plugins {
 
 kotlin {
     libraryTargets(
-        androidNamespace = "com.embarrasdf.palette.theme.components",
-        iosFrameworkBaseName = "ThemeComponents",
+        androidNamespace = "com.embarrasdf.palette.theme.components.navigation3",
+        iosFrameworkBaseName = "ThemeComponentsNavigation3",
     )
 
     sourceSets {
         commonMain {
             dependencies {
-                api(projects.components)
                 api(projects.theme)
+                api(libs.navigation3.ui)
+                api(libs.navigation3.runtime)
             }
         }
     }

@@ -21,7 +21,7 @@ import com.embarrasdf.palette.navigation.navGraph
 import com.embarrasdf.palette.navigation.rememberNavController
 import com.embarrasdf.palette.navigation.rememberNavState
 import com.embarrasdf.palette.navigation.toPathSegment
-import com.embarrasdf.palette.theme.components.navigation.NavDisplay
+import com.embarrasdf.palette.theme.components.navigation3.NavDisplay
 import com.embarrasdf.palette.theme.control.ThemeController
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

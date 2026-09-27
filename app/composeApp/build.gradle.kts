@@ -27,6 +27,7 @@ kotlin {
             implementation(projects.navigation)
             implementation(projects.theme)
             implementation(projects.theme.components)
+            implementation(projects.theme.components.navigation3)
         }
     }
 }
