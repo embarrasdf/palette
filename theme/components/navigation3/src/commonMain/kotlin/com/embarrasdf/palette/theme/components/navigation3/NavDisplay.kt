@@ -1,4 +1,4 @@
-package com.embarrasdf.palette.theme.components.navigation
+package com.embarrasdf.palette.theme.components.navigation3
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
