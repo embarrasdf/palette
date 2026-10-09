@@ -4,7 +4,7 @@ import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.embarrasdf.palette.MainCatalogPage
-import com.embarrasdf.palette.appPackageName
+import com.embarrasdf.palette.AppPackageName
 import com.embarrasdf.palette.formats.FormatsPage
 import com.embarrasdf.palette.formats.core.CoreFormatsPage
 import com.embarrasdf.palette.formats.core.NumberFormatPage
@@ -13,7 +13,7 @@ import com.embarrasdf.palette.formats.datetime.DateTimeFormatPage
 import com.embarrasdf.palette.formats.datetime.DateTimeFormatsPage
 import com.embarrasdf.palette.formats.money.MoneyFormatPage
 import com.embarrasdf.palette.formats.money.MoneyFormatsPage
-import com.embarrasdf.palette.formatsPackageName
+import com.embarrasdf.palette.FormatsPackageName
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,8 +28,8 @@ class BaselineProfileGenerator {
     @Test
     fun generateFormatsProfile() {
         rule.collect(
-            packageName = appPackageName,
-            filterPredicate = { packageFilterPredicate(formatsPackageName, it) },
+            packageName = AppPackageName,
+            filterPredicate = { packageFilterPredicate(FormatsPackageName, it) },
         ) {
             pressHome()
             startActivityAndWait()

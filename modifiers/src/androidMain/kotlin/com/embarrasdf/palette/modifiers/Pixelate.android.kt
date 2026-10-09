@@ -24,7 +24,7 @@ private const val UniformSizeName = "size"
 private const val UniformSubdivisionsName = "subdivisions"
 
 @Language("AGSL")
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSizeName;
 uniform float $UniformSubdivisionsName;

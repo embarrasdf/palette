@@ -75,7 +75,7 @@ fun rememberBorderStyleScreenState(
 ): BorderStyleScreenState {
     return rememberSaveable(
         themeState,
-        saver = BorderStyleScreenStateSaver(themeState),
+        saver = borderStyleScreenStateSaver(themeState),
     ) {
         BorderStyleScreenState(
             themeState = themeState,
@@ -91,7 +91,7 @@ class BorderStyleScreenState(
         themeState.component.border.getValue(token)
 }
 
-fun BorderStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun borderStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },

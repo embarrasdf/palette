@@ -73,32 +73,32 @@ class ComposeTextStyleDemoState(
     }
 }
 
-private const val fontFamilyKey = "fontFamily"
-private const val fontWeightKey = "fontWeight"
-private const val fontStyleKey = "fontStyle"
-private const val fontSizeKey = "fontSize"
-private const val lineHeightKey = "lineHeight"
-private const val letterSpacingKey = "letterSpacing"
+private const val FontFamilyKey = "fontFamily"
+private const val FontWeightKey = "fontWeight"
+private const val FontStyleKey = "fontStyle"
+private const val FontSizeKey = "fontSize"
+private const val LineHeightKey = "lineHeight"
+private const val LetterSpacingKey = "letterSpacing"
 
 val ComposeTextStyleDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            fontFamilyKey to value.fontFamily?.name,
-            fontWeightKey to value.fontWeight?.name,
-            fontStyleKey to value.fontStyle?.name,
-            fontSizeKey to value.fontSize,
-            lineHeightKey to value.lineHeight,
-            letterSpacingKey to value.letterSpacing,
+            FontFamilyKey to value.fontFamily?.name,
+            FontWeightKey to value.fontWeight?.name,
+            FontStyleKey to value.fontStyle?.name,
+            FontSizeKey to value.fontSize,
+            LineHeightKey to value.lineHeight,
+            LetterSpacingKey to value.letterSpacing,
         )
     },
     restore = { map ->
         ComposeTextStyleDemoState().apply {
-            fontFamily = (map[fontFamilyKey] as? String)?.let { FontFamily.valueOf(it) }
-            fontWeight = (map[fontWeightKey] as? String)?.let { FontWeight.valueOf(it) }
-            fontStyle = (map[fontStyleKey] as? String)?.let { FontStyle.valueOf(it) }
-            fontSize = map[fontSizeKey] as? Float
-            lineHeight = map[lineHeightKey] as? Float
-            letterSpacing = map[letterSpacingKey] as? Float
+            fontFamily = (map[FontFamilyKey] as? String)?.let { FontFamily.valueOf(it) }
+            fontWeight = (map[FontWeightKey] as? String)?.let { FontWeight.valueOf(it) }
+            fontStyle = (map[FontStyleKey] as? String)?.let { FontStyle.valueOf(it) }
+            fontSize = map[FontSizeKey] as? Float
+            lineHeight = map[LineHeightKey] as? Float
+            letterSpacing = map[LetterSpacingKey] as? Float
         }
     }
 )

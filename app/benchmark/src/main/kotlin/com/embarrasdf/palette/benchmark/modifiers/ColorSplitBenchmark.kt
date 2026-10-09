@@ -10,7 +10,7 @@ import androidx.benchmark.macro.TraceSectionMetric.Mode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.embarrasdf.palette.MainCatalogPage
-import com.embarrasdf.palette.appPackageName
+import com.embarrasdf.palette.AppPackageName
 import com.embarrasdf.palette.modifiers.ColorSplitPage
 import com.embarrasdf.palette.modifiers.ModifiersPage
 import org.junit.Rule
@@ -30,7 +30,7 @@ class ColorSplitBenchmark {
 
     @OptIn(ExperimentalMetricApi::class)
     fun xyAdjustment(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
-        packageName = appPackageName,
+        packageName = AppPackageName,
         metrics = listOf(
             FrameTimingMetric(),
             TraceSectionMetric("colorSplit", Mode.Sum),

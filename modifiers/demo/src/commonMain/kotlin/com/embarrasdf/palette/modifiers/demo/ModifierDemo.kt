@@ -54,7 +54,7 @@ fun rememberModifierDemoState(
     return rememberSaveable(
         density,
         color,
-        saver = ModifierDemoStateSaver(
+        saver = modifierDemoStateSaver(
             density = density,
             color = color,
         ),
@@ -81,7 +81,7 @@ class ModifierDemoState(
     )
 }
 
-fun ModifierDemoStateSaver(
+fun modifierDemoStateSaver(
     density: Density,
     color: Color,
 ) = mapSaverSafe(

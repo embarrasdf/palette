@@ -90,7 +90,7 @@ fun rememberPaddingScreenState(
 ): PaddingScreenState {
     return rememberSaveable(
         themeState,
-        saver = PaddingScreenStateSaver(themeState),
+        saver = paddingScreenStateSaver(themeState),
     ) {
         PaddingScreenState(
             themeState = themeState,
@@ -106,7 +106,7 @@ class PaddingScreenState(
         get() = themeState.semantic.dimension.padding
 }
 
-fun PaddingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun paddingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf<String, Any>()
     },

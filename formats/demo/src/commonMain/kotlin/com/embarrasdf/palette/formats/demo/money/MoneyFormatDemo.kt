@@ -64,7 +64,7 @@ fun rememberMoneyFormatDemoState(
 ): MoneyFormatDemoState {
     return rememberSaveable(
         moneyFormatInitial,
-        saver = MoneyFormatDemoStateSaver(),
+        saver = moneyFormatDemoStateSaver(),
     ) {
         MoneyFormatDemoState(
             moneyFormatInitial = moneyFormatInitial,
@@ -92,7 +92,7 @@ class MoneyFormatDemoState(
     }
 }
 
-fun MoneyFormatDemoStateSaver() = mapSaverSafe(
+fun moneyFormatDemoStateSaver() = mapSaverSafe(
     save = { state ->
         mapOf()
     },

@@ -89,7 +89,7 @@ fun rememberTextStyleScreenState(
     return rememberSaveable(
         themeState,
         demoTextFieldState,
-        saver = TextStyleScreenStateSaver(themeState),
+        saver = textStyleScreenStateSaver(themeState),
     ) {
         TextStyleScreenState(
             themeState = themeState,
@@ -123,27 +123,27 @@ class TextStyleScreenState(
     }
 }
 
-private const val demoTextFieldStateKey = "demoTextFieldState"
-private const val surfaceTokenKeyPrefix = "surfaceToken_"
+private const val DemoTextFieldStateKey = "demoTextFieldState"
+private const val SurfaceTokenKeyPrefix = "surfaceToken_"
 
-fun TextStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         val map = mutableMapOf<String, Any?>(
-            demoTextFieldStateKey to save(state.demoTextFieldState, TextFieldState.Saver, this),
+            DemoTextFieldStateKey to save(state.demoTextFieldState, TextFieldState.Saver, this),
         )
         TextStyleToken.entries.forEach { token ->
-            map[surfaceTokenKeyPrefix + token.name] = state.surfaceToken(token).name
+            map[SurfaceTokenKeyPrefix + token.name] = state.surfaceToken(token).name
         }
         map
     },
     restore = { map ->
         val surfaceTokens = TextStyleToken.entries.mapNotNull { token ->
-            (map[surfaceTokenKeyPrefix + token.name] as? String)
+            (map[SurfaceTokenKeyPrefix + token.name] as? String)
                 ?.let { token to SurfaceStyleToken.valueOf(it) }
         }.toMap()
         TextStyleScreenState(
             themeState = themeState,
-            demoTextFieldState = restore(map[demoTextFieldStateKey], TextFieldState.Saver)!!,
+            demoTextFieldState = restore(map[DemoTextFieldStateKey], TextFieldState.Saver)!!,
             surfaceTokensInitial = surfaceTokens,
         )
     }

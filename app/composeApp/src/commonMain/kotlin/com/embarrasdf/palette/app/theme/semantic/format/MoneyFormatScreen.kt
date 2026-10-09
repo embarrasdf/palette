@@ -71,7 +71,7 @@ fun rememberMoneyFormatScreenState(
 ): MoneyFormatScreenState {
     return rememberSaveable(
         formats,
-        saver = MoneyFormatScreenStateSaver(formats),
+        saver = moneyFormatScreenStateSaver(formats),
     ) {
         MoneyFormatScreenState(
             formats = formats,
@@ -99,7 +99,7 @@ class MoneyFormatScreenState(
     }
 }
 
-fun MoneyFormatScreenStateSaver(
+fun moneyFormatScreenStateSaver(
     formats: Formats,
 ) = mapSaverSafe(
     save = { state ->

@@ -235,47 +235,47 @@ class CurveStitchDemoState(
         internal set
 }
 
-private const val currentDemoKey = "currentDemo"
-private const val strokeWidthKey = "strokeWidth"
-private const val numLinesKey = "numLines"
-private const val angleStartOffsetKey = "angleStartOffset"
-private const val angleVertexOffsetKey = "angleVertexOffset"
-private const val angleEndOffsetKey = "angleEndOffset"
-private const val numPointsKey = "numPoints"
-private const val innerRadiusKey = "innerRadius"
-private const val starInsidePointsKey = "starInsidePoints"
-private const val starOutsidePointsKey = "starOutsidePoints"
-private const val rotationKey = "rotation"
+private const val CurrentDemoKey = "currentDemo"
+private const val StrokeWidthKey = "strokeWidth"
+private const val NumLinesKey = "numLines"
+private const val AngleStartOffsetKey = "angleStartOffset"
+private const val AngleVertexOffsetKey = "angleVertexOffset"
+private const val AngleEndOffsetKey = "angleEndOffset"
+private const val NumPointsKey = "numPoints"
+private const val InnerRadiusKey = "innerRadius"
+private const val StarInsidePointsKey = "starInsidePoints"
+private const val StarOutsidePointsKey = "starOutsidePoints"
+private const val RotationKey = "rotation"
 
 val CurveStitchDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            currentDemoKey to value.currentDemo.name,
-            strokeWidthKey to value.strokeWidth.value,
-            numLinesKey to value.numLines,
-            angleEndOffsetKey to save(value.angleStartOffset, OffsetSaver, this),
-            angleVertexOffsetKey to save(value.angleVertexOffset, OffsetSaver, this),
-            angleStartOffsetKey to save(value.angleEndOffset, OffsetSaver, this),
-            numPointsKey to value.numPoints,
-            innerRadiusKey to value.innerRadius,
-            starInsidePointsKey to value.starInsidePoints,
-            starOutsidePointsKey to value.starOutsidePoints,
-            rotationKey to value.rotation,
+            CurrentDemoKey to value.currentDemo.name,
+            StrokeWidthKey to value.strokeWidth.value,
+            NumLinesKey to value.numLines,
+            AngleEndOffsetKey to save(value.angleStartOffset, OffsetSaver, this),
+            AngleVertexOffsetKey to save(value.angleVertexOffset, OffsetSaver, this),
+            AngleStartOffsetKey to save(value.angleEndOffset, OffsetSaver, this),
+            NumPointsKey to value.numPoints,
+            InnerRadiusKey to value.innerRadius,
+            StarInsidePointsKey to value.starInsidePoints,
+            StarOutsidePointsKey to value.starOutsidePoints,
+            RotationKey to value.rotation,
         )
     },
     restore = { map ->
         CurveStitchDemoState(
-            currentDemoInitial = CurveStitchDemo.valueOf(map[currentDemoKey] as String),
-            strokeWidthInitial = (map[strokeWidthKey] as Float).dp,
-            numLinesInitial = map[numLinesKey] as Int,
-            angleStartOffsetInitial = restore(map[angleStartOffsetKey], OffsetSaver)!!,
-            angleVertexOffsetInitial = restore(map[angleVertexOffsetKey], OffsetSaver)!!,
-            angleEndOffsetInitial = restore(map[angleEndOffsetKey], OffsetSaver)!!,
-            numPointsInitial = map[numPointsKey] as Int,
-            innerRadiusInitial = map[innerRadiusKey] as Float,
-            starInsidePointsInitial = map[starInsidePointsKey] as Boolean,
-            starOutsidePointsInitial = map[starOutsidePointsKey] as Boolean,
-            rotationInitial = map[rotationKey] as Float,
+            currentDemoInitial = CurveStitchDemo.valueOf(map[CurrentDemoKey] as String),
+            strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
+            numLinesInitial = map[NumLinesKey] as Int,
+            angleStartOffsetInitial = restore(map[AngleStartOffsetKey], OffsetSaver)!!,
+            angleVertexOffsetInitial = restore(map[AngleVertexOffsetKey], OffsetSaver)!!,
+            angleEndOffsetInitial = restore(map[AngleEndOffsetKey], OffsetSaver)!!,
+            numPointsInitial = map[NumPointsKey] as Int,
+            innerRadiusInitial = map[InnerRadiusKey] as Float,
+            starInsidePointsInitial = map[StarInsidePointsKey] as Boolean,
+            starOutsidePointsInitial = map[StarOutsidePointsKey] as Boolean,
+            rotationInitial = map[RotationKey] as Float,
         )
     },
 )

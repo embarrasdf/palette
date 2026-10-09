@@ -25,7 +25,7 @@ private const val UniformColorEnabled = "colorEnabledInt"
 private const val UniformFilterBlack = "filterBlackInt"
 
 @Language("AGSL")
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSize;
 uniform float $UniformAmount;

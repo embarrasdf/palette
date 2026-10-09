@@ -86,7 +86,7 @@ fun rememberSpacingScreenState(
 ): SpacingScreenState {
     return rememberSaveable(
         themeState,
-        saver = SpacingScreenStateSaver(themeState),
+        saver = spacingScreenStateSaver(themeState),
     ) {
         SpacingScreenState(
             themeState = themeState,
@@ -106,7 +106,7 @@ class SpacingScreenState(
     }
 }
 
-fun SpacingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun spacingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },

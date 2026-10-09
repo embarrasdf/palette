@@ -131,32 +131,32 @@ class ButtonDemoState(
         internal set
 }
 
-private const val enabledKey = "enabled"
-private const val styleKey = "style"
-private const val maxWidthKey = "maxWidth"
-private const val widthKey = "width"
-private const val contentPaddingKey = "contentPadding"
-private const val textDemoStateKey = "textDemoState"
+private const val EnabledKey = "enabled"
+private const val StyleKey = "style"
+private const val MaxWidthKey = "maxWidth"
+private const val WidthKey = "width"
+private const val ContentPaddingKey = "contentPadding"
+private const val TextDemoStateKey = "textDemoState"
 
 val ButtonDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            enabledKey to value.enabled,
-            styleKey to value.style,
-            maxWidthKey to value.maxWidth.value,
-            widthKey to value.width.value,
-            contentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
-            textDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
+            EnabledKey to value.enabled,
+            StyleKey to value.style,
+            MaxWidthKey to value.maxWidth.value,
+            WidthKey to value.width.value,
+            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
         )
     },
     restore = { map ->
         ButtonDemoState(
-            enabledInitial = map[enabledKey] as Boolean,
-            styleInitial = map[styleKey] as ButtonStyleToken,
-            maxWidthInitial = (map[maxWidthKey] as Float).dp,
-            widthInitial = (map[widthKey] as Float).dp,
-            contentPaddingInitial = restore(map[contentPaddingKey], PaddingValuesSaver)!!,
-            textDemoState = restore(map[textDemoStateKey], TextDemoStateSaver)!!
+            enabledInitial = map[EnabledKey] as Boolean,
+            styleInitial = map[StyleKey] as ButtonStyleToken,
+            maxWidthInitial = (map[MaxWidthKey] as Float).dp,
+            widthInitial = (map[WidthKey] as Float).dp,
+            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
+            textDemoState = restore(map[TextDemoStateKey], TextDemoStateSaver)!!
         )
     },
 )

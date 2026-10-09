@@ -97,23 +97,23 @@ class AuthButtonDemoState(
         internal set
 }
 
-private const val authStateKey = "authState"
-private const val styleKey = "style"
-private const val contentPaddingKey = "contentPadding"
+private const val AuthStateKey = "authState"
+private const val StyleKey = "style"
+private const val ContentPaddingKey = "contentPadding"
 
 val AuthButtonDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            authStateKey to value.authState,
-            styleKey to value.style,
-            contentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            AuthStateKey to value.authState,
+            StyleKey to value.style,
+            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
         )
     },
     restore = { map ->
         AuthButtonDemoState(
-            authStateInitial = map[authStateKey] as AuthState,
-            styleInitial = map[styleKey] as AuthButtonStyleToken,
-            contentPaddingInitial = restore(map[contentPaddingKey], PaddingValuesSaver)!!,
+            authStateInitial = map[AuthStateKey] as AuthState,
+            styleInitial = map[StyleKey] as AuthButtonStyleToken,
+            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
         )
     },
 )

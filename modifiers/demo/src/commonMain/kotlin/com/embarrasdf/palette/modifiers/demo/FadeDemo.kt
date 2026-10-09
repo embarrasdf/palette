@@ -149,26 +149,26 @@ class FadeDemoState(
         internal set
 }
 
-private const val fadeLengthKey = "fadeLength"
-private const val showBorderKey = "showBorder"
-private const val borderColorKey = "borderColor"
-private const val widthKey = "width"
+private const val FadeLengthKey = "fadeLength"
+private const val ShowBorderKey = "showBorder"
+private const val BorderColorKey = "borderColor"
+private const val WidthKey = "width"
 
 val FadeDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            fadeLengthKey to value.fadeLength.value,
-            showBorderKey to value.showBorder,
-            borderColorKey to save(value.borderColor, ColorSaver, this),
-            widthKey to value.width.value,
+            FadeLengthKey to value.fadeLength.value,
+            ShowBorderKey to value.showBorder,
+            BorderColorKey to save(value.borderColor, ColorSaver, this),
+            WidthKey to value.width.value,
         )
     },
     restore = { map ->
         FadeDemoState(
-            fadeLengthInitial = (map[fadeLengthKey] as? Float)?.dp ?: 20.dp,
-            showBorderInitial = map[showBorderKey] as? Boolean ?: false,
-            widthInitial = (map[widthKey] as? Float)?.dp ?: 0.dp,
-            borderColor = restore(map[borderColorKey], ColorSaver)!!,
+            fadeLengthInitial = (map[FadeLengthKey] as? Float)?.dp ?: 20.dp,
+            showBorderInitial = map[ShowBorderKey] as? Boolean ?: false,
+            widthInitial = (map[WidthKey] as? Float)?.dp ?: 0.dp,
+            borderColor = restore(map[BorderColorKey], ColorSaver)!!,
         )
     }
 )

@@ -88,20 +88,20 @@ class ColorPickerDemoState(
         internal set
 }
 
-private const val colorKey = "color"
-private const val spacingKey = "spacing"
+private const val ColorKey = "color"
+private const val SpacingKey = "spacing"
 
 val ColorPickerDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            colorKey to save(value.color, ColorSaver, this),
-            spacingKey to value.spacing.value,
+            ColorKey to save(value.color, ColorSaver, this),
+            SpacingKey to value.spacing.value,
         )
     },
     restore = { map ->
         ColorPickerDemoState(
-            colorInitial = restore(map[colorKey], ColorSaver)!!,
-            spacingInitial = (map[spacingKey] as Float).dp,
+            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            spacingInitial = (map[SpacingKey] as Float).dp,
         )
     },
 )

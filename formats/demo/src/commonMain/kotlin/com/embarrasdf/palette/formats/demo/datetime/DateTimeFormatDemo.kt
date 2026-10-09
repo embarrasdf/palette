@@ -86,7 +86,7 @@ fun <T> rememberDateTimeFormatDemoState(
 ): DateTimeFormatDemoState<T> = rememberSaveable(
     formatInitial,
     timeZoneInitial,
-    saver = DateTimeFormatDemoStateSaver(),
+    saver = dateTimeFormatDemoStateSaver(),
 ) {
     DateTimeFormatDemoState(
         timeZoneInitial = timeZoneInitial,
@@ -116,20 +116,20 @@ class DateTimeFormatDemoState<T>(
     }
 }
 
-private const val timeZoneKey = "timeZone"
-private const val tokenKey = "token"
+private const val TimeZoneKey = "timeZone"
+private const val TokenKey = "token"
 
-fun <T> DateTimeFormatDemoStateSaver() = mapSaverSafe(
+fun <T> dateTimeFormatDemoStateSaver() = mapSaverSafe(
     save = { value ->
         mapOf(
-            timeZoneKey to value.timeZone.id,
-            tokenKey to value.token,
+            TimeZoneKey to value.timeZone.id,
+            TokenKey to value.token,
         )
     },
     restore = { map ->
         DateTimeFormatDemoState(
-            timeZoneInitial = TimeZone.of(map[timeZoneKey] as String),
-            tokenInitial = map[tokenKey] as T,
+            timeZoneInitial = TimeZone.of(map[TimeZoneKey] as String),
+            tokenInitial = map[TokenKey] as T,
         )
     },
 )

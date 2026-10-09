@@ -74,7 +74,7 @@ fun rememberSurfaceStyleScreenState(
 ): SurfaceStyleScreenState {
     return rememberSaveable(
         themeState,
-        saver = SurfaceStyleScreenStateSaver(themeState),
+        saver = surfaceStyleScreenStateSaver(themeState),
     ) {
         SurfaceStyleScreenState(
             themeState = themeState,
@@ -90,7 +90,7 @@ class SurfaceStyleScreenState(
         themeState.component.surface.getValue(token)
 }
 
-fun SurfaceStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun surfaceStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },

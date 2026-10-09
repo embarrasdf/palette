@@ -70,7 +70,7 @@ fun rememberNumberFormatScreenState(
 ): NumberFormatScreenState {
     return rememberSaveable(
         formats,
-        saver = NumberFormatScreenStateSaver(formats),
+        saver = numberFormatScreenStateSaver(formats),
     ) {
         NumberFormatScreenState(
             formats = formats,
@@ -100,7 +100,7 @@ class NumberFormatScreenState(
     }
 }
 
-fun NumberFormatScreenStateSaver(formats: Formats) = mapSaverSafe(
+fun numberFormatScreenStateSaver(formats: Formats) = mapSaverSafe(
     save = { state ->
         mapOf()
     },

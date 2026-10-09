@@ -81,7 +81,7 @@ fun rememberInstantFormatSchemeScreenState(
 ): InstantFormatSchemeScreenState {
     return rememberSaveable(
         formats.dateTimeFormats,
-        saver = InstantFormatSchemeScreenStateSaver(formats),
+        saver = instantFormatSchemeScreenStateSaver(formats),
     ) {
         InstantFormatSchemeScreenState(
             formats = formats,
@@ -110,7 +110,7 @@ class InstantFormatSchemeScreenState(
     }
 }
 
-fun InstantFormatSchemeScreenStateSaver(
+fun instantFormatSchemeScreenStateSaver(
     formats: Formats,
 ) = mapSaverSafe(
     save = { state ->

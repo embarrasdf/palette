@@ -98,7 +98,7 @@ fun rememberButtonStyleScreenState(
 ): ButtonStyleScreenState {
     return rememberSaveable(
         themeState,
-        saver = ButtonStyleScreenStateSaver(themeState),
+        saver = buttonStyleScreenStateSaver(themeState),
     ) {
         ButtonStyleScreenState(
             themeState = themeState,
@@ -119,7 +119,7 @@ class ButtonStyleScreenState(
         textDemoStates.getValue(token)
 }
 
-fun ButtonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun buttonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         ButtonStyleToken.entries.associate { token ->
             token.name to save(state.textDemoState(token), TextDemoStateSaver, this)

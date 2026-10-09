@@ -161,81 +161,81 @@ class GridDemoState(
         internal set
 }
 
-private const val colorKey = "color"
-private const val densityKey = "density"
-private const val coordinateSystemTypeKey = "coordinateSystem"
-private const val xGridScaleStateKey = "xGridScaleState"
-private const val yGridScaleStateKey = "yGridScaleState"
-private const val polarGridScaleStateKey = "radiusGridScaleState"
-private const val vertexStateKey = "vertexState"
-private const val showLinesKey = "showLines"
-private const val lineStyleKey = "lineStyle"
-private const val strokeWidthPxKey = "strokeWidthPx"
-private const val offsetXKey = "offsetX"
-private const val offsetYKey = "offsetY"
-private const val rotationDegreesKey = "rotationDegrees"
-private const val clipToBoundsKey = "clipToBounds"
+private const val ColorKey = "color"
+private const val DensityKey = "density"
+private const val CoordinateSystemTypeKey = "coordinateSystem"
+private const val XGridScaleStateKey = "xGridScaleState"
+private const val YGridScaleStateKey = "yGridScaleState"
+private const val PolarGridScaleStateKey = "radiusGridScaleState"
+private const val VertexStateKey = "vertexState"
+private const val ShowLinesKey = "showLines"
+private const val LineStyleKey = "lineStyle"
+private const val StrokeWidthPxKey = "strokeWidthPx"
+private const val OffsetXKey = "offsetX"
+private const val OffsetYKey = "offsetY"
+private const val RotationDegreesKey = "rotationDegrees"
+private const val ClipToBoundsKey = "clipToBounds"
 
 val GridDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            colorKey to save(value.color, ColorSaver, this),
-            densityKey to save(value.density, DensitySaver, this),
-            coordinateSystemTypeKey to value.coordinateSystemType,
-            xGridScaleStateKey to save(
+            ColorKey to save(value.color, ColorSaver, this),
+            DensityKey to save(value.density, DensitySaver, this),
+            CoordinateSystemTypeKey to value.coordinateSystemType,
+            XGridScaleStateKey to save(
                 value = value.xGridScaleState,
                 saver = CartesianGridScaleStateSaver,
                 scope = this,
             ),
-            yGridScaleStateKey to save(
+            YGridScaleStateKey to save(
                 value = value.yGridScaleState,
                 saver = CartesianGridScaleStateSaver,
                 scope = this,
             ),
-            polarGridScaleStateKey to save(
+            PolarGridScaleStateKey to save(
                 value = value.polarGridScaleState,
                 saver = PolarGridScaleStateSaver,
                 scope = this,
             ),
-            vertexStateKey to save(
+            VertexStateKey to save(
                 value = value.vertexState,
                 saver = GridVertexStateSaver,
                 scope = this,
             ),
-            showLinesKey to value.showLines,
-            lineStyleKey to save(value.lineStyle, GridLineStyleSaver, this),
-            strokeWidthPxKey to value.strokeWidthPx,
-            offsetXKey to value.offsetX.value,
-            offsetYKey to value.offsetY.value,
-            rotationDegreesKey to value.rotationDegrees,
-            clipToBoundsKey to value.clipToBounds,
+            ShowLinesKey to value.showLines,
+            LineStyleKey to save(value.lineStyle, GridLineStyleSaver, this),
+            StrokeWidthPxKey to value.strokeWidthPx,
+            OffsetXKey to value.offsetX.value,
+            OffsetYKey to value.offsetY.value,
+            RotationDegreesKey to value.rotationDegrees,
+            ClipToBoundsKey to value.clipToBounds,
         )
     },
     restore = { value ->
         GridDemoState(
-            color = restore(value[colorKey], ColorSaver)!!,
-            density = restore(value[densityKey], DensitySaver)!!,
-            coordinateSystemTypeInitial = value[coordinateSystemTypeKey] as GridCoordinateSystemType,
+            color = restore(value[ColorKey], ColorSaver)!!,
+            density = restore(value[DensityKey], DensitySaver)!!,
+            coordinateSystemTypeInitial = value[CoordinateSystemTypeKey] as GridCoordinateSystemType,
             xGridScaleStateInitial = restore(
-                value = value[xGridScaleStateKey],
+                value = value[XGridScaleStateKey],
                 saver = CartesianGridScaleStateSaver,
             )!!,
             yGridScaleStateInitial = restore(
-                value = value[yGridScaleStateKey],
+                value = value[YGridScaleStateKey],
                 saver = CartesianGridScaleStateSaver,
             )!!,
             polarGridScaleStateInitial = restore(
-                value = value[polarGridScaleStateKey],
+                value = value[PolarGridScaleStateKey],
                 saver = PolarGridScaleStateSaver,
             )!!,
-            vertexStateInitial = restore(value[vertexStateKey], GridVertexStateSaver)!!,
-            showLinesInitial = value[showLinesKey] as Boolean,
-            strokeWidthPxInitial = value[strokeWidthPxKey] as Float,
-            lineStyleInitial = restore(value[lineStyleKey], GridLineStyleSaver)!!,
-            offsetXInitial = (value[offsetXKey] as Float).dp,
-            offsetYInitial = (value[offsetYKey] as Float).dp,
-            rotationDegreesInitial = value[rotationDegreesKey] as Float,
-            clipToBoundsInitial = value[clipToBoundsKey] as Boolean,
+            vertexStateInitial = restore(value[VertexStateKey], GridVertexStateSaver)!!,
+            showLinesInitial = value[ShowLinesKey] as Boolean,
+            strokeWidthPxInitial = value[StrokeWidthPxKey] as Float,
+            lineStyleInitial = restore(value[LineStyleKey], GridLineStyleSaver)!!,
+            offsetXInitial = (value[OffsetXKey] as Float).dp,
+            offsetYInitial = (value[OffsetYKey] as Float).dp,
+            rotationDegreesInitial = value[RotationDegreesKey] as Float,
+            clipToBoundsInitial = value[ClipToBoundsKey] as Boolean,
         )
     },
 )
@@ -377,23 +377,23 @@ class CartesianGridScaleState(
     gridScaleExponentInitial = gridScaleExponentInitial,
 )
 
-private const val cartesianGridSpacingKey = "cartesianGridSpacing"
-private const val cartesianGridScaleBaseKey = "cartesianGridScaleBase"
-private const val cartesianGridScaleExponentKey = "cartesianGridScaleExponent"
+private const val CartesianGridSpacingKey = "cartesianGridSpacing"
+private const val CartesianGridScaleBaseKey = "cartesianGridScaleBase"
+private const val CartesianGridScaleExponentKey = "cartesianGridScaleExponent"
 
 val CartesianGridScaleStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            cartesianGridSpacingKey to value.gridSpacing.value,
-            cartesianGridScaleBaseKey to value.gridScaleBase,
-            cartesianGridScaleExponentKey to value.gridScaleExponent,
+            CartesianGridSpacingKey to value.gridSpacing.value,
+            CartesianGridScaleBaseKey to value.gridScaleBase,
+            CartesianGridScaleExponentKey to value.gridScaleExponent,
         )
     },
     restore = { value ->
         CartesianGridScaleState(
-            gridSpacingInitial = (value[cartesianGridSpacingKey] as Float).dp,
-            gridScaleBaseInitial = value[cartesianGridScaleBaseKey] as Float,
-            gridScaleExponentInitial = value[cartesianGridScaleExponentKey] as Float,
+            gridSpacingInitial = (value[CartesianGridSpacingKey] as Float).dp,
+            gridScaleBaseInitial = value[CartesianGridScaleBaseKey] as Float,
+            gridScaleExponentInitial = value[CartesianGridScaleExponentKey] as Float,
         )
     },
 )
@@ -439,26 +439,26 @@ class PolarGridScaleState(
         internal set
 }
 
-private const val polarGridSpacingKey = "polarGridSpacing"
-private const val polarGridScaleBaseKey = "polarGridScaleBase"
-private const val polarGridScaleExponentKey = "polarGridScaleExponent"
-private const val polarGridThetaRadiansKey = "polarGridThetaRadians"
+private const val PolarGridSpacingKey = "polarGridSpacing"
+private const val PolarGridScaleBaseKey = "polarGridScaleBase"
+private const val PolarGridScaleExponentKey = "polarGridScaleExponent"
+private const val PolarGridThetaRadiansKey = "polarGridThetaRadians"
 
 val PolarGridScaleStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            polarGridSpacingKey to value.gridSpacing.value,
-            polarGridScaleBaseKey to value.gridScaleBase,
-            polarGridScaleExponentKey to value.gridScaleExponent,
-            polarGridThetaRadiansKey to value.thetaRadians,
+            PolarGridSpacingKey to value.gridSpacing.value,
+            PolarGridScaleBaseKey to value.gridScaleBase,
+            PolarGridScaleExponentKey to value.gridScaleExponent,
+            PolarGridThetaRadiansKey to value.thetaRadians,
         )
     },
     restore = { value ->
         PolarGridScaleState(
-            gridSpacingInitial = (value[polarGridSpacingKey] as Float).dp,
-            gridScaleBaseInitial = value[polarGridScaleBaseKey] as Float,
-            gridScaleExponentInitial = value[polarGridScaleExponentKey] as Float,
-            thetaRadiansInitial = value[polarGridThetaRadiansKey] as Float,
+            gridSpacingInitial = (value[PolarGridSpacingKey] as Float).dp,
+            gridScaleBaseInitial = value[PolarGridScaleBaseKey] as Float,
+            gridScaleExponentInitial = value[PolarGridScaleExponentKey] as Float,
+            thetaRadiansInitial = value[PolarGridThetaRadiansKey] as Float,
         )
     },
 )
@@ -667,38 +667,38 @@ class GridVertexState(
         }
 }
 
-private const val vertexDensityKey = "density"
-private const val vertexTypeKey = "vertexType"
-private const val vertexColorKey = "color"
-private const val vertexStrokeWidthKey = "vertexStrokeWidth"
-private const val vertexDrawStyleKey = "vertexDrawStyle"
-private const val vertexWidthKey = "vertexWidth"
-private const val vertexHeightKey = "vertexHeight"
-private const val vertexRotationDegreesKey = "vertexRotationDegrees"
+private const val VertexDensityKey = "density"
+private const val VertexTypeKey = "vertexType"
+private const val VertexColorKey = "color"
+private const val VertexStrokeWidthKey = "vertexStrokeWidth"
+private const val VertexDrawStyleKey = "vertexDrawStyle"
+private const val VertexWidthKey = "vertexWidth"
+private const val VertexHeightKey = "vertexHeight"
+private const val VertexRotationDegreesKey = "vertexRotationDegrees"
 
 val GridVertexStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            vertexDensityKey to save(value.density, DensitySaver, this),
-            vertexTypeKey to value.vertexType,
-            vertexColorKey to save(value.color, ColorSaver, this),
-            vertexStrokeWidthKey to value.strokeWidth.value,
-            vertexDrawStyleKey to save(value.drawStyle, DrawStyleSaver, this),
-            vertexWidthKey to value.width.value,
-            vertexHeightKey to value.height.value,
-            vertexRotationDegreesKey to value.rotationDegrees,
+            VertexDensityKey to save(value.density, DensitySaver, this),
+            VertexTypeKey to value.vertexType,
+            VertexColorKey to save(value.color, ColorSaver, this),
+            VertexStrokeWidthKey to value.strokeWidth.value,
+            VertexDrawStyleKey to save(value.drawStyle, DrawStyleSaver, this),
+            VertexWidthKey to value.width.value,
+            VertexHeightKey to value.height.value,
+            VertexRotationDegreesKey to value.rotationDegrees,
         )
     },
     restore = { value ->
         GridVertexState(
-            density = restore(value[vertexDensityKey], DensitySaver)!!,
-            vertexTypeInitial = value[vertexTypeKey] as GridVertexType,
-            colorInitial = restore(value[vertexColorKey], ColorSaver)!!,
-            strokeWidthInitial = (value[vertexStrokeWidthKey] as Float).dp,
-            drawStyleInitial = restore(value[vertexDrawStyleKey], DrawStyleSaver)!!,
-            widthInitial = (value[vertexWidthKey] as Float).dp,
-            heightInitial = (value[vertexHeightKey] as Float).dp,
-            rotationDegreesInitial = value[vertexRotationDegreesKey] as Float,
+            density = restore(value[VertexDensityKey], DensitySaver)!!,
+            vertexTypeInitial = value[VertexTypeKey] as GridVertexType,
+            colorInitial = restore(value[VertexColorKey], ColorSaver)!!,
+            strokeWidthInitial = (value[VertexStrokeWidthKey] as Float).dp,
+            drawStyleInitial = restore(value[VertexDrawStyleKey], DrawStyleSaver)!!,
+            widthInitial = (value[VertexWidthKey] as Float).dp,
+            heightInitial = (value[VertexHeightKey] as Float).dp,
+            rotationDegreesInitial = value[VertexRotationDegreesKey] as Float,
         )
     },
 )

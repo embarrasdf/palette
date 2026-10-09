@@ -27,7 +27,7 @@ import com.embarrasdf.palette.components.demo.geometry.CartesianGridScaleState
 import com.embarrasdf.palette.components.demo.geometry.CircleDemo
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoState
-import com.embarrasdf.palette.components.demo.geometry.CircleDemoStateSaver
+import com.embarrasdf.palette.components.demo.geometry.circleDemoStateSaver
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemo
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoState
@@ -123,7 +123,7 @@ fun rememberComponentDemoState(
     return rememberSaveable(
         density,
         color,
-        saver = ComponentDemoStateSaver(
+        saver = componentDemoStateSaver(
             density = density,
             color = color,
         ),
@@ -181,50 +181,50 @@ class ComponentDemoState(
     val textFieldDemoState = textFieldDemoStateInitial
 }
 
-private const val demoTypeKey = "demoType"
-private const val circleDemoStateKey = "circleDemoState"
-private const val curveStitchDemoStateKey = "curveStitchDemoState"
-private const val gridDemoStateKey = "gridDemoState"
-private const val sphereDemoStateKey = "sphereDemoState"
-private const val textDemoStateKey = "textDemoState"
-private const val textFieldDemoStateKey = "textFieldDemoState"
+private const val DemoTypeKey = "demoType"
+private const val CircleDemoStateKey = "circleDemoState"
+private const val CurveStitchDemoStateKey = "curveStitchDemoState"
+private const val GridDemoStateKey = "gridDemoState"
+private const val SphereDemoStateKey = "sphereDemoState"
+private const val TextDemoStateKey = "textDemoState"
+private const val TextFieldDemoStateKey = "textFieldDemoState"
 
-fun ComponentDemoStateSaver(
+fun componentDemoStateSaver(
     density: Density,
     color: Color,
 ) = mapSaverSafe(
     save = { value ->
         mapOf(
-            demoTypeKey to value.demoType,
-            circleDemoStateKey to save(
+            DemoTypeKey to value.demoType,
+            CircleDemoStateKey to save(
                 value = value.circleDemoState,
-                saver = CircleDemoStateSaver(density = density),
+                saver = circleDemoStateSaver(density = density),
                 scope = this,
             ),
-            curveStitchDemoStateKey to save(
+            CurveStitchDemoStateKey to save(
                 value = value.curveStitchDemoState,
                 saver = CurveStitchDemoStateSaver,
                 scope = this,
             ),
-            gridDemoStateKey to save(value.gridDemoState, GridDemoStateSaver, this),
-            sphereDemoStateKey to save(value.sphereDemoState, SphereDemoStateSaver, this),
-            textDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
-            textFieldDemoStateKey to save(value.textFieldDemoState, TextFieldDemoStateSaver, this),
+            GridDemoStateKey to save(value.gridDemoState, GridDemoStateSaver, this),
+            SphereDemoStateKey to save(value.sphereDemoState, SphereDemoStateSaver, this),
+            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
+            TextFieldDemoStateKey to save(value.textFieldDemoState, TextFieldDemoStateSaver, this),
         )
     },
     restore = { map ->
         ComponentDemoState(
             density = density,
             color = color,
-            componentDemoTypeInitial = map[demoTypeKey] as ComponentDemoType,
-            circleDemoStateInitial = restore(map[circleDemoStateKey], CircleDemoStateSaver(density = density))!!,
-            curveStitchDemoStateInitial = restore(map[curveStitchDemoStateKey],
+            componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
+            circleDemoStateInitial = restore(map[CircleDemoStateKey], circleDemoStateSaver(density = density))!!,
+            curveStitchDemoStateInitial = restore(map[CurveStitchDemoStateKey],
                 CurveStitchDemoStateSaver
             )!!,
-            gridDemoStateInitial = restore(map[gridDemoStateKey], GridDemoStateSaver)!!,
-            sphereDemoStateInitial = restore(map[sphereDemoStateKey], SphereDemoStateSaver)!!,
-            textDemoStateInitial = restore(map[textDemoStateKey], TextDemoStateSaver)!!,
-            textFieldDemoStateInitial = restore(map[textFieldDemoStateKey], TextFieldDemoStateSaver)!!,
+            gridDemoStateInitial = restore(map[GridDemoStateKey], GridDemoStateSaver)!!,
+            sphereDemoStateInitial = restore(map[SphereDemoStateKey], SphereDemoStateSaver)!!,
+            textDemoStateInitial = restore(map[TextDemoStateKey], TextDemoStateSaver)!!,
+            textFieldDemoStateInitial = restore(map[TextFieldDemoStateKey], TextFieldDemoStateSaver)!!,
         )
     },
 )

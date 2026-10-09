@@ -75,7 +75,7 @@ fun rememberPrimitiveShapeScreenState(
 ): PrimitiveShapeScreenState {
     return rememberSaveable(
         themeState,
-        saver = PrimitiveShapeScreenStateSaver(themeState),
+        saver = primitiveShapeScreenStateSaver(themeState),
     ) {
         PrimitiveShapeScreenState(themeState = themeState)
     }
@@ -95,14 +95,14 @@ class PrimitiveShapeScreenState(
         get() = shapePrimitives.getValue(subject)
 }
 
-private const val subjectKey = "subject"
+private const val SubjectKey = "subject"
 
-fun PrimitiveShapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
-    save = { state -> mapOf(subjectKey to state.subject.name) },
+fun primitiveShapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+    save = { state -> mapOf(SubjectKey to state.subject.name) },
     restore = { map ->
         PrimitiveShapeScreenState(
             themeState = themeState,
-            subjectInitial = (map[subjectKey] as? String)
+            subjectInitial = (map[SubjectKey] as? String)
                 ?.let { ShapePrimitiveToken.valueOf(it) }
                 ?: ShapePrimitiveToken.Rectangle,
         )

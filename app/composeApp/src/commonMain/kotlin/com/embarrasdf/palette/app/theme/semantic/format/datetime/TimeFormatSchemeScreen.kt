@@ -81,7 +81,7 @@ fun rememberTimeFormatSchemeScreenState(
 ): TimeFormatSchemeScreenState {
     return rememberSaveable(
         formats.dateTimeFormats,
-        saver = TimeFormatSchemeScreenStateSaver(formats),
+        saver = timeFormatSchemeScreenStateSaver(formats),
     ) {
         TimeFormatSchemeScreenState(
             formats = formats,
@@ -110,7 +110,7 @@ class TimeFormatSchemeScreenState(
     }
 }
 
-fun TimeFormatSchemeScreenStateSaver(
+fun timeFormatSchemeScreenStateSaver(
     formats: Formats,
 ) = mapSaverSafe(
     save = { state ->

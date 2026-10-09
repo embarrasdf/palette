@@ -65,23 +65,23 @@ private class ColorSplitState(
     var colorMode: ColorSplitMode by mutableStateOf(colorModeInitial)
 }
 
-private const val xAmountKey = "xAmount"
-private const val yAmountKey = "yAmount"
-private const val colorModeKey = "colorMode"
+private const val XAmountKey = "xAmount"
+private const val YAmountKey = "yAmount"
+private const val ColorModeKey = "colorMode"
 
 private val ColorSplitStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            xAmountKey to it.xAmount,
-            yAmountKey to it.yAmount,
-            colorModeKey to it.colorMode.ordinal,
+            XAmountKey to it.xAmount,
+            YAmountKey to it.yAmount,
+            ColorModeKey to it.colorMode.ordinal,
         )
     },
     restore = {
         ColorSplitState(
-            xAmountInitial = it[xAmountKey] as Float,
-            yAmountInitial = it[yAmountKey] as Float,
-            colorModeInitial = ColorSplitMode.entries[(it[colorModeKey] as Int)],
+            xAmountInitial = it[XAmountKey] as Float,
+            yAmountInitial = it[YAmountKey] as Float,
+            colorModeInitial = ColorSplitMode.entries[(it[ColorModeKey] as Int)],
         )
     }
 )

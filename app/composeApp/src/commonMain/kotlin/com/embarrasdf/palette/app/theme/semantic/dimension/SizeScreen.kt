@@ -95,7 +95,7 @@ fun rememberSizeScreenState(
 ): SizeScreenState {
     return rememberSaveable(
         themeState,
-        saver = SizeScreenStateSaver(themeState),
+        saver = sizeScreenStateSaver(themeState),
     ) {
         SizeScreenState(
             themeState = themeState,
@@ -111,7 +111,7 @@ class SizeScreenState(
         get() = themeState.semantic.dimension.size
 }
 
-fun SizeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun sizeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf<String, Any>()
     },

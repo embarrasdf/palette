@@ -70,7 +70,7 @@ fun rememberCircleDemoState(
     val density = LocalDensity.current
     return rememberSaveable(
         density,
-        saver = CircleDemoStateSaver(
+        saver = circleDemoStateSaver(
             density = density,
         )
     ) {
@@ -101,26 +101,26 @@ class CircleDemoState(
         get() = with(density) { strokeWidth.toPx() }
 }
 
-private const val colorKey = "color"
-private const val drawStyleKey = "drawStyle"
-private const val strokeWidthKey = "strokeWidth"
+private const val ColorKey = "color"
+private const val DrawStyleKey = "drawStyle"
+private const val StrokeWidthKey = "strokeWidth"
 
-fun CircleDemoStateSaver(
+fun circleDemoStateSaver(
     density: Density,
 ) = mapSaverSafe(
     save = { value ->
         mapOf(
-            colorKey to save(value.color, ColorSaver, this),
-            drawStyleKey to save(value.drawStyle, DrawStyleSaver, this),
-            strokeWidthKey to value.strokeWidth.value,
+            ColorKey to save(value.color, ColorSaver, this),
+            DrawStyleKey to save(value.drawStyle, DrawStyleSaver, this),
+            StrokeWidthKey to value.strokeWidth.value,
         )
     },
     restore = { map ->
         CircleDemoState(
             density = density,
-            colorInitial = restore(map[colorKey], ColorSaver)!!,
-            drawStyleInitial = restore(map[drawStyleKey], DrawStyleSaver)!!,
-            strokeWidthInitial = (map[strokeWidthKey] as Float).dp,
+            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            drawStyleInitial = restore(map[DrawStyleKey], DrawStyleSaver)!!,
+            strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
         )
     },
 )

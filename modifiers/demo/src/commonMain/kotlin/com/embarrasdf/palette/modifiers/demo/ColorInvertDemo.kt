@@ -41,17 +41,17 @@ private class ColorInvertState(
     var amount: Float by mutableStateOf(amountInitial)
 }
 
-private const val amountKey = "amount"
+private const val AmountKey = "amount"
 
 private val ColorInvertStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            amountKey to it.amount,
+            AmountKey to it.amount,
         )
     },
     restore = {
         ColorInvertState(
-            amountInitial = it[amountKey] as Float,
+            amountInitial = it[AmountKey] as Float,
         )
     }
 )

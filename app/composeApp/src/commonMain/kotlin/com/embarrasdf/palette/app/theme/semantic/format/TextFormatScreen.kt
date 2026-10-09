@@ -70,7 +70,7 @@ fun rememberTextFormatScreenState(
 ): TextFormatScreenState {
     return rememberSaveable(
         formats,
-        saver = TextFormatScreenStateSaver(formats),
+        saver = textFormatScreenStateSaver(formats),
     ) {
         TextFormatScreenState(
             formats = formats,
@@ -103,7 +103,7 @@ class TextFormatScreenState(
     }
 }
 
-fun TextFormatScreenStateSaver(formats: Formats) = mapSaverSafe(
+fun textFormatScreenStateSaver(formats: Formats) = mapSaverSafe(
     save = { state ->
         mapOf()
     },

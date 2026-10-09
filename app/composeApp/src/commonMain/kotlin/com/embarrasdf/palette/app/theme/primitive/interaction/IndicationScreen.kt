@@ -91,7 +91,7 @@ fun rememberPrimitiveIndicationScreenState(
 ): PrimitiveIndicationScreenState {
     return rememberSaveable(
         themeState,
-        saver = PrimitiveIndicationScreenStateSaver(themeState),
+        saver = primitiveIndicationScreenStateSaver(themeState),
     ) {
         PrimitiveIndicationScreenState(themeState = themeState)
     }
@@ -108,14 +108,14 @@ class PrimitiveIndicationScreenState(
         themeState.primitive.indication.getValue(token)
 }
 
-private const val subjectKey = "subject"
+private const val SubjectKey = "subject"
 
-fun PrimitiveIndicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
-    save = { state -> mapOf(subjectKey to state.subject.name) },
+fun primitiveIndicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+    save = { state -> mapOf(SubjectKey to state.subject.name) },
     restore = { map ->
         PrimitiveIndicationScreenState(
             themeState = themeState,
-            subjectInitial = (map[subjectKey] as? String)
+            subjectInitial = (map[SubjectKey] as? String)
                 ?.let { IndicationPrimitiveToken.valueOf(it) }
                 ?: IndicationPrimitiveToken.ColorSplit,
         )

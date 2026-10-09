@@ -126,52 +126,52 @@ class SphereDemoState(
         )
 }
 
-private const val strokeColorKey = "strokeColor"
-private const val outlineStrokeColorKey = "outlineStrokeColor"
-private const val fillKey = "fill"
-private const val outlineKey = "outline"
-private const val rotationXKey = "rotationX"
-private const val rotationYKey = "rotationY"
-private const val rotationZKey = "rotationZ"
-private const val numLatitudeLinesKey = "numLatitudeLines"
-private const val numLongitudeLinesKey = "numLongitudeLines"
-private const val strokeWidthKey = "strokeWidth"
-private const val outlineStrokeWidthKey = "outlineStrokeWidth"
-private const val precisionDegreeKey = "precisionDegree"
+private const val StrokeColorKey = "strokeColor"
+private const val OutlineStrokeColorKey = "outlineStrokeColor"
+private const val FillKey = "fill"
+private const val OutlineKey = "outline"
+private const val RotationXKey = "rotationX"
+private const val RotationYKey = "rotationY"
+private const val RotationZKey = "rotationZ"
+private const val NumLatitudeLinesKey = "numLatitudeLines"
+private const val NumLongitudeLinesKey = "numLongitudeLines"
+private const val StrokeWidthKey = "strokeWidth"
+private const val OutlineStrokeWidthKey = "outlineStrokeWidth"
+private const val PrecisionDegreeKey = "precisionDegree"
 
 val SphereDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            strokeColorKey to save(value.strokeColor, ColorSaver, this),
-            outlineStrokeColorKey to save(value.outlineStrokeColor, ColorSaver, this),
-            fillKey to value.fill,
-            outlineKey to value.outline,
-            rotationXKey to value.viewingAngle.rotationX,
-            rotationYKey to value.viewingAngle.rotationY,
-            rotationZKey to value.viewingAngle.rotationZ,
-            numLatitudeLinesKey to value.numLatitudeLines,
-            numLongitudeLinesKey to value.numLongitudeLines,
-            strokeWidthKey to value.strokeWidth.value,
-            outlineStrokeWidthKey to value.outlineStrokeWidth.value,
-            precisionDegreeKey to value.precisionDegree,
+            StrokeColorKey to save(value.strokeColor, ColorSaver, this),
+            OutlineStrokeColorKey to save(value.outlineStrokeColor, ColorSaver, this),
+            FillKey to value.fill,
+            OutlineKey to value.outline,
+            RotationXKey to value.viewingAngle.rotationX,
+            RotationYKey to value.viewingAngle.rotationY,
+            RotationZKey to value.viewingAngle.rotationZ,
+            NumLatitudeLinesKey to value.numLatitudeLines,
+            NumLongitudeLinesKey to value.numLongitudeLines,
+            StrokeWidthKey to value.strokeWidth.value,
+            OutlineStrokeWidthKey to value.outlineStrokeWidth.value,
+            PrecisionDegreeKey to value.precisionDegree,
         )
     },
     restore = { map ->
         SphereDemoState(
-            strokeColor = restore(map[strokeColorKey], ColorSaver)!!,
-            outlineStrokeColor = restore(map[outlineStrokeColorKey], ColorSaver)!!,
-            fillInitial = map[fillKey] as Boolean,
-            outlineInitial = map[outlineKey] as Boolean,
+            strokeColor = restore(map[StrokeColorKey], ColorSaver)!!,
+            outlineStrokeColor = restore(map[OutlineStrokeColorKey], ColorSaver)!!,
+            fillInitial = map[FillKey] as Boolean,
+            outlineInitial = map[OutlineKey] as Boolean,
             viewingAngleInitial = ViewingAngle(
-                rotationX = map[rotationXKey] as Float,
-                rotationY = map[rotationYKey] as Float,
-                rotationZ = map[rotationZKey] as Float,
+                rotationX = map[RotationXKey] as Float,
+                rotationY = map[RotationYKey] as Float,
+                rotationZ = map[RotationZKey] as Float,
             ),
-            numLatitudeLinesInitial = map[numLatitudeLinesKey] as Int,
-            numLongitudeLinesInitial = map[numLongitudeLinesKey] as Int,
-            strokeWidthInitial = (map[strokeWidthKey] as Float).dp,
-            outlineStrokeWidthInitial = (map[outlineStrokeWidthKey] as Float).dp,
-            precisionDegreeInitial = map[precisionDegreeKey] as Int,
+            numLatitudeLinesInitial = map[NumLatitudeLinesKey] as Int,
+            numLongitudeLinesInitial = map[NumLongitudeLinesKey] as Int,
+            strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
+            outlineStrokeWidthInitial = (map[OutlineStrokeWidthKey] as Float).dp,
+            precisionDegreeInitial = map[PrecisionDegreeKey] as Int,
         )
     },
 )

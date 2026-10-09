@@ -70,7 +70,7 @@ fun rememberIndicationScreenState(
 ): IndicationScreenState {
     return rememberSaveable(
         themeState,
-        saver = IndicationScreenStateSaver(themeState),
+        saver = indicationScreenStateSaver(themeState),
     ) {
         IndicationScreenState(
             themeState = themeState,
@@ -91,18 +91,18 @@ class IndicationScreenState(
         internal set
 }
 
-private const val buttonDemoStateKey = "buttonDemoState"
+private const val ButtonDemoStateKey = "buttonDemoState"
 
-fun IndicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            buttonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this)
+            ButtonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this)
         )
     },
     restore = { map ->
         IndicationScreenState(
             themeState = themeState,
-            buttonDemoStateInitial = restore(map[buttonDemoStateKey], ButtonDemoStateSaver)!!,
+            buttonDemoStateInitial = restore(map[ButtonDemoStateKey], ButtonDemoStateSaver)!!,
         )
     }
 )

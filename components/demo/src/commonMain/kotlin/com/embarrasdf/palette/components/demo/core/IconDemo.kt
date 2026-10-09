@@ -116,26 +116,26 @@ class IconDemoState(
         get() = IconStyle(size = sizing, color = color)
 }
 
-private const val sizeTypeKey = "sizeType"
-private const val fixedSizeKey = "fixedSize"
-private const val scaleKey = "scale"
-private const val colorKey = "color"
+private const val SizeTypeKey = "sizeType"
+private const val FixedSizeKey = "fixedSize"
+private const val ScaleKey = "scale"
+private const val ColorKey = "color"
 
 val IconDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            sizeTypeKey to value.sizeType,
-            fixedSizeKey to value.fixedSize.value,
-            scaleKey to value.scale,
-            colorKey to save(value.color, ColorSaver, this),
+            SizeTypeKey to value.sizeType,
+            FixedSizeKey to value.fixedSize.value,
+            ScaleKey to value.scale,
+            ColorKey to save(value.color, ColorSaver, this),
         )
     },
     restore = { map ->
         IconDemoState(
-            sizeTypeInitial = map[sizeTypeKey] as SizingType,
-            fixedSizeInitial = (map[fixedSizeKey] as Float).dp,
-            scaleInitial = map[scaleKey] as Float,
-            colorInitial = restore(map[colorKey], ColorSaver)!!,
+            sizeTypeInitial = map[SizeTypeKey] as SizingType,
+            fixedSizeInitial = (map[FixedSizeKey] as Float).dp,
+            scaleInitial = map[ScaleKey] as Float,
+            colorInitial = restore(map[ColorKey], ColorSaver)!!,
         )
     },
 )

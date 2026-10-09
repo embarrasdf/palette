@@ -24,14 +24,14 @@ fun NumberFormat.format(
     return format(amount.toString())
 }
 
-private const val DOUBLE_VALUE_INFINITY_LOWERCASE = "infinity"
-private const val DOUBLE_VALUE_NEGATIVE_INFINITY_LOWERCASE = "-infinity"
-private const val DOUBLE_VALUE_NAN_LOWERCASE = "nan"
-private const val DOUBLE_VALUE_SCIENTIFIC_NOTATION_CHAR_LOWERCASE = 'e'
-private const val MINUS_SIGN_ASCII = '-'
-private const val MINUS_SIGN_UNICODE = '−'
-private const val PLUS_SIGN_ASCII = '+'
-private const val PLUS_SIGN_UNICODE = '＋'
+private const val DoubleValueInfinityLowercase = "infinity"
+private const val DoubleValueNegativeInfinityLowercase = "-infinity"
+private const val DoubleValueNanLowercase = "nan"
+private const val DoubleValueScientificNotationCharLowercase = 'e'
+private const val MinusSignAscii = '-'
+private const val MinusSignUnicode = '−'
+private const val PlusSignAscii = '+'
+private const val PlusSignUnicode = '＋'
 
 fun NumberFormat.format(
     amount: String,
@@ -39,16 +39,16 @@ fun NumberFormat.format(
     if (amount.isEmpty()) return ""
 
     val amountLower = amount.lowercase()
-    if (amountLower.contains(DOUBLE_VALUE_SCIENTIFIC_NOTATION_CHAR_LOWERCASE) ||
-        amountLower == DOUBLE_VALUE_INFINITY_LOWERCASE ||
-        amountLower == DOUBLE_VALUE_NEGATIVE_INFINITY_LOWERCASE ||
-        amountLower == DOUBLE_VALUE_NAN_LOWERCASE) {
+    if (amountLower.contains(DoubleValueScientificNotationCharLowercase) ||
+        amountLower == DoubleValueInfinityLowercase ||
+        amountLower == DoubleValueNegativeInfinityLowercase ||
+        amountLower == DoubleValueNanLowercase) {
         return amount
     }
 
-    val isNegative = amount.startsWith(MINUS_SIGN_ASCII) || amount.startsWith(MINUS_SIGN_UNICODE)
+    val isNegative = amount.startsWith(MinusSignAscii) || amount.startsWith(MinusSignUnicode)
 
-    val absAmountStr = amount.trimStart(MINUS_SIGN_ASCII, MINUS_SIGN_UNICODE, PLUS_SIGN_ASCII, PLUS_SIGN_UNICODE)
+    val absAmountStr = amount.trimStart(MinusSignAscii, MinusSignUnicode, PlusSignAscii, PlusSignUnicode)
     val numericValue = absAmountStr.toDoubleOrNull() ?: 0.0
 
     val sign = when {

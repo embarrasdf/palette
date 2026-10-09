@@ -7,7 +7,7 @@ private const val UniformYAmountName = "yAmount"
 private const val UniformColorModeName = "colorMode"
 
 // SKSL
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSizeName;
 uniform float $UniformXAmountName;

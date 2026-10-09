@@ -99,20 +99,20 @@ class ShapeDemoState(
         internal set
 }
 
-private const val widthKey = "width"
-private const val heightKey = "height"
+private const val WidthKey = "width"
+private const val HeightKey = "height"
 
 private val ShapeDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            widthKey to value.width.value,
-            heightKey to value.height.value,
+            WidthKey to value.width.value,
+            HeightKey to value.height.value,
         )
     },
     restore = { map ->
         ShapeDemoState(
-            widthInitial = (map[widthKey] as Float).dp,
-            heightInitial = (map[heightKey] as Float).dp,
+            widthInitial = (map[WidthKey] as Float).dp,
+            heightInitial = (map[HeightKey] as Float).dp,
         )
     },
 )

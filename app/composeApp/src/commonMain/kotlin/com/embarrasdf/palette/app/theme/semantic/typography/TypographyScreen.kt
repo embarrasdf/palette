@@ -87,7 +87,7 @@ fun rememberTypographyScreenState(
     val textFieldState = rememberTextFieldState(initialText = initialText)
     return rememberSaveable(
         themeState,
-        saver = TypographyScreenStateSaver(themeState),
+        saver = typographyScreenStateSaver(themeState),
     ) {
         TypographyScreenState(
             themeState = themeState,
@@ -110,7 +110,7 @@ class TypographyScreenState(
 
 private val textFieldKey = "textField"
 
-fun TypographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun typographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
             textFieldKey to save(state.textFieldState, TextFieldState.Saver, this),

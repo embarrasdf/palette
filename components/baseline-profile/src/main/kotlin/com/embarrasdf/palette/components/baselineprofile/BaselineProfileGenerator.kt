@@ -4,7 +4,7 @@ import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.embarrasdf.palette.MainCatalogPage
-import com.embarrasdf.palette.appPackageName
+import com.embarrasdf.palette.AppPackageName
 import com.embarrasdf.palette.components.ComponentsPage
 import com.embarrasdf.palette.components.core.ButtonPage
 import com.embarrasdf.palette.components.core.CoreComponentsPage
@@ -12,7 +12,7 @@ import com.embarrasdf.palette.components.core.TextFieldPage
 import com.embarrasdf.palette.components.core.TextPage
 import com.embarrasdf.palette.components.media.MediaComponentsPage
 import com.embarrasdf.palette.components.media.MediaControlSheetPage
-import com.embarrasdf.palette.componentsPackageName
+import com.embarrasdf.palette.ComponentsPackageName
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,8 +27,8 @@ class BaselineProfileGenerator {
     @Test
     fun generateCoreComponentsProfile() {
         rule.collect(
-            packageName = appPackageName,
-            filterPredicate = { packageFilterPredicate(componentsPackageName, it) },
+            packageName = AppPackageName,
+            filterPredicate = { packageFilterPredicate(ComponentsPackageName, it) },
         ) {
             pressHome()
             startActivityAndWait()
@@ -54,8 +54,8 @@ class BaselineProfileGenerator {
     @Test
     fun generateMediaComponentsProfile() {
         rule.collect(
-            packageName = appPackageName,
-            filterPredicate = { packageFilterPredicate(componentsPackageName, it) },
+            packageName = AppPackageName,
+            filterPredicate = { packageFilterPredicate(ComponentsPackageName, it) },
         ) {
             pressHome()
             startActivityAndWait()

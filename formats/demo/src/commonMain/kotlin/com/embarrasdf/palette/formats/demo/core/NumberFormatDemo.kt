@@ -69,7 +69,7 @@ fun rememberNumberFormatDemoState(
     return rememberSaveable(
         numberFormat,
         demoTextFieldState,
-        saver = NumberFormatDemoStateSaver(),
+        saver = numberFormatDemoStateSaver(),
     ) {
         NumberFormatDemoState(
             numberFormatInitial = numberFormat,
@@ -115,32 +115,32 @@ class NumberFormatDemoState(
     }
 }
 
-private const val demoTextFieldStateKey = "demoTextFieldState"
-private const val minNumDecimalValuesTextFieldStateKey = "minNumDecimalValuesTextFieldState"
-private const val maxNumDecimalValuesTextFieldStateKey = "maxNumDecimalValuesTextFieldState"
-private const val positiveSignTextFieldStateKey = "positiveSignTextFieldState"
-private const val negativeSignTextFieldStateKey = "negativeSignTextFieldState"
-private const val groupingNumDigitsTextFieldStateKey = "groupingNumDigitsTextFieldState"
+private const val DemoTextFieldStateKey = "demoTextFieldState"
+private const val MinNumDecimalValuesTextFieldStateKey = "minNumDecimalValuesTextFieldState"
+private const val MaxNumDecimalValuesTextFieldStateKey = "maxNumDecimalValuesTextFieldState"
+private const val PositiveSignTextFieldStateKey = "positiveSignTextFieldState"
+private const val NegativeSignTextFieldStateKey = "negativeSignTextFieldState"
+private const val GroupingNumDigitsTextFieldStateKey = "groupingNumDigitsTextFieldState"
 
-fun NumberFormatDemoStateSaver() = mapSaverSafe(
+fun numberFormatDemoStateSaver() = mapSaverSafe(
     save = { state ->
         mapOf(
-            demoTextFieldStateKey to save(state.demoTextFieldState),
-            minNumDecimalValuesTextFieldStateKey to save(state.minNumDecimalValuesTextFieldState),
-            maxNumDecimalValuesTextFieldStateKey to save(state.maxNumDecimalValuesTextFieldState),
-            positiveSignTextFieldStateKey to save(state.positiveSignTextFieldState),
-            negativeSignTextFieldStateKey to save(state.negativeSignTextFieldState),
-            groupingNumDigitsTextFieldStateKey to save(state.groupingNumDigitsTextFieldState),
+            DemoTextFieldStateKey to save(state.demoTextFieldState),
+            MinNumDecimalValuesTextFieldStateKey to save(state.minNumDecimalValuesTextFieldState),
+            MaxNumDecimalValuesTextFieldStateKey to save(state.maxNumDecimalValuesTextFieldState),
+            PositiveSignTextFieldStateKey to save(state.positiveSignTextFieldState),
+            NegativeSignTextFieldStateKey to save(state.negativeSignTextFieldState),
+            GroupingNumDigitsTextFieldStateKey to save(state.groupingNumDigitsTextFieldState),
         )
     },
     restore = { map ->
         NumberFormatDemoState(
-            demoTextFieldState = restore(map[demoTextFieldStateKey]!!) as TextFieldState,
-            minNumDecimalValuesTextFieldState = restore(map[minNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            maxNumDecimalValuesTextFieldState = restore(map[maxNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            positiveSignTextFieldState = restore(map[positiveSignTextFieldStateKey]!!) as TextFieldState,
-            negativeSignTextFieldState = restore(map[negativeSignTextFieldStateKey]!!) as TextFieldState,
-            groupingNumDigitsTextFieldState = restore(map[groupingNumDigitsTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
+            minNumDecimalValuesTextFieldState = restore(map[MinNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
+            maxNumDecimalValuesTextFieldState = restore(map[MaxNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
+            positiveSignTextFieldState = restore(map[PositiveSignTextFieldStateKey]!!) as TextFieldState,
+            negativeSignTextFieldState = restore(map[NegativeSignTextFieldStateKey]!!) as TextFieldState,
+            groupingNumDigitsTextFieldState = restore(map[GroupingNumDigitsTextFieldStateKey]!!) as TextFieldState,
         )
     }
 )

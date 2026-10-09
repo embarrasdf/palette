@@ -67,7 +67,7 @@ fun rememberTextFormatDemoState(
     return rememberSaveable(
         textFormat,
         demoTextFieldState,
-        saver = TextFormatDemoStateSaver(),
+        saver = textFormatDemoStateSaver(),
     ) {
         TextFormatDemoState(
             textFormatInitial = textFormat,
@@ -99,20 +99,20 @@ class TextFormatDemoState(
     }
 }
 
-private const val demoTextFieldStateKey = "demoTextFieldState"
-private const val wordDelimiterTextFieldStateKey = "wordDelimiterTextFieldState"
+private const val DemoTextFieldStateKey = "demoTextFieldState"
+private const val WordDelimiterTextFieldStateKey = "wordDelimiterTextFieldState"
 
-fun TextFormatDemoStateSaver() = mapSaverSafe(
+fun textFormatDemoStateSaver() = mapSaverSafe(
     save = { state ->
         mapOf(
-            demoTextFieldStateKey to save(state.demoTextFieldState),
-            wordDelimiterTextFieldStateKey to save(state.wordDelimiterTextFieldState),
+            DemoTextFieldStateKey to save(state.demoTextFieldState),
+            WordDelimiterTextFieldStateKey to save(state.wordDelimiterTextFieldState),
         )
     },
     restore = { map ->
         TextFormatDemoState(
-            demoTextFieldState = restore(map[demoTextFieldStateKey]!!) as TextFieldState,
-            wordDelimiterTextFieldState = restore(map[wordDelimiterTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
+            wordDelimiterTextFieldState = restore(map[WordDelimiterTextFieldStateKey]!!) as TextFieldState,
         )
     }
 )

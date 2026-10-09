@@ -126,7 +126,7 @@ fun rememberColorScreenState(
 ): ColorScreenState {
     return rememberSaveable(
         themeState,
-        saver = ColorScreenStateSaver(themeState),
+        saver = colorScreenStateSaver(themeState),
     ) {
         ColorScreenState(
             themeState = themeState,
@@ -142,7 +142,7 @@ class ColorScreenState(
         get() = themeState.isDarkMode
 }
 
-fun ColorScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun colorScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },
