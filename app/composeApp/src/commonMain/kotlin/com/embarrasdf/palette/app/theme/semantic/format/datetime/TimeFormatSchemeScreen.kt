@@ -9,17 +9,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
-import com.embarrasdf.palette.formats.demo.datetime.DateTimeFormatDemo
-import com.embarrasdf.palette.formats.demo.datetime.DateTimeFormatDemoState
-import com.embarrasdf.palette.formats.demo.datetime.rememberDateTimeFormatDemoControl
-import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.formats.datetime.TimeFormatValue
 import com.embarrasdf.palette.formats.datetime.toFormat
+import com.embarrasdf.palette.formats.demo.datetime.DateTimeFormatDemo
+import com.embarrasdf.palette.formats.demo.datetime.DateTimeFormatDemoState
+import com.embarrasdf.palette.formats.demo.datetime.rememberDateTimeFormatDemoControl
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.format.datetime.TimeFormatScheme
@@ -57,12 +57,12 @@ fun TimeFormatSchemeScreen(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { (token, format) ->
             BoxWithLabel(
                 label = token.name,
                 modifier = Modifier
-                    .padding(horizontal = PaletteTheme.semantic.dimension.spacing.medium)
+                    .padding(horizontal = PaletteTheme.semantic.dimension.spacing.medium),
             ) {
                 DateTimeFormatDemo(
                     state = state.dateTimeFormatDemoStateByToken[token]!!,
@@ -76,12 +76,10 @@ fun TimeFormatSchemeScreen(
 }
 
 @Composable
-fun rememberTimeFormatSchemeScreenState(
-    formats: Formats,
-): TimeFormatSchemeScreenState {
+fun rememberTimeFormatSchemeScreenState(formats: Formats): TimeFormatSchemeScreenState {
     return rememberSaveable(
         formats.dateTimeFormats,
-        saver = TimeFormatSchemeScreenStateSaver(formats),
+        saver = timeFormatSchemeScreenStateSaver(formats),
     ) {
         TimeFormatSchemeScreenState(
             formats = formats,
@@ -110,9 +108,7 @@ class TimeFormatSchemeScreenState(
     }
 }
 
-fun TimeFormatSchemeScreenStateSaver(
-    formats: Formats,
-) = mapSaverSafe(
+fun timeFormatSchemeScreenStateSaver(formats: Formats) = mapSaverSafe(
     save = { state ->
         mapOf()
     },
@@ -120,7 +116,7 @@ fun TimeFormatSchemeScreenStateSaver(
         TimeFormatSchemeScreenState(
             formats = formats,
         )
-    }
+    },
 )
 
 @Composable
@@ -172,12 +168,12 @@ private fun makeControlForToken(
                             timeFormatScheme = state.timeFormatScheme.update(
                                 format = token,
                                 value = newValue,
-                            )
-                        )
-                    )
+                            ),
+                        ),
+                    ),
                 )
             }
-        }
+        },
     )
     return Control.ControlColumn(
         name = token.name,

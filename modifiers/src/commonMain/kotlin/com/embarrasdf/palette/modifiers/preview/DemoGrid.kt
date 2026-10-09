@@ -21,7 +21,7 @@ fun DemoGrid(
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(background)
+            .background(background),
     ) {
         val widthPX = strokeWidth.toPx()
         val spacingPx = spacing.toPx()
@@ -32,7 +32,7 @@ fun DemoGrid(
                 color = color,
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
-                strokeWidth = widthPX
+                strokeWidth = widthPX,
             )
             x += spacingPx
         }
@@ -43,7 +43,7 @@ fun DemoGrid(
                 color = color,
                 start = Offset(0f, y),
                 end = Offset(size.width, y),
-                strokeWidth = widthPX
+                strokeWidth = widthPX,
             )
             y += spacingPx
         }

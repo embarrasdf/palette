@@ -37,7 +37,7 @@ fun TextFormatDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         TextFormatDemo(
             state = state,
@@ -53,9 +53,9 @@ fun DemoScope.TextFormatDemo(
     Text(
         text = state.text,
         style = PaletteTheme.component.core.text.headline.copy(
-            format = state.textFormat
+            format = state.textFormat,
         ),
-        modifier = modifier.align(Alignment.Center)
+        modifier = modifier.align(Alignment.Center),
     )
 }
 
@@ -67,7 +67,7 @@ fun rememberTextFormatDemoState(
     return rememberSaveable(
         textFormat,
         demoTextFieldState,
-        saver = TextFormatDemoStateSaver(),
+        saver = textFormatDemoStateSaver(),
     ) {
         TextFormatDemoState(
             textFormatInitial = textFormat,
@@ -99,22 +99,22 @@ class TextFormatDemoState(
     }
 }
 
-private const val demoTextFieldStateKey = "demoTextFieldState"
-private const val wordDelimiterTextFieldStateKey = "wordDelimiterTextFieldState"
+private const val DemoTextFieldStateKey = "demoTextFieldState"
+private const val WordDelimiterTextFieldStateKey = "wordDelimiterTextFieldState"
 
-fun TextFormatDemoStateSaver() = mapSaverSafe(
+fun textFormatDemoStateSaver() = mapSaverSafe(
     save = { state ->
         mapOf(
-            demoTextFieldStateKey to save(state.demoTextFieldState),
-            wordDelimiterTextFieldStateKey to save(state.wordDelimiterTextFieldState),
+            DemoTextFieldStateKey to save(state.demoTextFieldState),
+            WordDelimiterTextFieldStateKey to save(state.wordDelimiterTextFieldState),
         )
     },
     restore = { map ->
         TextFormatDemoState(
-            demoTextFieldState = restore(map[demoTextFieldStateKey]!!) as TextFieldState,
-            wordDelimiterTextFieldState = restore(map[wordDelimiterTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
+            wordDelimiterTextFieldState = restore(map[WordDelimiterTextFieldStateKey]!!) as TextFieldState,
         )
-    }
+    },
 )
 
 @Composable
@@ -148,7 +148,7 @@ class TextFormatDemoControl(
         selectedValue = { Capitalization.toKey(state.textFormat.capitalization) },
         onValueChange = { newKey ->
             val newState = state.textFormat.copy(
-                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar)
+                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar),
             )
             onValueChange(newState)
         },
@@ -205,9 +205,9 @@ class TextFormatDemoControl(
                             onValueChange = { newValue ->
                                 onChange(keyFieldState.text.toString() to newValue)
                             },
-                        )
+                        ),
                     )
-                }
+                },
             )
         },
         expandedInitial = false,
@@ -223,7 +223,7 @@ class TextFormatDemoControl(
                     add(capitalizeFirstCharControl)
                 }
             }.toPersistentList()
-        }
+        },
     )
 
     val controls: PersistentList<Control> = buildList {

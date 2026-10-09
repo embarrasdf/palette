@@ -19,9 +19,7 @@ fun NavGraphBuilder.mainNavGraph() = navGraph(
     route(MainCatalogRoute)
 }
 
-fun EntryProviderScope<NavKey>.mainEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.mainEntryProvider(navController: NavController) {
     catalogEntry<MainCatalogRoute, MainCatalogItem>(
         onItemClick = { item ->
             when (item) {

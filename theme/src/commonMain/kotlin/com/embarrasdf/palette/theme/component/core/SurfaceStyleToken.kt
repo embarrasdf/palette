@@ -1,9 +1,8 @@
 package com.embarrasdf.palette.theme.component.core
 
-import com.embarrasdf.palette.theme.component.LocalComponentTokens
-
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.components.core.SurfaceStyle
+import com.embarrasdf.palette.theme.component.LocalComponentTokens
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 
@@ -25,8 +24,7 @@ enum class SurfaceStyleToken(val default: SurfaceStyleTokenSet) {
 }
 
 @Composable
-fun SurfaceStyleToken.tokenSet(): SurfaceStyleTokenSet =
-    LocalComponentTokens.current.surface.getValue(this)
+fun SurfaceStyleToken.tokenSet(): SurfaceStyleTokenSet = LocalComponentTokens.current.surface.getValue(this)
 
 @Composable
 fun SurfaceStyleToken.resolve(): SurfaceStyle = tokenSet().toComponentStyle()

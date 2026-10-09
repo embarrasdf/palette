@@ -24,7 +24,6 @@ val LocalTimeFormatHMAmPmPadZero = LocalTime.Format {
 val LocalTime.Formats.HMAmPmPadZero: DateTimeFormat<LocalTime>
     get() = LocalTimeFormatHMAmPmPadZero
 
-
 val LocalTimeFormatHMSContinental = LocalTime.Format {
     hour(padding = Padding.ZERO)
     chars(":")

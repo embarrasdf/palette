@@ -4,7 +4,7 @@ private const val UniformShaderName = "composable"
 private const val UniformAmount = "amount"
 
 // SKSL
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float $UniformAmount;
 

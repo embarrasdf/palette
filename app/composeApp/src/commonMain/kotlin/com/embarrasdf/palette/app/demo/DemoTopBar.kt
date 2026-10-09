@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.components.core.Text
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.layout.TopBar
 import com.embarrasdf.palette.theme.components.navigation.BackNavigationButton
-import com.embarrasdf.palette.theme.PaletteTheme
 
 @Composable
 fun DemoTopBar(
@@ -19,7 +19,7 @@ fun DemoTopBar(
     },
     actions: @Composable () -> Unit = {
         ThemeButton(onClick = onThemeClick)
-    }
+    },
 ) {
     TopBar(
         title = {

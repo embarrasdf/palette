@@ -1,28 +1,26 @@
 package com.embarrasdf.palette.components.demo.media
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
 import com.embarrasdf.palette.components.media.PlayPauseButton
 import com.embarrasdf.palette.components.media.PlayPauseButtonStyle
+import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun PlayPauseButtonDemo(
-    modifier: Modifier = Modifier,
-) {
+fun PlayPauseButtonDemo(modifier: Modifier = Modifier) {
     var isPlaying by remember { mutableStateOf(false) }
     var isEnabled by remember { mutableStateOf(true) }
     val base = PaletteTheme.component.media.playPauseButton
@@ -58,7 +56,7 @@ fun PlayPauseButtonDemo(
     Demo(
         controls = controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         PlayPauseButtonDemo(
             isPlaying = isPlaying,

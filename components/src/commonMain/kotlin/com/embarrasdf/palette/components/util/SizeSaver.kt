@@ -4,14 +4,14 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
-private const val widthKey = "width"
-private const val heightKey = "height"
+private const val WidthKey = "width"
+private const val HeightKey = "height"
 
 val IntSizeSaver = mapSaverSafe(
-    save = { value -> mapOf(widthKey to value.width, heightKey to value.height) },
+    save = { value -> mapOf(WidthKey to value.width, HeightKey to value.height) },
     restore = { map ->
-        val width = map[widthKey] as Int
-        val height = map[heightKey] as Int
+        val width = map[WidthKey] as Int
+        val height = map[HeightKey] as Int
         IntSize(width, height)
     },
 )
@@ -19,14 +19,14 @@ val IntSizeSaver = mapSaverSafe(
 val DpSizeSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            widthKey to value.width.value,
-            heightKey to value.height.value,
+            WidthKey to value.width.value,
+            HeightKey to value.height.value,
         )
-   },
+    },
     restore = { map ->
         DpSize(
-            width = (map[widthKey] as Float).dp,
-            height = (map[heightKey] as Float).dp,
+            width = (map[WidthKey] as Float).dp,
+            height = (map[HeightKey] as Float).dp,
         )
     },
 )

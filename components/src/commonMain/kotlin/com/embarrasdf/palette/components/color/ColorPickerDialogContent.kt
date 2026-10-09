@@ -39,14 +39,14 @@ fun ColorPickerDialogContent(
         verticalArrangement = Arrangement.spacedBy(style.spacing),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .padding(style.padding)
+            .padding(style.padding),
     ) {
         ColorPicker(
             style = style.colorPickerStyle,
             color = currentColor,
             onColorChange = { currentColor = it },
             modifier = Modifier
-                .weight(1f, fill = false)
+                .weight(1f, fill = false),
         )
         ConfirmCancelButtonRow(
             style = style.confirmCancelButtonRowStyle,
@@ -56,7 +56,7 @@ fun ColorPickerDialogContent(
             },
             onDismiss = onDismissRequest,
             modifier = Modifier
-                .padding(top = style.buttonRowSpacing)
+                .padding(top = style.buttonRowSpacing),
         )
     }
 }

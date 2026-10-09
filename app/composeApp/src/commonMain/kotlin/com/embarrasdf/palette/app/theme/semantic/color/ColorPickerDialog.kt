@@ -7,9 +7,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import com.embarrasdf.palette.components.color.ColorPickerDialogContent
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.core.Surface
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
 
 @Composable
@@ -30,7 +30,7 @@ fun ColorPickerDialog(
                 onDismissRequest = onDismissRequest,
                 style = PaletteTheme.component.color.colorPickerDialogContent,
                 modifier = Modifier
-                    .padding(PaletteTheme.semantic.dimension.spacing.medium)
+                    .padding(PaletteTheme.semantic.dimension.spacing.medium),
             )
         }
     }

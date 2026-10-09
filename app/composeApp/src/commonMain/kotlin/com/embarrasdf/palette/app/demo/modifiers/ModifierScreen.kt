@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.app.preview.PalettePreview
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.modifiers.demo.ColorInvertDemo
 import com.embarrasdf.palette.modifiers.demo.ColorSplitDemo
 import com.embarrasdf.palette.modifiers.demo.FadeDemo
@@ -15,6 +14,7 @@ import com.embarrasdf.palette.modifiers.demo.NoiseDemo
 import com.embarrasdf.palette.modifiers.demo.PixelateDemo
 import com.embarrasdf.palette.modifiers.demo.WarpDemo
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 
 @Composable
 fun ModifierScreen(

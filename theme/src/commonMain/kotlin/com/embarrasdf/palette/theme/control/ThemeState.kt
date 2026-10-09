@@ -33,9 +33,7 @@ internal class ThemeStateImpl(
 }
 
 @Composable
-internal fun rememberThemeState(
-    isDarkMode: Boolean = isSystemInDarkTheme(),
-): ThemeStateImpl {
+internal fun rememberThemeState(isDarkMode: Boolean = isSystemInDarkTheme()): ThemeStateImpl {
     return remember(isDarkMode) {
         ThemeStateImpl(
             isDarkModeInitial = isDarkMode,

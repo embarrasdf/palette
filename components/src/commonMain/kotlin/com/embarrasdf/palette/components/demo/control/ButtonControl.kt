@@ -1,8 +1,8 @@
 package com.embarrasdf.palette.components.demo.control
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.components.core.Button
 import com.embarrasdf.palette.components.core.ButtonStyle
@@ -26,7 +26,7 @@ fun ButtonControl(
         onClick = control.onClick,
         enabled = enabled,
         modifier = modifier
-            .then(control.modifier)
+            .then(control.modifier),
     ) {
         Text(control.name, style = style.labelStyle)
     }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.text.input.insert
 
 class NumberFormatOutputTransformation(
     private val numberFormat: NumberFormat,
-): OutputTransformation {
+) : OutputTransformation {
     override fun TextFieldBuffer.transformOutput() {
         when (val intGrouping = numberFormat.intGrouping) {
             IntGrouping.None -> return

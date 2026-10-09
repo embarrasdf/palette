@@ -9,8 +9,8 @@ import com.embarrasdf.palette.components.demo.DemoListStyle
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.components.demo.DemoList as BaseDemoList
 import kotlinx.collections.immutable.PersistentList
+import com.embarrasdf.palette.components.demo.DemoList as BaseDemoList
 
 @Composable
 fun <T> DemoList(

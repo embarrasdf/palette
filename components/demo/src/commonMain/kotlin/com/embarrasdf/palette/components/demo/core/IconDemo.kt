@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Icon
-import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.IconStyle
+import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -55,7 +55,7 @@ fun IconDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         IconDemo(state = state)
     }
@@ -72,7 +72,7 @@ fun DemoScope.IconDemo(
         modifier = modifier
             .size(IconDemoContainerSize)
             .align(Alignment.Center)
-            .border(1.dp, PaletteTheme.semantic.color.outline)
+            .border(1.dp, PaletteTheme.semantic.color.outline),
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -83,11 +83,10 @@ fun DemoScope.IconDemo(
 }
 
 @Composable
-fun rememberIconDemoState(
-    colorInitial: Color = PaletteTheme.semantic.color.primary,
-): IconDemoState = rememberSaveable(saver = IconDemoStateSaver) {
-    IconDemoState(colorInitial = colorInitial)
-}
+fun rememberIconDemoState(colorInitial: Color = PaletteTheme.semantic.color.primary): IconDemoState =
+    rememberSaveable(saver = IconDemoStateSaver) {
+        IconDemoState(colorInitial = colorInitial)
+    }
 
 @Stable
 class IconDemoState(
@@ -116,34 +115,32 @@ class IconDemoState(
         get() = IconStyle(size = sizing, color = color)
 }
 
-private const val sizeTypeKey = "sizeType"
-private const val fixedSizeKey = "fixedSize"
-private const val scaleKey = "scale"
-private const val colorKey = "color"
+private const val SizeTypeKey = "sizeType"
+private const val FixedSizeKey = "fixedSize"
+private const val ScaleKey = "scale"
+private const val ColorKey = "color"
 
 val IconDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            sizeTypeKey to value.sizeType,
-            fixedSizeKey to value.fixedSize.value,
-            scaleKey to value.scale,
-            colorKey to save(value.color, ColorSaver, this),
+            SizeTypeKey to value.sizeType,
+            FixedSizeKey to value.fixedSize.value,
+            ScaleKey to value.scale,
+            ColorKey to save(value.color, ColorSaver, this),
         )
     },
     restore = { map ->
         IconDemoState(
-            sizeTypeInitial = map[sizeTypeKey] as SizingType,
-            fixedSizeInitial = (map[fixedSizeKey] as Float).dp,
-            scaleInitial = map[scaleKey] as Float,
-            colorInitial = restore(map[colorKey], ColorSaver)!!,
+            sizeTypeInitial = map[SizeTypeKey] as SizingType,
+            fixedSizeInitial = (map[FixedSizeKey] as Float).dp,
+            scaleInitial = map[ScaleKey] as Float,
+            colorInitial = restore(map[ColorKey], ColorSaver)!!,
         )
     },
 )
 
 @Composable
-fun rememberIconDemoControl(
-    state: IconDemoState,
-): IconDemoControl = remember(state) { IconDemoControl(state) }
+fun rememberIconDemoControl(state: IconDemoState): IconDemoControl = remember(state) { IconDemoControl(state) }
 
 @Stable
 class IconDemoControl(

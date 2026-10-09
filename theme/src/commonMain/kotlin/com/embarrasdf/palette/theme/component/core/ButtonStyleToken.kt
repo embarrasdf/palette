@@ -1,9 +1,8 @@
 package com.embarrasdf.palette.theme.component.core
 
-import com.embarrasdf.palette.theme.component.LocalComponentTokens
-
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.components.core.ButtonStyle
+import com.embarrasdf.palette.theme.component.LocalComponentTokens
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 
@@ -32,8 +31,7 @@ enum class ButtonStyleToken(val default: ButtonStyleTokenSet) {
 }
 
 @Composable
-fun ButtonStyleToken.tokenSet(): ButtonStyleTokenSet =
-    LocalComponentTokens.current.button.getValue(this)
+fun ButtonStyleToken.tokenSet(): ButtonStyleTokenSet = LocalComponentTokens.current.button.getValue(this)
 
 @Composable
 fun ButtonStyleToken.resolve(): ButtonStyle = tokenSet().toComponentStyle()

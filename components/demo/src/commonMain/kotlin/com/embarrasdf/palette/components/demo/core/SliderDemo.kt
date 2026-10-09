@@ -5,23 +5,23 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.components.core.RangeSlider
 import com.embarrasdf.palette.components.core.Slider
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.roundToInt
 
@@ -143,43 +143,43 @@ class SliderDemoState(
         internal set
 }
 
-private const val sliderTypeKey = "sliderType"
-private const val valueKey = "value"
-private const val rangeStartKey = "rangeStart"
-private const val rangeEndKey = "rangeEnd"
-private const val stepsKey = "steps"
-private const val enabledKey = "enabled"
-private const val stepModeKey = "stepMode"
-private const val snapValuesKey = "snapValues"
+private const val SliderTypeKey = "sliderType"
+private const val ValueKey = "value"
+private const val RangeStartKey = "rangeStart"
+private const val RangeEndKey = "rangeEnd"
+private const val StepsKey = "steps"
+private const val EnabledKey = "enabled"
+private const val StepModeKey = "stepMode"
+private const val SnapValuesKey = "snapValues"
 
 val SliderDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            sliderTypeKey to value.sliderType.name,
-            valueKey to value.value,
-            rangeStartKey to value.rangeStart,
-            rangeEndKey to value.rangeEnd,
-            stepsKey to value.steps,
-            enabledKey to value.enabled,
-            stepModeKey to value.stepMode.name,
-            snapValuesKey to value.snapValues.joinToString(","),
+            SliderTypeKey to value.sliderType.name,
+            ValueKey to value.value,
+            RangeStartKey to value.rangeStart,
+            RangeEndKey to value.rangeEnd,
+            StepsKey to value.steps,
+            EnabledKey to value.enabled,
+            StepModeKey to value.stepMode.name,
+            SnapValuesKey to value.snapValues.joinToString(","),
         )
     },
     restore = { map ->
         SliderDemoState(
             sliderTypeInitial = runCatching {
-                SliderType.valueOf(map[sliderTypeKey] as String)
+                SliderType.valueOf(map[SliderTypeKey] as String)
             }.getOrDefault(SliderType.Continuous),
-            valueInitial = map[valueKey] as Float,
-            rangeStartInitial = map[rangeStartKey] as Float,
-            rangeEndInitial = map[rangeEndKey] as Float,
-            stepsInitial = map[stepsKey] as Int,
-            enabledInitial = map[enabledKey] as Boolean,
+            valueInitial = map[ValueKey] as Float,
+            rangeStartInitial = map[RangeStartKey] as Float,
+            rangeEndInitial = map[RangeEndKey] as Float,
+            stepsInitial = map[StepsKey] as Int,
+            enabledInitial = map[EnabledKey] as Boolean,
             stepModeInitial = runCatching {
-                StepMode.valueOf(map[stepModeKey] as String)
+                StepMode.valueOf(map[StepModeKey] as String)
             }.getOrDefault(StepMode.Uniform),
             snapValuesInitial = runCatching {
-                (map[snapValuesKey] as String)
+                (map[SnapValuesKey] as String)
                     .split(",")
                     .map { it.toFloat() }
             }.getOrDefault(listOf(0f, 0.25f, 0.5f, 0.75f, 1f)),
@@ -188,9 +188,7 @@ val SliderDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberSliderDemoControl(
-    state: SliderDemoState,
-): SliderDemoControl = remember(state) { SliderDemoControl(state) }
+fun rememberSliderDemoControl(state: SliderDemoState): SliderDemoControl = remember(state) { SliderDemoControl(state) }
 
 @Stable
 class SliderDemoControl(

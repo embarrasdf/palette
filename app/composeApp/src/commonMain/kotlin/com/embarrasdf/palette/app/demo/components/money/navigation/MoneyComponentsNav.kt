@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.moneyComponentsNavGraph() = navGraph(
     root = MoneyComponentsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.moneyComponentsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.moneyComponentsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.moneyComponentsEntryProvider(navController: NavController) {
     catalogEntry<MoneyComponentCatalogRoute, MoneyComponent>(
         onItemClick = { component ->
             navController.navigate(MoneyComponentRoute(component))

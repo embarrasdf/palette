@@ -30,7 +30,7 @@ class MediaControlBarTest(
                     isPlaying = false,
                     onPlayPauseClick = {},
                     style = PaletteTheme.component.media.mediaControlBar,
-                    progress = { progress }
+                    progress = { progress },
                 )
             }
         }

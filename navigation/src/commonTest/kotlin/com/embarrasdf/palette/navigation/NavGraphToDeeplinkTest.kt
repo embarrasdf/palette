@@ -58,7 +58,10 @@ class NavGraphToDeeplinkTest {
 
         val deeplink = Route1.toDeeplink(navGraph)
 
-        assertEquals("${RootRoute.pathSegment}/${Graph3.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}", deeplink)
+        assertEquals(
+            "${RootRoute.pathSegment}/${Graph3.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}",
+            deeplink,
+        )
     }
 
     @Test
@@ -95,7 +98,7 @@ class NavGraphToDeeplinkTest {
                 children = {
                     route(Route1)
                     route(Route2)
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }
@@ -115,7 +118,7 @@ class NavGraphToDeeplinkTest {
                         route(Route1)
                         route(Route2)
                     }
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }

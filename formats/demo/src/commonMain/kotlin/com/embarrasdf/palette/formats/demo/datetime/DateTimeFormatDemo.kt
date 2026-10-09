@@ -14,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
@@ -52,13 +52,13 @@ fun <T : Enum<T>> DateTimeFormatDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         DateTimeFormatDemo(
             state = state,
             format = format,
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.Center),
         )
     }
 }
@@ -86,7 +86,7 @@ fun <T> rememberDateTimeFormatDemoState(
 ): DateTimeFormatDemoState<T> = rememberSaveable(
     formatInitial,
     timeZoneInitial,
-    saver = DateTimeFormatDemoStateSaver(),
+    saver = dateTimeFormatDemoStateSaver(),
 ) {
     DateTimeFormatDemoState(
         timeZoneInitial = timeZoneInitial,
@@ -116,20 +116,20 @@ class DateTimeFormatDemoState<T>(
     }
 }
 
-private const val timeZoneKey = "timeZone"
-private const val tokenKey = "token"
+private const val TimeZoneKey = "timeZone"
+private const val TokenKey = "token"
 
-fun <T> DateTimeFormatDemoStateSaver() = mapSaverSafe(
+fun <T> dateTimeFormatDemoStateSaver() = mapSaverSafe(
     save = { value ->
         mapOf(
-            timeZoneKey to value.timeZone.id,
-            tokenKey to value.token,
+            TimeZoneKey to value.timeZone.id,
+            TokenKey to value.token,
         )
     },
     restore = { map ->
         DateTimeFormatDemoState(
-            timeZoneInitial = TimeZone.of(map[timeZoneKey] as String),
-            tokenInitial = map[tokenKey] as T,
+            timeZoneInitial = TimeZone.of(map[TimeZoneKey] as String),
+            tokenInitial = map[TokenKey] as T,
         )
     },
 )

@@ -29,5 +29,4 @@ fun PaddingValuesTokenSet.toPaddingValues(spacing: Spacing): PaddingValues = Pad
 )
 
 @Composable
-fun PaddingValuesTokenSet.toPaddingValues(): PaddingValues =
-    toPaddingValues(PaletteTheme.semantic.dimension.spacing)
+fun PaddingValuesTokenSet.toPaddingValues(): PaddingValues = toPaddingValues(PaletteTheme.semantic.dimension.spacing)

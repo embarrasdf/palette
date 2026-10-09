@@ -3,9 +3,9 @@ package com.embarrasdf.palette.modifiers.baselineprofile
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.embarrasdf.palette.AppPackageName
 import com.embarrasdf.palette.MainCatalogPage
-import com.embarrasdf.palette.appPackageName
-import com.embarrasdf.palette.modifierPackageName
+import com.embarrasdf.palette.ModifierPackageName
 import com.embarrasdf.palette.modifiers.ColorInvertPage
 import com.embarrasdf.palette.modifiers.ColorSplitPage
 import com.embarrasdf.palette.modifiers.FadePage
@@ -27,8 +27,8 @@ class BaselineProfileGenerator {
     @Test
     fun generateModifiersProfile() {
         rule.collect(
-            packageName = appPackageName,
-            filterPredicate = { packageFilterPredicate(modifierPackageName, it) },
+            packageName = AppPackageName,
+            filterPredicate = { packageFilterPredicate(ModifierPackageName, it) },
         ) {
             pressHome()
             startActivityAndWait()
@@ -62,7 +62,10 @@ class BaselineProfileGenerator {
         }
     }
 
-    private fun packageFilterPredicate(packageName: String, rule: String): Boolean {
+    private fun packageFilterPredicate(
+        packageName: String,
+        rule: String,
+    ): Boolean {
         // Only capture rules in the library's package, excluding test app code
         // Rules are prefixed by tag characters, followed by JVM method signature,
         // e.g. `HSPLcom/mylibrary/LibraryClass;-><init>()V`, where `L`

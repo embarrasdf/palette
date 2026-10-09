@@ -71,9 +71,7 @@ private fun NavGraph.buildBackStack(dest: NavKey): List<NavKey> {
     return listOf(dest)
 }
 
-internal fun List<PathSegment>.toNavKey(
-    navGraph: NavGraph,
-): NavKey? {
+internal fun List<PathSegment>.toNavKey(navGraph: NavGraph): NavKey? {
     fun matchRoute(
         nodes: List<NavGraphNode>,
         segmentIndex: Int,

@@ -1,6 +1,6 @@
 package com.embarrasdf.palette
 
-const val appPackageName = "com.embarrasdf.palette"
-const val componentsPackageName = "com.embarrasdf.palette.components"
-const val formatsPackageName = "com.embarrasdf.palette.formats"
-const val modifierPackageName = "com.embarrasdf.palette.modifiers"
+const val AppPackageName = "com.embarrasdf.palette"
+const val ComponentsPackageName = "com.embarrasdf.palette.components"
+const val FormatsPackageName = "com.embarrasdf.palette.formats"
+const val ModifierPackageName = "com.embarrasdf.palette.modifiers"

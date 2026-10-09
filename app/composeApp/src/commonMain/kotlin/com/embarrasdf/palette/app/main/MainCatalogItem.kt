@@ -5,7 +5,8 @@ import com.embarrasdf.palette.components.layout.catalog.CatalogItem
 enum class MainCatalogItem : CatalogItem {
     Components,
     Formats,
-    Modifiers;
+    Modifiers,
+    ;
 
     override val title = this.name
 }

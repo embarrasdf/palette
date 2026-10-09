@@ -24,7 +24,7 @@ class NavGraphBuilder(
     inline fun <reified T : NavGraphRoute> navGraph(
         root: T,
         start: NavKey,
-        children: NavGraphBuilder.() -> Unit = {}
+        children: NavGraphBuilder.() -> Unit = {},
     ) {
         require(parent == null || root.pathSegment.value.isNotEmpty()) {
             "${T::class.simpleName} has an empty path segment. Only the top-level graph root may have an empty path segment."
@@ -47,7 +47,7 @@ class NavGraphBuilder(
                 parent = parent,
                 children = childrenBuilder.nodes,
                 startRouteFactory = { start },
-            )
+            ),
         )
     }
 
@@ -72,7 +72,7 @@ class NavGraphBuilder(
                 parent = parent,
                 children = childrenBuilder.nodes,
                 startRouteFactory = { route -> start(route as T) },
-            )
+            ),
         )
     }
 
@@ -93,14 +93,14 @@ class NavGraphBuilder(
                 parent = parent,
                 children = childrenBuilder.nodes,
                 startRouteFactory = { route -> start(route as T) },
-            )
+            ),
         )
     }
 
     inline fun <reified T : NavKey> route(
         pathSegment: PathSegment,
         noinline parser: (PathSegment) -> NavKey?,
-        children: NavGraphBuilder.() -> Unit = {}
+        children: NavGraphBuilder.() -> Unit = {},
     ) {
         require(pathSegment.value.isNotEmpty()) {
             "${T::class.simpleName} has an empty path segment and cannot be registered as a route."
@@ -117,13 +117,13 @@ class NavGraphBuilder(
                 parser = parser,
                 parent = parent,
                 children = childrenBuilder.nodes,
-            )
+            ),
         )
     }
 
     inline fun <reified T : NavKey> wildcardRoute(
         children: NavGraphBuilder.() -> Unit = {},
-        noinline parser: (PathSegment) -> NavKey?
+        noinline parser: (PathSegment) -> NavKey?,
     ) {
         val pathSegment = PathSegment.Wildcard
 
@@ -140,13 +140,13 @@ class NavGraphBuilder(
                 parser = parser,
                 parent = parent,
                 children = childrenBuilder.nodes,
-            )
+            ),
         )
     }
 
     inline fun <reified T : NavKey> route(
         navKey: T,
-        children: NavGraphBuilder.() -> Unit = {}
+        children: NavGraphBuilder.() -> Unit = {},
     ) {
         route<T>(
             pathSegment = navKey.pathSegment,

@@ -6,9 +6,9 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.DemoStyle
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.components.demo.Demo as BaseDemo
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import com.embarrasdf.palette.components.demo.Demo as BaseDemo
 
 @Composable
 fun Demo(

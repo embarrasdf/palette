@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.coreComponentsNavGraph() = navGraph(
     root = CoreComponentsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.coreComponentsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.coreComponentsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.coreComponentsEntryProvider(navController: NavController) {
     catalogEntry<CoreComponentCatalogRoute, CoreComponent>(
         onItemClick = { component ->
             navController.navigate(CoreComponentRoute(component))

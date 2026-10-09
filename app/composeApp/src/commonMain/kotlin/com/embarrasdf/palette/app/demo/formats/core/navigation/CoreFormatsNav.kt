@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.coreFormatsNavGraph() = navGraph(
     root = CoreFormatsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.coreFormatsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.coreFormatsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.coreFormatsEntryProvider(navController: NavController) {
     catalogEntry<CoreFormatCatalogRoute, CoreFormat>(
         onItemClick = { format ->
             navController.navigate(CoreFormatRoute(format))

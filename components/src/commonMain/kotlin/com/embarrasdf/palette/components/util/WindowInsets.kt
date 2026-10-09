@@ -6,5 +6,4 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.runtime.Composable
 
 @Composable
-fun WindowInsets.horizontalPaddingValues(): PaddingValues =
-    this.asPaddingValues().calculateHorizontalPaddingValues()
+fun WindowInsets.horizontalPaddingValues(): PaddingValues = this.asPaddingValues().calculateHorizontalPaddingValues()

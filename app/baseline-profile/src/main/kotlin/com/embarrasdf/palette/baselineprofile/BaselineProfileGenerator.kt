@@ -3,7 +3,7 @@ package com.embarrasdf.palette.baselineprofile
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.embarrasdf.palette.appPackageName
+import com.embarrasdf.palette.AppPackageName
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,9 +18,9 @@ class BaselineProfileGenerator {
     @Test
     fun generateAppProfile() {
         rule.collect(
-            packageName = appPackageName,
+            packageName = AppPackageName,
             // See: https://d.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
-            includeInStartupProfile = true
+            includeInStartupProfile = true,
         ) {
             pressHome()
             startActivityAndWait()

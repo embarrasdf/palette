@@ -16,7 +16,7 @@ fun TextFormatToken.toFormat(): TextFormat {
     val defaultPunctuationReplacements = mapOf(
         TextFormatReplacements.UNICODE_ELLIPSES,
         TextFormatReplacements.UNICODE_EM_DASH,
-        TextFormatReplacements.NEWLINE_UNICODE_BULLET
+        TextFormatReplacements.NEWLINE_UNICODE_BULLET,
     )
     return when (this) {
         TextFormatToken.Body -> TextFormat(

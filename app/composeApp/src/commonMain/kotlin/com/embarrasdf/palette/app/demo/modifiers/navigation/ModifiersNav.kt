@@ -20,9 +20,7 @@ fun NavGraphBuilder.modifiersNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.modifiersEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.modifiersEntryProvider(navController: NavController) {
     catalogEntry<ModifierCatalogRoute, DemoModifier>(
         onItemClick = { modifier ->
             navController.navigate(ModifierRoute(modifier))

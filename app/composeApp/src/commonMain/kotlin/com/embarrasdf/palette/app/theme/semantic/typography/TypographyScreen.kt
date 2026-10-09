@@ -58,12 +58,12 @@ fun TypographyScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { token ->
             BoxWithLabel(
                 label = token.name,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 Text(
                     text = state.text,
@@ -87,7 +87,7 @@ fun rememberTypographyScreenState(
     val textFieldState = rememberTextFieldState(initialText = initialText)
     return rememberSaveable(
         themeState,
-        saver = TypographyScreenStateSaver(themeState),
+        saver = typographyScreenStateSaver(themeState),
     ) {
         TypographyScreenState(
             themeState = themeState,
@@ -104,13 +104,12 @@ class TypographyScreenState(
     val text: String
         get() = textFieldState.text.toString()
 
-    fun tokenSet(token: TypographyToken): TypographyTokenSet =
-        themeState.semantic.typography.tokens.getValue(token)
+    fun tokenSet(token: TypographyToken): TypographyTokenSet = themeState.semantic.typography.tokens.getValue(token)
 }
 
 private val textFieldKey = "textField"
 
-fun TypographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun typographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
             textFieldKey to save(state.textFieldState, TextFieldState.Saver, this),
@@ -121,7 +120,7 @@ fun TypographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             themeState = themeState,
             textFieldState = restore(map[textFieldKey], TextFieldState.Saver)!!,
         )
-    }
+    },
 )
 
 @Composable

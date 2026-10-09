@@ -35,7 +35,7 @@ fun ChevronButton(
     Button(
         onClick = onClick,
         style = style.buttonStyle,
-        modifier = modifier
+        modifier = modifier,
     ) {
         ChevronIcon(
             direction = direction,
@@ -65,7 +65,7 @@ fun ChevronIcon(
                 .aspectRatio(1f, matchHeightConstraintsFirst = false)
                 .rotate(rotation)
                 .clip(ChevronIconShape)
-                .background(color)
+                .background(color),
         )
     }
 }

@@ -3,6 +3,7 @@ package com.embarrasdf.palette.theme.component.layout
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
+import com.embarrasdf.palette.components.core.copy
 import com.embarrasdf.palette.components.layout.BoxWithLabelStyle
 import com.embarrasdf.palette.components.layout.FloatingActionStyle
 import com.embarrasdf.palette.components.layout.ScaffoldStyle
@@ -12,11 +13,10 @@ import com.embarrasdf.palette.components.layout.dialog.ConfirmButtonStyle
 import com.embarrasdf.palette.components.layout.dialog.ConfirmCancelButtonRowStyle
 import com.embarrasdf.palette.components.layout.dialog.DialogContentStyle
 import com.embarrasdf.palette.components.layout.dialog.ProgressDialogContentStyle
-import com.embarrasdf.palette.components.core.copy
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.CoreStyles
 import com.embarrasdf.palette.theme.component.core.TextStyles
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
 import com.embarrasdf.palette.theme.semantic.dimension.SizeToken
 import com.embarrasdf.palette.theme.semantic.dimension.toSize

@@ -21,9 +21,7 @@ import com.embarrasdf.palette.modifiers.warp
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun WarpDemo(
-    modifier: Modifier = Modifier,
-) {
+fun WarpDemo(modifier: Modifier = Modifier) {
     val modifierState = rememberSaveable(saver = WarpStateSaver) { WarpState() }
     var pointerOffset by remember { mutableStateOf(Offset.Zero) }
 
@@ -62,11 +60,11 @@ fun WarpDemo(
                 onValueChange = {
                     modifierState.radius = it.dp
                 },
-                valueRange = { 0f..1000f }
+                valueRange = { 0f..1000f },
             ),
         ),
         state = rememberModifierDemoState(componentDemoTypeInitial = ComponentDemoType.Grid),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -78,20 +76,20 @@ private class WarpState(
     var amount: Float by mutableStateOf(amountInitial)
 }
 
-private const val radiusKey = "radius"
-private const val amountKey = "amount"
+private const val RadiusKey = "radius"
+private const val AmountKey = "amount"
 
 private val WarpStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            radiusKey to it.radius.value,
-            amountKey to it.amount,
+            RadiusKey to it.radius.value,
+            AmountKey to it.amount,
         )
     },
     restore = {
         WarpState(
-            radiusInitial = Dp(it[radiusKey] as Float),
-            amountInitial = it[amountKey] as Float,
+            radiusInitial = Dp(it[RadiusKey] as Float),
+            amountInitial = it[AmountKey] as Float,
         )
-    }
+    },
 )

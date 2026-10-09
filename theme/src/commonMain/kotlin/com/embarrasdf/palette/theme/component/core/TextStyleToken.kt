@@ -1,12 +1,11 @@
 package com.embarrasdf.palette.theme.component.core
 
-import com.embarrasdf.palette.theme.component.LocalComponentTokens
-
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.components.core.TextStyle
+import com.embarrasdf.palette.theme.component.LocalComponentTokens
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
-import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
+import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 
 enum class TextStyleToken(val default: TextStyleTokenSet) {
     Display(TextStyleTokenSet(TypographyToken.Display, TextFormatToken.Display, ColorToken.OnSurface)),
@@ -23,9 +22,7 @@ enum class TextStyleToken(val default: TextStyleTokenSet) {
 }
 
 @Composable
-fun TextStyleToken.tokenSet(): TextStyleTokenSet =
-    LocalComponentTokens.current.text.getValue(this)
+fun TextStyleToken.tokenSet(): TextStyleTokenSet = LocalComponentTokens.current.text.getValue(this)
 
 @Composable
-fun TextStyleToken.resolve(): TextStyle =
-    tokenSet().toTextStyle()
+fun TextStyleToken.resolve(): TextStyle = tokenSet().toTextStyle()

@@ -1,9 +1,9 @@
 package com.embarrasdf.palette.theme.semantic.shape
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.components.core.Shape
 import com.embarrasdf.palette.components.core.toComposeShape
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.primitive.ShapePrimitiveToken
 import androidx.compose.ui.graphics.Shape as ComposeShape
 

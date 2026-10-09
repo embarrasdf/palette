@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.mapSaverSafe
@@ -25,6 +24,7 @@ import com.embarrasdf.palette.formats.money.MoneyFormat
 import com.embarrasdf.palette.formats.money.format
 import com.embarrasdf.palette.formats.money.update
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -37,7 +37,7 @@ fun MoneyFormatDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         MoneyFormatDemo(
             state = state,
@@ -54,17 +54,15 @@ fun DemoScope.MoneyFormatDemo(
     Text(
         text = state.text,
         style = PaletteTheme.component.core.text.headline,
-        modifier = modifier.align(Alignment.Center)
+        modifier = modifier.align(Alignment.Center),
     )
 }
 
 @Composable
-fun rememberMoneyFormatDemoState(
-    moneyFormatInitial: MoneyFormat = MoneyFormat()
-): MoneyFormatDemoState {
+fun rememberMoneyFormatDemoState(moneyFormatInitial: MoneyFormat = MoneyFormat()): MoneyFormatDemoState {
     return rememberSaveable(
         moneyFormatInitial,
-        saver = MoneyFormatDemoStateSaver(),
+        saver = moneyFormatDemoStateSaver(),
     ) {
         MoneyFormatDemoState(
             moneyFormatInitial = moneyFormatInitial,
@@ -92,13 +90,13 @@ class MoneyFormatDemoState(
     }
 }
 
-fun MoneyFormatDemoStateSaver() = mapSaverSafe(
+fun moneyFormatDemoStateSaver() = mapSaverSafe(
     save = { state ->
         mapOf()
     },
     restore = { map ->
         MoneyFormatDemoState()
-    }
+    },
 )
 
 @Composable
@@ -127,7 +125,7 @@ class MoneyFormatDemoControl(
             KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
             )
-        }
+        },
     )
 
     val currencySymbolControl = Control.TextField(

@@ -2,26 +2,26 @@ package com.embarrasdf.palette.components.util
 
 import androidx.compose.ui.graphics.Color
 
-private const val redKey = "red"
-private const val greenKey = "green"
-private const val blueKey = "blue"
-private const val alphaKey = "alpha"
+private const val RedKey = "red"
+private const val GreenKey = "green"
+private const val BlueKey = "blue"
+private const val AlphaKey = "alpha"
 
 val ColorSaver = mapSaverSafe(
     save = { color ->
         mapOf(
-            redKey to color.red,
-            greenKey to color.green,
-            blueKey to color.blue,
-            alphaKey to color.alpha,
+            RedKey to color.red,
+            GreenKey to color.green,
+            BlueKey to color.blue,
+            AlphaKey to color.alpha,
         )
     },
     restore = { map ->
         Color(
-            red = map[redKey] as Float,
-            green = map[greenKey] as Float,
-            blue = map[blueKey] as Float,
-            alpha = map[alphaKey] as Float,
+            red = map[RedKey] as Float,
+            green = map[GreenKey] as Float,
+            blue = map[BlueKey] as Float,
+            alpha = map[AlphaKey] as Float,
         )
     },
 )

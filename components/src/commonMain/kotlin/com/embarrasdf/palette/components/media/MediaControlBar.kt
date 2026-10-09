@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +34,7 @@ import com.embarrasdf.palette.components.MediaControlBarContentDescription
 import com.embarrasdf.palette.components.core.Surface
 import com.embarrasdf.palette.components.core.SurfaceStyle
 import com.embarrasdf.palette.components.core.Text
+import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.media.model.Artist
 import com.embarrasdf.palette.components.media.model.MediaItem
 import com.embarrasdf.palette.components.util.Spacer
@@ -41,7 +42,6 @@ import com.embarrasdf.palette.components.util.calculateEndPadding
 import com.embarrasdf.palette.components.util.calculateHorizontalPadding
 import com.embarrasdf.palette.components.util.calculateStartPadding
 import com.embarrasdf.palette.components.util.calculateVerticalPadding
-import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.util.toIntSize
 import com.embarrasdf.palette.components.util.toPx
 import com.embarrasdf.trace.trace
@@ -99,10 +99,14 @@ fun MediaControlBar(
         val maxContentSizePx = DpSize(
             width = if (expandedContentSize.width.isSpecified) {
                 minOf(expandedContentSize.width, style.maxContentSize.width)
-            } else style.maxContentSize.width,
+            } else {
+                style.maxContentSize.width
+            },
             height = if (expandedContentSize.height.isSpecified) {
                 minOf(expandedContentSize.height, style.maxContentSize.height)
-            } else style.maxContentSize.height,
+            } else {
+                style.maxContentSize.height
+            },
         ).toIntSize()
 
         BoxWithConstraints {
@@ -169,7 +173,7 @@ fun MediaControlBar(
                             stateDescription?.let {
                                 this@semantics.stateDescription = it
                             }
-                        }
+                        },
                 ) {
                     Spacer(width = contentPadding.calculateStartPadding())
 
@@ -196,13 +200,13 @@ fun MediaControlBar(
                                             minHeight = height.roundToInt(),
                                             maxWidth = width.roundToInt(),
                                             maxHeight = height.roundToInt(),
-                                        )
+                                        ),
                                     )
                                     layout(width.roundToInt(), height.roundToInt()) {
                                         placeable.place(x.roundToInt(), y.roundToInt())
                                     }
                                 }
-                            }
+                            },
                     )
 
                     Column(
@@ -212,21 +216,21 @@ fun MediaControlBar(
                             .padding(horizontal = style.contentSpacing)
                             .graphicsLayer {
                                 alpha = 1f - progress()
-                            }
+                            },
                     ) {
                         Text(
                             text = mediaItem.title,
                             style = style.titleStyle,
                             maxLines = 1,
                             modifier = Modifier
-                                .basicMarquee()
+                                .basicMarquee(),
                         )
                         Text(
                             text = mediaItem.artists.joinToString { it.name },
                             style = style.artistStyle,
                             maxLines = 1,
                             modifier = Modifier
-                                .basicMarquee()
+                                .basicMarquee(),
                         )
                     }
 
@@ -239,7 +243,7 @@ fun MediaControlBar(
                             .padding(style.contentSpacing)
                             .graphicsLayer {
                                 alpha = 1f - progress()
-                            }
+                            },
                     )
 
                     Spacer(width = contentPadding.calculateEndPadding())
@@ -255,9 +259,7 @@ private class ProgressPreviewParameterProvider : PreviewParameterProvider<Float>
 
 @Preview
 @Composable
-private fun Preview(
-    @PreviewParameter(ProgressPreviewParameterProvider::class) progress: Float
-) {
+private fun Preview(@PreviewParameter(ProgressPreviewParameterProvider::class) progress: Float) {
     var isPlaying by remember { mutableStateOf(false) }
     MediaControlBar(
         mediaItem = MediaItem(

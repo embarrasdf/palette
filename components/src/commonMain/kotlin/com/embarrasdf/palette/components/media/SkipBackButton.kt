@@ -20,7 +20,7 @@ fun SkipBackButton(
         enabled = enabled,
         style = style.buttonStyle,
         modifier = modifier
-            .aspectRatio(1f)
+            .aspectRatio(1f),
     ) { shapePadding ->
         SkipIcon(
             style = style.iconStyle,

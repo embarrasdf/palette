@@ -33,7 +33,7 @@ data class SurfaceStyle(
 fun Surface(
     modifier: Modifier = Modifier,
     style: SurfaceStyle = SurfaceStyle(),
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -47,7 +47,7 @@ fun Surface(
                 isTraversalGroup = true
             }
             .pointerInput(Unit) {},
-        propagateMinConstraints = true
+        propagateMinConstraints = true,
     ) {
         ShapeContent(style.shape, content)
     }
@@ -64,7 +64,7 @@ fun Surface(
     hapticFeedbackEnabled: Boolean = true,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     Box(
         propagateMinConstraints = true,
@@ -85,7 +85,7 @@ fun Surface(
                 composeShape = style.shape.toComposeShape(),
                 backgroundColor = style.color,
                 borderStyle = style.borderStyle,
-            )
+            ),
     ) {
         ShapeContent(style.shape, content)
     }
@@ -113,7 +113,7 @@ private fun ShapeContent(
                         end = maxWidth / 4,
                         top = maxHeight / 3,
                         bottom = 0.dp,
-                    )
+                    ),
                 )
             }
         }
@@ -146,9 +146,7 @@ private fun Modifier.surface(
 
 @Preview
 @Composable
-private fun Preview(
-    @PreviewParameter(BoolPreviewParameterProvider::class) isDarkTheme: Boolean,
-) {
+private fun Preview(@PreviewParameter(BoolPreviewParameterProvider::class) isDarkTheme: Boolean) {
     Surface {
         Text("Hello world")
     }
@@ -156,9 +154,7 @@ private fun Preview(
 
 @Preview
 @Composable
-private fun PreviewClickable(
-    @PreviewParameter(BoolPreviewParameterProvider::class) enabled: Boolean,
-) {
+private fun PreviewClickable(@PreviewParameter(BoolPreviewParameterProvider::class) enabled: Boolean) {
     Surface(
         onClick = {},
         enabled = enabled,

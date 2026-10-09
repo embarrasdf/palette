@@ -63,7 +63,7 @@ fun ShapeScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             ShapeDemo(
                 shape = state.subjectShape,
@@ -74,12 +74,10 @@ fun ShapeScreen(
 }
 
 @Composable
-fun rememberShapeScreenState(
-    themeState: ThemeState,
-): ShapeScreenState {
+fun rememberShapeScreenState(themeState: ThemeState): ShapeScreenState {
     return rememberSaveable(
         themeState,
-        saver = ShapeScreenStateSaver(themeState),
+        saver = shapeScreenStateSaver(themeState),
     ) {
         ShapeScreenState(themeState = themeState)
     }
@@ -99,18 +97,18 @@ class ShapeScreenState(
         get() = subject.toShape(shapeScheme, themeState.primitive.shape)
 }
 
-private const val subjectKey = "subject"
+private const val SubjectKey = "subject"
 
-fun ShapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
-    save = { state -> mapOf(subjectKey to state.subject.name) },
+fun shapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+    save = { state -> mapOf(SubjectKey to state.subject.name) },
     restore = { map ->
         ShapeScreenState(
             themeState = themeState,
-            subjectInitial = (map[subjectKey] as? String)
+            subjectInitial = (map[SubjectKey] as? String)
                 ?.let { ShapeToken.valueOf(it) }
                 ?: ShapeToken.Primary,
         )
-    }
+    },
 )
 
 @Composable

@@ -72,7 +72,7 @@ fun CartesianGrid(
     drawVertex: (DrawScope.(Float, Float) -> Unit)? = null,
 ) {
     Canvas(
-        modifier = modifier
+        modifier = modifier,
     ) {
         drawContext.transform.rotate(
             degrees = rotationDegrees,
@@ -118,7 +118,7 @@ fun CartesianGrid(
                     color = lineStyle.color,
                     start = Offset(0f, y),
                     end = Offset(size.width, y),
-                    strokeWidth = lineStyle.stroke.width
+                    strokeWidth = lineStyle.stroke.width,
                 )
                 y += ySpacing(yInterval)
                 yInterval += 1
@@ -132,7 +132,7 @@ fun CartesianGrid(
                     color = lineStyle.color,
                     start = Offset(0f, y),
                     end = Offset(size.width, y),
-                    strokeWidth = lineStyle.stroke.width
+                    strokeWidth = lineStyle.stroke.width,
                 )
                 y -= ySpacing(yInterval)
                 yInterval += 1

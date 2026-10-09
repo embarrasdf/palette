@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Button
 import com.embarrasdf.palette.components.core.ButtonStyle
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -29,9 +28,10 @@ import com.embarrasdf.palette.components.util.PaddingValuesSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.ButtonStyleToken
+import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
 import kotlinx.collections.immutable.persistentListOf
 
@@ -44,7 +44,7 @@ fun ButtonDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         ButtonDemo(
             state = state,
@@ -81,7 +81,7 @@ fun DemoScope.ButtonDemo(
             .width(state.width)
             .align(Alignment.Center)
             .padding(PaletteTheme.semantic.dimension.spacing.medium)
-            .semantics { contentDescription = "Demo Button" }
+            .semantics { contentDescription = "Demo Button" },
     ) {
         this@ButtonDemo.TextDemo(
             state = state.textDemoState,
@@ -131,40 +131,38 @@ class ButtonDemoState(
         internal set
 }
 
-private const val enabledKey = "enabled"
-private const val styleKey = "style"
-private const val maxWidthKey = "maxWidth"
-private const val widthKey = "width"
-private const val contentPaddingKey = "contentPadding"
-private const val textDemoStateKey = "textDemoState"
+private const val EnabledKey = "enabled"
+private const val StyleKey = "style"
+private const val MaxWidthKey = "maxWidth"
+private const val WidthKey = "width"
+private const val ContentPaddingKey = "contentPadding"
+private const val TextDemoStateKey = "textDemoState"
 
 val ButtonDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            enabledKey to value.enabled,
-            styleKey to value.style,
-            maxWidthKey to value.maxWidth.value,
-            widthKey to value.width.value,
-            contentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
-            textDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
+            EnabledKey to value.enabled,
+            StyleKey to value.style,
+            MaxWidthKey to value.maxWidth.value,
+            WidthKey to value.width.value,
+            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
         )
     },
     restore = { map ->
         ButtonDemoState(
-            enabledInitial = map[enabledKey] as Boolean,
-            styleInitial = map[styleKey] as ButtonStyleToken,
-            maxWidthInitial = (map[maxWidthKey] as Float).dp,
-            widthInitial = (map[widthKey] as Float).dp,
-            contentPaddingInitial = restore(map[contentPaddingKey], PaddingValuesSaver)!!,
-            textDemoState = restore(map[textDemoStateKey], TextDemoStateSaver)!!
+            enabledInitial = map[EnabledKey] as Boolean,
+            styleInitial = map[StyleKey] as ButtonStyleToken,
+            maxWidthInitial = (map[MaxWidthKey] as Float).dp,
+            widthInitial = (map[WidthKey] as Float).dp,
+            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
+            textDemoState = restore(map[TextDemoStateKey], TextDemoStateSaver)!!,
         )
     },
 )
 
 @Composable
-fun rememberButtonDemoControl(
-    state: ButtonDemoState,
-): ButtonDemoControl = remember(state) { ButtonDemoControl(state) }
+fun rememberButtonDemoControl(state: ButtonDemoState): ButtonDemoControl = remember(state) { ButtonDemoControl(state) }
 
 @Stable
 class ButtonDemoControl(

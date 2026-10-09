@@ -25,7 +25,7 @@ class MediaControlSheetTest(
     object AnchorProvider : TestParameter.TestParameterValuesProvider {
         override fun provideValues() = listOf(
             PeekSheetAnchor.Peek,
-            PeekSheetAnchor.Expanded
+            PeekSheetAnchor.Expanded,
         )
     }
 

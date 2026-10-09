@@ -3,8 +3,8 @@ package com.embarrasdf.palette.theme.component.core
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
-import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
+import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import com.embarrasdf.palette.theme.semantic.shape.toShape
 import com.embarrasdf.palette.components.core.BorderStyle as ComponentBorderStyle
 

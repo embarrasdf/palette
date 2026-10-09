@@ -6,13 +6,14 @@ data class SemanticTypography(
     val tokens: Map<TypographyToken, TypographyTokenSet> =
         TypographyToken.entries.associateWith { it.default },
 ) {
-    fun withTokenSet(token: TypographyToken, tokenSet: TypographyTokenSet): SemanticTypography =
-        copy(tokens = tokens + (token to tokenSet))
+    fun withTokenSet(
+        token: TypographyToken,
+        tokenSet: TypographyTokenSet,
+    ): SemanticTypography = copy(tokens = tokens + (token to tokenSet))
 }
 
 fun SemanticTypography.resolve(primitiveTokens: PrimitiveTokens): Typography {
-    fun style(token: TypographyToken) =
-        tokens.getValue(token).toComposeTextStyle(primitiveTokens)
+    fun style(token: TypographyToken) = tokens.getValue(token).toComposeTextStyle(primitiveTokens)
     return Typography(
         display = style(TypographyToken.Display),
         headline = style(TypographyToken.Headline),

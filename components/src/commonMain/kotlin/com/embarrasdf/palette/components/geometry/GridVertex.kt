@@ -37,7 +37,7 @@ sealed class GridVertex(
         override val rotationDegrees: Float = 0f,
     ) : GridVertex(
         size = size,
-        rotationDegrees = rotationDegrees
+        rotationDegrees = rotationDegrees,
     )
 
     data class Plus(
@@ -83,7 +83,6 @@ fun DrawScope.drawVertex(
                     style = vertex.drawStyle,
                 )
             }
-
             is GridVertex.Rect -> {
                 val size = vertex.size.toSize()
                 drawRect(
@@ -93,7 +92,6 @@ fun DrawScope.drawVertex(
                     style = vertex.drawStyle,
                 )
             }
-
             is GridVertex.Plus -> {
                 val size = vertex.size.toSize()
                 val halfPlusWidthPx = size.width / 2f
@@ -108,10 +106,9 @@ fun DrawScope.drawVertex(
                     color = vertex.color,
                     start = Offset(x, y - halfPlusHeightPx),
                     end = Offset(x, y + halfPlusHeightPx),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() }
+                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
                 )
             }
-
             is GridVertex.X -> {
                 val size = vertex.size.toSize()
                 val halfXWidthPx = size.width / 2f
@@ -126,7 +123,7 @@ fun DrawScope.drawVertex(
                     color = vertex.color,
                     start = Offset(x - halfXWidthPx, y + halfXHeightPx),
                     end = Offset(x + halfXWidthPx, y - halfXHeightPx),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() }
+                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
                 )
             }
         }

@@ -14,20 +14,20 @@ data class GridLineStyle(
     val stroke: Stroke,
 )
 
-private const val colorKey = "color"
-private const val strokeKey = "stroke"
+private const val ColorKey = "color"
+private const val StrokeKey = "stroke"
 
 val GridLineStyleSaver: Saver<GridLineStyle, Any> = mapSaverSafe(
     save = { value ->
         mapOf(
-            colorKey to save(value.color, ColorSaver, this),
-            strokeKey to save(value.stroke, DrawStyleSaver, this),
+            ColorKey to save(value.color, ColorSaver, this),
+            StrokeKey to save(value.stroke, DrawStyleSaver, this),
         )
     },
     restore = { map ->
         GridLineStyle(
-            color = restore(map[colorKey], ColorSaver)!!,
-            stroke = restore(map[strokeKey], DrawStyleSaver)!!,
+            color = restore(map[ColorKey], ColorSaver)!!,
+            stroke = restore(map[StrokeKey], DrawStyleSaver)!!,
         )
-    }
+    },
 )

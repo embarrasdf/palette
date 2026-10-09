@@ -18,7 +18,10 @@ class NavController(val state: NavState) {
         state.navigate(route, replace)
     }
 
-    fun navigateToDeeplink(deeplink: String, replace: Boolean = false) {
+    fun navigateToDeeplink(
+        deeplink: String,
+        replace: Boolean = false,
+    ) {
         val route = NavKey.fromDeeplink(deeplink, state.navGraph) ?: return
         navigate(route, replace)
     }
@@ -31,7 +34,10 @@ class NavController(val state: NavState) {
         return state.navigateUp()
     }
 
-    fun popUpTo(route: NavKey, inclusive: Boolean = false): Boolean {
+    fun popUpTo(
+        route: NavKey,
+        inclusive: Boolean = false,
+    ): Boolean {
         return state.popUpTo(route, inclusive)
     }
 }

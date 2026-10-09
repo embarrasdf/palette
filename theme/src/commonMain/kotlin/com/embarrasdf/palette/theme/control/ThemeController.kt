@@ -6,8 +6,8 @@ import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
 import com.embarrasdf.palette.theme.semantic.SemanticTokens
 
 class ThemeController internal constructor(
-    private val state: ThemeStateImpl
-): ThemeState by state {
+    private val state: ThemeStateImpl,
+) : ThemeState by state {
 
     fun updatePrimitive(block: (PrimitiveTokens) -> PrimitiveTokens) {
         state.primitive = block(state.primitive)

@@ -12,11 +12,11 @@ private enum class KeyboardCapitalizationEnum(
     Characters(KeyboardCapitalization.Characters),
     Words(KeyboardCapitalization.Words),
     Sentences(KeyboardCapitalization.Sentences),
-    ;
 }
 
 private fun KeyboardCapitalization.toEnum() =
-    KeyboardCapitalizationEnum.entries.find { it.keyboardCapitalization == this } ?: KeyboardCapitalizationEnum.Unspecified
+    KeyboardCapitalizationEnum.entries.find { it.keyboardCapitalization == this }
+        ?: KeyboardCapitalizationEnum.Unspecified
 
 val KeyboardCapitalizationSaver = object : Saver<KeyboardCapitalization, Any> {
     override fun SaverScope.save(value: KeyboardCapitalization): Any? {

@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
  * @param subdivisions: Returns the number of additional adjacent pixels to include in each pixel
  * block.
  */
-fun Modifier.pixelate(
-    subdivisions: () -> Int,
-): Modifier = this then ShaderElement(
+fun Modifier.pixelate(subdivisions: () -> Int): Modifier = this then ShaderElement(
     shader = createPixelateShader().apply {
         setSubdivisions(subdivisions())
     },

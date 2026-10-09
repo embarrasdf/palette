@@ -35,6 +35,6 @@ fun IndeterminateProgressDialogContent(
 @Composable
 private fun IndeterminateProgressDialogContentPreview() {
     IndeterminateProgressDialogContent(
-        title = "Doing something"
+        title = "Doing something",
     )
 }
