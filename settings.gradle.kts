@@ -51,6 +51,7 @@ include(":navigation")
 include(":testing")
 include(":theme")
 include(":theme:components")
+include(":theme:components:navigation3")
 
 val localPropsFile = rootDir.resolve("local.properties").takeIf { it.exists() }
 val localProps = java.util.Properties().apply {
