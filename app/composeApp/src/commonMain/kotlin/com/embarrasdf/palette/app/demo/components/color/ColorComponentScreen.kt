@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.app.demo.components.color.navigation.ColorComponent
 import com.embarrasdf.palette.components.demo.color.ColorPickerDemo
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 
 @Composable
 fun ColorComponentScreen(
@@ -26,7 +26,7 @@ fun ColorComponentScreen(
     ) { innerPadding ->
         when (component) {
             ColorComponent.ColorPicker -> ColorPickerDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

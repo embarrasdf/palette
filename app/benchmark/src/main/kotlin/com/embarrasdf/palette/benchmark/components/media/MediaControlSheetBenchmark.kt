@@ -8,8 +8,8 @@ import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.TraceSectionMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.embarrasdf.palette.AppPackageName
 import com.embarrasdf.palette.MainCatalogPage
-import com.embarrasdf.palette.appPackageName
 import com.embarrasdf.palette.components.ComponentsPage
 import com.embarrasdf.palette.components.media.MediaComponentsPage
 import com.embarrasdf.palette.components.media.MediaControlSheetPage
@@ -26,19 +26,18 @@ class MediaControlSheetBenchmark {
     fun compilationModeNone() = mediaControlSheetOpen(CompilationMode.None())
 
     @Test
-    fun compilationModePartial() =
-        mediaControlSheetOpen(CompilationMode.Partial(BaselineProfileMode.Require))
+    fun compilationModePartial() = mediaControlSheetOpen(CompilationMode.Partial(BaselineProfileMode.Require))
 
     @OptIn(ExperimentalMetricApi::class)
     fun mediaControlSheetOpen(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
-        packageName = appPackageName,
+        packageName = AppPackageName,
         metrics = listOf(
             FrameTimingMetric(),
             TraceSectionMetric("MediaControlSheet", TraceSectionMetric.Mode.Sum),
             TraceSectionMetric("MediaControlBar", TraceSectionMetric.Mode.Sum),
             TraceSectionMetric(
                 "MediaControlBar:MediaItemArtwork:layout",
-                TraceSectionMetric.Mode.Sum
+                TraceSectionMetric.Mode.Sum,
             ),
         ),
         iterations = 5,
@@ -51,7 +50,7 @@ class MediaControlSheetBenchmark {
             MainCatalogPage(device).navigateToComponents()
             ComponentsPage(device).navigateToMediaComponents()
             MediaComponentsPage(device).navigateToMediaControlSheet()
-        }
+        },
     ) {
         MediaControlSheetPage(device).expandSheet()
     }

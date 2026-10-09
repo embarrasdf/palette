@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
@@ -33,8 +32,9 @@ import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.modifiers.FadeSide
 import com.embarrasdf.palette.modifiers.bottomFade
 import com.embarrasdf.palette.modifiers.fade
-import com.embarrasdf.palette.theme.semantic.spacing.PaletteSpacing
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.theme.semantic.spacing.PaletteSpacing
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -46,7 +46,7 @@ fun FadeDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         LaunchedEffect(this@Demo.maxWidth) {
             control.onSizeChanged(this@Demo.maxWidth)
@@ -65,7 +65,7 @@ fun FadeDemo(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f)
+                    .aspectRatio(1f),
             ) {
                 listOf(
                     FadeSide.Left to Alignment.TopStart,
@@ -83,7 +83,7 @@ fun FadeDemo(
                                 borderColor = state.borderColor.takeIf { state.showBorder },
                             )
                             .background(PaletteTheme.semantic.color.primary)
-                            .align(alignment)
+                            .align(alignment),
                     )
                 }
             }
@@ -92,7 +92,7 @@ fun FadeDemo(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f)
+                    .aspectRatio(1f),
             ) {
                 listOf(
                     FadeSide.Left + FadeSide.Top to Alignment.TopStart,
@@ -110,7 +110,7 @@ fun FadeDemo(
                                 borderColor = state.borderColor.takeIf { state.showBorder },
                             )
                             .background(PaletteTheme.semantic.color.primary)
-                            .align(alignment)
+                            .align(alignment),
                     )
                 }
             }
@@ -119,16 +119,14 @@ fun FadeDemo(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .background(PaletteTheme.semantic.color.primary)
+                    .background(PaletteTheme.semantic.color.primary),
             )
         }
     }
 }
 
 @Composable
-fun rememberFadeDemoState(
-    borderColor: Color = Color.Red,
-) = rememberSaveable(saver = FadeDemoStateSaver) {
+fun rememberFadeDemoState(borderColor: Color = Color.Red) = rememberSaveable(saver = FadeDemoStateSaver) {
     FadeDemoState(
         borderColor = borderColor,
     )
@@ -149,28 +147,28 @@ class FadeDemoState(
         internal set
 }
 
-private const val fadeLengthKey = "fadeLength"
-private const val showBorderKey = "showBorder"
-private const val borderColorKey = "borderColor"
-private const val widthKey = "width"
+private const val FadeLengthKey = "fadeLength"
+private const val ShowBorderKey = "showBorder"
+private const val BorderColorKey = "borderColor"
+private const val WidthKey = "width"
 
 val FadeDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            fadeLengthKey to value.fadeLength.value,
-            showBorderKey to value.showBorder,
-            borderColorKey to save(value.borderColor, ColorSaver, this),
-            widthKey to value.width.value,
+            FadeLengthKey to value.fadeLength.value,
+            ShowBorderKey to value.showBorder,
+            BorderColorKey to save(value.borderColor, ColorSaver, this),
+            WidthKey to value.width.value,
         )
     },
     restore = { map ->
         FadeDemoState(
-            fadeLengthInitial = (map[fadeLengthKey] as? Float)?.dp ?: 20.dp,
-            showBorderInitial = map[showBorderKey] as? Boolean ?: false,
-            widthInitial = (map[widthKey] as? Float)?.dp ?: 0.dp,
-            borderColor = restore(map[borderColorKey], ColorSaver)!!,
+            fadeLengthInitial = (map[FadeLengthKey] as? Float)?.dp ?: 20.dp,
+            showBorderInitial = map[ShowBorderKey] as? Boolean ?: false,
+            widthInitial = (map[WidthKey] as? Float)?.dp ?: 0.dp,
+            borderColor = restore(map[BorderColorKey], ColorSaver)!!,
         )
-    }
+    },
 )
 
 @Composable

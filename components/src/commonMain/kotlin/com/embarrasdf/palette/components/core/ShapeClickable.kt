@@ -7,10 +7,10 @@ import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -52,7 +52,7 @@ fun Modifier.shapeClickable(
                 }
             } else {
                 Modifier
-            }
+            },
         )
         .indication(interactionSource, indication)
         .clippedPointerEvents(
@@ -183,14 +183,18 @@ fun Modifier.clippedTapGestures(
                         onLongClick()
                     }
                 }
-            } else null,
+            } else {
+                null
+            },
             onDoubleTap = if (onDoubleClick != null) {
                 { offset ->
                     if (isInShape(size, offset, shape)) {
                         onDoubleClick()
                     }
                 }
-            } else null
+            } else {
+                null
+            },
         )
     }
 }

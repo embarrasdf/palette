@@ -34,9 +34,7 @@ sealed class Shape(
         get() = this is Circle
 }
 
-fun ShapeType.toShape(
-    cornerRadius: Dp = 0.dp,
-): Shape {
+fun ShapeType.toShape(cornerRadius: Dp = 0.dp): Shape {
     return when (this) {
         ShapeType.Rectangle -> Shape.Rectangle(cornerRadius = cornerRadius)
         ShapeType.Circle -> Shape.Circle

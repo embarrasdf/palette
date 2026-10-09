@@ -40,9 +40,7 @@ fun NavGraphBuilder.componentsNavGraph() = navGraph(
     moneyComponentsNavGraph()
 }
 
-fun EntryProviderScope<NavKey>.componentsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.componentsEntryProvider(navController: NavController) {
     catalogEntry<ComponentCatalogRoute, Component>(
         onItemClick = { component ->
             val targetRoute = when (component) {

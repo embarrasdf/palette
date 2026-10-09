@@ -11,9 +11,7 @@ data class BorderStyle(
     val shape: Shape = Shape.Rectangle(),
 )
 
-fun Modifier.border(
-    style: BorderStyle,
-): Modifier = this.border(
+fun Modifier.border(style: BorderStyle): Modifier = this.border(
     width = style.width,
     color = style.color,
     shape = style.shape.toComposeShape(),

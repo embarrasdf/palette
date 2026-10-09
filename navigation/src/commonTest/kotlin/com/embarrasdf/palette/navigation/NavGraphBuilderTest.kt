@@ -108,7 +108,7 @@ class NavGraphBuilderTest {
             wildcardRoute<TestRoute>(
                 children = {
                     route(Route1)
-                }
+                },
             ) { segment ->
                 require(segment != PathSegment.Wildcard) {
                     "Parser should not be called with PathSegment.Wildcard"
@@ -142,7 +142,7 @@ class NavGraphBuilderTest {
                         route(Route1)
                         route(Route2)
                     }
-                }
+                },
             ) { segment ->
                 require(segment != PathSegment.Wildcard) {
                     "Parser should not be called with PathSegment.Wildcard"

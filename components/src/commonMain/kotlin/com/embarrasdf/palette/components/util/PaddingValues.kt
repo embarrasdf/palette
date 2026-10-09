@@ -9,8 +9,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
-fun PaddingValues.calculateVerticalPadding() =
-    this.calculateTopPadding() + this.calculateBottomPadding()
+fun PaddingValues.calculateVerticalPadding() = this.calculateTopPadding() + this.calculateBottomPadding()
 
 fun PaddingValues.calculateVerticalPaddingValues() = PaddingValues(
     start = 0.dp,
@@ -121,9 +120,7 @@ fun PaddingValues.plus(
 }
 
 @Composable
-fun PaddingValues.plus(
-    all: Dp,
-): PaddingValues {
+fun PaddingValues.plus(all: Dp): PaddingValues {
     return this.plus(
         vertical = PaddingValues(all = all),
         horizontal = PaddingValues(all = all),

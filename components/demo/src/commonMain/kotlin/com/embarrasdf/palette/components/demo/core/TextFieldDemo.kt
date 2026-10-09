@@ -12,13 +12,13 @@ import androidx.compose.foundation.text.input.allCaps
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -27,7 +27,8 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.TextField
-import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.components.core.TextStyle
+import com.embarrasdf.palette.components.core.copy
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -41,8 +42,7 @@ import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.format
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.components.core.TextStyle
-import com.embarrasdf.palette.components.core.copy
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -61,7 +61,7 @@ fun TextFieldDemo(
             state = state,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium)
+                .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium),
         )
     }
 }
@@ -112,7 +112,7 @@ fun DemoScope.TextFieldDemo(
             InputTransformations.OnlyDigits -> InputTransformation.onlyDigits()
         },
         modifier = modifier
-            .width(state.width)
+            .width(state.width),
     )
 }
 
@@ -221,70 +221,69 @@ class TextFieldDemoState(
         internal set
 }
 
-private const val textKey = "text"
-private const val widthKey = "width"
-private const val maxWidthKey = "maxWidth"
-private const val enabledKey = "enabled"
-private const val styleKey = "style"
-private const val keyboardTypeKey = "keyboardType"
-private const val keyboardCapitalizationKey = "keyboardCapitalization"
-private const val autoCorrectEnabledKey = "autoCorrectEnabled"
-private const val showKeyboardOnFocusKey = "showKeyboardOnFocus"
-private const val lineLimitsKey = "lineLimits"
-private const val minHeightInLinesKey = "minHeightInLines"
-private const val maxHeightInLinesKey = "maxHeightInLines"
-private const val inputTransformationKey = "inputTransformation"
-private const val contentPaddingKey = "contentPadding"
+private const val TextKey = "text"
+private const val WidthKey = "width"
+private const val MaxWidthKey = "maxWidth"
+private const val EnabledKey = "enabled"
+private const val StyleKey = "style"
+private const val KeyboardTypeKey = "keyboardType"
+private const val KeyboardCapitalizationKey = "keyboardCapitalization"
+private const val AutoCorrectEnabledKey = "autoCorrectEnabled"
+private const val ShowKeyboardOnFocusKey = "showKeyboardOnFocus"
+private const val LineLimitsKey = "lineLimits"
+private const val MinHeightInLinesKey = "minHeightInLines"
+private const val MaxHeightInLinesKey = "maxHeightInLines"
+private const val InputTransformationKey = "inputTransformation"
+private const val ContentPaddingKey = "contentPadding"
 
 val TextFieldDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            textKey to value.textFieldState.text.toString(),
-            widthKey to value.width.value,
-            maxWidthKey to value.maxWidth.value,
-            enabledKey to value.enabled,
-            styleKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
-            keyboardTypeKey to save(value.keyboardType, KeyboardTypeSaver, this),
-            keyboardCapitalizationKey to save(
+            TextKey to value.textFieldState.text.toString(),
+            WidthKey to value.width.value,
+            MaxWidthKey to value.maxWidth.value,
+            EnabledKey to value.enabled,
+            StyleKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
+            KeyboardTypeKey to save(value.keyboardType, KeyboardTypeSaver, this),
+            KeyboardCapitalizationKey to save(
                 value = value.keyboardCapitalization,
                 saver = KeyboardCapitalizationSaver,
                 scope = this,
             ),
-            autoCorrectEnabledKey to value.autoCorrectEnabled,
-            showKeyboardOnFocusKey to value.showKeyboardOnFocus,
-            lineLimitsKey to value.lineLimits.name,
-            minHeightInLinesKey to value.minHeightInLines,
-            maxHeightInLinesKey to value.maxHeightInLines,
-            inputTransformationKey to value.inputTransformation.name,
-            contentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            AutoCorrectEnabledKey to value.autoCorrectEnabled,
+            ShowKeyboardOnFocusKey to value.showKeyboardOnFocus,
+            LineLimitsKey to value.lineLimits.name,
+            MinHeightInLinesKey to value.minHeightInLines,
+            MaxHeightInLinesKey to value.maxHeightInLines,
+            InputTransformationKey to value.inputTransformation.name,
+            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = restore(map[styleKey], TextStyleDemoStateSaver)!!
+        val textStyleDemoState: TextStyleDemoState = restore(map[StyleKey], TextStyleDemoStateSaver)!!
 
         TextFieldDemoState(
-            initialText = map[textKey] as String,
+            initialText = map[TextKey] as String,
             textStyleInitial = textStyleDemoState.textStyle,
-            widthInitial = (map[widthKey] as Float).dp,
-            maxWidthInitial = (map[maxWidthKey] as Float).dp,
-            enabledInitial = map[enabledKey] as Boolean,
-            keyboardTypeInitial = restore(map[keyboardTypeKey], KeyboardTypeSaver)!!,
-            keyboardCapitalizationInitial = restore(map[keyboardCapitalizationKey], KeyboardCapitalizationSaver)!!,
-            autoCorrectEnabledInitial = map[autoCorrectEnabledKey] as Boolean,
-            showKeyboardOnFocusInitial = map[showKeyboardOnFocusKey] as Boolean,
-            lineLimitsInitial = LineLimits.valueOf(map[lineLimitsKey] as String),
-            minHeightInLinesInitial = map[minHeightInLinesKey] as Int,
-            maxHeightInLinesInitial = map[maxHeightInLinesKey] as Int,
-            inputTransformationInitial = InputTransformations.valueOf(map[inputTransformationKey] as String),
-            contentPaddingInitial = restore(map[contentPaddingKey], PaddingValuesSaver)!!,
+            widthInitial = (map[WidthKey] as Float).dp,
+            maxWidthInitial = (map[MaxWidthKey] as Float).dp,
+            enabledInitial = map[EnabledKey] as Boolean,
+            keyboardTypeInitial = restore(map[KeyboardTypeKey], KeyboardTypeSaver)!!,
+            keyboardCapitalizationInitial = restore(map[KeyboardCapitalizationKey], KeyboardCapitalizationSaver)!!,
+            autoCorrectEnabledInitial = map[AutoCorrectEnabledKey] as Boolean,
+            showKeyboardOnFocusInitial = map[ShowKeyboardOnFocusKey] as Boolean,
+            lineLimitsInitial = LineLimits.valueOf(map[LineLimitsKey] as String),
+            minHeightInLinesInitial = map[MinHeightInLinesKey] as Int,
+            maxHeightInLinesInitial = map[MaxHeightInLinesKey] as Int,
+            inputTransformationInitial = InputTransformations.valueOf(map[InputTransformationKey] as String),
+            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
         )
-    }
+    },
 )
 
 @Composable
-fun rememberTextFieldDemoControl(
-    state: TextFieldDemoState = rememberTextFieldDemoState(),
-) = remember(state) { TextFieldDemoControl(state) }
+fun rememberTextFieldDemoControl(state: TextFieldDemoState = rememberTextFieldDemoState()) =
+    remember(state) { TextFieldDemoControl(state) }
 
 @Stable
 class TextFieldDemoControl(
@@ -322,7 +321,7 @@ class TextFieldDemoControl(
         value = { state.enabled },
         onValueChange = {
             state.enabled = it
-        }
+        },
     )
 
     val keyboardTypeControl = Control.Dropdown(
@@ -354,19 +353,19 @@ class TextFieldDemoControl(
         selectedIndex = { keyboardCapitalizations.indexOf(state.keyboardCapitalization) },
         onValueChange = {
             state.keyboardCapitalization = keyboardCapitalizations[it]
-        }
+        },
     )
 
     val autoCorrectEnabledControl = Control.Toggle(
         name = "Auto-correct",
         value = { state.autoCorrectEnabled },
-        onValueChange = { state.autoCorrectEnabled = it }
+        onValueChange = { state.autoCorrectEnabled = it },
     )
 
     val showKeyboardOnFocusControl = Control.Toggle(
         name = "Show keyboard on focus",
         value = { state.showKeyboardOnFocus },
-        onValueChange = { state.showKeyboardOnFocus = it }
+        onValueChange = { state.showKeyboardOnFocus = it },
     )
 
     val lineLimitsControl = enumControl(
@@ -433,9 +432,11 @@ class TextFieldDemoControl(
                 minHeightInLinesControl,
                 maxHeightInLinesControl,
             )
-        } else persistentListOf(
-            lineLimitsControl,
-        )
+        } else {
+            persistentListOf(
+                lineLimitsControl,
+            )
+        }
 
     val controls
         get() = persistentListOf(
@@ -459,4 +460,3 @@ class TextFieldDemoControl(
         }
     }
 }
-

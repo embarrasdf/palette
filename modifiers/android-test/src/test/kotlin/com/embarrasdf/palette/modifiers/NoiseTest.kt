@@ -38,7 +38,7 @@ class NoiseTest(
         paparazzi.snapshot {
             DemoCircle(
                 modifier = Modifier
-                    .noise(colorMode) { amount }
+                    .noise(colorMode) { amount },
             )
         }
     }
@@ -50,7 +50,7 @@ class NoiseTest(
                 color = Color.White,
                 background = Color.Black,
                 modifier = Modifier
-                    .noise(colorMode) { amount }
+                    .noise(colorMode) { amount },
             )
         }
     }

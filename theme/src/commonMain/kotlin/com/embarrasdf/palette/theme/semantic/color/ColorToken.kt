@@ -1,8 +1,8 @@
 package com.embarrasdf.palette.theme.semantic.color
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.embarrasdf.palette.theme.PaletteTheme
 
 enum class ColorToken {
     Primary,

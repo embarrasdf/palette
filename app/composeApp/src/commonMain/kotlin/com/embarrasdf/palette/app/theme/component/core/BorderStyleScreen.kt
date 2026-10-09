@@ -16,16 +16,16 @@ import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
+import com.embarrasdf.palette.theme.component.core.BorderStyleToken
+import com.embarrasdf.palette.theme.component.core.BorderStyleTokenSet
 import com.embarrasdf.palette.theme.components.core.border
 import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.component.core.BorderStyleToken
-import com.embarrasdf.palette.theme.component.core.BorderStyleTokenSet
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
+import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -52,7 +52,7 @@ fun BorderStyleScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { token ->
             Box(
                 modifier = Modifier
@@ -62,7 +62,7 @@ fun BorderStyleScreen(
                 Text(
                     text = token.name,
                     style = PaletteTheme.component.core.text.headline,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
         }
@@ -70,12 +70,10 @@ fun BorderStyleScreen(
 }
 
 @Composable
-fun rememberBorderStyleScreenState(
-    themeState: ThemeState,
-): BorderStyleScreenState {
+fun rememberBorderStyleScreenState(themeState: ThemeState): BorderStyleScreenState {
     return rememberSaveable(
         themeState,
-        saver = BorderStyleScreenStateSaver(themeState),
+        saver = borderStyleScreenStateSaver(themeState),
     ) {
         BorderStyleScreenState(
             themeState = themeState,
@@ -87,11 +85,10 @@ fun rememberBorderStyleScreenState(
 class BorderStyleScreenState(
     val themeState: ThemeState,
 ) {
-    fun tokenSet(token: BorderStyleToken): BorderStyleTokenSet =
-        themeState.component.border.getValue(token)
+    fun tokenSet(token: BorderStyleToken): BorderStyleTokenSet = themeState.component.border.getValue(token)
 }
 
-fun BorderStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun borderStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },
@@ -99,7 +96,7 @@ fun BorderStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         BorderStyleScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable
@@ -181,7 +178,7 @@ private fun makeControlForToken(
 fun BorderStyleTokenSet.update(
     color: ColorToken? = null,
     width: Dp? = null,
-    shape: ShapeToken? = null
+    shape: ShapeToken? = null,
 ): BorderStyleTokenSet = this.copy(
     color = color ?: this.color,
     width = width ?: this.width,

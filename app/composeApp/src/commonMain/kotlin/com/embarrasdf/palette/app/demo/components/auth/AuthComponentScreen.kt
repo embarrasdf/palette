@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.app.demo.components.auth.navigation.AuthComponent
 import com.embarrasdf.palette.components.demo.auth.AuthButtonDemo
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 
 @Composable
 fun AuthComponentScreen(
@@ -26,7 +26,7 @@ fun AuthComponentScreen(
     ) { innerPadding ->
         when (component) {
             AuthComponent.Button -> AuthButtonDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

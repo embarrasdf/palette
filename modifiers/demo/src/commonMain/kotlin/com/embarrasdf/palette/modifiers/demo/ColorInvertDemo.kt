@@ -12,9 +12,7 @@ import com.embarrasdf.palette.modifiers.colorInvert
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun ColorInvertDemo(
-    modifier: Modifier = Modifier,
-) {
+fun ColorInvertDemo(modifier: Modifier = Modifier) {
     val modifierState = rememberSaveable(saver = ColorInvertStateSaver) { ColorInvertState() }
 
     ModifierDemo(
@@ -29,7 +27,7 @@ fun ColorInvertDemo(
                     modifierState.amount = it
                 },
                 valueRange = { 0f..1f },
-            )
+            ),
         ),
         modifier = modifier,
     )
@@ -41,18 +39,17 @@ private class ColorInvertState(
     var amount: Float by mutableStateOf(amountInitial)
 }
 
-private const val amountKey = "amount"
+private const val AmountKey = "amount"
 
 private val ColorInvertStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            amountKey to it.amount,
+            AmountKey to it.amount,
         )
     },
     restore = {
         ColorInvertState(
-            amountInitial = it[amountKey] as Float,
+            amountInitial = it[AmountKey] as Float,
         )
-    }
+    },
 )
-

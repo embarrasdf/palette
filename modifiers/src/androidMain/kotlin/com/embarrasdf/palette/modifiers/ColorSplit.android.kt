@@ -26,7 +26,7 @@ private const val UniformYAmountName = "yAmount"
 private const val UniformColorModeName = "colorMode"
 
 @Language("AGSL")
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSizeName;
 uniform float $UniformXAmountName;
@@ -109,7 +109,10 @@ class ColorSplitShaderImpl : ColorSplitShader {
         control.setIntUniform(UniformColorModeName, mode.ordinal)
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
     }
 }
@@ -126,20 +129,20 @@ private fun Preview() {
                 .weight(1f)
                 .colorSplit(
                     xAmount = { xAmount },
-                    yAmount = { yAmount }
-                )
+                    yAmount = { yAmount },
+                ),
         )
         Slider(
             valueRange = range,
             value = xAmount,
             onValueChange = { xAmount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
         Slider(
             valueRange = range,
             value = yAmount,
             onValueChange = { yAmount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

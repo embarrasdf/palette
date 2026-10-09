@@ -22,9 +22,6 @@ import com.embarrasdf.palette.components.core.ButtonDefaults
 import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
-import com.embarrasdf.palette.theme.semantic.color.PaletteDarkColorScheme
-import com.embarrasdf.palette.theme.semantic.color.PaletteLightColorScheme
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.core.Surface
 import com.embarrasdf.palette.theme.components.demo.DemoList
@@ -32,6 +29,9 @@ import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
 import com.embarrasdf.palette.theme.control.rememberThemeController
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
+import com.embarrasdf.palette.theme.semantic.color.PaletteDarkColorScheme
+import com.embarrasdf.palette.theme.semantic.color.PaletteLightColorScheme
 import com.embarrasdf.palette.theme.semantic.color.copy
 import com.embarrasdf.palette.theme.semantic.color.toColor
 import kotlinx.collections.immutable.PersistentList
@@ -64,7 +64,7 @@ fun ColorScreen(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { colorToken ->
             ColorDisplayRow(
                 label = colorToken.name,
@@ -83,7 +83,7 @@ fun ColorScreen(
             },
             onDismissRequest = {
                 selectedColorToken = null
-            }
+            },
         )
     }
 }
@@ -108,25 +108,23 @@ private fun ColorDisplayRow(
                 color = color,
                 style = PaletteTheme.component.color.colorDisplay,
                 modifier = Modifier
-                    .size(ButtonDefaults.MinHeight)
+                    .size(ButtonDefaults.MinHeight),
             )
             Text(
                 text = label,
                 style = PaletteTheme.component.core.text.labelMedium,
                 modifier = Modifier
-                    .padding(end = PaletteTheme.semantic.dimension.spacing.medium)
+                    .padding(end = PaletteTheme.semantic.dimension.spacing.medium),
             )
         }
     }
 }
 
 @Composable
-fun rememberColorScreenState(
-    themeState: ThemeState,
-): ColorScreenState {
+fun rememberColorScreenState(themeState: ThemeState): ColorScreenState {
     return rememberSaveable(
         themeState,
-        saver = ColorScreenStateSaver(themeState),
+        saver = colorScreenStateSaver(themeState),
     ) {
         ColorScreenState(
             themeState = themeState,
@@ -142,7 +140,7 @@ class ColorScreenState(
         get() = themeState.isDarkMode
 }
 
-fun ColorScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun colorScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf()
     },
@@ -150,7 +148,7 @@ fun ColorScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         ColorScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable
@@ -173,7 +171,7 @@ class ColorScreenControl(
         value = { state.isDarkMode },
         onValueChange = {
             themeController.setIsDarkMode(it)
-        }
+        },
     )
 
     val resetButton = Control.Button(
@@ -188,7 +186,7 @@ class ColorScreenControl(
                     it.copy(colors = it.colors.copy(light = PaletteLightColorScheme))
                 }
             }
-        }
+        },
     )
 
     val controls: PersistentList<Control> = persistentListOf(
@@ -196,7 +194,10 @@ class ColorScreenControl(
         resetButton,
     )
 
-    fun onColorSelected(color: Color, colorToken: ColorToken) {
+    fun onColorSelected(
+        color: Color,
+        colorToken: ColorToken,
+    ) {
         val colorScheme = themeController.colorScheme.copy(
             token = colorToken,
             color = color,

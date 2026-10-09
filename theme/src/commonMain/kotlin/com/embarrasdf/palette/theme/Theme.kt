@@ -20,7 +20,7 @@ fun PaletteTheme(
     semantic: SemanticTokens = SemanticTokens(),
     component: ComponentTokens = ComponentTokens(),
     isDarkMode: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalPrimitiveTokens provides primitive,

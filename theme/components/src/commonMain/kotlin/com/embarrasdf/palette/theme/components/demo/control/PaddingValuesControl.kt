@@ -2,8 +2,8 @@ package com.embarrasdf.palette.theme.components.demo.control
 
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.theme.semantic.spacing.SpacingToken
 import com.embarrasdf.palette.theme.semantic.dimension.PaddingValuesTokenSet
+import com.embarrasdf.palette.theme.semantic.spacing.SpacingToken
 import kotlinx.collections.immutable.persistentListOf
 
 /**

@@ -10,7 +10,7 @@ inline fun <reified T : NavKey, reified E> EntryProviderScope<NavKey>.catalogEnt
     noinline onItemClick: (E) -> Unit,
     title: String? = null,
     noinline onNavigateUp: (() -> Unit)? = null,
-    noinline actions: @Composable () -> Unit = {}
+    noinline actions: @Composable () -> Unit = {},
 ) where E : Enum<E>, E : CatalogItem {
     entry<T> {
         CatalogScreen(

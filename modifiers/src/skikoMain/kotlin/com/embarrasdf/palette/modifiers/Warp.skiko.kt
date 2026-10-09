@@ -12,7 +12,7 @@ private const val UniformRadius = "radius"
 private const val UniformAmount = "amount"
 
 // SKSL
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSize;
 uniform float2 $UniformPoint;
@@ -48,7 +48,10 @@ class WarpShaderImpl : WarpShader {
 
     override fun createRenderEffect() = control.createRenderEffect()
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSize, width.toFloat(), height.toFloat())
     }
 

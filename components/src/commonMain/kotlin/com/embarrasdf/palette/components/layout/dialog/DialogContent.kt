@@ -104,7 +104,7 @@ fun DialogContent(
             text = message,
             style = style.messageStyle,
             modifier = Modifier
-                .padding(style.messagePadding)
+                .padding(style.messagePadding),
         )
         buttonRow(onDismissRequest, Modifier.align(Alignment.End))
     }
@@ -125,13 +125,13 @@ fun DialogContent(
             verticalArrangement = Arrangement.spacedBy(style.spacing),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(style.padding)
+                .padding(style.padding),
         ) {
             Text(
                 text = title,
                 style = style.titleStyle,
                 modifier = Modifier
-                    .padding(style.titlePadding)
+                    .padding(style.titlePadding),
             )
             content()
         }
@@ -147,7 +147,7 @@ private fun DialogContentPreview() {
         onDismissRequest = {},
         onConfirm = {},
         modifier = Modifier
-            .padding(16.dp)
+            .padding(16.dp),
     )
 }
 
@@ -158,6 +158,6 @@ private fun ErrorDialogContentPreview() {
         message = "An error occurred while processing your request.",
         onDismissRequest = {},
         modifier = Modifier
-            .padding(16.dp)
+            .padding(16.dp),
     )
 }

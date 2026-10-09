@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,13 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.color.ColorPicker
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -35,7 +35,7 @@ fun ColorPickerDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         ColorPickerDemo(
             state = state,
@@ -59,7 +59,7 @@ fun BoxWithConstraintsScope.ColorPickerDemo(
         modifier = modifier
             .fillMaxWidth()
             .align(Alignment.Center)
-            .padding(PaletteTheme.semantic.dimension.spacing.medium)
+            .padding(PaletteTheme.semantic.dimension.spacing.medium),
     )
 }
 
@@ -88,28 +88,27 @@ class ColorPickerDemoState(
         internal set
 }
 
-private const val colorKey = "color"
-private const val spacingKey = "spacing"
+private const val ColorKey = "color"
+private const val SpacingKey = "spacing"
 
 val ColorPickerDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            colorKey to save(value.color, ColorSaver, this),
-            spacingKey to value.spacing.value,
+            ColorKey to save(value.color, ColorSaver, this),
+            SpacingKey to value.spacing.value,
         )
     },
     restore = { map ->
         ColorPickerDemoState(
-            colorInitial = restore(map[colorKey], ColorSaver)!!,
-            spacingInitial = (map[spacingKey] as Float).dp,
+            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            spacingInitial = (map[SpacingKey] as Float).dp,
         )
     },
 )
 
 @Composable
-fun rememberColorPickerDemoControl(
-    state: ColorPickerDemoState,
-): ColorPickerDemoControl = remember(state) { ColorPickerDemoControl(state) }
+fun rememberColorPickerDemoControl(state: ColorPickerDemoState): ColorPickerDemoControl =
+    remember(state) { ColorPickerDemoControl(state) }
 
 @Stable
 class ColorPickerDemoControl(

@@ -1,7 +1,7 @@
 package com.embarrasdf.palette.navigation
 
-import kotlin.reflect.KClass
 import kotlinx.serialization.KSerializer
+import kotlin.reflect.KClass
 
 data class NavGraphNode(
     val pathSegment: PathSegment,

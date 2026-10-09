@@ -5,7 +5,7 @@ private const val UniformSizeName = "size"
 private const val UniformSubdivisionsName = "subdivisions"
 
 // SKSL
-private var ShaderSource = """
+private val ShaderSource = """
 uniform shader $UniformShaderName;
 uniform float2 $UniformSizeName;
 uniform float $UniformSubdivisionsName;
@@ -36,7 +36,10 @@ class PixelateShaderImpl : PixelateShader {
         control.setFloatUniform(UniformSubdivisionsName, subdivisions.toFloat())
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
     }
 }

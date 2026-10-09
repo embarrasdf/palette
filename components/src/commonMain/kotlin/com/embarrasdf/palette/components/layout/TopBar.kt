@@ -44,7 +44,7 @@ fun TopBar(
             .consumeWindowInsets(windowInsetsPaddingValues)
             .padding(vertical = spacing)
             .heightIn(min = style.minHeight),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(modifier = Modifier.padding(start = spacing)) {
             navButton?.invoke()
@@ -52,7 +52,7 @@ fun TopBar(
         Box(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = spacing)
+                .padding(horizontal = spacing),
         ) {
             title?.invoke()
         }
@@ -69,7 +69,7 @@ private fun Preview() {
         TopBar(
             title = {
                 Text("Title")
-            }
+            },
         )
     }
 }
@@ -84,7 +84,7 @@ private fun NavButtonPreview() {
             },
             navButton = {
                 BackNavigationButton(onClick = {})
-            }
+            },
         )
     }
 }
@@ -104,7 +104,7 @@ private fun ActionsPreview() {
                 ) {
                     Text("Action")
                 }
-            }
+            },
         )
     }
 }

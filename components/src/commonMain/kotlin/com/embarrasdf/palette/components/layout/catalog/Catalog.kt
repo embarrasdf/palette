@@ -42,16 +42,16 @@ fun <T : CatalogItem> Catalog(
         ),
         contentPadding = contentPadding,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         items(
             items = items,
-            key = { it.title }
+            key = { it.title },
         ) { item ->
             Button(
                 style = style.itemStyle,
                 onClick = { onItemClick(item) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(item.title, style = style.itemTextStyle)
             }
@@ -61,7 +61,6 @@ fun <T : CatalogItem> Catalog(
         }
     }
 }
-
 
 private enum class MainCatalogItem : CatalogItem {
     Components,
@@ -76,6 +75,6 @@ private enum class MainCatalogItem : CatalogItem {
 private fun Preview() {
     Catalog(
         items = MainCatalogItem.entries.toList(),
-        onItemClick = {}
+        onItemClick = {},
     )
 }

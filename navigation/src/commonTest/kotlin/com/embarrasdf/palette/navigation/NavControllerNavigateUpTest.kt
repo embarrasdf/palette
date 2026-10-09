@@ -40,7 +40,7 @@ class NavControllerNavigateUpTest {
         val navState = NavState(
             backStack = backStack,
             navGraph = navGraph,
-            onWouldBecomeEmpty = { onWouldBecomeEmptyCalled = true }
+            onWouldBecomeEmpty = { onWouldBecomeEmptyCalled = true },
         )
         val navController = NavController(navState)
 

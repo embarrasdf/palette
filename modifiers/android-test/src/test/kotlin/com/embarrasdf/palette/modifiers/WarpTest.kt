@@ -43,7 +43,7 @@ class WarpTest(
                         offset = { Offset(offsetX, offsetY) },
                         radius = { width / 2f },
                         amount = { amount },
-                    )
+                    ),
             )
         }
     }
@@ -64,7 +64,7 @@ class WarpTest(
                         offset = { Offset(offsetX, offsetY) },
                         radius = { width / 2f },
                         amount = { amount },
-                    )
+                    ),
             )
         }
     }

@@ -29,19 +29,19 @@ fun CoreComponentScreen(
     ) { innerPadding ->
         when (component) {
             CoreComponent.Button -> ButtonDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             CoreComponent.Icon -> IconDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             CoreComponent.Slider -> SliderDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             CoreComponent.Text -> TextDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             CoreComponent.TextField -> TextFieldDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

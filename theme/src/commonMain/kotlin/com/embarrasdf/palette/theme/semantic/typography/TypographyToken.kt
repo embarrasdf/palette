@@ -1,12 +1,12 @@
 package com.embarrasdf.palette.theme.semantic.typography
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle as ComposeTextStyle
 import androidx.compose.ui.unit.sp
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.primitive.FontFamily
 import com.embarrasdf.palette.theme.primitive.FontStyle
 import com.embarrasdf.palette.theme.primitive.FontWeight
+import androidx.compose.ui.text.TextStyle as ComposeTextStyle
 
 enum class TypographyToken(val default: TypographyTokenSet) {
     Display(
@@ -17,7 +17,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 57.sp,
             lineHeight = 64.sp,
             letterSpacing = (-0.2).sp,
-        )
+        ),
     ),
     Headline(
         TypographyTokenSet(
@@ -27,7 +27,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 32.sp,
             lineHeight = 40.sp,
             letterSpacing = 0.sp,
-        )
+        ),
     ),
     TitleLarge(
         TypographyTokenSet(
@@ -37,7 +37,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 22.sp,
             lineHeight = 28.sp,
             letterSpacing = 0.sp,
-        )
+        ),
     ),
     TitleMedium(
         TypographyTokenSet(
@@ -47,7 +47,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 16.sp,
             lineHeight = 24.sp,
             letterSpacing = 0.2.sp,
-        )
+        ),
     ),
     TitleSmall(
         TypographyTokenSet(
@@ -57,7 +57,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = 0.1.sp,
-        )
+        ),
     ),
     BodyLarge(
         TypographyTokenSet(
@@ -67,7 +67,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 16.sp,
             lineHeight = 24.sp,
             letterSpacing = 0.5.sp,
-        )
+        ),
     ),
     BodyMedium(
         TypographyTokenSet(
@@ -77,7 +77,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = 0.2.sp,
-        )
+        ),
     ),
     BodySmall(
         TypographyTokenSet(
@@ -87,7 +87,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 12.sp,
             lineHeight = 16.sp,
             letterSpacing = 0.4.sp,
-        )
+        ),
     ),
     LabelLarge(
         TypographyTokenSet(
@@ -97,7 +97,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 14.sp,
             lineHeight = 20.sp,
             letterSpacing = 0.1.sp,
-        )
+        ),
     ),
     LabelMedium(
         TypographyTokenSet(
@@ -107,7 +107,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 12.sp,
             lineHeight = 16.sp,
             letterSpacing = 0.5.sp,
-        )
+        ),
     ),
     LabelSmall(
         TypographyTokenSet(
@@ -117,7 +117,7 @@ enum class TypographyToken(val default: TypographyTokenSet) {
             fontSize = 11.sp,
             lineHeight = 16.sp,
             letterSpacing = 0.5.sp,
-        )
+        ),
     ),
 }
 

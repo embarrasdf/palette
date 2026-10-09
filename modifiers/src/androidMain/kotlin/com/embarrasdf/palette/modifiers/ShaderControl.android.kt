@@ -17,7 +17,7 @@ internal actual fun createShaderControl(
 private class ShaderControlImpl(
     source: String,
     val uniformName: String,
-): ShaderControl {
+) : ShaderControl {
     private val runtimeShader: RuntimeShader? = createRuntimeShader(source)
 
     override fun createRenderEffect(): RenderEffect? {
@@ -30,15 +30,25 @@ private class ShaderControlImpl(
             .asComposeRenderEffect()
     }
 
-    override fun setFloatUniform(name: String, value: Float) {
+    override fun setFloatUniform(
+        name: String,
+        value: Float,
+    ) {
         runtimeShader?.setFloatUniform(name, value)
     }
 
-    override fun setFloatUniform(name: String, value1: Float, value2: Float) {
+    override fun setFloatUniform(
+        name: String,
+        value1: Float,
+        value2: Float,
+    ) {
         runtimeShader?.setFloatUniform(name, value1, value2)
     }
 
-    override fun setIntUniform(name: String, value: Int) {
+    override fun setIntUniform(
+        name: String,
+        value: Int,
+    ) {
         runtimeShader?.setIntUniform(name, value)
     }
 

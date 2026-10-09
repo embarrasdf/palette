@@ -137,7 +137,7 @@ class NavGraphParseDeeplinkToNavKeyTest {
                 children = {
                     route(Route1)
                     route(Route2)
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }
@@ -155,7 +155,7 @@ class NavGraphParseDeeplinkToNavKeyTest {
                 children = {
                     route(Route1)
                     route(Route2)
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }
@@ -175,13 +175,15 @@ class NavGraphParseDeeplinkToNavKeyTest {
                         route(Route1)
                         route(Route2)
                     }
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }
         }
 
-        val route = navGraph.parseDeeplinkToNavKey("${RootRoute.pathSegment}/dynamic/${Graph1.pathSegment}/${Route2.pathSegment}")
+        val route = navGraph.parseDeeplinkToNavKey(
+            "${RootRoute.pathSegment}/dynamic/${Graph1.pathSegment}/${Route2.pathSegment}",
+        )
 
         assertEquals(Route2, route)
     }
@@ -195,7 +197,7 @@ class NavGraphParseDeeplinkToNavKeyTest {
                         route(Route1)
                         route(Route2)
                     }
-                }
+                },
             ) { segment ->
                 TestRoute(segment.value)
             }
@@ -212,7 +214,9 @@ class NavGraphParseDeeplinkToNavKeyTest {
             route(Route1)
         }
 
-        val route = navGraph.parseDeeplinkToNavKey("${RootRoute.pathSegment.value.uppercase()}/${Route1.pathSegment.value.uppercase()}")
+        val route = navGraph.parseDeeplinkToNavKey(
+            "${RootRoute.pathSegment.value.uppercase()}/${Route1.pathSegment.value.uppercase()}",
+        )
 
         assertEquals(Route1, route)
     }
@@ -255,7 +259,9 @@ class NavGraphParseDeeplinkToNavKeyTest {
             }
         }
 
-        val route = navGraph.parseDeeplinkToNavKey("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}")
+        val route = navGraph.parseDeeplinkToNavKey(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}",
+        )
 
         assertEquals(Route1, route)
     }

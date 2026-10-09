@@ -4,13 +4,13 @@ import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.InteractionSource
 import kotlinx.coroutines.launch
 
-class ShaderIndicationNode<T: Shader>(
+class ShaderIndicationNode<T : Shader>(
     shader: T,
     traceLabel: String,
     private val interactionSource: InteractionSource,
     private val onAttach: ShaderIndicationNode<T>.() -> Unit = {},
     private val onInteraction: ShaderIndicationNode<T>.(Interaction) -> Unit = {},
-): ShaderNode<T>(
+) : ShaderNode<T>(
     shader = shader,
     traceLabel = traceLabel,
 ) {

@@ -28,7 +28,7 @@ class PixelateTest(
         paparazzi.snapshot {
             DemoCircle(
                 modifier = Modifier
-                    .pixelate { subdivisions }
+                    .pixelate { subdivisions },
             )
         }
     }
@@ -40,7 +40,7 @@ class PixelateTest(
                 color = Color.White,
                 background = Color.Black,
                 modifier = Modifier
-                    .pixelate { subdivisions }
+                    .pixelate { subdivisions },
             )
         }
     }

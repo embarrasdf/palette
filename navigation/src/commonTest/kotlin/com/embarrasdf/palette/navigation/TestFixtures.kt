@@ -11,7 +11,10 @@ data class TestRoute(
     @Transient val parent: NavKey? = null,
 ) : NavKey
 
-fun TestRoute(value: String, parent: NavKey? = null) = TestRoute(PathSegment(value), parent)
+fun TestRoute(
+    value: String,
+    parent: NavKey? = null,
+) = TestRoute(PathSegment(value), parent)
 
 @Serializable
 @SerialName("root-route")

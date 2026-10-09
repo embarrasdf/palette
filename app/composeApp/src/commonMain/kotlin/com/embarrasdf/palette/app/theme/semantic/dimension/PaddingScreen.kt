@@ -54,12 +54,12 @@ fun PaddingScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { token ->
             PaddingDemo(
                 token = token,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
         }
     }
@@ -75,7 +75,7 @@ fun PaddingDemo(
         modifier = modifier
             .border(1.dp, PaletteTheme.semantic.color.primary)
             .padding(token.toPaddingValues())
-            .border(1.dp, PaletteTheme.semantic.color.primary)
+            .border(1.dp, PaletteTheme.semantic.color.primary),
     ) {
         Text(
             text = token.name,
@@ -85,12 +85,10 @@ fun PaddingDemo(
 }
 
 @Composable
-fun rememberPaddingScreenState(
-    themeState: ThemeState,
-): PaddingScreenState {
+fun rememberPaddingScreenState(themeState: ThemeState): PaddingScreenState {
     return rememberSaveable(
         themeState,
-        saver = PaddingScreenStateSaver(themeState),
+        saver = paddingScreenStateSaver(themeState),
     ) {
         PaddingScreenState(
             themeState = themeState,
@@ -106,7 +104,7 @@ class PaddingScreenState(
         get() = themeState.semantic.dimension.padding
 }
 
-fun PaddingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun paddingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf<String, Any>()
     },
@@ -114,7 +112,7 @@ fun PaddingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         PaddingScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable

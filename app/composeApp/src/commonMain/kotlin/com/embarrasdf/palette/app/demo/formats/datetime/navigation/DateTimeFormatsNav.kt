@@ -19,9 +19,7 @@ fun NavGraphBuilder.dateTimeFormatsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.dateTimeFormatsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.dateTimeFormatsEntryProvider(navController: NavController) {
     catalogEntry<DateTimeFormatCatalogRoute, DateTimeFormat>(
         onItemClick = { format ->
             navController.navigate(DateTimeFormatRoute(format))

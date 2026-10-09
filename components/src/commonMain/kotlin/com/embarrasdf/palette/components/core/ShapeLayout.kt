@@ -4,11 +4,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 
-
 @Stable
-fun Modifier.shapeLayout(
-    shape: Shape,
-) = this.layout { measurable, constraints ->
+fun Modifier.shapeLayout(shape: Shape) = this.layout { measurable, constraints ->
     val initialPlaceable = measurable.measure(constraints)
 
     val placeable = if (shape.hasEqualAspectRatio) {
@@ -18,8 +15,8 @@ fun Modifier.shapeLayout(
                 minWidth = max,
                 maxWidth = max,
                 minHeight = max,
-                maxHeight = max
-            )
+                maxHeight = max,
+            ),
         )
     } else {
         initialPlaceable

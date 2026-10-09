@@ -7,8 +7,8 @@ import com.embarrasdf.palette.app.theme.semantic.format.datetime.DateTimeFormatS
 import com.embarrasdf.palette.app.theme.semantic.format.datetime.InstantFormatSchemeScreen
 import com.embarrasdf.palette.app.theme.semantic.format.datetime.TimeFormatSchemeScreen
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.theme.control.ThemeController
 
 fun NavGraphBuilder.dateTimeFormatNavGraph() = navGraph(

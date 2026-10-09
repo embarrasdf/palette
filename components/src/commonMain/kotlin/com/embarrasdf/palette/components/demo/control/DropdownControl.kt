@@ -1,7 +1,5 @@
 package com.embarrasdf.palette.components.demo.control
 
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,14 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Button
 import com.embarrasdf.palette.components.core.ButtonStyle
 import com.embarrasdf.palette.components.core.Text
@@ -92,7 +92,7 @@ fun <T> DropdownControlRow(
                 text = control.name,
                 style = style.labelStyle,
                 softWrap = true,
-                modifier = Modifier.weight(1f, fill = false)
+                modifier = Modifier.weight(1f, fill = false),
             )
             Spacer(modifier = Modifier.width(style.rowSpacing))
         }
@@ -101,7 +101,7 @@ fun <T> DropdownControlRow(
             selectedValue = selectedValue,
             onClick = { isMenuExpanded = true },
             style = style,
-            modifier = Modifier.weight(1f, fill = false)
+            modifier = Modifier.weight(1f, fill = false),
         )
 
         DropdownControlMenu(
@@ -167,13 +167,13 @@ private fun DropdownControlPreview() {
                     listOf("A", "B", "C").map {
                         Control.Dropdown.DropdownItem(
                             name = it,
-                            value = it
+                            value = it,
                         )
                     }.toPersistentList()
                 },
                 selectedIndex = { selectedIndex },
-                onValueChange = { selectedIndex = it }
-            )
+                onValueChange = { selectedIndex = it },
+            ),
         )
     }
     DropdownControl(control = control)
@@ -191,13 +191,13 @@ private fun DropdownControlRowPreview() {
                     listOf("A", "B", "C").map {
                         Control.Dropdown.DropdownItem(
                             name = it,
-                            value = it
+                            value = it,
                         )
                     }.toPersistentList()
                 },
                 selectedIndex = { selectedIndex },
-                onValueChange = { selectedIndex = it }
-            )
+                onValueChange = { selectedIndex = it },
+            ),
         )
     }
     DropdownControlRow(control = control)

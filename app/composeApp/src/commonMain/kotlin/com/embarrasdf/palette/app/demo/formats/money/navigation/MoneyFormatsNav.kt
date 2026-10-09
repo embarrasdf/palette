@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.moneyFormatsNavGraph() = navGraph(
     root = MoneyFormatsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.moneyFormatsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.moneyFormatsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.moneyFormatsEntryProvider(navController: NavController) {
     catalogEntry<MoneyFormatCatalogRoute, MoneyFormat>(
         onItemClick = { format ->
             navController.navigate(MoneyFormatRoute(format))

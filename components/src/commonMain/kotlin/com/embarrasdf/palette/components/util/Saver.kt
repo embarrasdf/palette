@@ -18,14 +18,14 @@ fun <T> mapSaverSafe(
 fun <T : Saver<Original, Saveable>, Original, Saveable> save(
     value: Original?,
     saver: T,
-    scope: SaverScope
+    scope: SaverScope,
 ): Any {
     return value?.let { with(saver) { scope.save(value) } } ?: false
 }
 
 inline fun <T : Saver<Original, Saveable>, Original, Saveable, reified Result> restore(
     value: Saveable?,
-    saver: T
+    saver: T,
 ): Result? {
     // Most of the types we save are nullable. However, value classes are usually not but instead
     // have a special Unspecified value. In that case we delegate handling of the "false"

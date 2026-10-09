@@ -38,22 +38,33 @@ sealed class GridScale {
         val exponent: Float = 10f,
     ) : GridScale()
 
-    fun scale(interval: Int, density: Density): Float = with(density) {
+    fun scale(
+        interval: Int,
+        density: Density,
+    ): Float = with(density) {
         return when (this@GridScale) {
             is Linear -> spacing.toPx()
-            is Logarithmic -> if (interval == 0) 1f else {
+            is Logarithmic -> if (interval == 0) {
+                1f
+            } else {
                 val scaling = ln(base.toDouble()).toFloat() * interval
                 spacing.toPx() * scaling
             }
-            is LogarithmicDecay -> if (interval == 0) 1f else {
+            is LogarithmicDecay -> if (interval == 0) {
+                1f
+            } else {
                 val scaling = 1 / (ln(base.toDouble()).toFloat() * interval)
                 (spacing.toPx() * scaling).coerceAtLeast(1f)
             }
-            is Exponential -> if (interval == 0) spacing.toPx() else {
+            is Exponential -> if (interval == 0) {
+                spacing.toPx()
+            } else {
                 val scaling = exponent.toDouble().pow(interval.toDouble()).toFloat()
                 spacing.toPx() * scaling
             }
-            is ExponentialDecay -> if (interval == 0) spacing.toPx() else {
+            is ExponentialDecay -> if (interval == 0) {
+                spacing.toPx()
+            } else {
                 val scaling = 1 / exponent.toDouble().pow(interval.toDouble()).toFloat()
                 (spacing.toPx() * scaling).coerceAtLeast(1f)
             }

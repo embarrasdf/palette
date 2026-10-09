@@ -41,7 +41,10 @@ class NavControllerNavigateToDeeplinkTest {
         val navState = NavState(backStack, navGraph)
         val navController = NavController(navState)
 
-        navController.navigateToDeeplink("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route2.pathSegment}", replace = true)
+        navController.navigateToDeeplink(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route2.pathSegment}",
+            replace = true,
+        )
 
         assertEquals(1, backStack.size)
         assertEquals(Route2, backStack[0])

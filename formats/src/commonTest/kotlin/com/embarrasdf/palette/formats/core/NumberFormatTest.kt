@@ -313,7 +313,7 @@ class NumberFormatTest {
         val formatWithPositiveSign = testFormat.copy(positiveSign = "+")
         assertEquals(
             "+1,234.56",
-            formatWithPositiveSign.format(sign = "+", intPart = "1234", fracPart = "56")
+            formatWithPositiveSign.format(sign = "+", intPart = "1234", fracPart = "56"),
         )
         assertEquals("+100", formatWithPositiveSign.format(sign = "+", intPart = "100"))
     }

@@ -7,7 +7,7 @@ androidx-test-ext-junit = "1.3.0"
 coil = "3.6.2"
 compose-multiplatform-material3 = "1.11.0-alpha07"
 compose-multiplatform-material-icons-extended = "1.7.3"
-embarrasdf-gradle-plugins = "0.0.129"
+embarrasdf-gradle-plugins = "0.0.133"
 junit = "4.13.2"
 kotlinx-collections-immutable = "0.5.2"
 kotlinx-coroutines = "1.11.0"
@@ -67,6 +67,7 @@ embarrasdf-android-library-compose = { id = "com.embarrasdf.gradle.plugin.androi
 embarrasdf-android-test = { id = "com.embarrasdf.gradle.plugin.android.test", version.ref = "embarrasdf-gradle-plugins" }
 embarrasdf-compose-multiplatform = { id = "com.embarrasdf.gradle.plugin.compose.multiplatform", version.ref = "embarrasdf-gradle-plugins" }
 embarrasdf-desktop-application = { id = "com.embarrasdf.gradle.plugin.desktop.application", version.ref = "embarrasdf-gradle-plugins" }
+embarrasdf-format = { id = "com.embarrasdf.gradle.plugin.format", version.ref = "embarrasdf-gradle-plugins" }
 embarrasdf-github-release = { id = "com.embarrasdf.gradle.plugin.github.release", version.ref = "embarrasdf-gradle-plugins" }
 embarrasdf-kotlin-multiplatform-library = { id = "com.embarrasdf.gradle.plugin.kotlin.multiplatform.library", version.ref = "embarrasdf-gradle-plugins" }
 embarrasdf-kotlin-serialization = { id = "com.embarrasdf.gradle.plugin.kotlin.serialization", version.ref = "embarrasdf-gradle-plugins" }

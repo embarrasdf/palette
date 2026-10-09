@@ -14,9 +14,7 @@ import com.embarrasdf.palette.modifiers.noise
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun NoiseDemo(
-    modifier: Modifier = Modifier,
-) {
+fun NoiseDemo(modifier: Modifier = Modifier) {
     val modifierState = rememberSaveable(saver = NoiseStateSaver) { NoiseState() }
 
     ModifierDemo(
@@ -54,21 +52,20 @@ private class NoiseState(
     var colorMode: NoiseColorMode by mutableStateOf(colorModeInitial)
 }
 
-private const val amountKey = "amount"
-private const val colorModeKey = "colorMode"
+private const val AmountKey = "amount"
+private const val ColorModeKey = "colorMode"
 
 private val NoiseStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            colorModeKey to it.colorMode.ordinal,
-            amountKey to it.amount,
+            ColorModeKey to it.colorMode.ordinal,
+            AmountKey to it.amount,
         )
     },
     restore = {
         NoiseState(
-            colorModeInitial = NoiseColorMode.entries[(it[colorModeKey] as Int)],
-            amountInitial = it[amountKey] as Float,
+            colorModeInitial = NoiseColorMode.entries[(it[ColorModeKey] as Int)],
+            amountInitial = it[AmountKey] as Float,
         )
-    }
+    },
 )
-

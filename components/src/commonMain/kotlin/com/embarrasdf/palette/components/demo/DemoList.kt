@@ -44,7 +44,7 @@ fun <T> DemoList(
             contentPadding = style.contentPadding,
             modifier = Modifier
                 .fillMaxHeight()
-                .align(Alignment.Center)
+                .align(Alignment.Center),
         ) {
             items(
                 items = items,

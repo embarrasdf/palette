@@ -50,20 +50,20 @@ fun ExpandableHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(style.spacing),
             modifier = Modifier
-                .height(IntrinsicSize.Min)
+                .height(IntrinsicSize.Min),
         ) {
             Text(
                 text = name,
                 style = style.headerStyle,
                 modifier = Modifier
                     .border(style.borderWidth, style.borderColor)
-                    .padding(style.labelPadding)
+                    .padding(style.labelPadding),
             )
             ChevronIcon(
                 direction = if (expanded) ChevronDirection.Up else ChevronDirection.Down,
                 style = style.chevronIconStyle,
                 modifier = Modifier
-                    .padding(style.chevronPadding)
+                    .padding(style.chevronPadding),
             )
         }
     }

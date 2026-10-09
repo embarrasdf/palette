@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,12 +19,12 @@ import androidx.compose.ui.test.performClick
 import com.embarrasdf.palette.components.MediaControlBarContentDescription
 import com.embarrasdf.palette.components.MediaControlBarStateDescriptionExpanded
 import com.embarrasdf.palette.components.MediaControlBarStateDescriptionPartiallyExpanded
-import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.layout.PeekSheetAnchor
 import com.embarrasdf.palette.components.layout.rememberPeekSheetState
 import com.embarrasdf.palette.components.media.model.Artist
 import com.embarrasdf.palette.components.media.model.MediaItem
+import com.embarrasdf.palette.theme.PaletteTheme
 import kotlinx.coroutines.launch
 import org.junit.Rule
 import org.junit.Test
@@ -42,9 +42,7 @@ class MediaControlSheetTest {
     )
 
     @Composable
-    private fun ComposableUnderTest(
-        initialValue: PeekSheetAnchor,
-    ) {
+    private fun ComposableUnderTest(initialValue: PeekSheetAnchor) {
         var isPlaying by remember { mutableStateOf(false) }
         val state = rememberPeekSheetState(
             initialValue = initialValue,
@@ -85,12 +83,12 @@ class MediaControlSheetTest {
         }
 
         val mediaControlBar = rule.onNode(
-            hasContentDescription(MediaControlBarContentDescription)
+            hasContentDescription(MediaControlBarContentDescription),
         )
         mediaControlBar.performClick()
 
         mediaControlBar.assert(
-            hasStateDescription(MediaControlBarStateDescriptionExpanded)
+            hasStateDescription(MediaControlBarStateDescriptionExpanded),
         )
     }
 
@@ -103,12 +101,12 @@ class MediaControlSheetTest {
         }
 
         val mediaControlBar = rule.onNode(
-            hasContentDescription(MediaControlBarContentDescription)
+            hasContentDescription(MediaControlBarContentDescription),
         )
         mediaControlBar.performClick()
 
         mediaControlBar.assert(
-            hasStateDescription(MediaControlBarStateDescriptionPartiallyExpanded)
+            hasStateDescription(MediaControlBarStateDescriptionPartiallyExpanded),
         )
     }
 }

@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.core.Surface
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -37,6 +35,8 @@ import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.core.Surface
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.roundToInt
 
@@ -73,7 +73,7 @@ fun DemoScope.CurveStitchDemo(
                     .aspectRatio(1f)
             } else {
                 Modifier.size(maxWidth)
-            }
+            },
         )
         .align(Alignment.Center)
         .graphicsLayer { this.rotationZ = state.rotation }
@@ -142,9 +142,8 @@ fun DemoScope.CurveStitchDemo(
             strokeWidth = state.strokeWidth,
             color = PaletteTheme.semantic.color.primary,
             modifier = modifier
-                .then(anglePointerModifier)
+                .then(anglePointerModifier),
         )
-
         CurveStitchDemo.Star -> CurveStitchStar(
             numLines = state.numLines,
             numPoints = state.numPoints,
@@ -155,7 +154,6 @@ fun DemoScope.CurveStitchDemo(
             drawOutsidePoints = state.starOutsidePoints,
             modifier = modifier,
         )
-
         CurveStitchDemo.Shape -> CurveStitchShape(
             numLines = state.numLines,
             numPoints = state.numPoints,
@@ -235,55 +233,54 @@ class CurveStitchDemoState(
         internal set
 }
 
-private const val currentDemoKey = "currentDemo"
-private const val strokeWidthKey = "strokeWidth"
-private const val numLinesKey = "numLines"
-private const val angleStartOffsetKey = "angleStartOffset"
-private const val angleVertexOffsetKey = "angleVertexOffset"
-private const val angleEndOffsetKey = "angleEndOffset"
-private const val numPointsKey = "numPoints"
-private const val innerRadiusKey = "innerRadius"
-private const val starInsidePointsKey = "starInsidePoints"
-private const val starOutsidePointsKey = "starOutsidePoints"
-private const val rotationKey = "rotation"
+private const val CurrentDemoKey = "currentDemo"
+private const val StrokeWidthKey = "strokeWidth"
+private const val NumLinesKey = "numLines"
+private const val AngleStartOffsetKey = "angleStartOffset"
+private const val AngleVertexOffsetKey = "angleVertexOffset"
+private const val AngleEndOffsetKey = "angleEndOffset"
+private const val NumPointsKey = "numPoints"
+private const val InnerRadiusKey = "innerRadius"
+private const val StarInsidePointsKey = "starInsidePoints"
+private const val StarOutsidePointsKey = "starOutsidePoints"
+private const val RotationKey = "rotation"
 
 val CurveStitchDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            currentDemoKey to value.currentDemo.name,
-            strokeWidthKey to value.strokeWidth.value,
-            numLinesKey to value.numLines,
-            angleEndOffsetKey to save(value.angleStartOffset, OffsetSaver, this),
-            angleVertexOffsetKey to save(value.angleVertexOffset, OffsetSaver, this),
-            angleStartOffsetKey to save(value.angleEndOffset, OffsetSaver, this),
-            numPointsKey to value.numPoints,
-            innerRadiusKey to value.innerRadius,
-            starInsidePointsKey to value.starInsidePoints,
-            starOutsidePointsKey to value.starOutsidePoints,
-            rotationKey to value.rotation,
+            CurrentDemoKey to value.currentDemo.name,
+            StrokeWidthKey to value.strokeWidth.value,
+            NumLinesKey to value.numLines,
+            AngleEndOffsetKey to save(value.angleStartOffset, OffsetSaver, this),
+            AngleVertexOffsetKey to save(value.angleVertexOffset, OffsetSaver, this),
+            AngleStartOffsetKey to save(value.angleEndOffset, OffsetSaver, this),
+            NumPointsKey to value.numPoints,
+            InnerRadiusKey to value.innerRadius,
+            StarInsidePointsKey to value.starInsidePoints,
+            StarOutsidePointsKey to value.starOutsidePoints,
+            RotationKey to value.rotation,
         )
     },
     restore = { map ->
         CurveStitchDemoState(
-            currentDemoInitial = CurveStitchDemo.valueOf(map[currentDemoKey] as String),
-            strokeWidthInitial = (map[strokeWidthKey] as Float).dp,
-            numLinesInitial = map[numLinesKey] as Int,
-            angleStartOffsetInitial = restore(map[angleStartOffsetKey], OffsetSaver)!!,
-            angleVertexOffsetInitial = restore(map[angleVertexOffsetKey], OffsetSaver)!!,
-            angleEndOffsetInitial = restore(map[angleEndOffsetKey], OffsetSaver)!!,
-            numPointsInitial = map[numPointsKey] as Int,
-            innerRadiusInitial = map[innerRadiusKey] as Float,
-            starInsidePointsInitial = map[starInsidePointsKey] as Boolean,
-            starOutsidePointsInitial = map[starOutsidePointsKey] as Boolean,
-            rotationInitial = map[rotationKey] as Float,
+            currentDemoInitial = CurveStitchDemo.valueOf(map[CurrentDemoKey] as String),
+            strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
+            numLinesInitial = map[NumLinesKey] as Int,
+            angleStartOffsetInitial = restore(map[AngleStartOffsetKey], OffsetSaver)!!,
+            angleVertexOffsetInitial = restore(map[AngleVertexOffsetKey], OffsetSaver)!!,
+            angleEndOffsetInitial = restore(map[AngleEndOffsetKey], OffsetSaver)!!,
+            numPointsInitial = map[NumPointsKey] as Int,
+            innerRadiusInitial = map[InnerRadiusKey] as Float,
+            starInsidePointsInitial = map[StarInsidePointsKey] as Boolean,
+            starOutsidePointsInitial = map[StarOutsidePointsKey] as Boolean,
+            rotationInitial = map[RotationKey] as Float,
         )
     },
 )
 
 @Composable
-fun rememberCurveStitchDemoControl(
-    state: CurveStitchDemoState,
-): CurveStitchDemoControl = remember(state) { CurveStitchDemoControl(state) }
+fun rememberCurveStitchDemoControl(state: CurveStitchDemoState): CurveStitchDemoControl =
+    remember(state) { CurveStitchDemoControl(state) }
 
 @Stable
 class CurveStitchDemoControl(

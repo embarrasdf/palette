@@ -1,6 +1,5 @@
 package com.embarrasdf.palette.app.theme.component.core
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,28 +10,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
+import com.embarrasdf.palette.components.core.Button
+import com.embarrasdf.palette.components.demo.control.Control
+import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.core.TextAlign
 import com.embarrasdf.palette.components.demo.core.TextDemo
 import com.embarrasdf.palette.components.demo.core.TextDemoControl
 import com.embarrasdf.palette.components.demo.core.TextDemoState
 import com.embarrasdf.palette.components.demo.core.TextDemoStateSaver
-import com.embarrasdf.palette.components.core.Button
-import com.embarrasdf.palette.theme.components.demo.DemoList
-import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.theme.components.demo.control.spacingTokenPaddingControls
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
-import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
-import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.BorderStyleToken
 import com.embarrasdf.palette.theme.component.core.ButtonStyleToken
 import com.embarrasdf.palette.theme.component.core.ButtonStyleTokenSet
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.demo.control.spacingTokenPaddingControls
+import com.embarrasdf.palette.theme.components.layout.Scaffold
+import com.embarrasdf.palette.theme.control.ThemeController
+import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
+import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -59,7 +59,7 @@ fun ButtonStyleScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { style ->
             val textDemoState = state.textDemoState(style)
             val contentColor = when (style) {
@@ -74,7 +74,7 @@ fun ButtonStyleScreen(
                 style = PaletteTheme.component.core.button[style],
                 onClick = {},
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 this@DemoList.TextDemo(
                     state = textDemoState,
@@ -98,7 +98,7 @@ fun rememberButtonStyleScreenState(
 ): ButtonStyleScreenState {
     return rememberSaveable(
         themeState,
-        saver = ButtonStyleScreenStateSaver(themeState),
+        saver = buttonStyleScreenStateSaver(themeState),
     ) {
         ButtonStyleScreenState(
             themeState = themeState,
@@ -112,14 +112,12 @@ class ButtonStyleScreenState(
     val themeState: ThemeState,
     val textDemoStates: Map<ButtonStyleToken, TextDemoState>,
 ) {
-    fun tokenSet(token: ButtonStyleToken): ButtonStyleTokenSet =
-        themeState.component.button.getValue(token)
+    fun tokenSet(token: ButtonStyleToken): ButtonStyleTokenSet = themeState.component.button.getValue(token)
 
-    fun textDemoState(token: ButtonStyleToken): TextDemoState =
-        textDemoStates.getValue(token)
+    fun textDemoState(token: ButtonStyleToken): TextDemoState = textDemoStates.getValue(token)
 }
 
-fun ButtonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
+fun buttonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         ButtonStyleToken.entries.associate { token ->
             token.name to save(state.textDemoState(token), TextDemoStateSaver, this)
@@ -132,7 +130,7 @@ fun ButtonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
                 restore(map[token.name], TextDemoStateSaver)!!
             },
         )
-    }
+    },
 )
 
 @Composable
@@ -168,8 +166,7 @@ class ButtonStyleScreenControl(
         *buttonStyleControls.toTypedArray(),
     )
 
-    fun textDemoControl(token: ButtonStyleToken): TextDemoControl =
-        textDemoControls.getValue(token)
+    fun textDemoControl(token: ButtonStyleToken): TextDemoControl = textDemoControls.getValue(token)
 }
 
 private fun makeControlForToken(

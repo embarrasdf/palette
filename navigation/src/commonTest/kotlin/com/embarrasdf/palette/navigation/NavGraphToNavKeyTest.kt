@@ -33,7 +33,7 @@ class NavGraphToNavKeyTest {
             RootRoute.pathSegment,
             Graph1.pathSegment,
             Graph2.pathSegment,
-            Route1.pathSegment
+            Route1.pathSegment,
         )
         val route = segments.toNavKey(navGraph)
 

@@ -11,24 +11,24 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.Demo
-import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
 import com.embarrasdf.palette.components.money.CurrencyAmountField
 import com.embarrasdf.palette.formats.money.MoneyFormat
 import com.embarrasdf.palette.formats.money.format
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -73,7 +73,10 @@ fun CurrencyAmountFieldDemo(
             .fillMaxSize(),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(PaletteTheme.semantic.dimension.spacing.medium, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(
+                PaletteTheme.semantic.dimension.spacing.medium,
+                Alignment.CenterVertically,
+            ),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .height(IntrinsicSize.Max)
@@ -83,7 +86,7 @@ fun CurrencyAmountFieldDemo(
             BoxWithLabel(
                 label = "Raw",
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 Text(
                     text = text,
@@ -93,7 +96,7 @@ fun CurrencyAmountFieldDemo(
             BoxWithLabel(
                 label = "Formatted",
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 Text(
                     text = moneyFormat.format(text),

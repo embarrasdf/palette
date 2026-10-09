@@ -57,12 +57,11 @@ internal object MenuPosition {
      * The given [offset] is [LayoutDirection]-aware. It will be added to the resulting x position
      * for [LayoutDirection.Ltr] and subtracted for [LayoutDirection.Rtl].
      */
-    fun startToAnchorStart(offset: Int = 0): Horizontal =
-        AnchorAlignmentOffsetPosition.Horizontal(
-            menuAlignment = Alignment.Start,
-            anchorAlignment = Alignment.Start,
-            offset = offset,
-        )
+    fun startToAnchorStart(offset: Int = 0): Horizontal = AnchorAlignmentOffsetPosition.Horizontal(
+        menuAlignment = Alignment.Start,
+        anchorAlignment = Alignment.Start,
+        offset = offset,
+    )
 
     /**
      * Returns a [MenuPosition.Horizontal] which aligns the end of the menu to the end of the
@@ -71,12 +70,11 @@ internal object MenuPosition {
      * The given [offset] is [LayoutDirection]-aware. It will be added to the resulting x position
      * for [LayoutDirection.Ltr] and subtracted for [LayoutDirection.Rtl].
      */
-    fun endToAnchorEnd(offset: Int = 0): Horizontal =
-        AnchorAlignmentOffsetPosition.Horizontal(
-            menuAlignment = Alignment.End,
-            anchorAlignment = Alignment.End,
-            offset = offset,
-        )
+    fun endToAnchorEnd(offset: Int = 0): Horizontal = AnchorAlignmentOffsetPosition.Horizontal(
+        menuAlignment = Alignment.End,
+        anchorAlignment = Alignment.End,
+        offset = offset,
+    )
 
     /**
      * Returns a [MenuPosition.Horizontal] which aligns the left of the menu to the left of the
@@ -85,11 +83,10 @@ internal object MenuPosition {
      * The resulting x position will be coerced so that the menu remains within the area inside the
      * given [margin] from the left and right edges of the window.
      */
-    fun leftToWindowLeft(margin: Int = 0): Horizontal =
-        WindowAlignmentMarginPosition.Horizontal(
-            alignment = AbsoluteAlignment.Left,
-            margin = margin,
-        )
+    fun leftToWindowLeft(margin: Int = 0): Horizontal = WindowAlignmentMarginPosition.Horizontal(
+        alignment = AbsoluteAlignment.Left,
+        margin = margin,
+    )
 
     /**
      * Returns a [MenuPosition.Horizontal] which aligns the right of the menu to the right of the
@@ -98,44 +95,40 @@ internal object MenuPosition {
      * The resulting x position will be coerced so that the menu remains within the area inside the
      * given [margin] from the left and right edges of the window.
      */
-    fun rightToWindowRight(margin: Int = 0): Horizontal =
-        WindowAlignmentMarginPosition.Horizontal(
-            alignment = AbsoluteAlignment.Right,
-            margin = margin,
-        )
+    fun rightToWindowRight(margin: Int = 0): Horizontal = WindowAlignmentMarginPosition.Horizontal(
+        alignment = AbsoluteAlignment.Right,
+        margin = margin,
+    )
 
     /**
      * Returns a [MenuPosition.Vertical] which aligns the top of the menu to the bottom of the
      * anchor.
      */
-    fun topToAnchorBottom(offset: Int = 0): Vertical =
-        AnchorAlignmentOffsetPosition.Vertical(
-            menuAlignment = Alignment.Top,
-            anchorAlignment = Alignment.Bottom,
-            offset = offset,
-        )
+    fun topToAnchorBottom(offset: Int = 0): Vertical = AnchorAlignmentOffsetPosition.Vertical(
+        menuAlignment = Alignment.Top,
+        anchorAlignment = Alignment.Bottom,
+        offset = offset,
+    )
 
     /**
      * Returns a [MenuPosition.Vertical] which aligns the bottom of the menu to the top of the
      * anchor.
      */
-    fun bottomToAnchorTop(offset: Int = 0): Vertical =
-        AnchorAlignmentOffsetPosition.Vertical(
-            menuAlignment = Alignment.Bottom,
-            anchorAlignment = Alignment.Top,
-            offset = offset,
-        )
+    fun bottomToAnchorTop(offset: Int = 0): Vertical = AnchorAlignmentOffsetPosition.Vertical(
+        menuAlignment = Alignment.Bottom,
+        anchorAlignment = Alignment.Top,
+        offset = offset,
+    )
 
     /**
      * Returns a [MenuPosition.Vertical] which aligns the center of the menu to the top of the
      * anchor.
      */
-    fun centerToAnchorTop(offset: Int = 0): Vertical =
-        AnchorAlignmentOffsetPosition.Vertical(
-            menuAlignment = Alignment.CenterVertically,
-            anchorAlignment = Alignment.Top,
-            offset = offset,
-        )
+    fun centerToAnchorTop(offset: Int = 0): Vertical = AnchorAlignmentOffsetPosition.Vertical(
+        menuAlignment = Alignment.CenterVertically,
+        anchorAlignment = Alignment.Top,
+        offset = offset,
+    )
 
     /**
      * Returns a [MenuPosition.Vertical] which aligns the top of the menu to the top of the
@@ -144,11 +137,10 @@ internal object MenuPosition {
      * The resulting y position will be coerced so that the menu remains within the area inside the
      * given [margin] from the top and bottom edges of the window.
      */
-    fun topToWindowTop(margin: Int = 0): Vertical =
-        WindowAlignmentMarginPosition.Vertical(
-            alignment = Alignment.Top,
-            margin = margin,
-        )
+    fun topToWindowTop(margin: Int = 0): Vertical = WindowAlignmentMarginPosition.Vertical(
+        alignment = Alignment.Top,
+        margin = margin,
+    )
 
     /**
      * Returns a [MenuPosition.Vertical] which aligns the bottom of the menu to the bottom of the
@@ -157,11 +149,10 @@ internal object MenuPosition {
      * The resulting y position will be coerced so that the menu remains within the area inside the
      * given [margin] from the top and bottom edges of the window.
      */
-    fun bottomToWindowBottom(margin: Int = 0): Vertical =
-        WindowAlignmentMarginPosition.Vertical(
-            alignment = Alignment.Bottom,
-            margin = margin,
-        )
+    fun bottomToWindowBottom(margin: Int = 0): Vertical = WindowAlignmentMarginPosition.Vertical(
+        alignment = Alignment.Bottom,
+        margin = margin,
+    )
 }
 
 @Immutable
@@ -303,13 +294,14 @@ internal data class DropdownMenuPositionProvider(
     val contentOffset: DpOffset,
     val density: Density,
     val verticalMargin: Int = with(density) { MenuVerticalMargin.roundToPx() },
-    val onPositionCalculated: (anchorBounds: IntRect, menuBounds: IntRect) -> Unit = { _, _ -> }
+    val onPositionCalculated: (anchorBounds: IntRect, menuBounds: IntRect) -> Unit = { _, _ -> },
 ) : PopupPositionProvider {
     // Horizontal position
     private val startToAnchorStart: MenuPosition.Horizontal
     private val endToAnchorEnd: MenuPosition.Horizontal
     private val leftToWindowLeft: MenuPosition.Horizontal
     private val rightToWindowRight: MenuPosition.Horizontal
+
     // Vertical position
     private val topToAnchorBottom: MenuPosition.Vertical
     private val bottomToAnchorTop: MenuPosition.Vertical
@@ -337,7 +329,7 @@ internal data class DropdownMenuPositionProvider(
         anchorBounds: IntRect,
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
-        popupContentSize: IntSize
+        popupContentSize: IntSize,
     ): IntOffset {
         val xCandidates = listOf(
             startToAnchorStart,
@@ -346,13 +338,13 @@ internal data class DropdownMenuPositionProvider(
                 leftToWindowLeft
             } else {
                 rightToWindowRight
-            }
+            },
         ).fastMap {
             it.position(
                 anchorBounds = anchorBounds,
                 windowSize = windowSize,
                 menuWidth = popupContentSize.width,
-                layoutDirection = layoutDirection
+                layoutDirection = layoutDirection,
             )
         }
         val x = xCandidates.fastFirstOrNull {
@@ -367,23 +359,23 @@ internal data class DropdownMenuPositionProvider(
                 topToWindowTop
             } else {
                 bottomToWindowBottom
-            }
+            },
         ).fastMap {
             it.position(
                 anchorBounds = anchorBounds,
                 windowSize = windowSize,
-                menuHeight = popupContentSize.height
+                menuHeight = popupContentSize.height,
             )
         }
         val y = yCandidates.fastFirstOrNull {
             it >= verticalMargin &&
-                    it + popupContentSize.height <= windowSize.height - verticalMargin
+                it + popupContentSize.height <= windowSize.height - verticalMargin
         } ?: yCandidates.last()
 
         val menuOffset = IntOffset(x, y)
         onPositionCalculated(
             /* anchorBounds = */anchorBounds,
-            /* menuBounds = */IntRect(offset = menuOffset, size = popupContentSize)
+            /* menuBounds = */IntRect(offset = menuOffset, size = popupContentSize),
         )
         return menuOffset
     }

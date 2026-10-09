@@ -44,7 +44,7 @@ fun TextDemo(
 ) {
     Demo(
         controls = control.controls,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         TextDemo(
             state = state,
@@ -77,7 +77,7 @@ fun DemoScope.TextDemo(
                         alignment = state.lineHeightAlignment.toCompose(),
                         trim = state.lineHeightTrim.toCompose(),
                         mode = state.lineHeightMode.toCompose(),
-                    )
+                    ),
                 ),
             )
         },
@@ -95,12 +95,15 @@ fun DemoScope.TextDemo(
             .width(state.width)
             .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium)
             .then(
-                if (state.showBorder) Modifier.border(
-                    1.dp,
-                    PaletteTheme.semantic.color.primary
-                )
-                else Modifier
-            )
+                if (state.showBorder) {
+                    Modifier.border(
+                        1.dp,
+                        PaletteTheme.semantic.color.primary,
+                    )
+                } else {
+                    Modifier
+                },
+            ),
     )
 }
 
@@ -137,7 +140,6 @@ enum class LineHeightMode {
     Fixed,
     Minimum,
 }
-
 
 @Composable
 fun rememberTextDemoState(
@@ -204,60 +206,58 @@ class TextDemoState(
     }
 }
 
-private const val textStyleDemoKey = "textStyleDemo"
-private const val textAlignKey = "textAlign"
-private const val lineHeightAlignmentKey = "lineHeightAlignment"
-private const val lineHeightTrimKey = "lineHeightTrim"
-private const val lineHeightModeKey = "lineHeightMode"
-private const val maxWidthKey = "maxWidth"
-private const val widthKey = "width"
-private const val autoSizeKey = "autoSize"
-private const val softWrapKey = "softWrap"
-private const val showBorderKey = "showBorder"
-private const val overflowKey = "overflow"
+private const val TextStyleDemoKey = "textStyleDemo"
+private const val TextAlignKey = "textAlign"
+private const val LineHeightAlignmentKey = "lineHeightAlignment"
+private const val LineHeightTrimKey = "lineHeightTrim"
+private const val LineHeightModeKey = "lineHeightMode"
+private const val MaxWidthKey = "maxWidth"
+private const val WidthKey = "width"
+private const val AutoSizeKey = "autoSize"
+private const val SoftWrapKey = "softWrap"
+private const val ShowBorderKey = "showBorder"
+private const val OverflowKey = "overflow"
 
 val TextDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            textStyleDemoKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
-            textAlignKey to value.textAlign.name,
-            lineHeightAlignmentKey to value.lineHeightAlignment.name,
-            lineHeightTrimKey to value.lineHeightTrim.name,
-            lineHeightModeKey to value.lineHeightMode.name,
-            maxWidthKey to value.maxWidth.value,
-            widthKey to value.width.value,
-            autoSizeKey to value.autoSize,
-            softWrapKey to value.softWrap,
-            showBorderKey to value.showBorder,
-            overflowKey to value.overflow.name,
+            TextStyleDemoKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
+            TextAlignKey to value.textAlign.name,
+            LineHeightAlignmentKey to value.lineHeightAlignment.name,
+            LineHeightTrimKey to value.lineHeightTrim.name,
+            LineHeightModeKey to value.lineHeightMode.name,
+            MaxWidthKey to value.maxWidth.value,
+            WidthKey to value.width.value,
+            AutoSizeKey to value.autoSize,
+            SoftWrapKey to value.softWrap,
+            ShowBorderKey to value.showBorder,
+            OverflowKey to value.overflow.name,
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = restore(map[textStyleDemoKey], TextStyleDemoStateSaver)!!
+        val textStyleDemoState: TextStyleDemoState = restore(map[TextStyleDemoKey], TextStyleDemoStateSaver)!!
 
         TextDemoState(
             textStyleInitial = textStyleDemoState.textStyle,
-            textAlignInitial = TextAlign.valueOf(map[textAlignKey] as String),
+            textAlignInitial = TextAlign.valueOf(map[TextAlignKey] as String),
             lineHeightAlignmentInitial =
-                LineHeightAlignment.valueOf(map[lineHeightAlignmentKey] as String),
+            LineHeightAlignment.valueOf(map[LineHeightAlignmentKey] as String),
             lineHeightTrimInitial =
-                LineHeightTrim.valueOf(map[lineHeightTrimKey] as String),
+            LineHeightTrim.valueOf(map[LineHeightTrimKey] as String),
             lineHeightModeInitial =
-                LineHeightMode.valueOf(map[lineHeightModeKey] as String),
-            maxWidthInitial = (map[maxWidthKey] as Float).dp,
-            widthInitial = (map[widthKey] as Float).dp,
-            autoSizeInitial = map[autoSizeKey] as Boolean,
-            softWrapInitial = map[softWrapKey] as Boolean,
-            showBorderInitial = map[showBorderKey] as Boolean,
-            overflowInitial = Overflow.valueOf(map[overflowKey] as String),
+            LineHeightMode.valueOf(map[LineHeightModeKey] as String),
+            maxWidthInitial = (map[MaxWidthKey] as Float).dp,
+            widthInitial = (map[WidthKey] as Float).dp,
+            autoSizeInitial = map[AutoSizeKey] as Boolean,
+            softWrapInitial = map[SoftWrapKey] as Boolean,
+            showBorderInitial = map[ShowBorderKey] as Boolean,
+            overflowInitial = Overflow.valueOf(map[OverflowKey] as String),
         )
-    }
+    },
 )
 
 @Composable
-fun rememberTextDemoControl(
-    textDemoState: TextDemoState,
-) = remember(textDemoState) {
+fun rememberTextDemoControl(textDemoState: TextDemoState) = remember(textDemoState) {
     TextDemoControl(textDemoState)
 }
 
@@ -325,7 +325,7 @@ class TextDemoControl(
         value = { state.autoSize },
         onValueChange = {
             state.autoSize = it
-        }
+        },
     )
 
     val softWrapControl = Control.Toggle(
@@ -333,7 +333,7 @@ class TextDemoControl(
         value = { state.softWrap },
         onValueChange = {
             state.softWrap = it
-        }
+        },
     )
 
     val showBorderControl = Control.Toggle(
@@ -341,7 +341,7 @@ class TextDemoControl(
         value = { state.showBorder },
         onValueChange = {
             state.showBorder = it
-        }
+        },
     )
 
     val overflowControl = enumControl(

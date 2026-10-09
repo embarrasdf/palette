@@ -2,8 +2,8 @@ package com.embarrasdf.palette.theme.semantic.format
 
 import com.embarrasdf.palette.theme.semantic.format.core.NumberFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.core.PaletteNumberFormatScheme
-import com.embarrasdf.palette.theme.semantic.format.core.TextFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.core.PaletteTextFormatScheme
+import com.embarrasdf.palette.theme.semantic.format.core.TextFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.datetime.DateTimeFormats
 import com.embarrasdf.palette.theme.semantic.format.datetime.PaletteDateTimeFormats
 import com.embarrasdf.palette.theme.semantic.format.money.MoneyFormatScheme

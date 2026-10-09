@@ -25,7 +25,9 @@ class NavGraphParseDeeplinkToBackStackTest {
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route2.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route2.pathSegment}",
+        )
 
         assertEquals(listOf(Route1, Route2), backStack)
     }
@@ -67,7 +69,9 @@ class NavGraphParseDeeplinkToBackStackTest {
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Graph2.pathSegment}/${Route3.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Graph2.pathSegment}/${Route3.pathSegment}",
+        )
 
         assertEquals(listOf(Route1, Route2, Route3), backStack)
     }
@@ -87,7 +91,9 @@ class NavGraphParseDeeplinkToBackStackTest {
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Graph2.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Graph2.pathSegment}",
+        )
 
         assertEquals(listOf(Route1, Route2), backStack)
     }
@@ -102,7 +108,9 @@ class NavGraphParseDeeplinkToBackStackTest {
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${Graph3.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${Graph3.pathSegment}/${Graph1.pathSegment}/${Route1.pathSegment}",
+        )
 
         assertEquals(listOf(Route1), backStack)
     }
@@ -115,12 +123,14 @@ class NavGraphParseDeeplinkToBackStackTest {
             navGraph(root = Graph1, start = Route1) {
                 route(Route1)
                 wildcardRoute<TestRoute>(
-                    children = { route(Route2) }
+                    children = { route(Route2) },
                 ) { segment -> TestRoute(segment.value) }
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${RootRoute.pathSegment}/${Graph1.pathSegment}/any-value/${Route2.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/any-value/${Route2.pathSegment}",
+        )
 
         // Route2's parent is Graph1 (not the wildcard), so back stack is [Route1, Route2]
         assertEquals(listOf(Route1, Route2), backStack)
@@ -140,7 +150,9 @@ class NavGraphParseDeeplinkToBackStackTest {
             }
         }
 
-        val backStack = navGraph.parseDeeplinkToBackStack("${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route3.pathSegment}")
+        val backStack = navGraph.parseDeeplinkToBackStack(
+            "${RootRoute.pathSegment}/${Graph1.pathSegment}/${Route3.pathSegment}",
+        )
 
         assertEquals(listOf(Route1, Route2, Route3), backStack)
     }

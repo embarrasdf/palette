@@ -80,7 +80,7 @@ fun GridSphere(
     }
 
     Canvas(
-        modifier = modifier
+        modifier = modifier,
     ) {
         val center = Offset(size.width / 2, size.height / 2)
         val radius = size.minDimension / 2f
@@ -98,7 +98,10 @@ fun GridSphere(
         val cosZ = cos(rotZ)
         val sinZ = sin(rotZ)
 
-        fun getRotatedPoint(lat: Int, lon: Int): Point3D {
+        fun getRotatedPoint(
+            lat: Int,
+            lon: Int,
+        ): Point3D {
             val key = lat to lon
             return rotationCache.getOrPut(key) {
                 val latRad = lat.toRadians()

@@ -3,10 +3,10 @@ package com.embarrasdf.palette.components.demo
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,6 @@ import com.embarrasdf.palette.components.demo.geometry.CartesianGridScaleState
 import com.embarrasdf.palette.components.demo.geometry.CircleDemo
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoState
-import com.embarrasdf.palette.components.demo.geometry.CircleDemoStateSaver
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemo
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoState
@@ -40,6 +39,7 @@ import com.embarrasdf.palette.components.demo.geometry.SphereDemo
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoControl
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoState
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoStateSaver
+import com.embarrasdf.palette.components.demo.geometry.circleDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
@@ -64,7 +64,7 @@ fun ComponentDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         ComponentDemo(
             state = state,
@@ -83,28 +83,28 @@ fun DemoScope.ComponentDemo(
         ComponentDemoType.Circle -> CircleDemo(
             state = state.circleDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.CurveStitch -> CurveStitchDemo(
             state = state.curveStitchDemoState,
             enablePointerInput = false,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Grid -> GridDemo(
             state = state.gridDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Sphere -> SphereDemo(
             state = state.sphereDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Text -> TextDemo(
             state = state.textDemoState,
             control = control.textDemoControl,
-            modifier = modifier
+            modifier = modifier,
         )
         ComponentDemoType.TextField -> TextFieldDemo(
             state = state.textFieldDemoState,
@@ -123,7 +123,7 @@ fun rememberComponentDemoState(
     return rememberSaveable(
         density,
         color,
-        saver = ComponentDemoStateSaver(
+        saver = componentDemoStateSaver(
             density = density,
             color = color,
         ),
@@ -181,58 +181,57 @@ class ComponentDemoState(
     val textFieldDemoState = textFieldDemoStateInitial
 }
 
-private const val demoTypeKey = "demoType"
-private const val circleDemoStateKey = "circleDemoState"
-private const val curveStitchDemoStateKey = "curveStitchDemoState"
-private const val gridDemoStateKey = "gridDemoState"
-private const val sphereDemoStateKey = "sphereDemoState"
-private const val textDemoStateKey = "textDemoState"
-private const val textFieldDemoStateKey = "textFieldDemoState"
+private const val DemoTypeKey = "demoType"
+private const val CircleDemoStateKey = "circleDemoState"
+private const val CurveStitchDemoStateKey = "curveStitchDemoState"
+private const val GridDemoStateKey = "gridDemoState"
+private const val SphereDemoStateKey = "sphereDemoState"
+private const val TextDemoStateKey = "textDemoState"
+private const val TextFieldDemoStateKey = "textFieldDemoState"
 
-fun ComponentDemoStateSaver(
+fun componentDemoStateSaver(
     density: Density,
     color: Color,
 ) = mapSaverSafe(
     save = { value ->
         mapOf(
-            demoTypeKey to value.demoType,
-            circleDemoStateKey to save(
+            DemoTypeKey to value.demoType,
+            CircleDemoStateKey to save(
                 value = value.circleDemoState,
-                saver = CircleDemoStateSaver(density = density),
+                saver = circleDemoStateSaver(density = density),
                 scope = this,
             ),
-            curveStitchDemoStateKey to save(
+            CurveStitchDemoStateKey to save(
                 value = value.curveStitchDemoState,
                 saver = CurveStitchDemoStateSaver,
                 scope = this,
             ),
-            gridDemoStateKey to save(value.gridDemoState, GridDemoStateSaver, this),
-            sphereDemoStateKey to save(value.sphereDemoState, SphereDemoStateSaver, this),
-            textDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
-            textFieldDemoStateKey to save(value.textFieldDemoState, TextFieldDemoStateSaver, this),
+            GridDemoStateKey to save(value.gridDemoState, GridDemoStateSaver, this),
+            SphereDemoStateKey to save(value.sphereDemoState, SphereDemoStateSaver, this),
+            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
+            TextFieldDemoStateKey to save(value.textFieldDemoState, TextFieldDemoStateSaver, this),
         )
     },
     restore = { map ->
         ComponentDemoState(
             density = density,
             color = color,
-            componentDemoTypeInitial = map[demoTypeKey] as ComponentDemoType,
-            circleDemoStateInitial = restore(map[circleDemoStateKey], CircleDemoStateSaver(density = density))!!,
-            curveStitchDemoStateInitial = restore(map[curveStitchDemoStateKey],
-                CurveStitchDemoStateSaver
+            componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
+            circleDemoStateInitial = restore(map[CircleDemoStateKey], circleDemoStateSaver(density = density))!!,
+            curveStitchDemoStateInitial = restore(
+                map[CurveStitchDemoStateKey],
+                CurveStitchDemoStateSaver,
             )!!,
-            gridDemoStateInitial = restore(map[gridDemoStateKey], GridDemoStateSaver)!!,
-            sphereDemoStateInitial = restore(map[sphereDemoStateKey], SphereDemoStateSaver)!!,
-            textDemoStateInitial = restore(map[textDemoStateKey], TextDemoStateSaver)!!,
-            textFieldDemoStateInitial = restore(map[textFieldDemoStateKey], TextFieldDemoStateSaver)!!,
+            gridDemoStateInitial = restore(map[GridDemoStateKey], GridDemoStateSaver)!!,
+            sphereDemoStateInitial = restore(map[SphereDemoStateKey], SphereDemoStateSaver)!!,
+            textDemoStateInitial = restore(map[TextDemoStateKey], TextDemoStateSaver)!!,
+            textFieldDemoStateInitial = restore(map[TextFieldDemoStateKey], TextFieldDemoStateSaver)!!,
         )
     },
 )
 
 @Composable
-fun rememberComponentDemoControl(
-    state: ComponentDemoState = rememberComponentDemoState(),
-): ComponentDemoControl {
+fun rememberComponentDemoControl(state: ComponentDemoState = rememberComponentDemoState()): ComponentDemoControl {
     return remember(state) { ComponentDemoControl(state) }
 }
 

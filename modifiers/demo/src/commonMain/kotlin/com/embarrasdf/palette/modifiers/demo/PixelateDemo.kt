@@ -12,9 +12,7 @@ import com.embarrasdf.palette.modifiers.pixelate
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun PixelateDemo(
-    modifier: Modifier = Modifier,
-) {
+fun PixelateDemo(modifier: Modifier = Modifier) {
     val modifierState = rememberSaveable(saver = PixelateStateSaver) { PixelateState() }
 
     ModifierDemo(
@@ -29,7 +27,7 @@ fun PixelateDemo(
                     modifierState.subdivisions = it.toInt()
                 },
                 valueRange = { 0f..100f },
-            )
+            ),
         ),
         modifier = modifier,
     )
@@ -41,17 +39,17 @@ private class PixelateState(
     var subdivisions: Int by mutableStateOf(subdivisionsInitial)
 }
 
-private const val subdivisionsKey = "subdivisions"
+private const val SubdivisionsKey = "subdivisions"
 
 private val PixelateStateSaver = mapSaverSafe(
     save = {
         mapOf(
-            subdivisionsKey to it.subdivisions,
+            SubdivisionsKey to it.subdivisions,
         )
     },
     restore = {
         PixelateState(
-            subdivisionsInitial = it[subdivisionsKey] as Int,
+            subdivisionsInitial = it[SubdivisionsKey] as Int,
         )
-    }
+    },
 )

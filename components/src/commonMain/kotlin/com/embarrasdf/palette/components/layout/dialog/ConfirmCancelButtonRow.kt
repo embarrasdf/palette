@@ -29,7 +29,7 @@ fun ConfirmCancelButtonRow(
             onConfirm = onConfirm,
             style = style.buttonStyle,
             modifier = Modifier
-                .padding(start = style.spacing)
+                .padding(start = style.spacing),
         )
     }
 }

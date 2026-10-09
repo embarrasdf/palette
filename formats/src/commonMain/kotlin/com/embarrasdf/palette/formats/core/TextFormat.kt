@@ -57,9 +57,7 @@ object TextFormatReplacements {
     val NEWLINE_UNICODE_BULLET = "\n* " to "\n\u2022 "
 }
 
-fun TextFormat.format(
-    string: String,
-): String {
+fun TextFormat.format(string: String): String {
     if (string.isEmpty()) return string
 
     if (wordDelimiter == " ") {
@@ -68,8 +66,11 @@ fun TextFormat.format(
             Capitalization.Sentence -> string.titlecaseFirstChar()
             Capitalization.Title -> {
                 val words = string.split(' ')
-                if (words.size == 1) string.titlecaseFirstChar()
-                else words.joinToString(wordDelimiter) { it.titlecaseFirstChar() }
+                if (words.size == 1) {
+                    string.titlecaseFirstChar()
+                } else {
+                    words.joinToString(wordDelimiter) { it.titlecaseFirstChar() }
+                }
             }
             Capitalization.Uppercase -> string.uppercase()
             Capitalization.Lowercase -> string.lowercase()
@@ -86,12 +87,15 @@ fun TextFormat.format(
         Capitalization.None -> words.joinToString(wordDelimiter)
         Capitalization.Sentence -> {
             val firstWord = words[0].titlecaseFirstChar()
-            if (words.size == 1) firstWord
-            else buildString {
-                append(firstWord)
-                for (i in 1 until words.size) {
-                    append(wordDelimiter)
-                    append(words[i])
+            if (words.size == 1) {
+                firstWord
+            } else {
+                buildString {
+                    append(firstWord)
+                    for (i in 1 until words.size) {
+                        append(wordDelimiter)
+                        append(words[i])
+                    }
                 }
             }
         }
@@ -99,7 +103,9 @@ fun TextFormat.format(
         Capitalization.Uppercase -> words.joinToString(wordDelimiter) { it.uppercase() }
         Capitalization.Lowercase -> words.joinToString(wordDelimiter) { it.lowercase() }
         Capitalization.ReverseSentence -> words.formatReverseSentenceCase(wordDelimiter)
-        is Capitalization.Alternating -> words.joinToString(wordDelimiter).formatAlternatingCase(capitalization.capitalizeFirstChar)
+        is Capitalization.Alternating -> words.joinToString(
+            wordDelimiter,
+        ).formatAlternatingCase(capitalization.capitalizeFirstChar)
     }
 
     return formatted.applyReplacements(replacements)

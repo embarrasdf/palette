@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
  * @param amount: Returns the amount of color inversion to apply where 0f applies none and 1f fully
  * inverts the color.
  */
-fun Modifier.colorInvert(
-    amount: () -> Float,
-): Modifier = this then ShaderElement(
+fun Modifier.colorInvert(amount: () -> Float): Modifier = this then ShaderElement(
     shader = createColorInvertShader().apply {
         setAmount(amount())
     },
@@ -27,7 +25,7 @@ fun Modifier.colorInvert(
 
 data class ColorInvertIndication(
     private val amount: (Interaction) -> Float = { 0f },
-    private val animationSpec: AnimationSpec<Float> = tween()
+    private val animationSpec: AnimationSpec<Float> = tween(),
 ) : IndicationNodeFactory {
 
     override fun create(interactionSource: InteractionSource): DelegatableNode {
