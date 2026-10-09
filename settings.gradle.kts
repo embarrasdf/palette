@@ -1,6 +1,9 @@
 pluginManagement {
-    if (file("../gradle-plugins").exists()) {
-        includeBuild("../gradle-plugins")
+    val embarrasdfGradlePluginsVersion = file("gradle/libs.versions.toml").readLines()
+        .first { it.startsWith("embarrasdf-gradle-plugins") }
+        .substringAfter('"').substringBefore('"')
+    plugins {
+        id("com.embarrasdf.gradle.plugin.settings") version embarrasdfGradlePluginsVersion
     }
     repositories {
         google()
@@ -9,19 +12,17 @@ pluginManagement {
         maven("https://central.sonatype.com/repository/maven-snapshots/")
     }
 }
+
+plugins {
+    id("com.embarrasdf.gradle.plugin.settings")
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
         maven("https://central.sonatype.com/repository/maven-snapshots/")
-    }
-    versionCatalogs {
-        if (file("../gradle-plugins").exists()) {
-            create("embarrasdfPluginLibs") {
-                from(files("../gradle-plugins/gradle/libs.versions.toml"))
-            }
-        }
     }
 }
 
