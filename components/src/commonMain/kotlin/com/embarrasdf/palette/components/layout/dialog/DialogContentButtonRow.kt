@@ -18,7 +18,7 @@ fun DialogContentButtonRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         content()
     }
@@ -33,7 +33,7 @@ fun DialogContentSingleButtonRow(
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         content()
     }

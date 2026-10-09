@@ -44,7 +44,7 @@ fun TextDemo(
 ) {
     Demo(
         controls = control.controls,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         TextDemo(
             state = state,
@@ -77,7 +77,7 @@ fun DemoScope.TextDemo(
                         alignment = state.lineHeightAlignment.toCompose(),
                         trim = state.lineHeightTrim.toCompose(),
                         mode = state.lineHeightMode.toCompose(),
-                    )
+                    ),
                 ),
             )
         },
@@ -95,12 +95,15 @@ fun DemoScope.TextDemo(
             .width(state.width)
             .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium)
             .then(
-                if (state.showBorder) Modifier.border(
-                    1.dp,
-                    PaletteTheme.semantic.color.primary
-                )
-                else Modifier
-            )
+                if (state.showBorder) {
+                    Modifier.border(
+                        1.dp,
+                        PaletteTheme.semantic.color.primary,
+                    )
+                } else {
+                    Modifier
+                },
+            ),
     )
 }
 
@@ -137,7 +140,6 @@ enum class LineHeightMode {
     Fixed,
     Minimum,
 }
-
 
 @Composable
 fun rememberTextDemoState(
@@ -239,11 +241,11 @@ val TextDemoStateSaver = mapSaverSafe(
             textStyleInitial = textStyleDemoState.textStyle,
             textAlignInitial = TextAlign.valueOf(map[TextAlignKey] as String),
             lineHeightAlignmentInitial =
-                LineHeightAlignment.valueOf(map[LineHeightAlignmentKey] as String),
+            LineHeightAlignment.valueOf(map[LineHeightAlignmentKey] as String),
             lineHeightTrimInitial =
-                LineHeightTrim.valueOf(map[LineHeightTrimKey] as String),
+            LineHeightTrim.valueOf(map[LineHeightTrimKey] as String),
             lineHeightModeInitial =
-                LineHeightMode.valueOf(map[LineHeightModeKey] as String),
+            LineHeightMode.valueOf(map[LineHeightModeKey] as String),
             maxWidthInitial = (map[MaxWidthKey] as Float).dp,
             widthInitial = (map[WidthKey] as Float).dp,
             autoSizeInitial = map[AutoSizeKey] as Boolean,
@@ -251,13 +253,11 @@ val TextDemoStateSaver = mapSaverSafe(
             showBorderInitial = map[ShowBorderKey] as Boolean,
             overflowInitial = Overflow.valueOf(map[OverflowKey] as String),
         )
-    }
+    },
 )
 
 @Composable
-fun rememberTextDemoControl(
-    textDemoState: TextDemoState,
-) = remember(textDemoState) {
+fun rememberTextDemoControl(textDemoState: TextDemoState) = remember(textDemoState) {
     TextDemoControl(textDemoState)
 }
 
@@ -325,7 +325,7 @@ class TextDemoControl(
         value = { state.autoSize },
         onValueChange = {
             state.autoSize = it
-        }
+        },
     )
 
     val softWrapControl = Control.Toggle(
@@ -333,7 +333,7 @@ class TextDemoControl(
         value = { state.softWrap },
         onValueChange = {
             state.softWrap = it
-        }
+        },
     )
 
     val showBorderControl = Control.Toggle(
@@ -341,7 +341,7 @@ class TextDemoControl(
         value = { state.showBorder },
         onValueChange = {
             state.showBorder = it
-        }
+        },
     )
 
     val overflowControl = enumControl(

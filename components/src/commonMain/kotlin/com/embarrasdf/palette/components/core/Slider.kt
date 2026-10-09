@@ -20,13 +20,13 @@ import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +65,7 @@ fun Slider(
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     stepIncrement: Float,
     onValueChangeFinished: (() -> Unit)? = null,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Slider(
         value = value,
@@ -90,7 +90,7 @@ fun Slider(
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val onValueChangeFinishedState = rememberUpdatedState(onValueChangeFinished)
     val state = remember(valueRange, steps) {
@@ -132,7 +132,7 @@ fun Slider(
     enabled: Boolean = true,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     onValueChangeFinished: (() -> Unit)? = null,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val onValueChangeFinishedState = rememberUpdatedState(onValueChangeFinished)
     val state = remember(valueRange, snapValues) {
@@ -170,7 +170,7 @@ fun Slider(
     modifier: Modifier = Modifier,
     style: SliderStyle = SliderStyle(),
     enabled: Boolean = true,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Layout(
         content = {
@@ -192,10 +192,12 @@ fun Slider(
                             onTap = {
                                 state.dispatchRawDelta(0f)
                                 state.gestureEndAction()
-                            }
+                            },
                         )
                     }
-                } else Modifier
+                } else {
+                    Modifier
+                },
             )
             .draggable(
                 orientation = Orientation.Horizontal,
@@ -204,7 +206,7 @@ fun Slider(
                 onDragStopped = { state.gestureEndAction() },
                 startDragImmediately = state.isDragging,
                 state = state,
-            )
+            ),
     ) { measurables, constraints ->
 
         val trackPlaceable = measurables[0].measure(constraints)
@@ -215,7 +217,7 @@ fun Slider(
 
         state.updateDimensions(
             thumbPlaceable.width.toFloat(),
-            sliderWidth
+            sliderWidth,
         )
 
         val trackOffsetX = thumbPlaceable.width / 2
@@ -226,11 +228,11 @@ fun Slider(
         layout(sliderWidth, sliderHeight) {
             trackPlaceable.placeRelative(
                 trackOffsetX,
-                trackOffsetY
+                trackOffsetY,
             )
             thumbPlaceable.placeRelative(
                 thumbOffsetX,
-                thumbOffsetY
+                thumbOffsetY,
             )
         }
     }
@@ -363,8 +365,10 @@ fun RangeSlider(
                             startDragImmediately = state.isDraggingStart,
                             state = state.startDraggableState,
                         )
-                    } else Modifier
-                )
+                    } else {
+                        Modifier
+                    },
+                ),
             ) {
                 SliderDefaults.Thumb(colors = style.colors)
             }
@@ -378,8 +382,10 @@ fun RangeSlider(
                             startDragImmediately = state.isDraggingEnd,
                             state = state.endDraggableState,
                         )
-                    } else Modifier
-                )
+                    } else {
+                        Modifier
+                    },
+                ),
             ) {
                 SliderDefaults.Thumb(colors = style.colors)
             }
@@ -388,7 +394,7 @@ fun RangeSlider(
             .requiredSizeIn(
                 minWidth = SliderDefaults.ThumbSize * 2,
                 minHeight = SliderDefaults.ThumbSize,
-            )
+            ),
     ) { measurables, constraints ->
         val thumbConstraints = constraints.copy(minWidth = 0, minHeight = 0)
         val trackPlaceable = measurables[0].measure(constraints)
@@ -484,7 +490,7 @@ object SliderDefaults {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(TrackHeight)
+                .height(TrackHeight),
         ) {
             drawLine(
                 brush = brush,
@@ -503,9 +509,7 @@ object SliderDefaults {
     }
 
     @Composable
-    fun Thumb(
-        colors: SliderColors = SliderColors(),
-    ) {
+    fun Thumb(colors: SliderColors = SliderColors()) {
         val borderStroke = remember(colors.thumbColor) {
             BorderStroke(width = ThumbBorderWidth, color = colors.thumbColor)
         }
@@ -513,7 +517,7 @@ object SliderDefaults {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(ThumbSize)
-                .border(borderStroke)
+                .border(borderStroke),
         ) {
             val pointBrush = remember(colors.thumbPointColor) { SolidColor(colors.thumbPointColor) }
             val pointSize = ThumbPointSize
@@ -522,7 +526,7 @@ object SliderDefaults {
                 drawRect(
                     brush = backgroundBrush,
                     topLeft = Offset(center.x, 0f),
-                    size = Size(this.size.width / 2, this.size.height)
+                    size = Size(this.size.width / 2, this.size.height),
                 )
                 drawRect(
                     brush = pointBrush,
@@ -557,7 +561,7 @@ class SliderState(
 
     override suspend fun drag(
         dragPriority: MutatePriority,
-        block: suspend DragScope.() -> Unit
+        block: suspend DragScope.() -> Unit,
     ): Unit = coroutineScope {
         isDragging = true
         scrollMutex.mutateWith(dragScope, dragPriority, block)
@@ -588,7 +592,7 @@ class SliderState(
         get() = calcFraction(
             valueRange.start,
             valueRange.endInclusive,
-            value.coerceIn(valueRange.start, valueRange.endInclusive)
+            value.coerceIn(valueRange.start, valueRange.endInclusive),
         )
 
     internal var isDragging by mutableStateOf(false)
@@ -596,7 +600,7 @@ class SliderState(
 
     internal fun updateDimensions(
         newThumbWidth: Float,
-        newTotalWidth: Int
+        newTotalWidth: Int,
     ) {
         thumbWidth = newThumbWidth
         totalWidth = newTotalWidth
@@ -621,11 +625,17 @@ class SliderState(
 
     private val scrollMutex = MutatorMutex()
 
-    private fun scaleToUserValue(minPx: Float, maxPx: Float, offset: Float) =
-        scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
+    private fun scaleToUserValue(
+        minPx: Float,
+        maxPx: Float,
+        offset: Float,
+    ) = scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
 
-    private fun scaleToOffset(minPx: Float, maxPx: Float, userValue: Float) =
-        scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
+    private fun scaleToOffset(
+        minPx: Float,
+        maxPx: Float,
+        userValue: Float,
+    ) = scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
 }
 
 class RangeSliderState(
@@ -642,10 +652,10 @@ class RangeSliderState(
         ?: stepsToTickFractions(steps)
 
     private var activeRangeStartState by mutableFloatStateOf(
-        activeRangeStart.coerceIn(valueRange.start, valueRange.endInclusive)
+        activeRangeStart.coerceIn(valueRange.start, valueRange.endInclusive),
     )
     private var activeRangeEndState by mutableFloatStateOf(
-        activeRangeEnd.coerceIn(valueRange.start, valueRange.endInclusive)
+        activeRangeEnd.coerceIn(valueRange.start, valueRange.endInclusive),
     )
 
     var activeRangeStart: Float
@@ -673,7 +683,10 @@ class RangeSliderState(
     private var totalWidth by mutableIntStateOf(0)
     private var thumbWidth by mutableFloatStateOf(0f)
 
-    internal fun updateDimensions(newThumbWidth: Float, newTotalWidth: Int) {
+    internal fun updateDimensions(
+        newThumbWidth: Float,
+        newTotalWidth: Int,
+    ) {
         thumbWidth = newThumbWidth
         totalWidth = newTotalWidth
     }
@@ -706,7 +719,7 @@ class RangeSliderState(
     internal val startDraggableState: DraggableState = object : DraggableState {
         override suspend fun drag(
             dragPriority: MutatePriority,
-            block: suspend DragScope.() -> Unit
+            block: suspend DragScope.() -> Unit,
         ): Unit = coroutineScope {
             isDraggingStart = true
             startScrollMutex.mutateWith(startDragScope, dragPriority, block)
@@ -724,7 +737,7 @@ class RangeSliderState(
     internal val endDraggableState: DraggableState = object : DraggableState {
         override suspend fun drag(
             dragPriority: MutatePriority,
-            block: suspend DragScope.() -> Unit
+            block: suspend DragScope.() -> Unit,
         ): Unit = coroutineScope {
             isDraggingEnd = true
             endScrollMutex.mutateWith(endDragScope, dragPriority, block)
@@ -807,12 +820,20 @@ internal fun snapValueToTick(
 }
 
 // Scale x1 from a1..b1 range to a2..b2 range
-private fun scale(a1: Float, b1: Float, x1: Float, a2: Float, b2: Float) =
-    lerp(a2, b2, calcFraction(a1, b1, x1))
+private fun scale(
+    a1: Float,
+    b1: Float,
+    x1: Float,
+    a2: Float,
+    b2: Float,
+) = lerp(a2, b2, calcFraction(a1, b1, x1))
 
 // Calculate the 0..1 fraction that `pos` value represents between `a` and `b`
-private fun calcFraction(a: Float, b: Float, pos: Float) =
-    (if (b - a == 0f) 0f else (pos - a) / (b - a)).coerceIn(0f, 1f)
+private fun calcFraction(
+    a: Float,
+    b: Float,
+    pos: Float,
+) = (if (b - a == 0f) 0f else (pos - a) / (b - a)).coerceIn(0f, 1f)
 
 @Preview
 @Composable

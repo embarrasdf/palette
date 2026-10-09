@@ -19,7 +19,7 @@ fun DemoCircle(
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(background)
+            .background(background),
     ) {
         drawCircle(color, style = drawStyle, radius = size.minDimension / 4f)
     }

@@ -11,5 +11,5 @@ val OffsetSaver = listSaver(
         } else {
             Offset(it[0], it[1])
         }
-    }
+    },
 )

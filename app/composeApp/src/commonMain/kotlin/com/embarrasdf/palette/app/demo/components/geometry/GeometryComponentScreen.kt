@@ -8,8 +8,8 @@ import com.embarrasdf.palette.app.demo.components.geometry.navigation.GeometryCo
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemo
 import com.embarrasdf.palette.components.demo.geometry.GridDemo
 import com.embarrasdf.palette.components.demo.geometry.SphereDemo
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 
 @Composable
 fun GeometryComponentScreen(
@@ -28,13 +28,13 @@ fun GeometryComponentScreen(
     ) { innerPadding ->
         when (component) {
             GeometryComponent.CurveStitch -> CurveStitchDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             GeometryComponent.Grid -> GridDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             GeometryComponent.Sphere -> SphereDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

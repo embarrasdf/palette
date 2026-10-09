@@ -4,24 +4,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
+import com.embarrasdf.palette.components.demo.control.Control
+import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.core.ButtonDemo
 import com.embarrasdf.palette.components.demo.core.ButtonDemoControl
 import com.embarrasdf.palette.components.demo.core.ButtonDemoState
 import com.embarrasdf.palette.components.demo.core.ButtonDemoStateSaver
-import com.embarrasdf.palette.theme.components.demo.Demo
-import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
+import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
 import com.embarrasdf.palette.theme.primitive.IndicationPrimitiveToken
@@ -54,7 +54,7 @@ fun IndicationScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             this@Demo.ButtonDemo(
                 state = state.buttonDemoState,
@@ -65,9 +65,7 @@ fun IndicationScreen(
 }
 
 @Composable
-fun rememberIndicationScreenState(
-    themeState: ThemeState,
-): IndicationScreenState {
+fun rememberIndicationScreenState(themeState: ThemeState): IndicationScreenState {
     return rememberSaveable(
         themeState,
         saver = indicationScreenStateSaver(themeState),
@@ -96,7 +94,7 @@ private const val ButtonDemoStateKey = "buttonDemoState"
 fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            ButtonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this)
+            ButtonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this),
         )
     },
     restore = { map ->
@@ -104,7 +102,7 @@ fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             themeState = themeState,
             buttonDemoStateInitial = restore(map[ButtonDemoStateKey], ButtonDemoStateSaver)!!,
         )
-    }
+    },
 )
 
 @Composable
@@ -142,6 +140,6 @@ class IndicationScreenControl(
             indent = true,
             controls = { buttonDemoControl.controls },
             expandedInitial = false,
-        )
+        ),
     )
 }

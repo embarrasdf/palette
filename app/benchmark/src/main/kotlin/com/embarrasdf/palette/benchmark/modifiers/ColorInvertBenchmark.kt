@@ -9,8 +9,8 @@ import androidx.benchmark.macro.TraceSectionMetric
 import androidx.benchmark.macro.TraceSectionMetric.Mode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.AppPackageName
+import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.modifiers.ColorInvertPage
 import com.embarrasdf.palette.modifiers.ModifiersPage
 import org.junit.Rule
@@ -26,8 +26,7 @@ class ColorInvertBenchmark {
     fun compilationModeNone() = amountAdjustment(CompilationMode.None())
 
     @Test
-    fun compilationModePartial() =
-        amountAdjustment(CompilationMode.Partial(BaselineProfileMode.Require))
+    fun compilationModePartial() = amountAdjustment(CompilationMode.Partial(BaselineProfileMode.Require))
 
     @OptIn(ExperimentalMetricApi::class)
     fun amountAdjustment(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
@@ -45,7 +44,7 @@ class ColorInvertBenchmark {
 
             MainCatalogPage(device).navigateToModifiers()
             ModifiersPage(device).navigateToColorInvert()
-        }
+        },
     ) {
         ColorInvertPage(device).adjustColorInvert()
     }

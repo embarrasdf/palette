@@ -29,5 +29,5 @@ val GridLineStyleSaver: Saver<GridLineStyle, Any> = mapSaverSafe(
             color = restore(map[ColorKey], ColorSaver)!!,
             stroke = restore(map[StrokeKey], DrawStyleSaver)!!,
         )
-    }
+    },
 )

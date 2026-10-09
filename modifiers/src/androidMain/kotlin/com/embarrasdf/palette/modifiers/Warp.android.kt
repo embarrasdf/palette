@@ -66,7 +66,10 @@ class WarpShaderImpl : WarpShader {
 
     override fun createRenderEffect(): RenderEffect? = control.createRenderEffect()
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSize, width.toFloat(), height.toFloat())
     }
 
@@ -111,7 +114,7 @@ private fun Preview() {
                 )
                 .pointerInput(Unit) {
                     detectTapGestures(
-                        onPress =  { point = it },
+                        onPress = { point = it },
                         onTap = { point = it },
                     )
                 }
@@ -120,19 +123,19 @@ private fun Preview() {
                         change.consume()
                         point = change.position
                     }
-                }
+                },
         )
         Slider(
             valueRange = radiusRange,
             value = radius.value,
             onValueChange = { radius = it.dp },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
         Slider(
             valueRange = amountRange,
             value = amount,
             onValueChange = { amount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

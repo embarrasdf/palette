@@ -63,7 +63,7 @@ fun ShapeScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             ShapeDemo(
                 shape = state.subjectShape,
@@ -74,9 +74,7 @@ fun ShapeScreen(
 }
 
 @Composable
-fun rememberShapeScreenState(
-    themeState: ThemeState,
-): ShapeScreenState {
+fun rememberShapeScreenState(themeState: ThemeState): ShapeScreenState {
     return rememberSaveable(
         themeState,
         saver = shapeScreenStateSaver(themeState),
@@ -110,7 +108,7 @@ fun shapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
                 ?.let { ShapeToken.valueOf(it) }
                 ?: ShapeToken.Primary,
         )
-    }
+    },
 )
 
 @Composable

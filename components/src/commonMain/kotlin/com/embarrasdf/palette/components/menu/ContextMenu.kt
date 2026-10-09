@@ -27,7 +27,7 @@ fun ContextMenu(
         modifier = Modifier.absoluteOffset(
             x = with(density) { offset.x.toDp() },
             y = with(density) { offset.y.toDp() },
-        )
+        ),
     ) {
         DropdownMenu(
             expanded = expanded,

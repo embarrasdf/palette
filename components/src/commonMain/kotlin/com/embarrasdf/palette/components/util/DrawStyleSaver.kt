@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 
 private enum class DrawStyleType {
     Fill,
-    Stroke
+    Stroke,
 }
 
 private const val DrawStyleKey = "drawStyle"
@@ -42,5 +42,5 @@ val DrawStyleSaver: Saver<DrawStyle, Any> = mapSaverSafe(
                 join = restore(map[StrokeJoinKey], StrokeJoinSaver)!!,
             )
         }
-    }
+    },
 )

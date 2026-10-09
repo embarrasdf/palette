@@ -18,9 +18,7 @@ sealed class IntGrouping {
     data object None : IntGrouping()
 }
 
-fun NumberFormat.format(
-    amount: Double,
-): String {
+fun NumberFormat.format(amount: Double): String {
     return format(amount.toString())
 }
 
@@ -33,16 +31,15 @@ private const val MinusSignUnicode = '−'
 private const val PlusSignAscii = '+'
 private const val PlusSignUnicode = '＋'
 
-fun NumberFormat.format(
-    amount: String,
-): String {
+fun NumberFormat.format(amount: String): String {
     if (amount.isEmpty()) return ""
 
     val amountLower = amount.lowercase()
     if (amountLower.contains(DoubleValueScientificNotationCharLowercase) ||
         amountLower == DoubleValueInfinityLowercase ||
         amountLower == DoubleValueNegativeInfinityLowercase ||
-        amountLower == DoubleValueNanLowercase) {
+        amountLower == DoubleValueNanLowercase
+    ) {
         return amount
     }
 

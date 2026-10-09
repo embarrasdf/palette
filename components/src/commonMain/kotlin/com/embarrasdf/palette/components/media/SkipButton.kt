@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Button
 import com.embarrasdf.palette.components.core.ButtonStyle
-import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.IconStyle
+import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.size
 
 data class SkipButtonStyle(
@@ -59,8 +59,8 @@ fun SkipIcon(
         )
 
         val path = Path().apply {
-            moveTo(0f, 0f)                                         // top left (base)
-            lineTo(0f, size.height)                               // bottom left (base)
+            moveTo(0f, 0f) // top left (base)
+            lineTo(0f, size.height) // bottom left (base)
             lineTo(size.width - barWidth - gap, size.height / 2f) // right tip
             close()
         }

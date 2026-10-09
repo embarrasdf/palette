@@ -15,10 +15,10 @@ import com.embarrasdf.palette.components.demo.ComponentDemo
 import com.embarrasdf.palette.components.demo.ComponentDemoControl
 import com.embarrasdf.palette.components.demo.ComponentDemoState
 import com.embarrasdf.palette.components.demo.ComponentDemoType
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -33,7 +33,7 @@ fun ModifierDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         ComponentDemo(
             state = state.componentDemoState,
@@ -43,7 +43,6 @@ fun ModifierDemo(
         )
     }
 }
-
 
 @Composable
 fun rememberModifierDemoState(

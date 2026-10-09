@@ -48,12 +48,11 @@ sealed interface IndicationTokenSet {
             colorMode = colorMode,
         )
 
-        private fun amountFor(interaction: Interaction): Float =
-            when (interaction) {
-                is HoverInteraction.Enter -> hoverAmount
-                is PressInteraction.Press -> pressAmount
-                else -> 0f
-            }
+        private fun amountFor(interaction: Interaction): Float = when (interaction) {
+            is HoverInteraction.Enter -> hoverAmount
+            is PressInteraction.Press -> pressAmount
+            else -> 0f
+        }
     }
 
     data class Noise(

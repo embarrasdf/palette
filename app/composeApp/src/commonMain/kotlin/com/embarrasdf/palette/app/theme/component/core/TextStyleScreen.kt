@@ -7,32 +7,32 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.theme.components.core.Surface
-import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
-import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
-import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
-import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
+import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.SurfaceStyleToken
 import com.embarrasdf.palette.theme.component.core.TextStyleToken
 import com.embarrasdf.palette.theme.component.core.TextStyleTokenSet
 import com.embarrasdf.palette.theme.component.core.toTextStyle
+import com.embarrasdf.palette.theme.components.core.Surface
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
+import com.embarrasdf.palette.theme.components.layout.Scaffold
+import com.embarrasdf.palette.theme.control.ThemeController
+import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
+import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
+import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -59,13 +59,13 @@ fun TextStyleScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { token ->
             val textStyle = state.tokenSet(token).toTextStyle()
             BoxWithLabel(
                 label = token.name,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 Surface(
                     style = PaletteTheme.component.core.surface[state.surfaceToken(token)],
@@ -112,13 +112,14 @@ class TextStyleScreenState(
         putAll(surfaceTokensInitial)
     }
 
-    fun tokenSet(token: TextStyleToken): TextStyleTokenSet =
-        themeState.component.text.getValue(token)
+    fun tokenSet(token: TextStyleToken): TextStyleTokenSet = themeState.component.text.getValue(token)
 
-    fun surfaceToken(token: TextStyleToken): SurfaceStyleToken =
-        surfaceTokens[token] ?: SurfaceStyleToken.Default
+    fun surfaceToken(token: TextStyleToken): SurfaceStyleToken = surfaceTokens[token] ?: SurfaceStyleToken.Default
 
-    fun setSurfaceToken(token: TextStyleToken, value: SurfaceStyleToken) {
+    fun setSurfaceToken(
+        token: TextStyleToken,
+        value: SurfaceStyleToken,
+    ) {
         surfaceTokens[token] = value
     }
 }
@@ -146,7 +147,7 @@ fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             demoTextFieldState = restore(map[DemoTextFieldStateKey], TextFieldState.Saver)!!,
             surfaceTokensInitial = surfaceTokens,
         )
-    }
+    },
 )
 
 @Composable

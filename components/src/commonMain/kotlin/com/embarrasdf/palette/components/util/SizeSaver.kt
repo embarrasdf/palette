@@ -22,7 +22,7 @@ val DpSizeSaver = mapSaverSafe(
             WidthKey to value.width.value,
             HeightKey to value.height.value,
         )
-   },
+    },
     restore = { map ->
         DpSize(
             width = (map[WidthKey] as Float).dp,

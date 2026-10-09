@@ -37,7 +37,7 @@ fun TextFormatDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         TextFormatDemo(
             state = state,
@@ -53,9 +53,9 @@ fun DemoScope.TextFormatDemo(
     Text(
         text = state.text,
         style = PaletteTheme.component.core.text.headline.copy(
-            format = state.textFormat
+            format = state.textFormat,
         ),
-        modifier = modifier.align(Alignment.Center)
+        modifier = modifier.align(Alignment.Center),
     )
 }
 
@@ -114,7 +114,7 @@ fun textFormatDemoStateSaver() = mapSaverSafe(
             demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
             wordDelimiterTextFieldState = restore(map[WordDelimiterTextFieldStateKey]!!) as TextFieldState,
         )
-    }
+    },
 )
 
 @Composable
@@ -148,7 +148,7 @@ class TextFormatDemoControl(
         selectedValue = { Capitalization.toKey(state.textFormat.capitalization) },
         onValueChange = { newKey ->
             val newState = state.textFormat.copy(
-                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar)
+                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar),
             )
             onValueChange(newState)
         },
@@ -205,9 +205,9 @@ class TextFormatDemoControl(
                             onValueChange = { newValue ->
                                 onChange(keyFieldState.text.toString() to newValue)
                             },
-                        )
+                        ),
                     )
-                }
+                },
             )
         },
         expandedInitial = false,
@@ -223,7 +223,7 @@ class TextFormatDemoControl(
                     add(capitalizeFirstCharControl)
                 }
             }.toPersistentList()
-        }
+        },
     )
 
     val controls: PersistentList<Control> = buildList {

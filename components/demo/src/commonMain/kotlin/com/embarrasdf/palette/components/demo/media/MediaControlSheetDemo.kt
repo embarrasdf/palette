@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -31,14 +31,12 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MediaControlSheetDemo(
-    modifier: Modifier = Modifier,
-) {
+fun MediaControlSheetDemo(modifier: Modifier = Modifier) {
     val mediaItem = MediaItem(
         artworkThumbnailUrl = null,
         artworkLargeUrl = null,
         title = "Title",
-        artists = listOf(Artist("Artist 1"), Artist("Artist 2"))
+        artists = listOf(Artist("Artist 1"), Artist("Artist 2")),
     )
     var isPlaying by remember { mutableStateOf(false) }
     val state = rememberPeekSheetState(initialValue = PeekSheetAnchor.Peek)
@@ -47,7 +45,7 @@ fun MediaControlSheetDemo(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.horizontalPaddingValues())
+            .padding(WindowInsets.safeDrawing.horizontalPaddingValues()),
     ) {
         Text(text = "Current value ${state.currentValue}", style = PaletteTheme.component.core.text.labelLarge)
         Text(text = "Target value ${state.targetValue}", style = PaletteTheme.component.core.text.labelLarge)
@@ -55,7 +53,7 @@ fun MediaControlSheetDemo(
 
     BoxWithConstraints(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         val maxHeight = constraints.maxHeight
         MediaControlSheet(
@@ -85,7 +83,7 @@ fun MediaControlSheetDemo(
                     .fillMaxSize()
                     .graphicsLayer {
                         alpha = state.partialToFullProgress
-                    }
+                    },
             ) {
                 Text(text = "Current value ${state.currentValue}", style = PaletteTheme.component.core.text.labelLarge)
                 Text(text = "Target value ${state.targetValue}", style = PaletteTheme.component.core.text.labelLarge)

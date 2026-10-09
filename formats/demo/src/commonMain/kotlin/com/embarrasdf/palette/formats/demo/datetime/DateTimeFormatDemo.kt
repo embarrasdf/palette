@@ -14,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
@@ -52,13 +52,13 @@ fun <T : Enum<T>> DateTimeFormatDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         DateTimeFormatDemo(
             state = state,
             format = format,
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.Center),
         )
     }
 }

@@ -31,13 +31,12 @@ val ComposeTextStyleDemoDefault = ComposeTextStyle(
 )
 
 @Composable
-fun rememberComposeTextStyleDemoState(
-    composeTextStyleInitial: ComposeTextStyle = ComposeTextStyleDemoDefault,
-) = rememberSaveable(saver = ComposeTextStyleDemoStateSaver) {
-    ComposeTextStyleDemoState(
-        composeTextStyleInitial = composeTextStyleInitial,
-    )
-}
+fun rememberComposeTextStyleDemoState(composeTextStyleInitial: ComposeTextStyle = ComposeTextStyleDemoDefault) =
+    rememberSaveable(saver = ComposeTextStyleDemoStateSaver) {
+        ComposeTextStyleDemoState(
+            composeTextStyleInitial = composeTextStyleInitial,
+        )
+    }
 
 @Stable
 class ComposeTextStyleDemoState(
@@ -100,13 +99,11 @@ val ComposeTextStyleDemoStateSaver = mapSaverSafe(
             lineHeight = map[LineHeightKey] as? Float
             letterSpacing = map[LetterSpacingKey] as? Float
         }
-    }
+    },
 )
 
 @Composable
-fun rememberComposeTextStyleDemoControl(
-    state: ComposeTextStyleDemoState,
-) = remember(state) {
+fun rememberComposeTextStyleDemoControl(state: ComposeTextStyleDemoState) = remember(state) {
     ComposeTextStyleDemoControl(state = state)
 }
 
@@ -118,14 +115,14 @@ class ComposeTextStyleDemoControl(
         name = "Font family",
         values = { FontFamily.entries },
         selectedValue = { state.fontFamily ?: FontFamily.Default },
-        onValueChange = { state.fontFamily = it }
+        onValueChange = { state.fontFamily = it },
     )
 
     val fontWeightControl = enumControl(
         name = "Font weight",
         values = { FontWeight.entries },
         selectedValue = { state.fontWeight ?: FontWeight.Normal },
-        onValueChange = { state.fontWeight = it }
+        onValueChange = { state.fontWeight = it },
     )
 
     val fontStyleControl = enumControl(

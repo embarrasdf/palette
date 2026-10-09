@@ -14,9 +14,7 @@ import com.embarrasdf.palette.modifiers.colorSplit
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun ColorSplitDemo(
-    modifier: Modifier = Modifier,
-) {
+fun ColorSplitDemo(modifier: Modifier = Modifier) {
     val modifierState = rememberSaveable(saver = ColorSplitStateSaver) { ColorSplitState() }
 
     ModifierDemo(
@@ -83,5 +81,5 @@ private val ColorSplitStateSaver = mapSaverSafe(
             yAmountInitial = it[YAmountKey] as Float,
             colorModeInitial = ColorSplitMode.entries[(it[ColorModeKey] as Int)],
         )
-    }
+    },
 )

@@ -9,9 +9,9 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.navigation3.runtime.NavKey as Navigation3NavKey
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.json.Json
+import androidx.navigation3.runtime.NavKey as Navigation3NavKey
 
 @Composable
 fun rememberNavState(
@@ -81,7 +81,10 @@ class NavState(
         backStack.removeLastOrNull()
     }
 
-    fun popUpTo(route: NavKey, inclusive: Boolean = false): Boolean {
+    fun popUpTo(
+        route: NavKey,
+        inclusive: Boolean = false,
+    ): Boolean {
         val index = backStack.indexOfLast { it::class == route::class }
         if (index == -1) return false
 
@@ -149,9 +152,11 @@ private fun rememberNavBackStack(
         },
         restore = { saved ->
             @Suppress("UNCHECKED_CAST")
-            mutableStateListOf(*saved.map { s ->
-                json.decodeFromString(PolymorphicSerializer(Navigation3NavKey::class), s) as NavKey
-            }.toTypedArray())
+            mutableStateListOf(
+                *saved.map { s ->
+                    json.decodeFromString(PolymorphicSerializer(Navigation3NavKey::class), s) as NavKey
+                }.toTypedArray(),
+            )
         },
     ),
 ) { mutableStateListOf(*initialBackStack.toTypedArray()) }

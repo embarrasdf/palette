@@ -1,10 +1,10 @@
 package com.embarrasdf.palette.theme.primitive
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.embarrasdf.palette.components.core.Shape
 import androidx.compose.ui.text.font.FontFamily as ComposeFontFamily
 import androidx.compose.ui.text.font.FontStyle as ComposeFontStyle
 import androidx.compose.ui.text.font.FontWeight as ComposeFontWeight
-import com.embarrasdf.palette.components.core.Shape
 
 data class PrimitiveTokens(
     val fontFamily: Map<FontFamily, ComposeFontFamily> =

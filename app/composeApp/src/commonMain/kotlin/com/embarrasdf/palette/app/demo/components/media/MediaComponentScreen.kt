@@ -10,8 +10,8 @@ import com.embarrasdf.palette.components.demo.media.MediaControlSheetDemo
 import com.embarrasdf.palette.components.demo.media.MediaItemArtworkDemo
 import com.embarrasdf.palette.components.demo.media.PlayPauseButtonDemo
 import com.embarrasdf.palette.components.demo.media.SkipButtonDemo
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 
 @Composable
 fun MediaComponentScreen(
@@ -30,19 +30,19 @@ fun MediaComponentScreen(
     ) { innerPadding ->
         when (component) {
             MediaComponent.MediaControlBar -> MediaControlBarDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             MediaComponent.MediaControlSheet -> MediaControlSheetDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             MediaComponent.MediaItemArtwork -> MediaItemArtworkDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             MediaComponent.PlayPauseButton -> PlayPauseButtonDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
             MediaComponent.SkipButton -> SkipButtonDemo(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

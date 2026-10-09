@@ -1,19 +1,17 @@
 package com.embarrasdf.palette.components.demo.media
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
@@ -21,6 +19,8 @@ import com.embarrasdf.palette.components.media.MediaControlBar
 import com.embarrasdf.palette.components.media.MediaControlBarStyle
 import com.embarrasdf.palette.components.media.model.Artist
 import com.embarrasdf.palette.components.media.model.MediaItem
+import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 
 private val PreviewMediaItem = MediaItem(
@@ -31,9 +31,7 @@ private val PreviewMediaItem = MediaItem(
 )
 
 @Composable
-fun MediaControlBarDemo(
-    modifier: Modifier = Modifier,
-) {
+fun MediaControlBarDemo(modifier: Modifier = Modifier) {
     var progress by remember { mutableFloatStateOf(0f) }
     var isPlaying by remember { mutableStateOf(false) }
     val contentPaddingInitial = PaletteTheme.component.media.mediaControlBar.contentPadding
@@ -69,7 +67,7 @@ fun MediaControlBarDemo(
     Demo(
         controls = controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         MediaControlBarDemo(
             progress = { progress },

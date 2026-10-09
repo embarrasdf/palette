@@ -10,15 +10,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.app.demo.DemoTopBar
+import com.embarrasdf.palette.components.demo.control.Control
+import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.formats.demo.core.TextFormatDemo
 import com.embarrasdf.palette.formats.demo.core.TextFormatDemoState
 import com.embarrasdf.palette.formats.demo.core.rememberTextFormatDemoControl
-import com.embarrasdf.palette.theme.components.demo.DemoList
-import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.layout.BoxWithLabel
 import com.embarrasdf.palette.theme.components.layout.Scaffold
-import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.format.core.TextFormatScheme
@@ -51,7 +51,7 @@ fun TextFormatScreen(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { (token, _) ->
             BoxWithLabel(
                 label = token.name,
@@ -65,9 +65,7 @@ fun TextFormatScreen(
 }
 
 @Composable
-fun rememberTextFormatScreenState(
-    formats: Formats,
-): TextFormatScreenState {
+fun rememberTextFormatScreenState(formats: Formats): TextFormatScreenState {
     return rememberSaveable(
         formats,
         saver = textFormatScreenStateSaver(formats),
@@ -111,7 +109,7 @@ fun textFormatScreenStateSaver(formats: Formats) = mapSaverSafe(
         TextFormatScreenState(
             formats = formats,
         )
-    }
+    },
 )
 
 @Composable
@@ -161,11 +159,11 @@ private fun makeControlForToken(
                         textFormats = state.textFormatScheme.update(
                             token = token,
                             value = newValue,
-                        )
-                    )
+                        ),
+                    ),
                 )
             }
-        }
+        },
     )
     return Control.ControlColumn(
         name = token.name,

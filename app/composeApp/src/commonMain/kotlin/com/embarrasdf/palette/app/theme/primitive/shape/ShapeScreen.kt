@@ -59,7 +59,7 @@ fun ShapeScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             ShapeDemo(
                 shape = state.subjectShape,
@@ -70,9 +70,7 @@ fun ShapeScreen(
 }
 
 @Composable
-fun rememberPrimitiveShapeScreenState(
-    themeState: ThemeState,
-): PrimitiveShapeScreenState {
+fun rememberPrimitiveShapeScreenState(themeState: ThemeState): PrimitiveShapeScreenState {
     return rememberSaveable(
         themeState,
         saver = primitiveShapeScreenStateSaver(themeState),
@@ -106,7 +104,7 @@ fun primitiveShapeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
                 ?.let { ShapePrimitiveToken.valueOf(it) }
                 ?: ShapePrimitiveToken.Rectangle,
         )
-    }
+    },
 )
 
 @Composable
@@ -143,7 +141,7 @@ class PrimitiveShapeScreenControl(
         onValueChange = { radius ->
             themeController.updatePrimitive {
                 it.copy(
-                    shape = it.shape + (ShapePrimitiveToken.RoundRect to Shape.Rectangle(cornerRadius = radius.dp))
+                    shape = it.shape + (ShapePrimitiveToken.RoundRect to Shape.Rectangle(cornerRadius = radius.dp)),
                 )
             }
         },

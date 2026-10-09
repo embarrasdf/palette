@@ -3,10 +3,10 @@ package com.embarrasdf.palette.components.demo.geometry
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.core.Surface
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -41,6 +39,8 @@ import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.core.Surface
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -59,7 +59,7 @@ fun GridDemo(
         GridDemo(
             state = state,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
     }
 }
@@ -77,7 +77,7 @@ fun DemoScope.GridDemo(
             Offset(state.offsetX.toPx(), state.offsetY.toPx())
         },
         clipToBounds = state.clipToBounds,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -126,7 +126,6 @@ class GridDemoState(
                 scaleY = yGridScaleState.gridScale,
                 rotationDegrees = rotationDegrees,
             )
-
             GridCoordinateSystemType.Polar -> GridCoordinateSystem.Polar(
                 radiusScale = polarGridScaleState.gridScale,
                 thetaRadians = polarGridScaleState.thetaRadians,
@@ -241,9 +240,7 @@ val GridDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberGridDemoControl(
-    state: GridDemoState,
-): GridDemoControl = remember(state) { GridDemoControl(state) }
+fun rememberGridDemoControl(state: GridDemoState): GridDemoControl = remember(state) { GridDemoControl(state) }
 
 @Stable
 class GridDemoControl(
@@ -336,7 +333,7 @@ class GridDemoControl(
             }
             return persistentListOf(
                 coordinateSystemControl,
-                *scaleControls.toTypedArray()
+                *scaleControls.toTypedArray(),
             )
         }
 
@@ -418,7 +415,7 @@ class CartesianGridScaleControl(
                     *gridScaleControl.controls.toTypedArray(),
                 )
             },
-        )
+        ),
     )
 }
 
@@ -516,17 +513,14 @@ open class GridScaleState(
                 spacing = gridSpacing,
                 base = gridScaleBase,
             )
-
             GridScaleType.LogarithmicDecay -> GridScale.LogarithmicDecay(
                 spacing = gridSpacing,
                 base = gridScaleBase,
             )
-
             GridScaleType.Exponential -> GridScale.Exponential(
                 spacing = gridSpacing,
                 exponent = gridScaleExponent,
             )
-
             GridScaleType.ExponentialDecay -> GridScale.ExponentialDecay(
                 spacing = gridSpacing,
                 exponent = gridScaleExponent,
@@ -543,7 +537,7 @@ open class GridScaleControl(
         name = "Scale",
         values = { GridScaleType.entries },
         selectedValue = { state.gridScaleType },
-        onValueChange = { state.gridScaleType = it }
+        onValueChange = { state.gridScaleType = it },
     )
 
     val gridSpacingControl = Control.Slider(
@@ -584,18 +578,16 @@ open class GridScaleControl(
                 gridScaleTypeControl,
                 gridSpacingControl,
             )
-
             is GridScale.Logarithmic,
             is GridScale.LogarithmicDecay,
-                -> persistentListOf(
+            -> persistentListOf(
                 gridScaleTypeControl,
                 gridSpacingControl,
                 gridScaleBaseControl,
             )
-
             is GridScale.Exponential,
             is GridScale.ExponentialDecay,
-                -> persistentListOf(
+            -> persistentListOf(
                 gridScaleTypeControl,
                 gridSpacingControl,
                 gridScaleExponentControl,
@@ -641,28 +633,24 @@ class GridVertexState(
                 drawStyle = drawStyle,
                 rotationDegrees = rotationDegrees,
             )
-
             GridVertexType.Rect -> GridVertex.Rect(
                 color = color,
                 size = DpSize(width, height),
                 drawStyle = drawStyle,
                 rotationDegrees = rotationDegrees,
             )
-
             GridVertexType.Plus -> GridVertex.Plus(
                 color = color,
                 size = DpSize(width, height),
                 strokeWidth = strokeWidth,
                 rotationDegrees = rotationDegrees,
             )
-
             GridVertexType.X -> GridVertex.X(
                 color = color,
                 size = DpSize(width, height),
                 strokeWidth = strokeWidth,
                 rotationDegrees = rotationDegrees,
             )
-
             null -> null
         }
 }
@@ -737,7 +725,7 @@ class GridVertexControl(
                 DemoVertexType.None -> null
             }
             onStateChanged?.invoke(state)
-        }
+        },
     )
 
     val strokeWidthControl = Control.Slider(
@@ -773,7 +761,7 @@ class GridVertexControl(
                 VertexDrawStyle.Fill -> Fill
             }
             onStateChanged?.invoke(state)
-        }
+        },
     )
 
     val rotationDegreesControl = Control.Slider(
@@ -825,7 +813,6 @@ class GridVertexControl(
                 drawStyleControl,
                 if (state.drawStyle is Stroke) strokeWidthControl else null,
             ).filterNotNull().toPersistentList()
-
             is GridVertex.Plus,
             is GridVertex.X,
             null,
@@ -850,7 +837,7 @@ class GridVertexControl(
                     )
                 }
             },
-        )
+        ),
     )
 }
 

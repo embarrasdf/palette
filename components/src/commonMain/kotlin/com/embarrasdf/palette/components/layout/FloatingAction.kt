@@ -26,9 +26,9 @@ fun FloatingAction(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .padding(
-                WindowInsets.safeDrawing.asPaddingValues().copy(top = 0.dp)
+                WindowInsets.safeDrawing.asPaddingValues().copy(top = 0.dp),
             )
-            .padding(vertical = style.spacing)
+            .padding(vertical = style.spacing),
     ) {
         content()
     }

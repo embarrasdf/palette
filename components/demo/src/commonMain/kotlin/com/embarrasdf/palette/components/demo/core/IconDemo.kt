@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.Icon
-import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.IconStyle
+import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -55,7 +55,7 @@ fun IconDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         IconDemo(state = state)
     }
@@ -72,7 +72,7 @@ fun DemoScope.IconDemo(
         modifier = modifier
             .size(IconDemoContainerSize)
             .align(Alignment.Center)
-            .border(1.dp, PaletteTheme.semantic.color.outline)
+            .border(1.dp, PaletteTheme.semantic.color.outline),
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -83,11 +83,10 @@ fun DemoScope.IconDemo(
 }
 
 @Composable
-fun rememberIconDemoState(
-    colorInitial: Color = PaletteTheme.semantic.color.primary,
-): IconDemoState = rememberSaveable(saver = IconDemoStateSaver) {
-    IconDemoState(colorInitial = colorInitial)
-}
+fun rememberIconDemoState(colorInitial: Color = PaletteTheme.semantic.color.primary): IconDemoState =
+    rememberSaveable(saver = IconDemoStateSaver) {
+        IconDemoState(colorInitial = colorInitial)
+    }
 
 @Stable
 class IconDemoState(
@@ -141,9 +140,7 @@ val IconDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberIconDemoControl(
-    state: IconDemoState,
-): IconDemoControl = remember(state) { IconDemoControl(state) }
+fun rememberIconDemoControl(state: IconDemoState): IconDemoControl = remember(state) { IconDemoControl(state) }
 
 @Stable
 class IconDemoControl(

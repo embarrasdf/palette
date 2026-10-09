@@ -1,7 +1,5 @@
 package com.embarrasdf.palette.components.demo.control
 
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,14 +8,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -47,12 +47,12 @@ fun Controls(
     indent: Boolean = false,
     expandedInitial: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(vertical = controlsStyle.verticalContentPadding),
-    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(controlsStyle.spacing)
+    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(controlsStyle.spacing),
 ) {
     Column(
         verticalArrangement = verticalArrangement,
         modifier = modifier
-            .padding(contentPadding)
+            .padding(contentPadding),
     ) {
         var expanded by remember { mutableStateOf(expandedInitial) }
         name?.let {
@@ -71,10 +71,12 @@ fun Controls(
                 modifier = Modifier
                     .fillMaxWidth()
                     .then(
-                        if (indent)
+                        if (indent) {
                             Modifier.padding(start = controlsStyle.indent)
-                        else Modifier
-                    )
+                        } else {
+                            Modifier
+                        },
+                    ),
             ) {
                 when (control) {
                     is Control.Button -> ButtonControl(control = control, style = controlsStyle.button)
@@ -117,12 +119,12 @@ fun ControlsRow(
         horizontalArrangement = Arrangement.spacedBy(controlsStyle.rowSpacing),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         for (control in controls) {
             Box(
                 modifier = Modifier
-                    .then(if (equalWeight) Modifier.weight(1f, fill = false) else Modifier)
+                    .then(if (equalWeight) Modifier.weight(1f, fill = false) else Modifier),
             ) {
                 when (control) {
                     is Control.Button -> ButtonControl(control = control, style = controlsStyle.button)
@@ -169,7 +171,7 @@ private fun Preview() {
                 name = "Amount 2",
                 value = { 0.5f },
                 onValueChange = {},
-            )
+            ),
         ),
         expandedInitial = expanded,
         name = "Sliders",

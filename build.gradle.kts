@@ -12,11 +12,13 @@ subprojects {
                     attributes {
                         attribute(
                             TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE,
-                            objects.named(TargetJvmEnvironment::class.java, TargetJvmEnvironment.STANDARD_JVM)
+                            objects.named(TargetJvmEnvironment::class.java, TargetJvmEnvironment.STANDARD_JVM),
                         )
                     }
-                    because("LayoutLib and sdk-common depend on Guava's -jre published variant." +
-                            "See https://github.com/cashapp/paparazzi/issues/906.")
+                    because(
+                        "LayoutLib and sdk-common depend on Guava's -jre published variant." +
+                            "See https://github.com/cashapp/paparazzi/issues/906.",
+                    )
                 }
             }
         }
@@ -38,6 +40,6 @@ tasks.register("generateAllBaselineProfiles") {
         ":app:baseline-profile:generateBaselineProfile",
         ":components:baseline-profile:generateBaselineProfile",
         ":formats:baseline-profile:generateBaselineProfile",
-        ":modifiers:baseline-profile:generateBaselineProfile"
+        ":modifiers:baseline-profile:generateBaselineProfile",
     )
 }

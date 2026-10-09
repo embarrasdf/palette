@@ -90,7 +90,10 @@ class NoiseShaderImpl : NoiseShader {
         control.setFloatUniform(UniformAmount, amount)
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSize, width.toFloat(), height.toFloat())
     }
 }
@@ -106,13 +109,13 @@ private fun Preview() {
         DemoCircle(
             modifier = Modifier
                 .weight(1f)
-                .noise(colorMode = colorMode, amount = { amount })
+                .noise(colorMode = colorMode, amount = { amount }),
         )
         Slider(
             valueRange = range,
             value = amount,
             onValueChange = { amount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

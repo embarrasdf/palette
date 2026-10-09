@@ -48,7 +48,8 @@ class PeekSheetState(
         confirmValueChange = {
             when (it) {
                 PeekSheetAnchor.Peek,
-                PeekSheetAnchor.Expanded -> true
+                PeekSheetAnchor.Expanded,
+                -> true
             }
         },
     )
@@ -88,7 +89,10 @@ class PeekSheetState(
     val isExpanded: Boolean get() = targetValue == PeekSheetAnchor.Expanded
 
     internal val nestedScrollConnection: NestedScrollConnection = object : NestedScrollConnection {
-        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+        override fun onPreScroll(
+            available: Offset,
+            source: NestedScrollSource,
+        ): Offset {
             // Lock content scroll while sheet is mid-drag; move sheet back toward expanded instead
             if (available.y < 0f && partialToFullProgress < 1f) {
                 val delta = anchoredDraggableState.dispatchRawDelta(available.y)
@@ -115,7 +119,10 @@ class PeekSheetState(
             }
         }
 
-        override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+        override suspend fun onPostFling(
+            consumed: Velocity,
+            available: Velocity,
+        ): Velocity {
             // Snap to nearest anchor; absorb any remaining downward velocity
             anchoredDraggableState.settle(spring())
             return if (available.y > 0f) available else Velocity.Zero
@@ -125,15 +132,13 @@ class PeekSheetState(
     companion object {
         fun Saver(): Saver<PeekSheetState, PeekSheetAnchor> = Saver(
             save = { it.currentValue },
-            restore = { PeekSheetState(initialValue = it) }
+            restore = { PeekSheetState(initialValue = it) },
         )
     }
 }
 
 @Composable
-fun rememberPeekSheetState(
-    initialValue: PeekSheetAnchor = PeekSheetAnchor.Peek,
-): PeekSheetState {
+fun rememberPeekSheetState(initialValue: PeekSheetAnchor = PeekSheetAnchor.Peek): PeekSheetState {
     return rememberSaveable(saver = PeekSheetState.Saver()) {
         PeekSheetState(initialValue = initialValue)
     }
@@ -167,7 +172,7 @@ fun PeekSheet(
                         state = state,
                         minHeight = peekHeightPx,
                         fullHeight = expandedHeightPx.toFloat(),
-                    )
+                    ),
             ) {
                 Spacer(height = contentPadding.calculateTopPadding())
                 above()

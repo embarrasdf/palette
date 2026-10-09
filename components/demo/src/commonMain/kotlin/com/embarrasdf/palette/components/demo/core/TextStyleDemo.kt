@@ -71,12 +71,12 @@ val TextStyleDemoStateSaver = mapSaverSafe(
             ComposeTextStyleDemoStateKey to save(
                 value.composeTextStyleDemoState,
                 ComposeTextStyleDemoStateSaver,
-                this
+                this,
             ),
             TextFormatDemoStateKey to save(
                 value.textFormatDemoState,
                 textFormatDemoStateSaver(),
-                this
+                this,
             ),
             // Only persist a specified color; Color.Unspecified would round-trip to transparent.
             ColorKey to save(value.color.takeIf { it.isSpecified }, ColorSaver, this),
@@ -85,12 +85,12 @@ val TextStyleDemoStateSaver = mapSaverSafe(
     restore = { map ->
         val composeTextStyleDemoState: ComposeTextStyleDemoState = restore(
             map[ComposeTextStyleDemoStateKey],
-            ComposeTextStyleDemoStateSaver
+            ComposeTextStyleDemoStateSaver,
         )!!
 
         val textFormatDemoState: TextFormatDemoState = restore(
             map[TextFormatDemoStateKey],
-            textFormatDemoStateSaver()
+            textFormatDemoStateSaver(),
         )!!
 
         TextStyleDemoState(
@@ -101,7 +101,7 @@ val TextStyleDemoStateSaver = mapSaverSafe(
                 format = textFormatDemoState.textFormat,
             ),
         )
-    }
+    },
 )
 
 @Composable

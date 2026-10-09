@@ -49,13 +49,13 @@ fun ColorPicker(
                 .weight(1f, fill = false)
                 .semantics {
                     contentDescription = "Selected color"
-                }
+                },
         )
         ColorPickerControls(
             color = color,
             onColorChange = onColorChange,
             style = style.controlsStyle,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -79,25 +79,25 @@ fun ColorPickerControls(
             name = "R",
             value = color.red,
             onValueChange = { color.copy(red = it) },
-            valueRange = colorSpace.getMinValue(0) .. colorSpace.getMaxValue(0)
+            valueRange = colorSpace.getMinValue(0)..colorSpace.getMaxValue(0),
         ),
         ColorComponentInfo(
             name = "G",
             value = color.green,
             onValueChange = { color.copy(green = it) },
-            valueRange = colorSpace.getMinValue(1) .. colorSpace.getMaxValue(1)
+            valueRange = colorSpace.getMinValue(1)..colorSpace.getMaxValue(1),
         ),
         ColorComponentInfo(
             name = "B",
             value = color.blue,
             onValueChange = { color.copy(blue = it) },
-            valueRange = colorSpace.getMinValue(2) .. colorSpace.getMaxValue(2)
+            valueRange = colorSpace.getMinValue(2)..colorSpace.getMaxValue(2),
         ),
         ColorComponentInfo(
             name = "A",
             value = color.alpha,
             onValueChange = { color.copy(alpha = it) },
-            valueRange = colorSpace.getMinValue(3) .. colorSpace.getMaxValue(3)
+            valueRange = colorSpace.getMinValue(3)..colorSpace.getMaxValue(3),
         ),
     )
 
@@ -112,7 +112,7 @@ fun ColorPickerControls(
                 style = style,
                 valueRange = colorComponent.valueRange,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
         }
     }
@@ -139,7 +139,7 @@ private fun ColorSlider(
             style = style.sliderStyle,
             modifier = Modifier.semantics {
                 contentDescription = label
-            }
+            },
         )
     }
 }
@@ -150,7 +150,7 @@ private fun ColorPickerPreview() {
     var color = Color(0xFF6200EE)
     ColorPicker(
         color = color,
-        onColorChange = { color = it},
-        modifier = Modifier
+        onColorChange = { color = it },
+        modifier = Modifier,
     )
 }

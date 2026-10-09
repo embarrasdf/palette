@@ -1,8 +1,8 @@
 package com.embarrasdf.palette.theme.semantic.spacing
 
-import com.embarrasdf.palette.theme.PaletteTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
+import com.embarrasdf.palette.theme.PaletteTheme
 
 enum class SpacingToken {
     None,

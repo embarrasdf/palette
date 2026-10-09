@@ -55,7 +55,10 @@ class PixelateShaderImpl : PixelateShader {
         control.setFloatUniform(UniformSubdivisionsName, subdivisions.toFloat())
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
     }
 }
@@ -69,13 +72,13 @@ private fun Preview() {
         DemoCircle(
             modifier = Modifier
                 .weight(1f)
-                .pixelate(subdivisions = { amount.roundToInt() })
+                .pixelate(subdivisions = { amount.roundToInt() }),
         )
         Slider(
             valueRange = range,
             value = amount,
             onValueChange = { amount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

@@ -13,15 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.theme.semantic.spacing.Spacing
-import com.embarrasdf.palette.theme.semantic.spacing.SpacingToken
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.semantic.spacing.Spacing
+import com.embarrasdf.palette.theme.semantic.spacing.SpacingToken
 import com.embarrasdf.palette.theme.semantic.spacing.copy
 import com.embarrasdf.palette.theme.semantic.spacing.toSpacing
 import kotlinx.collections.immutable.PersistentList
@@ -50,12 +50,12 @@ fun SpacingScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { spacing ->
             SpacingDemo(
                 spacing = spacing,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
         }
     }
@@ -71,7 +71,7 @@ fun SpacingDemo(
         modifier = modifier
             .border(1.dp, PaletteTheme.semantic.color.primary)
             .padding(spacing.toSpacing())
-            .border(1.dp, PaletteTheme.semantic.color.primary)
+            .border(1.dp, PaletteTheme.semantic.color.primary),
     ) {
         Text(
             text = spacing.name,
@@ -81,9 +81,7 @@ fun SpacingDemo(
 }
 
 @Composable
-fun rememberSpacingScreenState(
-    themeState: ThemeState,
-): SpacingScreenState {
+fun rememberSpacingScreenState(themeState: ThemeState): SpacingScreenState {
     return rememberSaveable(
         themeState,
         saver = spacingScreenStateSaver(themeState),
@@ -114,7 +112,7 @@ fun spacingScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         SpacingScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable

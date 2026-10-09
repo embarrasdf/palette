@@ -90,7 +90,10 @@ class ColorSplitShaderImpl : ColorSplitShader {
         control.setIntUniform(UniformColorModeName, mode.ordinal)
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
     }
 }

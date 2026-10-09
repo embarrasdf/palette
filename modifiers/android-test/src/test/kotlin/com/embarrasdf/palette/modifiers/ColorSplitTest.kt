@@ -40,7 +40,7 @@ class ColorSplitTest(
                     .colorSplit(
                         xAmount = { xAmount },
                         yAmount = { yAmount },
-                    )
+                    ),
             )
         }
     }
@@ -55,7 +55,7 @@ class ColorSplitTest(
                     .colorSplit(
                         xAmount = { xAmount },
                         yAmount = { yAmount },
-                    )
+                    ),
             )
         }
     }

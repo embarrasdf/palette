@@ -40,7 +40,7 @@ fun BoxWithLabel(
             modifier = Modifier
                 .border(style.borderWidth, style.borderColor)
                 .padding(style.labelPadding)
-                .align(Alignment.Start)
+                .align(Alignment.Start),
         )
         content()
     }

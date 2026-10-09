@@ -18,5 +18,5 @@ val DensitySaver = mapSaverSafe(
             density = map[DensityKey] as Float,
             fontScale = map[FontScaleKey] as Float,
         )
-    }
+    },
 )

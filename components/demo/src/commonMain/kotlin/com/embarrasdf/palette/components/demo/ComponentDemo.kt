@@ -3,10 +3,10 @@ package com.embarrasdf.palette.components.demo
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,6 @@ import com.embarrasdf.palette.components.demo.geometry.CartesianGridScaleState
 import com.embarrasdf.palette.components.demo.geometry.CircleDemo
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CircleDemoState
-import com.embarrasdf.palette.components.demo.geometry.circleDemoStateSaver
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemo
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoControl
 import com.embarrasdf.palette.components.demo.geometry.CurveStitchDemoState
@@ -40,6 +39,7 @@ import com.embarrasdf.palette.components.demo.geometry.SphereDemo
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoControl
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoState
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoStateSaver
+import com.embarrasdf.palette.components.demo.geometry.circleDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
@@ -64,7 +64,7 @@ fun ComponentDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         ComponentDemo(
             state = state,
@@ -83,28 +83,28 @@ fun DemoScope.ComponentDemo(
         ComponentDemoType.Circle -> CircleDemo(
             state = state.circleDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.CurveStitch -> CurveStitchDemo(
             state = state.curveStitchDemoState,
             enablePointerInput = false,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Grid -> GridDemo(
             state = state.gridDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Sphere -> SphereDemo(
             state = state.sphereDemoState,
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         )
         ComponentDemoType.Text -> TextDemo(
             state = state.textDemoState,
             control = control.textDemoControl,
-            modifier = modifier
+            modifier = modifier,
         )
         ComponentDemoType.TextField -> TextFieldDemo(
             state = state.textFieldDemoState,
@@ -218,8 +218,9 @@ fun componentDemoStateSaver(
             color = color,
             componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
             circleDemoStateInitial = restore(map[CircleDemoStateKey], circleDemoStateSaver(density = density))!!,
-            curveStitchDemoStateInitial = restore(map[CurveStitchDemoStateKey],
-                CurveStitchDemoStateSaver
+            curveStitchDemoStateInitial = restore(
+                map[CurveStitchDemoStateKey],
+                CurveStitchDemoStateSaver,
             )!!,
             gridDemoStateInitial = restore(map[GridDemoStateKey], GridDemoStateSaver)!!,
             sphereDemoStateInitial = restore(map[SphereDemoStateKey], SphereDemoStateSaver)!!,
@@ -230,9 +231,7 @@ fun componentDemoStateSaver(
 )
 
 @Composable
-fun rememberComponentDemoControl(
-    state: ComponentDemoState = rememberComponentDemoState(),
-): ComponentDemoControl {
+fun rememberComponentDemoControl(state: ComponentDemoState = rememberComponentDemoState()): ComponentDemoControl {
     return remember(state) { ComponentDemoControl(state) }
 }
 

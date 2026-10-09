@@ -22,8 +22,7 @@ fun paddingValuesControls(
     snapIncrement: Float = 1f,
     expandedInitial: Boolean = false,
 ): Control {
-    fun snap(value: Float): Float =
-        if (snapIncrement > 0f) round(value / snapIncrement) * snapIncrement else value
+    fun snap(value: Float): Float = if (snapIncrement > 0f) round(value / snapIncrement) * snapIncrement else value
 
     fun edgeControl(
         edgeName: String,

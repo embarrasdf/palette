@@ -3,10 +3,10 @@ package com.embarrasdf.palette.components.demo.geometry
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.geometry.Sphere
@@ -25,6 +24,7 @@ import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.math.roundToInt
 
@@ -42,7 +42,7 @@ fun SphereDemo(
             state = state,
             modifier = Modifier
                 .align(Alignment.Center)
-                .fillMaxSize()
+                .fillMaxSize(),
         )
     }
 }
@@ -66,7 +66,7 @@ fun DemoScope.SphereDemo(
                         rotationX = (state.viewingAngle.rotationX - dy / 10f) % 360f,
                     )
                 }
-            }
+            },
     )
 }
 
@@ -177,9 +177,8 @@ val SphereDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberSphereDemoControl(
-    state: SphereDemoState = rememberSphereDemoState(),
-) = remember(state) { SphereDemoControl(state) }
+fun rememberSphereDemoControl(state: SphereDemoState = rememberSphereDemoState()) =
+    remember(state) { SphereDemoControl(state) }
 
 class SphereDemoControl(
     private val state: SphereDemoState,
@@ -254,11 +253,13 @@ class SphereDemoControl(
         get() = if (state.outline) {
             persistentListOf(
                 outlineControl,
-                outlineStrokeWidthControl
+                outlineStrokeWidthControl,
             )
-        } else persistentListOf(
-            outlineControl,
-        )
+        } else {
+            persistentListOf(
+                outlineControl,
+            )
+        }
 
     val controls
         get() = persistentListOf(

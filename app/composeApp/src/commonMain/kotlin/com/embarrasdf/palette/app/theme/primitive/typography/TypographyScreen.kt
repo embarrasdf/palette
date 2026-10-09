@@ -54,7 +54,7 @@ fun TypographyScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             TextDemo(
                 state = state.textDemoState,
@@ -91,9 +91,7 @@ class TypographyScreenState(
 }
 
 @Composable
-fun rememberTypographyScreenControl(
-    state: TypographyScreenState,
-): TypographyScreenControl {
+fun rememberTypographyScreenControl(state: TypographyScreenState): TypographyScreenControl {
     val textDemoControl = rememberTextDemoControl(state.textDemoState)
     return remember(state, textDemoControl) {
         TypographyScreenControl(
@@ -153,7 +151,7 @@ class TypographyScreenControl(
         textDemoControl.updateTextStyle(
             textStyle = with(state.textDemoState.textStyleDemoState.textStyle) {
                 copy(composeTextStyle = transform(composeTextStyle))
-            }
+            },
         )
     }
 }

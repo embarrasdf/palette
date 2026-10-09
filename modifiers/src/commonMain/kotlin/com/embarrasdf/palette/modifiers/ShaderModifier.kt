@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.IntSize
 import com.embarrasdf.palette.modifiers.util.useGraphicsLayer
 import com.embarrasdf.trace.trace
 
-data class ShaderElement<T: Shader>(
+data class ShaderElement<T : Shader>(
     val shader: T,
     val traceLabel: String,
 ) : ModifierNodeElement<ShaderNode<T>>() {
@@ -32,7 +32,7 @@ data class ShaderElement<T: Shader>(
     }
 }
 
-open class ShaderNode<T: Shader>(
+open class ShaderNode<T : Shader>(
     var shader: T,
     var traceLabel: String,
 ) : Modifier.Node(),

@@ -69,14 +69,14 @@ fun CurveStitchStar(
             val angle = i * angleStep
             Offset(
                 x = centerX + radius * cos(angle),
-                y = centerY + radius * sin(angle)
+                y = centerY + radius * sin(angle),
             )
         }
         val innerVertices = List(numPoints) { i ->
             val angle = (i + 0.5f) * angleStep
             Offset(
                 x = centerX + (radius * innerRadius) * cos(angle),
-                y = centerY + (radius * innerRadius) * sin(angle)
+                y = centerY + (radius * innerRadius) * sin(angle),
             )
         }
         val vertices = List(numPoints) { i ->
@@ -130,7 +130,7 @@ fun CurveStitchShape(
     modifier: Modifier = Modifier,
 ) {
     Canvas(
-        modifier = modifier
+        modifier = modifier,
     ) {
         val width = size.width
         val height = size.height
@@ -145,7 +145,7 @@ fun CurveStitchShape(
             val angle = i * angleStep
             Offset(
                 x = centerX + radius * cos(angle),
-                y = centerY + radius * sin(angle)
+                y = centerY + radius * sin(angle),
             )
         }
 

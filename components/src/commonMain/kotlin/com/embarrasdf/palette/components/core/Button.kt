@@ -45,7 +45,7 @@ fun Button(
     hapticFeedbackEnabled: Boolean = true,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable RowScope.(PaddingValues) -> Unit
+    content: @Composable RowScope.(PaddingValues) -> Unit,
 ) {
     val containerColor = style.containerColor.copy(
         alpha = if (enabled) style.containerColor.alpha else style.disabledContainerAlpha,
@@ -64,7 +64,7 @@ fun Button(
             indication = style.indication,
         ),
         interactionSource = interactionSource,
-        modifier = modifier.semantics { role = Role.Button }
+        modifier = modifier.semantics { role = Role.Button },
     ) { shapePadding ->
         Row(
             Modifier
@@ -73,7 +73,7 @@ fun Button(
                 }
                 .defaultMinSize(
                     minWidth = ButtonDefaults.MinWidth,
-                    minHeight = ButtonDefaults.MinHeight
+                    minHeight = ButtonDefaults.MinHeight,
                 )
                 .padding(style.contentPadding),
             horizontalArrangement = Arrangement.Center,
@@ -96,9 +96,7 @@ object ButtonDefaults {
 
 @Preview
 @Composable
-private fun ButtonPreview(
-    @PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean,
-) {
+private fun ButtonPreview(@PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean) {
     val interactionSource = MutableInteractionSource().apply {
         this.tryEmit(PressInteraction.Press(Offset.Zero))
     }

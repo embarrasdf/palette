@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.StrokeCap
 private enum class StrokeCapType {
     Butt,
     Round,
-    Square
+    Square,
 }
 
 val StrokeCapSaver = object : Saver<StrokeCap, Any> {

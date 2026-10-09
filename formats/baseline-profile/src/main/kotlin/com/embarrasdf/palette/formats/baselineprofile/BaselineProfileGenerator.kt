@@ -3,8 +3,9 @@ package com.embarrasdf.palette.formats.baselineprofile
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.AppPackageName
+import com.embarrasdf.palette.FormatsPackageName
+import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.formats.FormatsPage
 import com.embarrasdf.palette.formats.core.CoreFormatsPage
 import com.embarrasdf.palette.formats.core.NumberFormatPage
@@ -13,7 +14,6 @@ import com.embarrasdf.palette.formats.datetime.DateTimeFormatPage
 import com.embarrasdf.palette.formats.datetime.DateTimeFormatsPage
 import com.embarrasdf.palette.formats.money.MoneyFormatPage
 import com.embarrasdf.palette.formats.money.MoneyFormatsPage
-import com.embarrasdf.palette.FormatsPackageName
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -79,7 +79,10 @@ class BaselineProfileGenerator {
         }
     }
 
-    private fun packageFilterPredicate(packageName: String, rule: String): Boolean {
+    private fun packageFilterPredicate(
+        packageName: String,
+        rule: String,
+    ): Boolean {
         // Only capture rules in the library's package, excluding test app code
         // Rules are prefixed by tag characters, followed by JVM method signature,
         // e.g. `HSPLcom/mylibrary/LibraryClass;-><init>()V`, where `L`

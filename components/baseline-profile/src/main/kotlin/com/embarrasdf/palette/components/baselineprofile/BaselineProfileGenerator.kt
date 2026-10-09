@@ -3,8 +3,9 @@ package com.embarrasdf.palette.components.baselineprofile
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.AppPackageName
+import com.embarrasdf.palette.ComponentsPackageName
+import com.embarrasdf.palette.MainCatalogPage
 import com.embarrasdf.palette.components.ComponentsPage
 import com.embarrasdf.palette.components.core.ButtonPage
 import com.embarrasdf.palette.components.core.CoreComponentsPage
@@ -12,7 +13,6 @@ import com.embarrasdf.palette.components.core.TextFieldPage
 import com.embarrasdf.palette.components.core.TextPage
 import com.embarrasdf.palette.components.media.MediaComponentsPage
 import com.embarrasdf.palette.components.media.MediaControlSheetPage
-import com.embarrasdf.palette.ComponentsPackageName
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,7 +68,10 @@ class BaselineProfileGenerator {
         }
     }
 
-    private fun packageFilterPredicate(packageName: String, rule: String): Boolean {
+    private fun packageFilterPredicate(
+        packageName: String,
+        rule: String,
+    ): Boolean {
         // Only capture rules in the library's package, excluding test app code
         // Rules are prefixed by tag characters, followed by JVM method signature,
         // e.g. `HSPLcom/mylibrary/LibraryClass;-><init>()V`, where `L`

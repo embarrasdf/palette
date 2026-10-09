@@ -36,7 +36,10 @@ class PixelateShaderImpl : PixelateShader {
         control.setFloatUniform(UniformSubdivisionsName, subdivisions.toFloat())
     }
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
     }
 }

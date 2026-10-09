@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.mediaComponentsNavGraph() = navGraph(
     root = MediaComponentsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.mediaComponentsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.mediaComponentsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.mediaComponentsEntryProvider(navController: NavController) {
     catalogEntry<MediaComponentCatalogRoute, MediaComponent>(
         onItemClick = { component ->
             navController.navigate(MediaComponentRoute(component))

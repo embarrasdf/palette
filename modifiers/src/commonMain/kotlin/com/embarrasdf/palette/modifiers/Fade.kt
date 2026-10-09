@@ -18,10 +18,11 @@ import com.embarrasdf.trace.trace
 annotation class FadeSideMask
 
 enum class FadeSide(val value: Int) {
-    Left(1 shl 0),    // 1
-    Top(1 shl 1),     // 2
-    Right(1 shl 2),   // 4
-    Bottom(1 shl 3);  // 8
+    Left(1 shl 0), // 1
+    Top(1 shl 1), // 2
+    Right(1 shl 2), // 4
+    Bottom(1 shl 3), // 8
+    ;
 
     companion object {
         fun fromMask(mask: Int): List<FadeSide> {
@@ -63,37 +64,37 @@ fun Modifier.fade(
                         Brush.horizontalGradient(
                             listOf(Color.Transparent, Color.Black),
                             startX = 0f,
-                            endX = fadeLengthPx
+                            endX = fadeLengthPx,
                         ),
                         Offset(0f, 0f),
-                        Size(fadeLengthPx, size.height)
+                        Size(fadeLengthPx, size.height),
                     )
                     FadeSide.Top -> Triple(
                         Brush.verticalGradient(
                             listOf(Color.Transparent, Color.Black),
                             startY = 0f,
-                            endY = fadeLengthPx
+                            endY = fadeLengthPx,
                         ),
                         Offset(0f, 0f),
-                        Size(size.width, fadeLengthPx)
+                        Size(size.width, fadeLengthPx),
                     )
                     FadeSide.Right -> Triple(
                         Brush.horizontalGradient(
                             listOf(Color.Black, Color.Transparent),
                             startX = size.width - fadeLengthPx,
-                            endX = size.width
+                            endX = size.width,
                         ),
                         Offset(size.width - fadeLengthPx, 0f),
-                        Size(fadeLengthPx, size.height)
+                        Size(fadeLengthPx, size.height),
                     )
                     FadeSide.Bottom -> Triple(
                         Brush.verticalGradient(
                             listOf(Color.Black, Color.Transparent),
                             startY = size.height - fadeLengthPx,
-                            endY = size.height
+                            endY = size.height,
                         ),
                         Offset(0f, size.height - fadeLengthPx),
-                        Size(size.width, fadeLengthPx)
+                        Size(size.width, fadeLengthPx),
                     )
                 }
 
@@ -109,7 +110,7 @@ fun Modifier.fade(
                         color = borderColor,
                         topLeft = topLeft,
                         size = size,
-                        style = Stroke(2f)
+                        style = Stroke(2f),
                     )
                 }
             }

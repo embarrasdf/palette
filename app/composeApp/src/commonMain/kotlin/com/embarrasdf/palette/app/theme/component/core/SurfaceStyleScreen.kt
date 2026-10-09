@@ -13,17 +13,17 @@ import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
+import com.embarrasdf.palette.theme.component.core.BorderStyleToken
+import com.embarrasdf.palette.theme.component.core.SurfaceStyleToken
+import com.embarrasdf.palette.theme.component.core.SurfaceStyleTokenSet
 import com.embarrasdf.palette.theme.components.core.Surface
 import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.component.core.BorderStyleToken
-import com.embarrasdf.palette.theme.component.core.SurfaceStyleToken
-import com.embarrasdf.palette.theme.component.core.SurfaceStyleTokenSet
+import com.embarrasdf.palette.theme.semantic.color.ColorToken
+import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -50,7 +50,7 @@ fun SurfaceStyleScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { token ->
             Surface(
                 style = PaletteTheme.component.core.surface[token],
@@ -69,9 +69,7 @@ fun SurfaceStyleScreen(
 }
 
 @Composable
-fun rememberSurfaceStyleScreenState(
-    themeState: ThemeState,
-): SurfaceStyleScreenState {
+fun rememberSurfaceStyleScreenState(themeState: ThemeState): SurfaceStyleScreenState {
     return rememberSaveable(
         themeState,
         saver = surfaceStyleScreenStateSaver(themeState),
@@ -86,8 +84,7 @@ fun rememberSurfaceStyleScreenState(
 class SurfaceStyleScreenState(
     val themeState: ThemeState,
 ) {
-    fun tokenSet(token: SurfaceStyleToken): SurfaceStyleTokenSet =
-        themeState.component.surface.getValue(token)
+    fun tokenSet(token: SurfaceStyleToken): SurfaceStyleTokenSet = themeState.component.surface.getValue(token)
 }
 
 fun surfaceStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
@@ -98,7 +95,7 @@ fun surfaceStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         SurfaceStyleScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable
@@ -192,7 +189,7 @@ private fun makeControlForToken(
             persistentListOf(
                 colorControl,
                 shapeControl,
-                *borderControls.toTypedArray()
+                *borderControls.toTypedArray(),
             )
         },
     )

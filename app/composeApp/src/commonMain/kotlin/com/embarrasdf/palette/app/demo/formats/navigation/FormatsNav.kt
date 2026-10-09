@@ -27,9 +27,7 @@ fun NavGraphBuilder.formatsNavGraph() = navGraph(
     moneyFormatsNavGraph()
 }
 
-fun EntryProviderScope<NavKey>.formatsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.formatsEntryProvider(navController: NavController) {
     catalogEntry<FormatCatalogRoute, FormatCategory>(
         onItemClick = { category ->
             val targetRoute = when (category) {

@@ -16,8 +16,8 @@ import com.embarrasdf.palette.components.PlayPauseButtonContentDescriptionPlayin
 import com.embarrasdf.palette.components.core.Button
 import com.embarrasdf.palette.components.core.ButtonStyle
 import com.embarrasdf.palette.components.core.Icon
-import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.IconStyle
+import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.preview.BoolPreviewParameterProvider
 
 data class PlayPauseButtonStyle(
@@ -40,25 +40,25 @@ fun PlayPauseButton(
         style = style.buttonStyle,
         enabled = isEnabled,
         modifier = modifier
-            .aspectRatio(1f)
+            .aspectRatio(1f),
     ) { shapePadding ->
         Icon(
             imageVector = if (isPlaying) Icons.Default.Close else Icons.Default.PlayArrow,
             contentDescription = if (isPlaying) {
                 PlayPauseButtonContentDescriptionPlaying
-            } else PlayPauseButtonContentDescriptionPaused,
+            } else {
+                PlayPauseButtonContentDescriptionPaused
+            },
             style = style.iconStyle,
             modifier = Modifier
-                .padding(shapePadding)
+                .padding(shapePadding),
         )
     }
 }
 
 @Preview
 @Composable
-private fun PlayPreview(
-    @PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean,
-) {
+private fun PlayPreview(@PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean) {
     PlayPauseButton(
         isEnabled = isEnabled,
         isPlaying = false,
@@ -68,9 +68,7 @@ private fun PlayPreview(
 
 @Preview
 @Composable
-private fun PausePreview(
-    @PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean,
-) {
+private fun PausePreview(@PreviewParameter(BoolPreviewParameterProvider::class) isEnabled: Boolean) {
     PlayPauseButton(
         isEnabled = isEnabled,
         isPlaying = true,

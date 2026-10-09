@@ -6,16 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.components.auth.AuthButton
 import com.embarrasdf.palette.components.auth.AuthState
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
@@ -25,6 +24,7 @@ import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.auth.AuthButtonStyleToken
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -36,7 +36,7 @@ fun AuthButtonDemo(
     Demo(
         controls = control.controls,
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         AuthButtonDemo(
             state = state,
@@ -61,7 +61,7 @@ fun BoxWithConstraintsScope.AuthButtonDemo(
         onLogOutClick = {},
         modifier = modifier
             .align(Alignment.Center)
-            .padding(PaletteTheme.semantic.dimension.spacing.medium)
+            .padding(PaletteTheme.semantic.dimension.spacing.medium),
     )
 }
 
@@ -119,9 +119,8 @@ val AuthButtonDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberAuthButtonDemoControl(
-    state: AuthButtonDemoState,
-): AuthButtonDemoControl = remember(state) { AuthButtonDemoControl(state) }
+fun rememberAuthButtonDemoControl(state: AuthButtonDemoState): AuthButtonDemoControl =
+    remember(state) { AuthButtonDemoControl(state) }
 
 @Stable
 class AuthButtonDemoControl(

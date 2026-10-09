@@ -14,12 +14,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.embarrasdf.palette.app.demo.DemoTopBar
+import com.embarrasdf.palette.components.demo.control.Control
+import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.core.ButtonDemo
 import com.embarrasdf.palette.components.demo.core.ButtonDemoControl
 import com.embarrasdf.palette.components.demo.core.rememberButtonDemoControl
 import com.embarrasdf.palette.components.demo.core.rememberButtonDemoState
-import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -75,7 +75,7 @@ fun IndicationScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             this@Demo.ButtonDemo(
                 state = buttonDemoState,
@@ -86,9 +86,7 @@ fun IndicationScreen(
 }
 
 @Composable
-fun rememberPrimitiveIndicationScreenState(
-    themeState: ThemeState,
-): PrimitiveIndicationScreenState {
+fun rememberPrimitiveIndicationScreenState(themeState: ThemeState): PrimitiveIndicationScreenState {
     return rememberSaveable(
         themeState,
         saver = primitiveIndicationScreenStateSaver(themeState),
@@ -104,8 +102,7 @@ class PrimitiveIndicationScreenState(
 ) {
     var subject by mutableStateOf(subjectInitial)
 
-    fun tokenSet(token: IndicationPrimitiveToken): IndicationTokenSet =
-        themeState.primitive.indication.getValue(token)
+    fun tokenSet(token: IndicationPrimitiveToken): IndicationTokenSet = themeState.primitive.indication.getValue(token)
 }
 
 private const val SubjectKey = "subject"
@@ -119,7 +116,7 @@ fun primitiveIndicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
                 ?.let { IndicationPrimitiveToken.valueOf(it) }
                 ?: IndicationPrimitiveToken.ColorSplit,
         )
-    }
+    },
 )
 
 @Composable
@@ -192,14 +189,13 @@ class PrimitiveIndicationScreenControl(
                     IndicationPrimitiveToken.Noise -> noiseControl.controls
                     IndicationPrimitiveToken.Pixelate -> pixelateControl.controls
                     IndicationPrimitiveToken.Warp -> warpControl.controls
-                }
+                },
             )
             add(buttonControls)
         }.toPersistentList()
 
-    private inline fun <reified T : IndicationTokenSet> tokenSet(
-        token: IndicationPrimitiveToken,
-    ): T = state.tokenSet(token) as T
+    private inline fun <reified T : IndicationTokenSet> tokenSet(token: IndicationPrimitiveToken): T =
+        state.tokenSet(token) as T
 
     private fun updateIndication(
         token: IndicationPrimitiveToken,

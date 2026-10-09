@@ -6,8 +6,8 @@ import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.ThemeButton
 import com.embarrasdf.palette.app.theme.navigation.ThemeGraph
 import com.embarrasdf.palette.navigation.NavController
-import com.embarrasdf.palette.navigation.NavKey
 import com.embarrasdf.palette.navigation.NavGraphBuilder
+import com.embarrasdf.palette.navigation.NavKey
 
 fun NavGraphBuilder.authComponentsNavGraph() = navGraph(
     root = AuthComponentsGraph,
@@ -19,9 +19,7 @@ fun NavGraphBuilder.authComponentsNavGraph() = navGraph(
     }
 }
 
-fun EntryProviderScope<NavKey>.authComponentsEntryProvider(
-    navController: NavController,
-) {
+fun EntryProviderScope<NavKey>.authComponentsEntryProvider(navController: NavController) {
     catalogEntry<AuthComponentCatalogRoute, AuthComponent>(
         onItemClick = { component ->
             navController.navigate(AuthComponentRoute(component))

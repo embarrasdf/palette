@@ -12,13 +12,13 @@ import androidx.compose.foundation.text.input.allCaps
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -27,7 +27,8 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.core.TextField
-import com.embarrasdf.palette.theme.components.demo.Demo
+import com.embarrasdf.palette.components.core.TextStyle
+import com.embarrasdf.palette.components.core.copy
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -41,8 +42,7 @@ import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.format
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.components.core.TextStyle
-import com.embarrasdf.palette.components.core.copy
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -61,7 +61,7 @@ fun TextFieldDemo(
             state = state,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium)
+                .padding(vertical = PaletteTheme.semantic.dimension.spacing.medium),
         )
     }
 }
@@ -112,7 +112,7 @@ fun DemoScope.TextFieldDemo(
             InputTransformations.OnlyDigits -> InputTransformation.onlyDigits()
         },
         modifier = modifier
-            .width(state.width)
+            .width(state.width),
     )
 }
 
@@ -278,13 +278,12 @@ val TextFieldDemoStateSaver = mapSaverSafe(
             inputTransformationInitial = InputTransformations.valueOf(map[InputTransformationKey] as String),
             contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
         )
-    }
+    },
 )
 
 @Composable
-fun rememberTextFieldDemoControl(
-    state: TextFieldDemoState = rememberTextFieldDemoState(),
-) = remember(state) { TextFieldDemoControl(state) }
+fun rememberTextFieldDemoControl(state: TextFieldDemoState = rememberTextFieldDemoState()) =
+    remember(state) { TextFieldDemoControl(state) }
 
 @Stable
 class TextFieldDemoControl(
@@ -322,7 +321,7 @@ class TextFieldDemoControl(
         value = { state.enabled },
         onValueChange = {
             state.enabled = it
-        }
+        },
     )
 
     val keyboardTypeControl = Control.Dropdown(
@@ -354,19 +353,19 @@ class TextFieldDemoControl(
         selectedIndex = { keyboardCapitalizations.indexOf(state.keyboardCapitalization) },
         onValueChange = {
             state.keyboardCapitalization = keyboardCapitalizations[it]
-        }
+        },
     )
 
     val autoCorrectEnabledControl = Control.Toggle(
         name = "Auto-correct",
         value = { state.autoCorrectEnabled },
-        onValueChange = { state.autoCorrectEnabled = it }
+        onValueChange = { state.autoCorrectEnabled = it },
     )
 
     val showKeyboardOnFocusControl = Control.Toggle(
         name = "Show keyboard on focus",
         value = { state.showKeyboardOnFocus },
-        onValueChange = { state.showKeyboardOnFocus = it }
+        onValueChange = { state.showKeyboardOnFocus = it },
     )
 
     val lineLimitsControl = enumControl(
@@ -433,9 +432,11 @@ class TextFieldDemoControl(
                 minHeightInLinesControl,
                 maxHeightInLinesControl,
             )
-        } else persistentListOf(
-            lineLimitsControl,
-        )
+        } else {
+            persistentListOf(
+                lineLimitsControl,
+            )
+        }
 
     val controls
         get() = persistentListOf(
@@ -459,4 +460,3 @@ class TextFieldDemoControl(
         }
     }
 }
-

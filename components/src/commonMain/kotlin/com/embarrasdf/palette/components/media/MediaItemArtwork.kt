@@ -29,7 +29,7 @@ fun MediaItemArtwork(
             model = imageUrl,
             contentDescription = null,
             modifier = modifier
-                .alpha(if (isEnabled) 1f else style.disabledContentAlpha)
+                .alpha(if (isEnabled) 1f else style.disabledContentAlpha),
         )
     } else {
         // TODO: fallback image
@@ -37,7 +37,7 @@ fun MediaItemArtwork(
             contentAlignment = Alignment.Center,
             modifier = modifier
                 .background(Color.Red)
-                .clearAndSetSemantics {}
+                .clearAndSetSemantics {},
         ) {
             Text(
                 "Art",

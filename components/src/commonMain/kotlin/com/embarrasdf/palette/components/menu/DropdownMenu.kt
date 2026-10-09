@@ -25,10 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -74,7 +74,7 @@ fun DropdownMenu(
     scrollState: ScrollState = rememberScrollState(),
     style: DropdownMenuStyle = DropdownMenuStyle(),
     properties: PopupProperties = PopupProperties(focusable = true),
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val expandedState = remember { MutableTransitionState(false) }
     expandedState.targetState = expanded
@@ -85,7 +85,7 @@ fun DropdownMenu(
         val popupPositionProvider = remember(offset, density) {
             DropdownMenuPositionProvider(
                 offset,
-                density
+                density,
             ) { parentBounds, menuBounds ->
                 transformOriginState.value = calculateTransformOrigin(parentBounds, menuBounds)
             }
@@ -94,7 +94,7 @@ fun DropdownMenu(
         Popup(
             onDismissRequest = onDismissRequest,
             popupPositionProvider = popupPositionProvider,
-            properties = properties
+            properties = properties,
         ) {
             DropdownMenuContent(
                 expandedState = expandedState,
@@ -102,7 +102,7 @@ fun DropdownMenu(
                 scrollState = scrollState,
                 style = style,
                 modifier = modifier,
-                content = content
+                content = content,
             )
         }
     }
@@ -115,7 +115,7 @@ internal fun DropdownMenuContent(
     scrollState: ScrollState,
     modifier: Modifier = Modifier,
     style: DropdownMenuStyle = DropdownMenuStyle(),
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     // Menu open/close animation.
     val transition = rememberTransition(expandedState, "DropDownMenu")
@@ -126,17 +126,17 @@ internal fun DropdownMenuContent(
                 // Dismissed to expanded
                 tween(
                     durationMillis = InTransitionDuration,
-                    easing = LinearOutSlowInEasing
+                    easing = LinearOutSlowInEasing,
                 )
             } else {
                 // Expanded to dismissed.
                 tween(
                     durationMillis = 1,
-                    delayMillis = OutTransitionDuration - 1
+                    delayMillis = OutTransitionDuration - 1,
                 )
             }
         },
-        label = "DropdownMenuScale"
+        label = "DropdownMenuScale",
     ) { expanded ->
         if (expanded) 1f else 0.8f
     }
@@ -151,7 +151,7 @@ internal fun DropdownMenuContent(
                 tween(durationMillis = OutTransitionDuration)
             }
         },
-        label = "DropdownMenuAlpha"
+        label = "DropdownMenuAlpha",
     ) { expanded ->
         if (expanded) 1f else 0f
     }
@@ -163,14 +163,14 @@ internal fun DropdownMenuContent(
             scaleY = scale
             this.alpha = alpha
             transformOrigin = transformOriginState.value
-        }
+        },
     ) {
         Column(
             modifier = modifier
                 .padding(vertical = DropdownMenuVerticalPadding)
                 .width(IntrinsicSize.Max)
                 .verticalScroll(scrollState),
-            content = content
+            content = content,
         )
     }
 }
@@ -200,7 +200,7 @@ fun DropdownMenuItem(
                 minHeight = DropdownMenuItemDefaultMinHeight,
             )
             .padding(style.contentPadding),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(modifier = Modifier.weight(1f)) {
             text()
@@ -210,7 +210,7 @@ fun DropdownMenuItem(
 
 internal fun calculateTransformOrigin(
     anchorBounds: IntRect,
-    menuBounds: IntRect
+    menuBounds: IntRect,
 ): TransformOrigin {
     val pivotX = when {
         menuBounds.left >= anchorBounds.right -> 0f
@@ -218,8 +218,10 @@ internal fun calculateTransformOrigin(
         menuBounds.width == 0 -> 0f
         else -> {
             val intersectionCenter =
-                (max(anchorBounds.left, menuBounds.left) +
-                        min(anchorBounds.right, menuBounds.right)) / 2
+                (
+                    max(anchorBounds.left, menuBounds.left) +
+                        min(anchorBounds.right, menuBounds.right)
+                    ) / 2
             (intersectionCenter - menuBounds.left).toFloat() / menuBounds.width
         }
     }
@@ -229,8 +231,10 @@ internal fun calculateTransformOrigin(
         menuBounds.height == 0 -> 0f
         else -> {
             val intersectionCenter =
-                (max(anchorBounds.top, menuBounds.top) +
-                        min(anchorBounds.bottom, menuBounds.bottom)) / 2
+                (
+                    max(anchorBounds.top, menuBounds.top) +
+                        min(anchorBounds.bottom, menuBounds.bottom)
+                    ) / 2
             (intersectionCenter - menuBounds.top).toFloat() / menuBounds.height
         }
     }
@@ -265,13 +269,11 @@ class MenuItemColors(
         return true
     }
 
-
     override fun hashCode(): Int {
         var result = textColor.hashCode()
         result = 31 * result + disabledTextColor.hashCode()
         return result
     }
-
 }
 
 object MenuDefaults {
@@ -297,7 +299,7 @@ object MenuDefaults {
 
     val DropdownMenuItemContentPadding = PaddingValues(
         horizontal = DropdownMenuItemHorizontalPadding,
-        vertical = 0.dp
+        vertical = 0.dp,
     )
     val DropdownMenuItemDefaultMinHeight = 48.dp
 

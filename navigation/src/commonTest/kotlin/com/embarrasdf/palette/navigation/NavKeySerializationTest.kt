@@ -1,13 +1,13 @@
 package com.embarrasdf.palette.navigation
 
-import androidx.navigation3.runtime.NavKey as Navigation3NavKey
+import kotlinx.serialization.PolymorphicSerializer
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-import kotlinx.serialization.PolymorphicSerializer
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
+import androidx.navigation3.runtime.NavKey as Navigation3NavKey
 
 class NavKeySerializationTest {
 

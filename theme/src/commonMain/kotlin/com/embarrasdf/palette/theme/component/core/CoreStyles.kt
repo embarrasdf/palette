@@ -9,9 +9,9 @@ import com.embarrasdf.palette.components.core.ButtonStyle
 import com.embarrasdf.palette.components.core.CheckboxStyle
 import com.embarrasdf.palette.components.core.ChevronButtonStyle
 import com.embarrasdf.palette.components.core.DividerStyle
-import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.IconStyle
 import com.embarrasdf.palette.components.core.ProgressIndicatorStyle
+import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.SliderColors
 import com.embarrasdf.palette.components.core.SliderStyle
 import com.embarrasdf.palette.components.core.TextFieldStyle

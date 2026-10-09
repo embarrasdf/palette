@@ -67,14 +67,12 @@ fun DemoScope.ShapeDemo(
             .background(
                 color = color,
                 shape = shape.toComposeShape(),
-            )
+            ),
     )
 }
 
 @Composable
-fun rememberShapeDemoState(
-    shape: Shape,
-): ShapeDemoState {
+fun rememberShapeDemoState(shape: Shape): ShapeDemoState {
     val defaultSize = defaultShapeDemoSize(shape.type)
     return rememberSaveable(
         shape.type,
@@ -118,9 +116,7 @@ private val ShapeDemoStateSaver = mapSaverSafe(
 )
 
 @Composable
-fun rememberShapeDemoControl(
-    state: ShapeDemoState,
-): ShapeDemoControl {
+fun rememberShapeDemoControl(state: ShapeDemoState): ShapeDemoControl {
     return remember(state) { ShapeDemoControl(state) }
 }
 

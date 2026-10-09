@@ -16,15 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.app.demo.DemoTopBar
 import com.embarrasdf.palette.components.core.Text
-import com.embarrasdf.palette.theme.components.demo.DemoList
 import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.PaletteTheme
-import com.embarrasdf.palette.theme.semantic.dimension.Size
-import com.embarrasdf.palette.theme.semantic.dimension.SizeToken
+import com.embarrasdf.palette.theme.components.demo.DemoList
+import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.semantic.dimension.Size
+import com.embarrasdf.palette.theme.semantic.dimension.SizeToken
 import com.embarrasdf.palette.theme.semantic.dimension.copy
 import com.embarrasdf.palette.theme.semantic.dimension.toSize
 import kotlinx.collections.immutable.PersistentList
@@ -53,12 +53,12 @@ fun SizeScreen(
             controls = control.controls,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) { size ->
             SizeDemo(
                 size = size,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
         }
     }
@@ -80,7 +80,7 @@ fun SizeDemo(
         Box(
             modifier = Modifier
                 .size(size.toSize())
-                .border(1.dp, PaletteTheme.semantic.color.primary)
+                .border(1.dp, PaletteTheme.semantic.color.primary),
         )
         Text(
             text = size.name,
@@ -90,9 +90,7 @@ fun SizeDemo(
 }
 
 @Composable
-fun rememberSizeScreenState(
-    themeState: ThemeState,
-): SizeScreenState {
+fun rememberSizeScreenState(themeState: ThemeState): SizeScreenState {
     return rememberSaveable(
         themeState,
         saver = sizeScreenStateSaver(themeState),
@@ -119,7 +117,7 @@ fun sizeScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         SizeScreenState(
             themeState = themeState,
         )
-    }
+    },
 )
 
 @Composable

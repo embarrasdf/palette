@@ -59,14 +59,14 @@ private fun Preview() {
             modifier = Modifier
                 .weight(1f)
                 .colorInvert(
-                    amount = { amount }
-                )
+                    amount = { amount },
+                ),
         )
         Slider(
             valueRange = range,
             value = amount,
             onValueChange = { amount = it },
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

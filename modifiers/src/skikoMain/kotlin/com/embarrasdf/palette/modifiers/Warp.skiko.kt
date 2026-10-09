@@ -48,7 +48,10 @@ class WarpShaderImpl : WarpShader {
 
     override fun createRenderEffect() = control.createRenderEffect()
 
-    override fun onRemeasured(width: Int, height: Int) {
+    override fun onRemeasured(
+        width: Int,
+        height: Int,
+    ) {
         control.setFloatUniform(UniformSize, width.toFloat(), height.toFloat())
     }
 

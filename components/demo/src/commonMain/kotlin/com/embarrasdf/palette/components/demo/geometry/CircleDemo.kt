@@ -5,10 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
@@ -30,6 +29,7 @@ import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -57,22 +57,20 @@ fun DemoScope.CircleDemo(
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(PaletteTheme.semantic.color.surface)
+            .background(PaletteTheme.semantic.color.surface),
     ) {
         drawCircle(state.color, style = state.drawStyle, radius = size.minDimension / 4f)
     }
 }
 
 @Composable
-fun rememberCircleDemoState(
-    color: Color = PaletteTheme.semantic.color.primary,
-): CircleDemoState {
+fun rememberCircleDemoState(color: Color = PaletteTheme.semantic.color.primary): CircleDemoState {
     val density = LocalDensity.current
     return rememberSaveable(
         density,
         saver = circleDemoStateSaver(
             density = density,
-        )
+        ),
     ) {
         CircleDemoState(
             colorInitial = color,
@@ -105,9 +103,7 @@ private const val ColorKey = "color"
 private const val DrawStyleKey = "drawStyle"
 private const val StrokeWidthKey = "strokeWidth"
 
-fun circleDemoStateSaver(
-    density: Density,
-) = mapSaverSafe(
+fun circleDemoStateSaver(density: Density) = mapSaverSafe(
     save = { value ->
         mapOf(
             ColorKey to save(value.color, ColorSaver, this),
@@ -126,9 +122,7 @@ fun circleDemoStateSaver(
 )
 
 @Composable
-fun rememberCircleDemoControl(
-    state: CircleDemoState = rememberCircleDemoState(),
-): CircleDemoControl {
+fun rememberCircleDemoControl(state: CircleDemoState = rememberCircleDemoState()): CircleDemoControl {
     return remember(state) { CircleDemoControl(state) }
 }
 
