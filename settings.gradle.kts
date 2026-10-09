@@ -1,4 +1,10 @@
 pluginManagement {
+    val embarrasdfGradlePluginsVersion = file("gradle/libs.versions.toml").readLines()
+        .first { it.startsWith("embarrasdf-gradle-plugins") }
+        .substringAfter('"').substringBefore('"')
+    plugins {
+        id("com.embarrasdf.gradle.plugin.settings") version embarrasdfGradlePluginsVersion
+    }
     repositories {
         google()
         mavenCentral()
@@ -8,9 +14,7 @@ pluginManagement {
 }
 
 plugins {
-    // Builds against ../gradle-plugins from source when local.properties sets
-    // includeGradlePlugins=true; otherwise uses the published plugins, like CI.
-    id("com.embarrasdf.gradle.plugin.settings") version "0.0.134"
+    id("com.embarrasdf.gradle.plugin.settings")
 }
 
 dependencyResolutionManagement {
