@@ -2910,6 +2910,7 @@ HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope()Landroi
 HSPLandroidx/compose/runtime/GapComposer;->currentCompositionLocalScope(I)Landroidx/compose/runtime/PersistentCompositionLocalMap;
 HSPLandroidx/compose/runtime/GapComposer;->doCompose-aFTiNEg(Landroidx/collection/MutableScatterMap;Lkotlin/jvm/functions/Function2;)V
 PLandroidx/compose/runtime/GapComposer;->doRecordDownsFor(II)V
+HSPLandroidx/compose/runtime/GapComposer;->end(Z)V
 HSPLandroidx/compose/runtime/GapComposer;->endDefaults()V
 HSPLandroidx/compose/runtime/GapComposer;->endGroup()V
 HSPLandroidx/compose/runtime/GapComposer;->endMovableGroup()V
@@ -14740,7 +14741,7 @@ PLkotlinx/coroutines/JobSupport$Finishing;->addExceptionLocked(Ljava/lang/Throwa
 PLkotlinx/coroutines/JobSupport$Finishing;->allocateList()Ljava/util/ArrayList;
 PLkotlinx/coroutines/JobSupport$Finishing;->getExceptionsHolder()Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport$Finishing;->getList()Lkotlinx/coroutines/NodeList;
-HPLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
+PLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_exceptionsHolder$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_isCompleting$volatile$FU()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_rootCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
@@ -15269,7 +15270,7 @@ HSPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->get_prev$volatile$FU()L
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->get_removedRef$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 HSPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->isRemoved()Z
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->remove()Z
-PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removeOrNext()Lkotlinx/coroutines/internal/LockFreeLinkedListNode;
+HPLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removeOrNext()Lkotlinx/coroutines/internal/LockFreeLinkedListNode;
 PLkotlinx/coroutines/internal/LockFreeLinkedListNode;->removed()Lkotlinx/coroutines/internal/Removed;
 Lkotlinx/coroutines/internal/LockFreeTaskQueue;
 HSPLkotlinx/coroutines/internal/LockFreeTaskQueue;-><clinit>()V
