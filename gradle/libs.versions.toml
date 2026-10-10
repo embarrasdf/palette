@@ -21,7 +21,7 @@ paparazzi = "2.0.0-SNAPSHOT"
 profileinstaller = "1.4.1"
 test-parameter-injector = "1.22"
 uiautomator = "2.4.0"
-trace = "0.0.17"
+trace = "0.0.19"
 uievent = "0.0.19"
 
 [libraries]
