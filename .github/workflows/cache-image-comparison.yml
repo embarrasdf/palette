@@ -1,0 +1,56 @@
+name: "Cache image comparison"
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  image:
+    uses: embarrasdf/devops/.github/workflows/cache-image.yml@main
+    permissions:
+      contents: read
+      packages: write
+    with:
+      warm-tasks: >-
+        :app:androidApp:assembleDebug
+        :app:webApp:wasmJsBrowserDistribution
+        testDebug
+
+  container:
+    name: "Container: ${{ matrix.name }}"
+    needs: image
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: read
+    container:
+      image: ghcr.io/embarrasdf/palette-cache:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Build Android
+            tasks: :app:androidApp:assembleDebug
+          - name: Build Web
+            tasks: :app:webApp:wasmJsBrowserDistribution
+          - name: Test
+            tasks: testDebug
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: 'true'
+          fetch-depth: 0
+
+      - name: Trust the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build
+        run: ./gradlew ${{ matrix.tasks }}
