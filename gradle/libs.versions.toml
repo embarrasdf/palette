@@ -22,7 +22,7 @@ profileinstaller = "1.4.1"
 test-parameter-injector = "1.22"
 uiautomator = "2.4.0"
 trace = "0.0.17"
-uievent = "0.0.19"
+uievent = "0.0.22"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
