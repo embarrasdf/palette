@@ -133,7 +133,7 @@ PLcom/embarrasdf/palette/modifiers/ShaderElement;-><clinit>()V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;-><init>(Lcom/embarrasdf/palette/modifiers/Shader;Ljava/lang/String;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Landroidx/compose/ui/Modifier$Node;
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Lcom/embarrasdf/palette/modifiers/ShaderNode;
-PLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
+HPLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Landroidx/compose/ui/Modifier$Node;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Lcom/embarrasdf/palette/modifiers/ShaderNode;)V
 Lcom/embarrasdf/palette/modifiers/ShaderIndicationNode;
