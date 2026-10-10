@@ -14740,7 +14740,7 @@ PLkotlinx/coroutines/JobSupport$Finishing;->addExceptionLocked(Ljava/lang/Throwa
 PLkotlinx/coroutines/JobSupport$Finishing;->allocateList()Ljava/util/ArrayList;
 PLkotlinx/coroutines/JobSupport$Finishing;->getExceptionsHolder()Ljava/lang/Object;
 PLkotlinx/coroutines/JobSupport$Finishing;->getList()Lkotlinx/coroutines/NodeList;
-PLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
+HPLkotlinx/coroutines/JobSupport$Finishing;->getRootCause()Ljava/lang/Throwable;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_exceptionsHolder$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_isCompleting$volatile$FU()Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;
 PLkotlinx/coroutines/JobSupport$Finishing;->get_rootCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
@@ -15725,6 +15725,13 @@ HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
 HSPLokhttp3/internal/platform/android/Android10SocketAdapter$Companion;->isSupported()Z
+Lokhttp3/internal/platform/android/Android17SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter;-><clinit>()V
+Lokhttp3/internal/platform/android/Android17SocketAdapter$Companion;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>()V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->buildIfSupported()Lokhttp3/internal/platform/android/SocketAdapter;
+HSPLokhttp3/internal/platform/android/Android17SocketAdapter$Companion;->isSupported()Z
 Lokhttp3/internal/platform/android/AndroidLog;
 HSPLokhttp3/internal/platform/android/AndroidLog;-><clinit>()V
 HSPLokhttp3/internal/platform/android/AndroidLog;-><init>()V
