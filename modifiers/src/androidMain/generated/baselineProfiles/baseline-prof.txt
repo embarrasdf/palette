@@ -72,7 +72,7 @@ HSPLcom/embarrasdf/palette/modifiers/ColorSplit_androidKt;->createColorSplitShad
 PLcom/embarrasdf/palette/modifiers/FadeKt;->bottomFade-V5MJSes(Landroidx/compose/ui/Modifier;FLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
 PLcom/embarrasdf/palette/modifiers/FadeKt;->fade-ddyKRco(Landroidx/compose/ui/Modifier;IFLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
 PLcom/embarrasdf/palette/modifiers/FadeKt;->fade-ddyKRco(Landroidx/compose/ui/Modifier;Lcom/embarrasdf/palette/modifiers/FadeSide;FLandroidx/compose/ui/graphics/Color;)Landroidx/compose/ui/Modifier;
-HPLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$0(Landroidx/compose/ui/graphics/GraphicsLayerScope;)Lkotlin/Unit;
+PLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$0(Landroidx/compose/ui/graphics/GraphicsLayerScope;)Lkotlin/Unit;
 HPLcom/embarrasdf/palette/modifiers/FadeKt;->fade_ddyKRco$lambda$1(IFLandroidx/compose/ui/graphics/Color;Landroidx/compose/ui/graphics/drawscope/ContentDrawScope;)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/FadeKt$$ExternalSyntheticLambda0;-><init>()V
 PLcom/embarrasdf/palette/modifiers/FadeKt$$ExternalSyntheticLambda0;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
@@ -183,7 +183,7 @@ PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lamb
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$5(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
-HPLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt$$ExternalSyntheticLambda0;-><init>()V
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt$$ExternalSyntheticLambda0;->invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
