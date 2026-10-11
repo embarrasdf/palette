@@ -19,12 +19,12 @@ concurrency:
 jobs:
   ci:
     name: CI
-    uses: embarrasdf/devops/.github/workflows/ci.yml@claude/loving-mendel-w26y87-ci-test
+    uses: embarrasdf/devops/.github/workflows/ci.yml@main
     permissions:
       contents: write
       pull-requests: write
     with:
       test-tasks: jvmTest wasmJsBrowserTest testDebugUnitTest
       apple-test-tasks: ''
-      screenshots: true
+      screenshot-tests: true
       lfs: true

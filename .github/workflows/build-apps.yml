@@ -1,4 +1,4 @@
-name: Apps
+name: Build Apps
 
 on:
   push:
@@ -19,17 +19,14 @@ concurrency:
 jobs:
   app:
     name: Palette
-    uses: embarrasdf/devops/.github/workflows/apps.yml@claude/loving-mendel-w26y87-ci-test
+    uses: embarrasdf/devops/.github/workflows/build-apps.yml@main
     permissions:
       contents: read
       pull-requests: write
-      pages: write
-      id-token: write
     with:
       app-dir: app
       android: true
       ios: true
       web: true
       desktop: true
-      pages: true
       lfs: true
