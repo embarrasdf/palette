@@ -1,0 +1,20 @@
+name: Publish
+
+on:
+  workflow_run:
+    workflows: [Generate Baseline Profiles]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    uses: embarrasdf/devops/.github/workflows/publish.yml@claude/loving-mendel-w26y87-ci-test
+    permissions:
+      contents: write
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      GPG_KEY: ${{ secrets.GPG_KEY }}
+      GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+      GPG_KEY_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
