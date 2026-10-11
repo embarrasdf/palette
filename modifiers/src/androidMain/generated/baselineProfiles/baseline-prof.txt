@@ -29,7 +29,7 @@ HSPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1;->create(Lj
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1;->invokeSuspend$lambda$0(Landroidx/compose/animation/core/Animatable;)F
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$$ExternalSyntheticLambda0;-><init>(Landroidx/compose/animation/core/Animatable;)V
-HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$$ExternalSyntheticLambda0;->invoke()Ljava/lang/Object;
+PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$$ExternalSyntheticLambda0;->invoke()Ljava/lang/Object;
 PLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$2;-><init>(Lcom/embarrasdf/palette/modifiers/ShaderIndicationNode;)V
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$2;->emit(FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 HPLcom/embarrasdf/palette/modifiers/ColorSplitIndication$create$2$1$2;->emit(Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -392,6 +392,7 @@ PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$2$0
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/PixelateState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo$lambda$5(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
+PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 HPLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt;->PixelateStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/PixelateState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/PixelateDemoKt$$ExternalSyntheticLambda0;-><init>()V
