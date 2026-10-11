@@ -8,11 +8,11 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
-import androidx.compose.animation.core.Spring as ComposeSpring
 import androidx.compose.runtime.Composable
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
+import androidx.compose.animation.core.Spring as ComposeSpring
 
 /**
  * A time-driven, target-based animation: a value evolving over time toward a target. This is
@@ -95,17 +95,16 @@ fun AnimationSpec.Finite.type(): FiniteAnimationSpecType = when (this) {
  * Resolves this finite spec to a Compose [FiniteAnimationSpec], resolving a [AnimationSpec.Tween]'s
  * easing through the given primitive map (mirroring `IndicationToken.toIndication(scheme, primitives)`).
  */
-fun <T> AnimationSpec.Finite.toComposeSpec(
-    easings: Map<EasingPrimitiveToken, Easing>,
-): FiniteAnimationSpec<T> = when (this) {
-    is AnimationSpec.Spring -> spring(dampingRatio = dampingRatio, stiffness = stiffness)
-    is AnimationSpec.Tween -> tween(
-        durationMillis = durationMillis,
-        delayMillis = delayMillis,
-        easing = easings.getValue(easing),
-    )
-    is AnimationSpec.Snap -> snap(delayMillis = delayMillis)
-}
+fun <T> AnimationSpec.Finite.toComposeSpec(easings: Map<EasingPrimitiveToken, Easing>): FiniteAnimationSpec<T> =
+    when (this) {
+        is AnimationSpec.Spring -> spring(dampingRatio = dampingRatio, stiffness = stiffness)
+        is AnimationSpec.Tween -> tween(
+            durationMillis = durationMillis,
+            delayMillis = delayMillis,
+            easing = easings.getValue(easing),
+        )
+        is AnimationSpec.Snap -> snap(delayMillis = delayMillis)
+    }
 
 @Composable
 fun <T> AnimationSpec.Finite.toComposeSpec(): FiniteAnimationSpec<T> {
@@ -125,17 +124,16 @@ fun <T> AnimationSpec.Finite.DurationBased.toComposeSpec(
 }
 
 /** Resolves this infinite spec to a Compose [InfiniteRepeatableSpec]. */
-fun <T> AnimationSpec.Infinite.toComposeSpec(
-    easings: Map<EasingPrimitiveToken, Easing>,
-): InfiniteRepeatableSpec<T> = when (this) {
-    is AnimationSpec.Repeatable -> infiniteRepeatable(
-        animation = animation.toComposeSpec(easings),
-        repeatMode = when (repeatMode) {
-            RepeatMode.Restart -> ComposeRepeatMode.Restart
-            RepeatMode.Reverse -> ComposeRepeatMode.Reverse
-        },
-    )
-}
+fun <T> AnimationSpec.Infinite.toComposeSpec(easings: Map<EasingPrimitiveToken, Easing>): InfiniteRepeatableSpec<T> =
+    when (this) {
+        is AnimationSpec.Repeatable -> infiniteRepeatable(
+            animation = animation.toComposeSpec(easings),
+            repeatMode = when (repeatMode) {
+                RepeatMode.Restart -> ComposeRepeatMode.Restart
+                RepeatMode.Reverse -> ComposeRepeatMode.Reverse
+            },
+        )
+    }
 
 @Composable
 fun <T> AnimationSpec.Infinite.toComposeSpec(): InfiniteRepeatableSpec<T> {

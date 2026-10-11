@@ -65,7 +65,7 @@ fun transitionEffectControl(
                                 value = { effect.from },
                                 onValueChange = { onChange(effect.copy(from = it)) },
                                 valueRange = { 0f..1f },
-                            )
+                            ),
                         )
                         add(
                             Control.Slider(
@@ -73,7 +73,7 @@ fun transitionEffectControl(
                                 value = { effect.to },
                                 onValueChange = { onChange(effect.copy(to = it)) },
                                 valueRange = { 0f..1f },
-                            )
+                            ),
                         )
                     }
                     is TransitionEffect.Translate -> {
@@ -83,7 +83,7 @@ fun transitionEffectControl(
                                 values = { Axis.entries },
                                 selectedValue = { effect.axis },
                                 onValueChange = { onChange(effect.copy(axis = it)) },
-                            )
+                            ),
                         )
                         add(
                             Control.Slider(
@@ -91,7 +91,7 @@ fun transitionEffectControl(
                                 value = { effect.fraction },
                                 onValueChange = { onChange(effect.copy(fraction = it)) },
                                 valueRange = { 0f..1f },
-                            )
+                            ),
                         )
                     }
                 }

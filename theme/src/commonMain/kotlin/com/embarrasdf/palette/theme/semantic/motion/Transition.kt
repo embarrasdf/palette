@@ -87,8 +87,7 @@ fun Transition.toContentTransform(
     animationScheme: AnimationScheme,
     easings: Map<EasingPrimitiveToken, Easing>,
     forward: Boolean,
-): ContentTransform =
-    toEnter(animationScheme, easings, forward) togetherWith toExit(animationScheme, easings, forward)
+): ContentTransform = toEnter(animationScheme, easings, forward) togetherWith toExit(animationScheme, easings, forward)
 
 @Composable
 fun Transition.toContentTransform(forward: Boolean): ContentTransform = toContentTransform(

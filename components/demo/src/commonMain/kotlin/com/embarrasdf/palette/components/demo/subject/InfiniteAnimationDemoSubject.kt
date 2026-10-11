@@ -39,7 +39,7 @@ fun InfiniteAnimationDemoSubject(
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(PaletteTheme.semantic.color.surface)
+            .background(PaletteTheme.semantic.color.surface),
     ) {
         drawAnimationSubject(subject, progress.value, color)
     }

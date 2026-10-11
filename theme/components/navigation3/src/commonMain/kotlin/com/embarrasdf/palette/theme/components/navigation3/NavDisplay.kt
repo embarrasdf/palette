@@ -62,7 +62,9 @@ private fun <T : Any> rememberExitTransitionSpec(): AnimatedContentTransitionSco
 }
 
 @Composable
-private fun <T : Any> rememberPredictiveExitTransitionSpec(): AnimatedContentTransitionScope<Scene<T>>.(Int) -> ContentTransform {
+private fun <T : Any> rememberPredictiveExitTransitionSpec(): AnimatedContentTransitionScope<Scene<T>>.(
+    Int,
+) -> ContentTransform {
     val motion = PaletteTheme.semantic.motion
     val animation = PaletteTheme.semantic.animation
     val easings = PaletteTheme.primitive.easing
