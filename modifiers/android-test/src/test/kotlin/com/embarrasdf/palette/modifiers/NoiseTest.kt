@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 @RunWith(TestParameterInjector::class)
 class NoiseTest(
     @TestParameter(valuesProvider = ValuesProvider::class)
-    private val values: Pair<Float, NoiseColorMode>,
+    values: Pair<Float, NoiseColorMode>,
 ) {
     private val amount = values.first
     private val colorMode = values.second

@@ -28,6 +28,6 @@ fun ButtonControl(
         modifier = modifier
             .then(control.modifier),
     ) {
-        Text(control.name, style = style.labelStyle)
+        Text(text = control.name, style = style.labelStyle)
     }
 }

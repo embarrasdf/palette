@@ -41,12 +41,15 @@ open class ShaderNode<T : Shader>(
     CompositionLocalConsumerModifierNode {
 
     override fun onPlaced(coordinates: LayoutCoordinates) {
-        shader.onRemeasured(coordinates.size.width, coordinates.size.height)
+        shader.onRemeasured(
+            width = coordinates.size.width,
+            height = coordinates.size.height,
+        )
         if (currentValueOf(LocalInspectionMode)) invalidateDraw()
     }
 
     override fun onRemeasured(size: IntSize) {
-        shader.onRemeasured(size.width, size.height)
+        shader.onRemeasured(width = size.width, height = size.height)
         if (currentValueOf(LocalInspectionMode)) invalidateDraw()
     }
 

@@ -23,7 +23,10 @@ actual fun createPixelateShader(): PixelateShader {
 }
 
 class PixelateShaderImpl : PixelateShader {
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var subdivisions: Int = 0
 
@@ -33,13 +36,17 @@ class PixelateShaderImpl : PixelateShader {
 
     override fun setSubdivisions(subdivisions: Int) {
         this.subdivisions = subdivisions
-        control.setFloatUniform(UniformSubdivisionsName, subdivisions.toFloat())
+        control.setFloatUniform(name = UniformSubdivisionsName, value = subdivisions.toFloat())
     }
 
     override fun onRemeasured(
         width: Int,
         height: Int,
     ) {
-        control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
+        control.setFloatUniform(
+            name = UniformSizeName,
+            value1 = width.toFloat(),
+            value2 = height.toFloat(),
+        )
     }
 }

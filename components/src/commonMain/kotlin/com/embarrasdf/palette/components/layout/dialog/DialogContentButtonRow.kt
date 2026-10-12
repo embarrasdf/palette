@@ -41,7 +41,7 @@ fun DialogContentSingleButtonRow(
 
 @Preview
 @Composable
-fun DialogContentButtonRowPreview() {
+private fun DialogContentButtonRowPreview() {
     DialogContentButtonRow {
         CancelButton(
             onDismiss = {},
@@ -54,7 +54,7 @@ fun DialogContentButtonRowPreview() {
 
 @Preview
 @Composable
-fun DialogContentSingleButtonRowPreview() {
+private fun DialogContentSingleButtonRowPreview() {
     DialogContentSingleButtonRow {
         ConfirmButton(
             onConfirm = {},

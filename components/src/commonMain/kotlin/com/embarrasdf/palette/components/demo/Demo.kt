@@ -19,6 +19,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.movableContentWithReceiverOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -53,6 +55,8 @@ fun Demo(
     controls: PersistentList<Control> = persistentListOf(),
     content: @Composable DemoScope.() -> Unit,
 ) {
+    // The content moves between the portrait and landscape layouts; keep its state when it does.
+    val movableContent = remember(content) { movableContentWithReceiverOf(content) }
     BoxWithConstraints(
         modifier = modifier
             .padding(WindowInsets.safeDrawing.horizontalPaddingValues()),
@@ -68,7 +72,7 @@ fun Demo(
                         .weight(1f),
                 ) {
                     val scope = DemoScopeImpl(this)
-                    scope.content()
+                    scope.movableContent()
                 }
                 if (controls.isNotEmpty()) {
                     HorizontalDivider(modifier = Modifier.fillMaxWidth(), style = style.dividerStyle)
@@ -95,7 +99,7 @@ fun Demo(
                         .weight(1f),
                 ) {
                     val scope = DemoScopeImpl(this@BoxWithConstraints)
-                    scope.content()
+                    scope.movableContent()
                 }
                 if (controls.isNotEmpty()) {
                     VerticalDivider(modifier = Modifier.fillMaxHeight(), style = style.dividerStyle)

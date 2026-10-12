@@ -37,9 +37,9 @@ enum class StepMode {
 
 @Composable
 fun SliderDemo(
+    modifier: Modifier = Modifier,
     state: SliderDemoState = rememberSliderDemoState(),
     control: SliderDemoControl = rememberSliderDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -47,7 +47,6 @@ fun SliderDemo(
     ) {
         SliderDemo(
             state = state,
-            control = control,
         )
     }
 }
@@ -56,7 +55,6 @@ fun SliderDemo(
 fun DemoScope.SliderDemo(
     modifier: Modifier = Modifier,
     state: SliderDemoState = rememberSliderDemoState(),
-    control: SliderDemoControl = rememberSliderDemoControl(state),
 ) {
     val sliderModifier = modifier
         .fillMaxWidth()
@@ -114,6 +112,8 @@ fun rememberSliderDemoState(): SliderDemoState = rememberSaveable(
     saver = SliderDemoStateSaver,
 ) { SliderDemoState() }
 
+private val DefaultSnapValues = listOf(0f, 0.25f, 0.5f, 0.75f, 1f)
+
 @Stable
 class SliderDemoState(
     sliderTypeInitial: SliderType = SliderType.Continuous,
@@ -123,7 +123,7 @@ class SliderDemoState(
     stepsInitial: Int = 0,
     enabledInitial: Boolean = true,
     stepModeInitial: StepMode = StepMode.Uniform,
-    snapValuesInitial: List<Float> = listOf(0f, 0.25f, 0.5f, 0.75f, 1f),
+    snapValuesInitial: List<Float> = DefaultSnapValues,
 ) {
     var sliderType by mutableStateOf(sliderTypeInitial)
         internal set
@@ -182,7 +182,7 @@ val SliderDemoStateSaver = mapSaverSafe(
                 (map[SnapValuesKey] as String)
                     .split(",")
                     .map { it.toFloat() }
-            }.getOrDefault(listOf(0f, 0.25f, 0.5f, 0.75f, 1f)),
+            }.getOrDefault(DefaultSnapValues),
         )
     },
 )

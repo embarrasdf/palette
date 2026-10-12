@@ -283,10 +283,4 @@ class DeeplinkTest {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
         )
     }
-
-    private fun startIntent(intent: Intent) {
-        InstrumentationRegistry.getInstrumentation().targetContext.startActivity(
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-        )
-    }
 }

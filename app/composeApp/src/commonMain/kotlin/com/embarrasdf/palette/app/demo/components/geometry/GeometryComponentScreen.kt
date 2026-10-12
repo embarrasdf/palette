@@ -16,6 +16,7 @@ fun GeometryComponentScreen(
     component: GeometryComponent,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -25,6 +26,7 @@ fun GeometryComponentScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (component) {
             GeometryComponent.CurveStitch -> CurveStitchDemo(

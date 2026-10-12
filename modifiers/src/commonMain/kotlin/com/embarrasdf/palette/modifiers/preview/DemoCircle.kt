@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DemoCircle(
@@ -25,7 +26,7 @@ fun DemoCircle(
     }
 }
 
-@ModifierPreview
+@Preview
 @Composable
 private fun Preview() {
     DemoCircle()

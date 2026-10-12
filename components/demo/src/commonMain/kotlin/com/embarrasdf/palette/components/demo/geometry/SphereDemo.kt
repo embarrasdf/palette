@@ -21,11 +21,12 @@ import com.embarrasdf.palette.components.geometry.SphereStyle
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.ViewingAngle
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.roundToInt
 
 @Composable
@@ -142,8 +143,8 @@ private const val PrecisionDegreeKey = "precisionDegree"
 val SphereDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            StrokeColorKey to save(value.strokeColor, ColorSaver, this),
-            OutlineStrokeColorKey to save(value.outlineStrokeColor, ColorSaver, this),
+            StrokeColorKey to save(value = value.strokeColor, saver = ColorSaver, scope = this),
+            OutlineStrokeColorKey to save(value = value.outlineStrokeColor, saver = ColorSaver, scope = this),
             FillKey to value.fill,
             OutlineKey to value.outline,
             RotationXKey to value.viewingAngle.rotationX,
@@ -158,8 +159,8 @@ val SphereDemoStateSaver = mapSaverSafe(
     },
     restore = { map ->
         SphereDemoState(
-            strokeColor = restore(map[StrokeColorKey], ColorSaver)!!,
-            outlineStrokeColor = restore(map[OutlineStrokeColorKey], ColorSaver)!!,
+            strokeColor = map.requireRestore(key = StrokeColorKey, saver = ColorSaver),
+            outlineStrokeColor = map.requireRestore(key = OutlineStrokeColorKey, saver = ColorSaver),
             fillInitial = map[FillKey] as Boolean,
             outlineInitial = map[OutlineKey] as Boolean,
             viewingAngleInitial = ViewingAngle(
@@ -262,15 +263,15 @@ class SphereDemoControl(
         }
 
     val controls
-        get() = persistentListOf(
-            fillControl,
-            xRotationControl,
-            yRotationControl,
-            zRotationControl,
-            numLatitudeLinesControl,
-            numLongitudeLinesControl,
-            precisionDegreeControl,
-            strokeWidthControl,
-            *outlineControls.toTypedArray(),
-        )
+        get() = buildList<Control> {
+            add(fillControl)
+            add(xRotationControl)
+            add(yRotationControl)
+            add(zRotationControl)
+            add(numLatitudeLinesControl)
+            add(numLongitudeLinesControl)
+            add(precisionDegreeControl)
+            add(strokeWidthControl)
+            addAll(outlineControls)
+        }.toPersistentList()
 }

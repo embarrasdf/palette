@@ -15,7 +15,7 @@ import com.embarrasdf.palette.theme.semantic.color.toColor
 @Composable
 fun ColorPickerDialog(
     colorToken: ColorToken,
-    onColorSelected: (Color) -> Unit,
+    onColorSelect: (Color) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     Dialog(
@@ -26,7 +26,7 @@ fun ColorPickerDialog(
         ) {
             ColorPickerDialogContent(
                 color = colorToken.toColor(),
-                onColorSelected = onColorSelected,
+                onColorSelect = onColorSelect,
                 onDismissRequest = onDismissRequest,
                 style = PaletteTheme.component.color.colorPickerDialogContent,
                 modifier = Modifier
@@ -38,11 +38,11 @@ fun ColorPickerDialog(
 
 @Preview
 @Composable
-fun ColorPickerDialogPreview() {
+private fun ColorPickerDialogPreview() {
     PaletteTheme {
         ColorPickerDialogContent(
             color = ColorToken.Primary.toColor(),
-            onColorSelected = {},
+            onColorSelect = {},
             onDismissRequest = {},
             style = PaletteTheme.component.color.colorPickerDialogContent,
         )

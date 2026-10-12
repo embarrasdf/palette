@@ -28,7 +28,7 @@ data class ColorPickerDialogContentStyle(
 @Composable
 fun ColorPickerDialogContent(
     color: Color,
-    onColorSelected: (Color) -> Unit,
+    onColorSelect: (Color) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     style: ColorPickerDialogContentStyle = ColorPickerDialogContentStyle(),
@@ -46,12 +46,12 @@ fun ColorPickerDialogContent(
             color = currentColor,
             onColorChange = { currentColor = it },
             modifier = Modifier
-                .weight(1f, fill = false),
+                .weight(weight = 1f, fill = false),
         )
         ConfirmCancelButtonRow(
             style = style.confirmCancelButtonRowStyle,
             onConfirm = {
-                onColorSelected(currentColor)
+                onColorSelect(currentColor)
                 onDismissRequest()
             },
             onDismiss = onDismissRequest,

@@ -21,6 +21,7 @@ fun ModifierScreen(
     modifierType: DemoModifier,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -30,28 +31,29 @@ fun ModifierScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
-        val modifier = Modifier
+        val demoModifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
         when (modifierType) {
             DemoModifier.ColorInvert -> ColorInvertDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
             DemoModifier.ColorSplit -> ColorSplitDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
             DemoModifier.Fade -> FadeDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
             DemoModifier.Noise -> NoiseDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
             DemoModifier.Pixelate -> PixelateDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
             DemoModifier.Warp -> WarpDemo(
-                modifier = modifier,
+                modifier = demoModifier,
             )
         }
     }

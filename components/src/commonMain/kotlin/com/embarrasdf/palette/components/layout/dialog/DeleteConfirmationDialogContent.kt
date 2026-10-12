@@ -24,7 +24,7 @@ fun DeleteConfirmationDialogContent(
 
 @Preview
 @Composable
-fun DeleteConfirmationDialogContentPreview() {
+private fun DeleteConfirmationDialogContentPreview() {
     DeleteConfirmationDialogContent(
         contentTitle = "Log entry",
         onConfirm = {},

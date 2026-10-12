@@ -17,7 +17,7 @@ import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.TextFormat
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -33,12 +33,13 @@ import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import com.embarrasdf.palette.theme.semantic.typography.TypographyTokenSet
 import com.embarrasdf.palette.theme.semantic.typography.toComposeTextStyle
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TypographyScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTypographyScreenState(themeState = themeController)
     val control = rememberTypographyScreenControl(state = state, themeController = themeController)
@@ -52,6 +53,7 @@ fun TypographyScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = TypographyToken.entries.toList(),
@@ -107,18 +109,22 @@ class TypographyScreenState(
     fun tokenSet(token: TypographyToken): TypographyTokenSet = themeState.semantic.typography.tokens.getValue(token)
 }
 
-private val textFieldKey = "textField"
+private const val TextFieldKey = "textField"
 
 fun typographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            textFieldKey to save(state.textFieldState, TextFieldState.Saver, this),
+            TextFieldKey to save(
+                value = state.textFieldState,
+                saver = TextFieldState.Saver,
+                scope = this,
+            ),
         )
     },
     restore = { map ->
         TypographyScreenState(
             themeState = themeState,
-            textFieldState = restore(map[textFieldKey], TextFieldState.Saver)!!,
+            textFieldState = map.requireRestore(key = TextFieldKey, saver = TextFieldState.Saver),
         )
     },
 )
@@ -150,10 +156,10 @@ class TypographyScreenControl(
     private val tokenControls: List<Control.ControlColumn> =
         TypographyToken.entries.map { makeControlForToken(it) }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        textFieldControl,
-        *tokenControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = buildList<Control> {
+        add(textFieldControl)
+        addAll(tokenControls)
+    }.toPersistentList()
 
     private fun makeControlForToken(token: TypographyToken): Control.ControlColumn {
         val fontFamilyControl = enumControl(
@@ -180,6 +186,23 @@ class TypographyScreenControl(
                 updateTokenSet(token) { it.copy(fontStyle = fontStyle) }
             },
         )
+        val metricControls = makeMetricControls(token)
+        return Control.ControlColumn(
+            name = token.name,
+            controls = {
+                buildList<Control> {
+                    add(fontFamilyControl)
+                    add(fontWeightControl)
+                    add(fontStyleControl)
+                    addAll(metricControls)
+                }.toPersistentList()
+            },
+            indent = true,
+            expandedInitial = false,
+        )
+    }
+
+    private fun makeMetricControls(token: TypographyToken): List<Control> {
         val fontSizeControl = Control.Slider(
             name = "Font size",
             value = { state.tokenSet(token).fontSize.value },
@@ -207,20 +230,10 @@ class TypographyScreenControl(
             valueRange = { -1f..2f },
             stepIncrement = 0.1f,
         )
-        return Control.ControlColumn(
-            name = token.name,
-            controls = {
-                persistentListOf(
-                    fontFamilyControl,
-                    fontWeightControl,
-                    fontStyleControl,
-                    fontSizeControl,
-                    lineHeightControl,
-                    letterSpacingControl,
-                )
-            },
-            indent = true,
-            expandedInitial = false,
+        return listOf(
+            fontSizeControl,
+            lineHeightControl,
+            letterSpacingControl,
         )
     }
 
@@ -230,7 +243,12 @@ class TypographyScreenControl(
     ) {
         themeController.updateSemantic {
             val current = it.typography.tokens.getValue(token)
-            it.copy(typography = it.typography.withTokenSet(token, transform(current)))
+            it.copy(
+                typography = it.typography.withTokenSet(
+                    token = token,
+                    tokenSet = transform(current),
+                ),
+            )
         }
     }
 }

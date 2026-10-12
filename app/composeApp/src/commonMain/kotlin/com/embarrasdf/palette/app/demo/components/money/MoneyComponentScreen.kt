@@ -14,6 +14,7 @@ fun MoneyComponentScreen(
     component: MoneyComponent,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -23,6 +24,7 @@ fun MoneyComponentScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (component) {
             MoneyComponent.CurrencyAmountField -> CurrencyAmountFieldDemo(

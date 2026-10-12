@@ -26,14 +26,7 @@ val KeyboardTypeSaver = object : Saver<KeyboardType, Any> {
     }
 
     override fun restore(value: Any): KeyboardType? {
-        return try {
-            if (value is String) {
-                KeyboardTypeEnum.valueOf(value).keyboardType
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            null
-        }
+        // Unknown names restore to null rather than throwing, like an absent value.
+        return KeyboardTypeEnum.entries.find { it.name == value }?.keyboardType
     }
 }

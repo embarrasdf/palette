@@ -28,9 +28,9 @@ data class ChevronButtonStyle(
 @Composable
 fun ChevronButton(
     direction: ChevronDirection,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     style: ChevronButtonStyle = ChevronButtonStyle(),
-    onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
@@ -62,7 +62,7 @@ fun ChevronIcon(
     ) { color ->
         Box(
             modifier = Modifier
-                .aspectRatio(1f, matchHeightConstraintsFirst = false)
+                .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = false)
                 .rotate(rotation)
                 .clip(ChevronIconShape)
                 .background(color),

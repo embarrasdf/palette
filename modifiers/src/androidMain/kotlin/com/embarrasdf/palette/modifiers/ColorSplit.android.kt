@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RenderEffect
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.modifiers.preview.DemoCircle
-import com.embarrasdf.palette.modifiers.preview.ModifierPreview
 import org.intellij.lang.annotations.Language
 
 // Inspired by
@@ -86,7 +86,10 @@ actual fun createColorSplitShader(): ColorSplitShader {
 
 class ColorSplitShaderImpl : ColorSplitShader {
 
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var xAmount: Float = 0f
     private var yAmount: Float = 0f
@@ -97,27 +100,31 @@ class ColorSplitShaderImpl : ColorSplitShader {
 
     override fun setXAmount(xAmount: Float) {
         this.xAmount = xAmount
-        control.setFloatUniform(UniformXAmountName, xAmount)
+        control.setFloatUniform(name = UniformXAmountName, value = xAmount)
     }
 
     override fun setYAmount(yAmount: Float) {
         this.yAmount = yAmount
-        control.setFloatUniform(UniformYAmountName, yAmount)
+        control.setFloatUniform(name = UniformYAmountName, value = yAmount)
     }
 
     override fun setColorMode(mode: ColorSplitMode) {
-        control.setIntUniform(UniformColorModeName, mode.ordinal)
+        control.setIntUniform(name = UniformColorModeName, value = mode.ordinal)
     }
 
     override fun onRemeasured(
         width: Int,
         height: Int,
     ) {
-        control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
+        control.setFloatUniform(
+            name = UniformSizeName,
+            value1 = width.toFloat(),
+            value2 = height.toFloat(),
+        )
     }
 }
 
-@ModifierPreview
+@Preview
 @Composable
 private fun Preview() {
     val range = -1f..1f

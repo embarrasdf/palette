@@ -35,6 +35,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun PaddingScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberPaddingScreenState(themeState = themeController)
     val control = rememberPaddingScreenControl(state = state, themeController = themeController)
@@ -48,6 +49,7 @@ fun PaddingScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = PaddingValuesToken.entries.toList(),
@@ -67,15 +69,15 @@ fun PaddingScreen(
 
 @Composable
 fun PaddingDemo(
-    modifier: Modifier = Modifier,
     token: PaddingValuesToken,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .border(1.dp, PaletteTheme.semantic.color.primary)
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.primary)
             .padding(token.toPaddingValues())
-            .border(1.dp, PaletteTheme.semantic.color.primary),
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.primary),
     ) {
         Text(
             text = token.name,

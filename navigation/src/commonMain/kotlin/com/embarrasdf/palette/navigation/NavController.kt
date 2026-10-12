@@ -22,7 +22,7 @@ class NavController(val state: NavState) {
         deeplink: String,
         replace: Boolean = false,
     ) {
-        val route = NavKey.fromDeeplink(deeplink, state.navGraph) ?: return
+        val route = NavKey.fromDeeplink(deeplink = deeplink, navGraph = state.navGraph) ?: return
         navigate(route, replace)
     }
 

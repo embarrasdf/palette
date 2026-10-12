@@ -10,8 +10,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 class ColorSplitIndicationControl(
-    private val value: () -> IndicationTokenSet.ColorSplit,
-    private val onValueChange: (IndicationTokenSet.ColorSplit) -> Unit,
+    value: () -> IndicationTokenSet.ColorSplit,
+    onValueChange: (IndicationTokenSet.ColorSplit) -> Unit,
 ) {
     private val colorModeControl = enumControl(
         name = "Color mode",

@@ -13,9 +13,9 @@ data class NumberFormat(
         get() = numDecimalValuesRange.last
 }
 
-sealed class IntGrouping {
-    data class Uniform(val numDigits: Int, val separator: Char) : IntGrouping()
-    data object None : IntGrouping()
+sealed interface IntGrouping {
+    data class Uniform(val numDigits: Int, val separator: Char) : IntGrouping
+    data object None : IntGrouping
 }
 
 fun NumberFormat.format(amount: Double): String {
@@ -31,14 +31,18 @@ private const val MinusSignUnicode = '−'
 private const val PlusSignAscii = '+'
 private const val PlusSignUnicode = '＋'
 
+private val DoubleValueNonFiniteLowercase = setOf(
+    DoubleValueInfinityLowercase,
+    DoubleValueNegativeInfinityLowercase,
+    DoubleValueNanLowercase,
+)
+
 fun NumberFormat.format(amount: String): String {
     if (amount.isEmpty()) return ""
 
     val amountLower = amount.lowercase()
     if (amountLower.contains(DoubleValueScientificNotationCharLowercase) ||
-        amountLower == DoubleValueInfinityLowercase ||
-        amountLower == DoubleValueNegativeInfinityLowercase ||
-        amountLower == DoubleValueNanLowercase
+        amountLower in DoubleValueNonFiniteLowercase
     ) {
         return amount
     }
@@ -70,12 +74,12 @@ fun NumberFormat.format(
     fracPart: String? = null,
 ): String {
     val decimalPart = if (fracPart != null || minNumDecimalValues > 0) {
-        val truncated = (fracPart ?: "").take(maxNumDecimalValues)
+        val truncated = fracPart.orEmpty().take(maxNumDecimalValues)
 
         // Trim trailing zeros but keep at least minNumDecimalValues
         val trimmed = truncated.trimEnd('0')
         if (trimmed.length < minNumDecimalValues) {
-            trimmed.padEnd(minNumDecimalValues, '0')
+            trimmed.padEnd(length = minNumDecimalValues, padChar = '0')
         } else if (trimmed.isEmpty() && minNumDecimalValues == 0) {
             null
         } else {
@@ -85,7 +89,7 @@ fun NumberFormat.format(
         null
     }
 
-    val formattedIntPart = applyIntGrouping(intPart, intGrouping)
+    val formattedIntPart = applyIntGrouping(intPart = intPart, intGrouping = intGrouping)
 
     return if (decimalPart != null) {
         val decimalSeparatorStr = decimalSeparator.toString()
@@ -100,7 +104,7 @@ internal fun splitNumberParts(
     decimalSeparator: Char = '.',
 ): Pair<String, String?> {
     val parts = numberString.split(decimalSeparator, '.')
-    val intPart = parts.getOrNull(0) ?: ""
+    val intPart = parts.getOrNull(0).orEmpty()
     val fracPart = parts.getOrNull(1)
     return intPart to fracPart
 }

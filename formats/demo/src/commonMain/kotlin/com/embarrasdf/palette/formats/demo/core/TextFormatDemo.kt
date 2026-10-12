@@ -2,7 +2,6 @@ package com.embarrasdf.palette.formats.demo.core
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.TextFieldState.Saver.restore
 import androidx.compose.foundation.text.input.TextFieldState.Saver.save
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -20,6 +19,7 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.formats.core.Capitalization
 import com.embarrasdf.palette.formats.core.TextFormat
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -30,9 +30,9 @@ import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextFormatDemo(
+    modifier: Modifier = Modifier,
     state: TextFormatDemoState = rememberTextFormatDemoState(),
     control: TextFormatDemoControl = rememberTextFormatDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -111,8 +111,11 @@ fun textFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         TextFormatDemoState(
-            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
-            wordDelimiterTextFieldState = restore(map[WordDelimiterTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
+            wordDelimiterTextFieldState = map.requireRestore(
+                key = WordDelimiterTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
         )
     },
 )
@@ -122,11 +125,11 @@ fun rememberTextFormatDemoControl(
     state: TextFormatDemoState,
     onValueChange: (TextFormat) -> Unit = { state.textFormat = it },
 ): TextFormatDemoControl {
-    val onValueChange by rememberUpdatedState(onValueChange)
-    return remember(state, onValueChange) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    return remember(state, currentOnValueChange) {
         TextFormatDemoControl(
             state = state,
-            onValueChange = onValueChange,
+            onValueChange = currentOnValueChange,
         )
     }
 }
@@ -148,7 +151,7 @@ class TextFormatDemoControl(
         selectedValue = { Capitalization.toKey(state.textFormat.capitalization) },
         onValueChange = { newKey ->
             val newState = state.textFormat.copy(
-                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar),
+                capitalization = Capitalization.fromKey(key = newKey, capitalizeFirstChar = state.capitalizeFirstChar),
             )
             onValueChange(newState)
         },

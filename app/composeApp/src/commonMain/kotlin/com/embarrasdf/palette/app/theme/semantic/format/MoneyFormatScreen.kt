@@ -30,6 +30,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun MoneyFormatScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberMoneyFormatScreenState(formats = themeController.semantic.formats)
     val control = rememberMoneyFormatScreenControl(state = state, themeController = themeController)
@@ -43,6 +44,7 @@ fun MoneyFormatScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = state.moneyFormatsByToken.entries.toList(),
@@ -58,7 +60,7 @@ fun MoneyFormatScreen(
                     .padding(horizontal = PaletteTheme.semantic.dimension.spacing.medium),
             ) {
                 MoneyFormatDemo(
-                    state = state.moneyFormatDemoStatesByToken[token]!!,
+                    state = state.moneyFormatDemoStatesByToken.getValue(token),
                 )
             }
         }
@@ -92,7 +94,7 @@ class MoneyFormatScreenState(
 
     val moneyFormatDemoStatesByToken = MoneyFormatToken.entries.associateWith { token ->
         MoneyFormatDemoState(
-            moneyFormatInitial = moneyFormatsByToken[token]!!,
+            moneyFormatInitial = moneyFormatsByToken.getValue(token),
         )
     }
 }
@@ -138,14 +140,13 @@ class MoneyFormatScreenControl(
     val controls: PersistentList<Control> = formatControls
 }
 
-@Composable
 private fun makeControlForToken(
     token: MoneyFormatToken,
     state: MoneyFormatScreenState,
     themeController: ThemeController,
 ): Control {
     val moneyFormatDemoControl = MoneyFormatDemoControl(
-        state = state.moneyFormatDemoStatesByToken[token]!!,
+        state = state.moneyFormatDemoStatesByToken.getValue(token),
         onValueChange = { newValue ->
             themeController.updateSemantic {
                 it.copy(

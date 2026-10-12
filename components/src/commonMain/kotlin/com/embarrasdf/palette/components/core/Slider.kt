@@ -20,7 +20,8 @@ import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -42,9 +43,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
 import kotlinx.coroutines.coroutineScope
-import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -59,11 +58,11 @@ data class SliderStyle(
 fun Slider(
     value: Float,
     onValueChange: ((Float) -> Unit)?,
+    stepIncrement: Float,
     modifier: Modifier = Modifier,
     style: SliderStyle = SliderStyle(),
     enabled: Boolean = true,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    stepIncrement: Float,
     onValueChangeFinished: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
@@ -73,7 +72,7 @@ fun Slider(
         modifier = modifier,
         enabled = enabled,
         valueRange = valueRange,
-        steps = stepsForIncrement(valueRange, stepIncrement),
+        steps = stepsForIncrement(valueRange = valueRange, stepIncrement = stepIncrement),
         onValueChangeFinished = onValueChangeFinished,
         style = style,
         interactionSource = interactionSource,
@@ -105,13 +104,13 @@ fun Slider(
     state.onValueChange = onValueChange
     state.value = value
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    LaunchedEffect(state) {
-        val snapped = snapValueToTick(value, state.tickFractions, valueRange)
-        if (snapped != value) {
-            currentOnValueChange?.invoke(snapped)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     Slider(
         state = state,
@@ -147,13 +146,13 @@ fun Slider(
     state.onValueChange = onValueChange
     state.value = value
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    LaunchedEffect(state) {
-        val snapped = snapValueToTick(value, state.tickFractions, valueRange)
-        if (snapped != value) {
-            currentOnValueChange?.invoke(snapped)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     Slider(
         state = state,
@@ -216,8 +215,8 @@ fun Slider(
         val sliderHeight = max(trackPlaceable.height, thumbPlaceable.height)
 
         state.updateDimensions(
-            thumbPlaceable.width.toFloat(),
-            sliderWidth,
+            newThumbWidth = thumbPlaceable.width.toFloat(),
+            newTotalWidth = sliderWidth,
         )
 
         val trackOffsetX = thumbPlaceable.width / 2
@@ -242,11 +241,11 @@ fun Slider(
 fun RangeSlider(
     value: ClosedFloatingPointRange<Float>,
     onValueChange: ((ClosedFloatingPointRange<Float>) -> Unit)?,
+    stepIncrement: Float,
     modifier: Modifier = Modifier,
     style: SliderStyle = SliderStyle(),
     enabled: Boolean = true,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    stepIncrement: Float,
     onValueChangeFinished: (() -> Unit)? = null,
 ) {
     RangeSlider(
@@ -255,7 +254,7 @@ fun RangeSlider(
         modifier = modifier,
         enabled = enabled,
         valueRange = valueRange,
-        steps = stepsForIncrement(valueRange, stepIncrement),
+        steps = stepsForIncrement(valueRange = valueRange, stepIncrement = stepIncrement),
         onValueChangeFinished = onValueChangeFinished,
         style = style,
     )
@@ -275,8 +274,7 @@ fun RangeSlider(
     val onValueChangeFinishedState = rememberUpdatedState(onValueChangeFinished)
     val state = remember(valueRange, steps) {
         RangeSliderState(
-            activeRangeStart = value.start,
-            activeRangeEnd = value.endInclusive,
+            activeRange = value,
             onValueChangeFinished = { onValueChangeFinishedState.value?.invoke() },
             valueRange = valueRange,
             steps = steps,
@@ -286,14 +284,13 @@ fun RangeSlider(
     state.activeRangeStart = value.start
     state.activeRangeEnd = value.endInclusive
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    LaunchedEffect(state) {
-        val snappedStart = snapValueToTick(value.start, state.tickFractions, valueRange)
-        val snappedEnd = snapValueToTick(value.endInclusive, state.tickFractions, valueRange)
-        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
-            currentOnValueChange?.invoke(snappedStart..snappedEnd)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     RangeSlider(
         state = state,
@@ -317,8 +314,7 @@ fun RangeSlider(
     val onValueChangeFinishedState = rememberUpdatedState(onValueChangeFinished)
     val state = remember(valueRange, snapValues) {
         RangeSliderState(
-            activeRangeStart = value.start,
-            activeRangeEnd = value.endInclusive,
+            activeRange = value,
             onValueChangeFinished = { onValueChangeFinishedState.value?.invoke() },
             valueRange = valueRange,
             snapValues = snapValues,
@@ -328,14 +324,13 @@ fun RangeSlider(
     state.activeRangeStart = value.start
     state.activeRangeEnd = value.endInclusive
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    LaunchedEffect(state) {
-        val snappedStart = snapValueToTick(value.start, state.tickFractions, valueRange)
-        val snappedEnd = snapValueToTick(value.endInclusive, state.tickFractions, valueRange)
-        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
-            currentOnValueChange?.invoke(snappedStart..snappedEnd)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     RangeSlider(
         state = state,
@@ -409,8 +404,8 @@ fun RangeSlider(
         )
 
         state.updateDimensions(
-            startThumbPlaceable.width.toFloat(),
-            sliderWidth,
+            newThumbWidth = startThumbPlaceable.width.toFloat(),
+            newTotalWidth = sliderWidth,
         )
 
         val trackOffsetX = startThumbPlaceable.width / 2
@@ -427,6 +422,51 @@ fun RangeSlider(
     }
 }
 
+// When the caller's value doesn't sit on a tick, reports it snapped to the nearest one. Runs again
+// only when [key] changes.
+@Composable
+private fun SnapToTickEffect(
+    key: Any,
+    value: Float,
+    tickFractions: FloatArray,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: ((Float) -> Unit)?,
+) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    SideEffect(key) {
+        val snapped = snapValueToTick(current = value, tickFractions = tickFractions, valueRange = valueRange)
+        if (snapped != value) {
+            currentOnValueChange?.invoke(snapped)
+        }
+    }
+}
+
+@Composable
+private fun SnapToTickEffect(
+    key: Any,
+    value: ClosedFloatingPointRange<Float>,
+    tickFractions: FloatArray,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: ((ClosedFloatingPointRange<Float>) -> Unit)?,
+) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    SideEffect(key) {
+        val snappedStart = snapValueToTick(
+            current = value.start,
+            tickFractions = tickFractions,
+            valueRange = valueRange,
+        )
+        val snappedEnd = snapValueToTick(
+            current = value.endInclusive,
+            tickFractions = tickFractions,
+            valueRange = valueRange,
+        )
+        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
+            currentOnValueChange?.invoke(snappedStart..snappedEnd)
+        }
+    }
+}
+
 private fun Modifier.sliderSemantics(
     state: SliderState,
     enabled: Boolean,
@@ -434,9 +474,9 @@ private fun Modifier.sliderSemantics(
     if (!enabled) disabled()
     setProgress { targetValue ->
         val resolvedValue = snapValueToTick(
-            targetValue.coerceIn(state.valueRange.start, state.valueRange.endInclusive),
-            state.tickFractions,
-            state.valueRange,
+            current = targetValue.coerceIn(state.valueRange.start, state.valueRange.endInclusive),
+            tickFractions = state.tickFractions,
+            valueRange = state.valueRange,
         )
 
         if (resolvedValue == state.value) {
@@ -455,9 +495,9 @@ private fun Modifier.sliderSemantics(
         true
     }
 }.progressSemantics(
-    state.value,
-    state.valueRange.start..state.valueRange.endInclusive,
-    state.steps,
+    value = state.value,
+    valueRange = state.valueRange.start..state.valueRange.endInclusive,
+    steps = state.steps,
 )
 
 data class SliderColors(
@@ -476,19 +516,21 @@ object SliderDefaults {
     val ThumbPointSizeDp = 4.dp
     val ThumbPointSize: Size
         @Composable
+        @ReadOnlyComposable
         get() = with(LocalDensity.current) {
             Size(ThumbPointSizeDp.toPx(), ThumbPointSizeDp.toPx())
         }
 
     @Composable
     fun Track(
+        modifier: Modifier = Modifier,
         tickFractions: FloatArray = floatArrayOf(),
         colors: SliderColors = SliderColors(),
     ) {
         val brush = remember(colors.trackColor) { SolidColor(colors.trackColor) }
         val tickRadius = with(LocalDensity.current) { TickSize.toPx() }
         Canvas(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(TrackHeight),
         ) {
@@ -509,13 +551,16 @@ object SliderDefaults {
     }
 
     @Composable
-    fun Thumb(colors: SliderColors = SliderColors()) {
+    fun Thumb(
+        modifier: Modifier = Modifier,
+        colors: SliderColors = SliderColors(),
+    ) {
         val borderStroke = remember(colors.thumbColor) {
             BorderStroke(width = ThumbBorderWidth, color = colors.thumbColor)
         }
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
+            modifier = modifier
                 .size(ThumbSize)
                 .border(borderStroke),
         ) {
@@ -548,7 +593,7 @@ class SliderState(
 ) : DraggableState {
 
     internal val tickFractions: FloatArray = snapValues
-        ?.let { snapValuesToTickFractions(it, valueRange) }
+        ?.let { snapValuesToTickFractions(snapValues = it, valueRange = valueRange) }
         ?: stepsToTickFractions(steps)
 
     private var valueState by mutableFloatStateOf(value)
@@ -564,7 +609,7 @@ class SliderState(
         block: suspend DragScope.() -> Unit,
     ): Unit = coroutineScope {
         isDragging = true
-        scrollMutex.mutateWith(dragScope, dragPriority, block)
+        scrollMutex.mutateWith(receiver = dragScope, priority = dragPriority, block = block)
         isDragging = false
     }
 
@@ -574,8 +619,12 @@ class SliderState(
         rawOffset = (rawOffset + delta + pressOffset)
         pressOffset = 0f
         val offsetInTrack = rawOffset
-        val rawValue = scaleToUserValue(minPx, maxPx, offsetInTrack)
-        val scaledUserValue = snapValueToTick(rawValue, tickFractions, valueRange)
+        val rawValue = scaleToUserValue(minPx = minPx, maxPx = maxPx, offset = offsetInTrack)
+        val scaledUserValue = snapValueToTick(
+            current = rawValue,
+            tickFractions = tickFractions,
+            valueRange = valueRange,
+        )
         if (scaledUserValue != this.value) {
             if (onValueChange != null) {
                 onValueChange?.let { it(scaledUserValue) }
@@ -590,9 +639,9 @@ class SliderState(
 
     internal val coercedValueAsFraction
         get() = calcFraction(
-            valueRange.start,
-            valueRange.endInclusive,
-            value.coerceIn(valueRange.start, valueRange.endInclusive),
+            a = valueRange.start,
+            b = valueRange.endInclusive,
+            pos = value.coerceIn(valueRange.start, valueRange.endInclusive),
         )
 
     internal var isDragging by mutableStateOf(false)
@@ -617,7 +666,7 @@ class SliderState(
         pressOffset = pos.x - rawOffset
     }
 
-    private var rawOffset by mutableFloatStateOf(scaleToOffset(0f, 0f, value))
+    private var rawOffset by mutableFloatStateOf(scaleToOffset(minPx = 0f, maxPx = 0f, userValue = value))
     private var pressOffset by mutableFloatStateOf(0f)
     private val dragScope: DragScope = object : DragScope {
         override fun dragBy(pixels: Float): Unit = dispatchRawDelta(pixels)
@@ -629,18 +678,29 @@ class SliderState(
         minPx: Float,
         maxPx: Float,
         offset: Float,
-    ) = scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
+    ) = scale(
+        a1 = minPx,
+        b1 = maxPx,
+        x1 = offset,
+        a2 = valueRange.start,
+        b2 = valueRange.endInclusive,
+    )
 
     private fun scaleToOffset(
         minPx: Float,
         maxPx: Float,
         userValue: Float,
-    ) = scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
+    ) = scale(
+        a1 = valueRange.start,
+        b1 = valueRange.endInclusive,
+        x1 = userValue,
+        a2 = minPx,
+        b2 = maxPx,
+    )
 }
 
 class RangeSliderState(
-    activeRangeStart: Float = 0f,
-    activeRangeEnd: Float = 1f,
+    activeRange: ClosedFloatingPointRange<Float> = 0f..1f,
     var onValueChange: ((ClosedFloatingPointRange<Float>) -> Unit)? = null,
     val onValueChangeFinished: (() -> Unit)? = null,
     val valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
@@ -648,14 +708,14 @@ class RangeSliderState(
     snapValues: List<Float>? = null,
 ) {
     internal val tickFractions: FloatArray = snapValues
-        ?.let { snapValuesToTickFractions(it, valueRange) }
+        ?.let { snapValuesToTickFractions(snapValues = it, valueRange = valueRange) }
         ?: stepsToTickFractions(steps)
 
     private var activeRangeStartState by mutableFloatStateOf(
-        activeRangeStart.coerceIn(valueRange.start, valueRange.endInclusive),
+        activeRange.start.coerceIn(valueRange.start, valueRange.endInclusive),
     )
     private var activeRangeEndState by mutableFloatStateOf(
-        activeRangeEnd.coerceIn(valueRange.start, valueRange.endInclusive),
+        activeRange.endInclusive.coerceIn(valueRange.start, valueRange.endInclusive),
     )
 
     var activeRangeStart: Float
@@ -671,10 +731,10 @@ class RangeSliderState(
         }
 
     internal val coercedActiveRangeStartAsFraction
-        get() = calcFraction(valueRange.start, valueRange.endInclusive, activeRangeStart)
+        get() = calcFraction(a = valueRange.start, b = valueRange.endInclusive, pos = activeRangeStart)
 
     internal val coercedActiveRangeEndAsFraction
-        get() = calcFraction(valueRange.start, valueRange.endInclusive, activeRangeEnd)
+        get() = calcFraction(a = valueRange.start, b = valueRange.endInclusive, pos = activeRangeEnd)
 
     internal val gestureEndAction = {
         onValueChangeFinished?.invoke()
@@ -702,13 +762,25 @@ class RangeSliderState(
     internal fun initStartDrag() {
         val maxPx = max(totalWidth - thumbWidth / 2, 0f)
         val minPx = min(thumbWidth / 2, maxPx)
-        rawOffsetStart = scale(valueRange.start, valueRange.endInclusive, activeRangeStart, minPx, maxPx)
+        rawOffsetStart = scale(
+            a1 = valueRange.start,
+            b1 = valueRange.endInclusive,
+            x1 = activeRangeStart,
+            a2 = minPx,
+            b2 = maxPx,
+        )
     }
 
     internal fun initEndDrag() {
         val maxPx = max(totalWidth - thumbWidth / 2, 0f)
         val minPx = min(thumbWidth / 2, maxPx)
-        rawOffsetEnd = scale(valueRange.start, valueRange.endInclusive, activeRangeEnd, minPx, maxPx)
+        rawOffsetEnd = scale(
+            a1 = valueRange.start,
+            b1 = valueRange.endInclusive,
+            x1 = activeRangeEnd,
+            a2 = minPx,
+            b2 = maxPx,
+        )
     }
 
     private val startDragScope: DragScope = object : DragScope {
@@ -722,7 +794,7 @@ class RangeSliderState(
             block: suspend DragScope.() -> Unit,
         ): Unit = coroutineScope {
             isDraggingStart = true
-            startScrollMutex.mutateWith(startDragScope, dragPriority, block)
+            startScrollMutex.mutateWith(receiver = startDragScope, priority = dragPriority, block = block)
             isDraggingStart = false
         }
 
@@ -740,7 +812,7 @@ class RangeSliderState(
             block: suspend DragScope.() -> Unit,
         ): Unit = coroutineScope {
             isDraggingEnd = true
-            endScrollMutex.mutateWith(endDragScope, dragPriority, block)
+            endScrollMutex.mutateWith(receiver = endDragScope, priority = dragPriority, block = block)
             isDraggingEnd = false
         }
 
@@ -752,9 +824,15 @@ class RangeSliderState(
         val minPx = min(thumbWidth / 2, maxPx)
         rawOffsetStart = (rawOffsetStart + delta).coerceIn(minPx, rawOffsetEnd)
         val scaledUserValue = snapValueToTick(
-            scale(minPx, maxPx, rawOffsetStart, valueRange.start, valueRange.endInclusive),
-            tickFractions,
-            valueRange,
+            current = scale(
+                a1 = minPx,
+                b1 = maxPx,
+                x1 = rawOffsetStart,
+                a2 = valueRange.start,
+                b2 = valueRange.endInclusive,
+            ),
+            tickFractions = tickFractions,
+            valueRange = valueRange,
         ).coerceIn(valueRange.start, activeRangeEnd)
         if (scaledUserValue != activeRangeStart) {
             if (onValueChange != null) {
@@ -770,9 +848,15 @@ class RangeSliderState(
         val minPx = min(thumbWidth / 2, maxPx)
         rawOffsetEnd = (rawOffsetEnd + delta).coerceIn(rawOffsetStart, maxPx)
         val scaledUserValue = snapValueToTick(
-            scale(minPx, maxPx, rawOffsetEnd, valueRange.start, valueRange.endInclusive),
-            tickFractions,
-            valueRange,
+            current = scale(
+                a1 = minPx,
+                b1 = maxPx,
+                x1 = rawOffsetEnd,
+                a2 = valueRange.start,
+                b2 = valueRange.endInclusive,
+            ),
+            tickFractions = tickFractions,
+            valueRange = valueRange,
         ).coerceIn(activeRangeStart, valueRange.endInclusive)
         if (scaledUserValue != activeRangeEnd) {
             if (onValueChange != null) {
@@ -783,57 +867,6 @@ class RangeSliderState(
         }
     }
 }
-
-fun stepsForIncrement(
-    valueRange: ClosedFloatingPointRange<Float>,
-    stepIncrement: Float,
-): Int {
-    val rangeSize = valueRange.endInclusive - valueRange.start
-    return ((rangeSize / stepIncrement).roundToInt() - 1).coerceAtLeast(0)
-}
-
-internal fun stepsToTickFractions(steps: Int): FloatArray =
-    if (steps == 0) floatArrayOf() else FloatArray(steps + 2) { it.toFloat() / (steps + 1) }
-
-internal fun snapValuesToTickFractions(
-    snapValues: List<Float>,
-    valueRange: ClosedFloatingPointRange<Float>,
-): FloatArray {
-    val rangeSize = valueRange.endInclusive - valueRange.start
-    return snapValues
-        .filter { it in valueRange }
-        .map { (it - valueRange.start) / rangeSize }
-        .sorted()
-        .toFloatArray()
-}
-
-internal fun snapValueToTick(
-    current: Float,
-    tickFractions: FloatArray,
-    valueRange: ClosedFloatingPointRange<Float>,
-): Float {
-    if (tickFractions.isEmpty()) return current
-    return tickFractions
-        .minByOrNull { abs(lerp(valueRange.start, valueRange.endInclusive, it) - current) }
-        ?.run { lerp(valueRange.start, valueRange.endInclusive, this) }
-        ?: current
-}
-
-// Scale x1 from a1..b1 range to a2..b2 range
-private fun scale(
-    a1: Float,
-    b1: Float,
-    x1: Float,
-    a2: Float,
-    b2: Float,
-) = lerp(a2, b2, calcFraction(a1, b1, x1))
-
-// Calculate the 0..1 fraction that `pos` value represents between `a` and `b`
-private fun calcFraction(
-    a: Float,
-    b: Float,
-    pos: Float,
-) = (if (b - a == 0f) 0f else (pos - a) / (b - a)).coerceIn(0f, 1f)
 
 @Preview
 @Composable

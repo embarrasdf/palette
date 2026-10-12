@@ -73,7 +73,7 @@ fun ColorControl(
                     modifier = Modifier
                         .fillMaxHeight(),
                 )
-                Text(color.toString(), style = style.labelStyle)
+                Text(text = color.toString(), style = style.labelStyle)
             }
         }
     }
@@ -81,7 +81,7 @@ fun ColorControl(
     if (showDialog) {
         ColorPickerDialog(
             color = color,
-            onColorSelected = control.onColorChange,
+            onColorSelect = control.onColorChange,
             onDismissRequest = { showDialog = false },
             style = style,
         )
@@ -91,7 +91,7 @@ fun ColorControl(
 @Composable
 private fun ColorPickerDialog(
     color: Color,
-    onColorSelected: (Color) -> Unit,
+    onColorSelect: (Color) -> Unit,
     onDismissRequest: () -> Unit,
     style: ColorControlStyle,
 ) {
@@ -101,7 +101,7 @@ private fun ColorPickerDialog(
         Surface(style = style.surfaceStyle) {
             ColorPickerDialogContent(
                 color = color,
-                onColorSelected = onColorSelected,
+                onColorSelect = onColorSelect,
                 onDismissRequest = onDismissRequest,
                 style = style.colorPickerDialogContentStyle,
                 modifier = Modifier

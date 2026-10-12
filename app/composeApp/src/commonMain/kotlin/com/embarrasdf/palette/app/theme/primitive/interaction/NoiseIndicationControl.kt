@@ -10,8 +10,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 class NoiseIndicationControl(
-    private val value: () -> IndicationTokenSet.Noise,
-    private val onValueChange: (IndicationTokenSet.Noise) -> Unit,
+    value: () -> IndicationTokenSet.Noise,
+    onValueChange: (IndicationTokenSet.Noise) -> Unit,
 ) {
     private val colorModeControl = enumControl(
         name = "Color mode",

@@ -9,10 +9,10 @@ import com.embarrasdf.palette.components.layout.Scaffold as BaseScaffold
 
 @Composable
 fun Scaffold(
+    modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     floatingAction: @Composable () -> Unit = {},
     navigationBar: @Composable () -> Unit = {},
-    modifier: Modifier = Modifier,
     style: ScaffoldStyle = PaletteTheme.component.layout.scaffold,
     content: @Composable (PaddingValues) -> Unit,
 ) = BaseScaffold(

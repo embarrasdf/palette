@@ -34,7 +34,7 @@ fun ColorDisplay(
 
 @Preview
 @Composable
-fun ColorDisplayPreview() {
+private fun ColorDisplayPreview() {
     ColorDisplay(
         color = Color.Red,
         modifier = Modifier

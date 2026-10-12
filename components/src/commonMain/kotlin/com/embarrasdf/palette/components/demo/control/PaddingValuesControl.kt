@@ -9,6 +9,8 @@ import com.embarrasdf.palette.components.util.copy
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.math.round
 
+private const val DefaultMaxPaddingDp = 80f
+
 /**
  * A collapsed column of continuous dp sliders for each edge of a [PaddingValues]. The sliders are
  * continuous (no tick marks), but each edge value is snapped to [snapIncrement] dp. Edges are read
@@ -18,11 +20,11 @@ fun paddingValuesControls(
     value: () -> PaddingValues,
     onValueChange: (PaddingValues) -> Unit,
     name: String = "Padding",
-    valueRange: () -> ClosedFloatingPointRange<Float> = { 0f..80f },
+    valueRange: () -> ClosedFloatingPointRange<Float> = { 0f..DefaultMaxPaddingDp },
     snapIncrement: Float = 1f,
     expandedInitial: Boolean = false,
 ): Control {
-    fun snap(value: Float): Float = if (snapIncrement > 0f) round(value / snapIncrement) * snapIncrement else value
+    fun snap(raw: Float): Float = if (snapIncrement > 0f) round(raw / snapIncrement) * snapIncrement else raw
 
     fun edgeControl(
         edgeName: String,

@@ -34,6 +34,7 @@ data class CurrencyAmountFieldStyle(
 @Composable
 fun CurrencyAmountField(
     moneyFormat: MoneyFormat,
+    modifier: Modifier = Modifier,
     textFieldState: TextFieldState = rememberTextFieldState(),
     style: CurrencyAmountFieldStyle = CurrencyAmountFieldStyle(),
     placeholder: String = "0",
@@ -43,7 +44,7 @@ fun CurrencyAmountField(
     TextField(
         state = textFieldState,
         style = style.textFieldStyle,
-        modifier = Modifier
+        modifier = modifier
             .width(IntrinsicSize.Min)
             .padding(style.padding),
         inputTransformation = NumberFormatInputTransformation(

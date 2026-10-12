@@ -32,7 +32,7 @@ import com.embarrasdf.palette.components.geometry.CurveStitch
 import com.embarrasdf.palette.components.geometry.CurveStitchShape
 import com.embarrasdf.palette.components.geometry.CurveStitchStar
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.core.Surface
@@ -52,7 +52,6 @@ fun CurveStitchDemo(
     ) {
         CurveStitchDemo(
             state = state,
-            modifier = modifier,
         )
     }
 }
@@ -63,7 +62,7 @@ fun DemoScope.CurveStitchDemo(
     state: CurveStitchDemoState = rememberCurveStitchDemoState(),
     enablePointerInput: Boolean = true,
 ) {
-    val modifier = modifier
+    val contentModifier = modifier
         .then(
             if (maxHeight < maxWidth) {
                 val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues()
@@ -141,7 +140,7 @@ fun DemoScope.CurveStitchDemo(
             numLines = state.numLines,
             strokeWidth = state.strokeWidth,
             color = PaletteTheme.semantic.color.primary,
-            modifier = modifier
+            modifier = contentModifier
                 .then(anglePointerModifier),
         )
         CurveStitchDemo.Star -> CurveStitchStar(
@@ -152,14 +151,14 @@ fun DemoScope.CurveStitchDemo(
             innerRadius = state.innerRadius,
             drawInsidePoints = state.starInsidePoints,
             drawOutsidePoints = state.starOutsidePoints,
-            modifier = modifier,
+            modifier = contentModifier,
         )
         CurveStitchDemo.Shape -> CurveStitchShape(
             numLines = state.numLines,
             numPoints = state.numPoints,
             strokeWidth = state.strokeWidth,
             color = PaletteTheme.semantic.color.primary,
-            modifier = modifier,
+            modifier = contentModifier,
         )
     }
 }
@@ -251,9 +250,9 @@ val CurveStitchDemoStateSaver = mapSaverSafe(
             CurrentDemoKey to value.currentDemo.name,
             StrokeWidthKey to value.strokeWidth.value,
             NumLinesKey to value.numLines,
-            AngleEndOffsetKey to save(value.angleStartOffset, OffsetSaver, this),
-            AngleVertexOffsetKey to save(value.angleVertexOffset, OffsetSaver, this),
-            AngleStartOffsetKey to save(value.angleEndOffset, OffsetSaver, this),
+            AngleEndOffsetKey to save(value = value.angleStartOffset, saver = OffsetSaver, scope = this),
+            AngleVertexOffsetKey to save(value = value.angleVertexOffset, saver = OffsetSaver, scope = this),
+            AngleStartOffsetKey to save(value = value.angleEndOffset, saver = OffsetSaver, scope = this),
             NumPointsKey to value.numPoints,
             InnerRadiusKey to value.innerRadius,
             StarInsidePointsKey to value.starInsidePoints,
@@ -266,9 +265,9 @@ val CurveStitchDemoStateSaver = mapSaverSafe(
             currentDemoInitial = CurveStitchDemo.valueOf(map[CurrentDemoKey] as String),
             strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
             numLinesInitial = map[NumLinesKey] as Int,
-            angleStartOffsetInitial = restore(map[AngleStartOffsetKey], OffsetSaver)!!,
-            angleVertexOffsetInitial = restore(map[AngleVertexOffsetKey], OffsetSaver)!!,
-            angleEndOffsetInitial = restore(map[AngleEndOffsetKey], OffsetSaver)!!,
+            angleStartOffsetInitial = map.requireRestore(key = AngleStartOffsetKey, saver = OffsetSaver),
+            angleVertexOffsetInitial = map.requireRestore(key = AngleVertexOffsetKey, saver = OffsetSaver),
+            angleEndOffsetInitial = map.requireRestore(key = AngleEndOffsetKey, saver = OffsetSaver),
             numPointsInitial = map[NumPointsKey] as Int,
             innerRadiusInitial = map[InnerRadiusKey] as Float,
             starInsidePointsInitial = map[StarInsidePointsKey] as Boolean,
@@ -382,7 +381,7 @@ class CurveStitchDemoControl(
 
 @Preview
 @Composable
-fun CurveStitchDemoPreview() {
+private fun CurveStitchDemoPreview() {
     PaletteTheme {
         Surface {
             CurveStitchDemo()

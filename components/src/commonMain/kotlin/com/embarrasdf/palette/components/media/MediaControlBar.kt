@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -79,6 +78,7 @@ private data class CachedSizes(
  *   [MediaControlBarStyle.minContentSize]..[MediaControlBarStyle.maxContentSize] and the incoming
  *   constraints. [DpSize.Unspecified] (default) fills the available space up to the style's max.
  */
+@Suppress("ModifierNotUsedAtRoot")
 @Composable
 fun MediaControlBar(
     mediaItem: MediaItem,
@@ -109,20 +109,14 @@ fun MediaControlBar(
             },
         ).toIntSize()
 
+        // The box reads the constraints the parent offers, so the caller's modifier goes on the Row
+        // it lays out rather than on the box.
         BoxWithConstraints {
             val maxWidthPx = constraints.maxWidth
-            val minContentWidth by derivedStateOf {
-                maxOf(minContentSizePx.width, constraints.minWidth)
-            }
-            val minContentHeight by derivedStateOf {
-                maxOf(minContentSizePx.height, constraints.minHeight)
-            }
-            val maxContentWidth by derivedStateOf {
-                minOf(maxContentSizePx.width, constraints.maxWidth)
-            }
-            val maxContentHeight by derivedStateOf {
-                minOf(maxContentSizePx.height, constraints.maxHeight)
-            }
+            val minContentWidth = maxOf(minContentSizePx.width, constraints.minWidth)
+            val minContentHeight = maxOf(minContentSizePx.height, constraints.minHeight)
+            val maxContentWidth = minOf(maxContentSizePx.width, constraints.maxWidth)
+            val maxContentHeight = minOf(maxContentSizePx.height, constraints.maxHeight)
 
             val cachedSizes = remember(
                 maxWidthPx,

@@ -15,6 +15,7 @@ fun CoreFormatScreen(
     format: CoreFormat,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -24,6 +25,7 @@ fun CoreFormatScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (format) {
             CoreFormat.Number -> NumberFormatDemo(

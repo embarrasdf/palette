@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.TextFieldState.Saver.restore
 import androidx.compose.foundation.text.input.TextFieldState.Saver.save
 import androidx.compose.foundation.text.input.byValue
 import androidx.compose.runtime.Composable
@@ -24,6 +23,7 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.formats.core.IntGrouping
 import com.embarrasdf.palette.formats.core.NumberFormat
 import com.embarrasdf.palette.formats.core.format
@@ -34,9 +34,9 @@ import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun NumberFormatDemo(
+    modifier: Modifier = Modifier,
     state: NumberFormatDemoState = rememberNumberFormatDemoState(),
     control: NumberFormatDemoControl = rememberNumberFormatDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -89,7 +89,7 @@ class NumberFormatDemoState(
         initialText = numberFormatInitial.maxNumDecimalValues.toString(),
     ),
     val positiveSignTextFieldState: TextFieldState = TextFieldState(
-        initialText = numberFormatInitial.positiveSign ?: "",
+        initialText = numberFormatInitial.positiveSign.orEmpty(),
     ),
     val negativeSignTextFieldState: TextFieldState = TextFieldState(
         initialText = numberFormatInitial.negativeSign,
@@ -135,12 +135,27 @@ fun numberFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         NumberFormatDemoState(
-            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
-            minNumDecimalValuesTextFieldState = restore(map[MinNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            maxNumDecimalValuesTextFieldState = restore(map[MaxNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            positiveSignTextFieldState = restore(map[PositiveSignTextFieldStateKey]!!) as TextFieldState,
-            negativeSignTextFieldState = restore(map[NegativeSignTextFieldStateKey]!!) as TextFieldState,
-            groupingNumDigitsTextFieldState = restore(map[GroupingNumDigitsTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
+            minNumDecimalValuesTextFieldState = map.requireRestore(
+                key = MinNumDecimalValuesTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            maxNumDecimalValuesTextFieldState = map.requireRestore(
+                key = MaxNumDecimalValuesTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            positiveSignTextFieldState = map.requireRestore(
+                key = PositiveSignTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            negativeSignTextFieldState = map.requireRestore(
+                key = NegativeSignTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            groupingNumDigitsTextFieldState = map.requireRestore(
+                key = GroupingNumDigitsTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
         )
     },
 )
@@ -150,11 +165,11 @@ fun rememberNumberFormatDemoControl(
     state: NumberFormatDemoState,
     onValueChange: (NumberFormat) -> Unit = { state.numberFormat = it },
 ): NumberFormatDemoControl {
-    val onValueChange by rememberUpdatedState(onValueChange)
-    return remember(state, onValueChange) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    return remember(state, currentOnValueChange) {
         NumberFormatDemoControl(
             state = state,
-            onValueChange = onValueChange,
+            onValueChange = currentOnValueChange,
         )
     }
 }

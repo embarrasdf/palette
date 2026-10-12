@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 @RunWith(TestParameterInjector::class)
 class ColorSplitTest(
     @TestParameter(valuesProvider = AmountProvider::class)
-    private val amounts: Pair<Float, Float>,
+    amounts: Pair<Float, Float>,
 ) {
     private val xAmount = amounts.first
     private val yAmount = amounts.second

@@ -18,6 +18,7 @@ fun MediaComponentScreen(
     component: MediaComponent,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -27,6 +28,7 @@ fun MediaComponentScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (component) {
             MediaComponent.MediaControlBar -> MediaControlBarDemo(

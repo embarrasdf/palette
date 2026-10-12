@@ -41,7 +41,6 @@ fun EntryProviderScope<NavKey>.primitiveEntryProvider(
 
     entry<PrimitiveTypographyRoute> {
         TypographyScreen(
-            themeController = themeController,
             onNavigateUp = navController::goBack,
         )
     }

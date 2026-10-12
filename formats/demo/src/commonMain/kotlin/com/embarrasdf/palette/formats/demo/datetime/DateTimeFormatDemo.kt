@@ -40,6 +40,7 @@ fun <T : Enum<T>> DateTimeFormatDemo(
     initial: T,
     entries: EnumEntries<T>,
     format: (Instant, LocalDateTime, T) -> String,
+    modifier: Modifier = Modifier,
     state: DateTimeFormatDemoState<T> = rememberDateTimeFormatDemoState(
         formatInitial = initial,
     ),
@@ -47,7 +48,6 @@ fun <T : Enum<T>> DateTimeFormatDemo(
         entries = entries,
         state = state,
     ),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -162,7 +162,11 @@ class DateTimeFormatDemoControl<T : Enum<T>>(
         ),
         Control.Dropdown(
             name = "Time zone",
-            values = { state.availableTimeZoneIds.map { Control.Dropdown.DropdownItem(it, it) }.toPersistentList() },
+            values = {
+                state.availableTimeZoneIds
+                    .map { Control.Dropdown.DropdownItem(name = it, value = it) }
+                    .toPersistentList()
+            },
             selectedIndex = { state.availableTimeZoneIds.indexOf(state.timeZone.id) },
             onValueChange = { index ->
                 state.timeZone = TimeZone.of(state.availableTimeZoneIds[index])

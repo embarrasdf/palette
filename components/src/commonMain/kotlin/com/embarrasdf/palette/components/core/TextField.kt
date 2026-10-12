@@ -33,7 +33,7 @@ import com.embarrasdf.palette.formats.core.inputTransformation
 data class TextFieldStyle(
     val textStyle: TextStyle = TextStyle(),
     val cursorBrush: Brush = SolidColor(Color.Unspecified),
-    val borderStroke: BorderStroke = BorderStroke(1.dp, Color.Unspecified),
+    val borderStroke: BorderStroke = BorderStroke(width = 1.dp, color = Color.Unspecified),
     val contentPadding: PaddingValues = PaddingValues(8.dp),
 )
 
@@ -56,7 +56,7 @@ fun TextField(
 ) {
     val textStyle = style.textStyle
     val resolvedDecorator = decorator
-        ?: TextFieldDefaults.textFieldDecorator(style.borderStroke, style.contentPadding)
+        ?: TextFieldDefaults.textFieldDecorator(borderStroke = style.borderStroke, padding = style.contentPadding)
     val color = textStyle.composeTextStyle.color
 
     val formatInputTransformation = textStyle.format.inputTransformation
