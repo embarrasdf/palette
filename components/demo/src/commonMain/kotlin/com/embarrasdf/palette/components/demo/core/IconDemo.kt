@@ -32,6 +32,7 @@ import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 private val IconDemoContainerSize = 240.dp
 
@@ -179,10 +180,11 @@ class IconDemoControl(
         indent = true,
         expandedInitial = true,
         controls = {
-            persistentListOf(
-                colorControl,
-                sizeTypeControl,
-            ).addAll(sizeControls(state.sizeType))
+            buildList<Control> {
+                add(colorControl)
+                add(sizeTypeControl)
+                addAll(sizeControls(state.sizeType))
+            }.toPersistentList()
         },
     )
 

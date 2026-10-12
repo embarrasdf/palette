@@ -33,7 +33,7 @@ import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import com.embarrasdf.palette.theme.semantic.typography.TypographyTokenSet
 import com.embarrasdf.palette.theme.semantic.typography.toComposeTextStyle
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TypographyScreen(
@@ -161,8 +161,10 @@ class TypographyScreenControl(
     private val tokenControls: List<Control.ControlColumn> =
         TypographyToken.entries.map { makeControlForToken(it) }
 
-    val controls: PersistentList<Control> = persistentListOf<Control>(textFieldControl)
-        .addAll(tokenControls)
+    val controls: PersistentList<Control> = buildList<Control> {
+        add(textFieldControl)
+        addAll(tokenControls)
+    }.toPersistentList()
 
     private fun makeControlForToken(token: TypographyToken): Control.ControlColumn {
         val fontFamilyControl = enumControl(
@@ -193,11 +195,12 @@ class TypographyScreenControl(
         return Control.ControlColumn(
             name = token.name,
             controls = {
-                persistentListOf<Control>(
-                    fontFamilyControl,
-                    fontWeightControl,
-                    fontStyleControl,
-                ).addAll(metricControls)
+                buildList<Control> {
+                    add(fontFamilyControl)
+                    add(fontWeightControl)
+                    add(fontStyleControl)
+                    addAll(metricControls)
+                }.toPersistentList()
             },
             indent = true,
             expandedInitial = false,

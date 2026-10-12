@@ -332,7 +332,10 @@ class GridDemoControl(
         onValueChange = { state.clipToBounds = it },
     )
 
-    val cartesianControls = gridScaleXControls.addAll(gridScaleYControls)
+    val cartesianControls = buildList<Control> {
+        addAll(gridScaleXControls)
+        addAll(gridScaleYControls)
+    }.toPersistentList()
 
     val coordinateSystemControls: PersistentList<Control>
         get() {
@@ -340,7 +343,10 @@ class GridDemoControl(
                 is GridCoordinateSystem.Cartesian -> cartesianControls
                 is GridCoordinateSystem.Polar -> polarControls
             }
-            return persistentListOf<Control>(coordinateSystemControl).addAll(scaleControls)
+            return buildList<Control> {
+                add(coordinateSystemControl)
+                addAll(scaleControls)
+            }.toPersistentList()
         }
 
     val lineControls
@@ -356,17 +362,15 @@ class GridDemoControl(
         }
 
     val controls
-        get() = coordinateSystemControls
-            .addAll(vertexControls)
-            .addAll(lineControls)
-            .addAll(
-                listOf(
-                    offsetXControl,
-                    offsetYControl,
-                    rotationDegreesControl,
-                    clipControl,
-                ),
-            )
+        get() = buildList<Control> {
+            addAll(coordinateSystemControls)
+            addAll(vertexControls)
+            addAll(lineControls)
+            add(offsetXControl)
+            add(offsetYControl)
+            add(rotationDegreesControl)
+            add(clipControl)
+        }.toPersistentList()
 }
 
 @Stable
@@ -839,16 +843,14 @@ class GridVertexControl(
                 if (state.vertex == null) {
                     persistentListOf(typeControl)
                 } else {
-                    persistentListOf<Control>(typeControl)
-                        .addAll(drawStyleControls)
-                        .addAll(
-                            listOf(
-                                sizeControl,
-                                widthControl,
-                                heightControl,
-                                rotationDegreesControl,
-                            ),
-                        )
+                    buildList<Control> {
+                        add(typeControl)
+                        addAll(drawStyleControls)
+                        add(sizeControl)
+                        add(widthControl)
+                        add(heightControl)
+                        add(rotationDegreesControl)
+                    }.toPersistentList()
                 }
             },
         ),

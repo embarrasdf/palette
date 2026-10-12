@@ -35,6 +35,7 @@ import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
 import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextStyleScreen(
@@ -190,8 +191,10 @@ class TextStyleScreenControl(
         includeLabel = false,
     )
 
-    val controls: PersistentList<Control> = persistentListOf<Control>(demoTextControl)
-        .addAll(textStyleControls)
+    val controls: PersistentList<Control> = buildList<Control> {
+        add(demoTextControl)
+        addAll(textStyleControls)
+    }.toPersistentList()
 }
 
 private fun makeControlForToken(

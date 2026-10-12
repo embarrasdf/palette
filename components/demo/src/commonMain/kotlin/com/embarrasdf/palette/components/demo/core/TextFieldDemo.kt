@@ -45,6 +45,7 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextFieldDemo(
@@ -447,16 +448,16 @@ class TextFieldDemoControl(
         }
 
     val controls
-        get() = persistentListOf(
-            textFieldControl,
-            styleControls,
-            textStyleControls,
-            widthControl,
-            enabledControl,
-        )
-            .addAll(keyboardControls)
-            .addAll(lineControls)
-            .add(inputTransformationControl)
+        get() = buildList<Control> {
+            add(textFieldControl)
+            add(styleControls)
+            add(textStyleControls)
+            add(widthControl)
+            add(enabledControl)
+            addAll(keyboardControls)
+            addAll(lineControls)
+            add(inputTransformationControl)
+        }.toPersistentList()
 
     fun onSizeChanged(width: Dp) {
         if (state.maxWidth == 0.dp) {

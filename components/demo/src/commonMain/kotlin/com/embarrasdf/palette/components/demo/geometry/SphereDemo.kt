@@ -26,6 +26,7 @@ import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.roundToInt
 
 @Composable
@@ -266,14 +267,15 @@ class SphereDemoControl(
         }
 
     val controls
-        get() = persistentListOf(
-            fillControl,
-            xRotationControl,
-            yRotationControl,
-            zRotationControl,
-            numLatitudeLinesControl,
-            numLongitudeLinesControl,
-            precisionDegreeControl,
-            strokeWidthControl,
-        ).addAll(outlineControls)
+        get() = buildList<Control> {
+            add(fillControl)
+            add(xRotationControl)
+            add(yRotationControl)
+            add(zRotationControl)
+            add(numLatitudeLinesControl)
+            add(numLongitudeLinesControl)
+            add(precisionDegreeControl)
+            add(strokeWidthControl)
+            addAll(outlineControls)
+        }.toPersistentList()
 }

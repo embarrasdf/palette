@@ -25,7 +25,6 @@ import com.embarrasdf.palette.theme.control.ThemeState
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -187,10 +186,11 @@ private fun makeControlForToken(
             } else {
                 listOf(borderStyleToggleControl)
             }
-            persistentListOf<Control>(
-                colorControl,
-                shapeControl,
-            ).addAll(borderControls)
+            buildList<Control> {
+                add(colorControl)
+                add(shapeControl)
+                addAll(borderControls)
+            }.toPersistentList()
         },
     )
 }
