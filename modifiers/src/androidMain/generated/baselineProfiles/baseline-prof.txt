@@ -139,7 +139,7 @@ PLcom/embarrasdf/palette/modifiers/ShaderElement;-><clinit>()V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;-><init>(Lcom/embarrasdf/palette/modifiers/Shader;Ljava/lang/String;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Landroidx/compose/ui/Modifier$Node;
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->create()Lcom/embarrasdf/palette/modifiers/ShaderNode;
-PLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
+HPLcom/embarrasdf/palette/modifiers/ShaderElement;->equals(Ljava/lang/Object;)Z
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Landroidx/compose/ui/Modifier$Node;)V
 PLcom/embarrasdf/palette/modifiers/ShaderElement;->update(Lcom/embarrasdf/palette/modifiers/ShaderNode;)V
 Lcom/embarrasdf/palette/modifiers/ShaderIndicationNode;
@@ -189,7 +189,6 @@ PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lamb
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$3$0(Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;F)Lkotlin/Unit;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$4$0()Lkotlin/ranges/ClosedFloatingPointRange;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo$lambda$5(Landroidx/compose/ui/Modifier;IILandroidx/compose/runtime/Composer;I)Lkotlin/Unit;
-PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 HPLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertDemo(Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt;->ColorInvertStateSaver$lambda$0(Landroidx/compose/runtime/saveable/SaverScope;Lcom/embarrasdf/palette/modifiers/demo/ColorInvertState;)Ljava/util/Map;
 PLcom/embarrasdf/palette/modifiers/demo/ColorInvertDemoKt$$ExternalSyntheticLambda0;-><init>()V
