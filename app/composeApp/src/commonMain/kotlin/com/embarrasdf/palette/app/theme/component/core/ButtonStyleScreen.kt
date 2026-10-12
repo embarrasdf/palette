@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,12 +34,13 @@ import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.color.toColor
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun ButtonStyleScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberButtonStyleScreenState(themeState = themeController)
     val control = rememberButtonStyleScreenControl(state = state, themeController = themeController)
@@ -53,6 +54,7 @@ fun ButtonStyleScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = ButtonStyleToken.entries,
@@ -67,8 +69,9 @@ fun ButtonStyleScreen(
                 ButtonStyleToken.Secondary -> ColorToken.Secondary
                 ButtonStyleToken.Tertiary -> ColorToken.Primary
             }.toColor()
-            LaunchedEffect(textDemoState, contentColor) {
+            DisposableEffect(textDemoState, contentColor) {
                 textDemoState.textStyleDemoState.color = contentColor
+                onDispose {}
             }
             Button(
                 style = PaletteTheme.component.core.button[style],
@@ -120,14 +123,23 @@ class ButtonStyleScreenState(
 fun buttonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         ButtonStyleToken.entries.associate { token ->
-            token.name to save(state.textDemoState(token), TextDemoStateSaver, this)
+            token.name to save(
+                value = state.textDemoState(token),
+                saver = TextDemoStateSaver,
+                scope = this,
+            )
         }
     },
     restore = { map ->
         ButtonStyleScreenState(
             themeState = themeState,
             textDemoStates = ButtonStyleToken.entries.associateWith { token ->
-                restore(map[token.name], TextDemoStateSaver)!!
+                requireNotNull(
+                    restore(
+                        value = map[token.name],
+                        saver = TextDemoStateSaver,
+                    ),
+                ) { "Missing saved TextDemoState for ${token.name}" }
             },
         )
     },
@@ -162,9 +174,7 @@ class ButtonStyleScreenControl(
         )
     }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        *buttonStyleControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = buttonStyleControls.toPersistentList()
 
     fun textDemoControl(token: ButtonStyleToken): TextDemoControl = textDemoControls.getValue(token)
 }
@@ -177,12 +187,6 @@ private fun makeControlForToken(
 ): Control {
     fun setTokenSet(value: ButtonStyleTokenSet) {
         themeController.updateComponent { it.copy(button = it.button + (token to value)) }
-    }
-
-    fun defaultBorder() = when (token) {
-        ButtonStyleToken.Primary -> BorderStyleToken.Primary
-        ButtonStyleToken.Secondary -> BorderStyleToken.Secondary
-        ButtonStyleToken.Tertiary -> BorderStyleToken.Tertiary
     }
 
     val containerColorControl = enumControl(
@@ -203,26 +207,16 @@ private fun makeControlForToken(
         },
     )
 
-    val borderStyleToggleControl = Control.Toggle(
-        name = "Border",
-        value = { state.tokenSet(token).borderStyle != null },
-        onValueChange = { newValue ->
-            val border = if (newValue) {
-                state.tokenSet(token).borderStyle ?: defaultBorder()
-            } else {
-                null
-            }
-            setTokenSet(state.tokenSet(token).copy(borderStyle = border))
-        },
+    val borderStyleToggleControl = makeBorderStyleToggleControl(
+        token = token,
+        state = state,
+        setTokenSet = ::setTokenSet,
     )
 
-    val borderStyleControl = enumControl(
-        name = "Border style",
-        values = { BorderStyleToken.entries },
-        selectedValue = { state.tokenSet(token).borderStyle ?: defaultBorder() },
-        onValueChange = { newValue ->
-            setTokenSet(state.tokenSet(token).copy(borderStyle = newValue))
-        },
+    val borderStyleControl = makeBorderStyleControl(
+        token = token,
+        state = state,
+        setTokenSet = ::setTokenSet,
     )
 
     val contentPaddingControl = spacingTokenPaddingControls(
@@ -244,18 +238,56 @@ private fun makeControlForToken(
             } else {
                 listOf(borderStyleToggleControl)
             }
-            persistentListOf(
-                containerColorControl,
-                shapeControl,
-                *borderControls.toTypedArray(),
-                contentPaddingControl,
-                Control.ControlColumn(
-                    name = "Demo text",
-                    indent = true,
-                    controls = { textDemoControl.controls },
-                    expandedInitial = false,
-                ),
-            )
+            buildList<Control> {
+                add(containerColorControl)
+                add(shapeControl)
+                addAll(borderControls)
+                add(contentPaddingControl)
+                add(makeDemoTextControl(textDemoControl = textDemoControl))
+            }.toPersistentList()
         },
     )
 }
+
+private fun makeDemoTextControl(textDemoControl: TextDemoControl): Control = Control.ControlColumn(
+    name = "Demo text",
+    indent = true,
+    controls = { textDemoControl.controls },
+    expandedInitial = false,
+)
+
+private fun defaultBorder(token: ButtonStyleToken) = when (token) {
+    ButtonStyleToken.Primary -> BorderStyleToken.Primary
+    ButtonStyleToken.Secondary -> BorderStyleToken.Secondary
+    ButtonStyleToken.Tertiary -> BorderStyleToken.Tertiary
+}
+
+private fun makeBorderStyleToggleControl(
+    token: ButtonStyleToken,
+    state: ButtonStyleScreenState,
+    setTokenSet: (ButtonStyleTokenSet) -> Unit,
+): Control = Control.Toggle(
+    name = "Border",
+    value = { state.tokenSet(token).borderStyle != null },
+    onValueChange = { newValue ->
+        val border = if (newValue) {
+            state.tokenSet(token).borderStyle ?: defaultBorder(token)
+        } else {
+            null
+        }
+        setTokenSet(state.tokenSet(token).copy(borderStyle = border))
+    },
+)
+
+private fun makeBorderStyleControl(
+    token: ButtonStyleToken,
+    state: ButtonStyleScreenState,
+    setTokenSet: (ButtonStyleTokenSet) -> Unit,
+): Control = enumControl(
+    name = "Border style",
+    values = { BorderStyleToken.entries },
+    selectedValue = { state.tokenSet(token).borderStyle ?: defaultBorder(token) },
+    onValueChange = { newValue ->
+        setTokenSet(state.tokenSet(token).copy(borderStyle = newValue))
+    },
+)

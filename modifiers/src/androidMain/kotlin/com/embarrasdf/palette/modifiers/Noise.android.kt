@@ -11,9 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RenderEffect
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.modifiers.preview.DemoCircle
-import com.embarrasdf.palette.modifiers.preview.ModifierPreview
 import org.intellij.lang.annotations.Language
 
 // Inspired by Rikin Marfatia's Grainy Gradients https://www.youtube.com/watch?v=soMl3k0mBx4
@@ -64,7 +64,10 @@ actual fun createNoiseShader(): NoiseShader {
 }
 
 class NoiseShaderImpl : NoiseShader {
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var amount: Float = 0f
 
@@ -81,29 +84,33 @@ class NoiseShaderImpl : NoiseShader {
             NoiseColorMode.RandomColorFilterBlack -> 1
             else -> 0
         }
-        control.setIntUniform(UniformColorEnabled, colorEnabled)
-        control.setIntUniform(UniformFilterBlack, filterBlack)
+        control.setIntUniform(name = UniformColorEnabled, value = colorEnabled)
+        control.setIntUniform(name = UniformFilterBlack, value = filterBlack)
     }
 
     override fun setAmount(amount: Float) {
         this.amount = amount
-        control.setFloatUniform(UniformAmount, amount)
+        control.setFloatUniform(name = UniformAmount, value = amount)
     }
 
     override fun onRemeasured(
         width: Int,
         height: Int,
     ) {
-        control.setFloatUniform(UniformSize, width.toFloat(), height.toFloat())
+        control.setFloatUniform(
+            name = UniformSize,
+            value1 = width.toFloat(),
+            value2 = height.toFloat(),
+        )
     }
 }
 
-@ModifierPreview
+@Preview
 @Composable
 private fun Preview() {
     val range = 0f..1f
     var amount by remember { mutableFloatStateOf(range.endInclusive / 2f) }
-    var colorMode by remember { mutableStateOf(NoiseColorMode.RandomColorFilterBlack) }
+    val colorMode by remember { mutableStateOf(NoiseColorMode.RandomColorFilterBlack) }
 
     Column {
         DemoCircle(

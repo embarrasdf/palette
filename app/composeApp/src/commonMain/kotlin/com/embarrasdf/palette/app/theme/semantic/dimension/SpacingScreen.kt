@@ -25,12 +25,13 @@ import com.embarrasdf.palette.theme.semantic.spacing.SpacingToken
 import com.embarrasdf.palette.theme.semantic.spacing.copy
 import com.embarrasdf.palette.theme.semantic.spacing.toSpacing
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun SpacingScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberSpacingScreenState(themeState = themeController)
     val control = rememberSpacingScreenControl(state = state, themeController = themeController)
@@ -44,6 +45,7 @@ fun SpacingScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = state.spacingByToken.keys.toList(),
@@ -63,15 +65,15 @@ fun SpacingScreen(
 
 @Composable
 fun SpacingDemo(
-    modifier: Modifier = Modifier,
     spacing: SpacingToken,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .border(1.dp, PaletteTheme.semantic.color.primary)
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.primary)
             .padding(spacing.toSpacing())
-            .border(1.dp, PaletteTheme.semantic.color.primary),
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.primary),
     ) {
         Text(
             text = spacing.name,
@@ -138,9 +140,7 @@ class SpacingScreenControl(
         )
     }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        *spacingControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = spacingControls.toPersistentList()
 }
 
 private fun makeControlForToken(
@@ -150,7 +150,7 @@ private fun makeControlForToken(
 ): Control {
     return Control.Slider(
         name = token.name,
-        value = { state.spacingByToken[token]!!.value },
+        value = { state.spacingByToken.getValue(token).value },
         onValueChange = { radius ->
             val spacing = state.spacing.copy(
                 token = token,

@@ -29,9 +29,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun AuthButtonDemo(
+    modifier: Modifier = Modifier,
     state: AuthButtonDemoState = rememberAuthButtonDemoState(),
     control: AuthButtonDemoControl = rememberAuthButtonDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -40,7 +40,6 @@ fun AuthButtonDemo(
     ) {
         AuthButtonDemo(
             state = state,
-            control = control,
         )
     }
 }
@@ -49,7 +48,6 @@ fun AuthButtonDemo(
 fun BoxWithConstraintsScope.AuthButtonDemo(
     modifier: Modifier = Modifier,
     state: AuthButtonDemoState = rememberAuthButtonDemoState(),
-    control: AuthButtonDemoControl = rememberAuthButtonDemoControl(state),
 ) {
     val baseStyle = PaletteTheme.component.auth.authButton[state.style]
     AuthButton(
@@ -106,14 +104,16 @@ val AuthButtonDemoStateSaver = mapSaverSafe(
         mapOf(
             AuthStateKey to value.authState,
             StyleKey to value.style,
-            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            ContentPaddingKey to save(value = value.contentPadding, saver = PaddingValuesSaver, scope = this),
         )
     },
     restore = { map ->
         AuthButtonDemoState(
             authStateInitial = map[AuthStateKey] as AuthState,
             styleInitial = map[StyleKey] as AuthButtonStyleToken,
-            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
+            contentPaddingInitial = requireNotNull(
+                restore(value = map[ContentPaddingKey], saver = PaddingValuesSaver),
+            ) { "Missing $ContentPaddingKey" },
         )
     },
 )

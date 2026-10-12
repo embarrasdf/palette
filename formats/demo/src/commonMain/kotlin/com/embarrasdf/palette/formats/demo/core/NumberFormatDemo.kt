@@ -34,9 +34,9 @@ import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun NumberFormatDemo(
+    modifier: Modifier = Modifier,
     state: NumberFormatDemoState = rememberNumberFormatDemoState(),
     control: NumberFormatDemoControl = rememberNumberFormatDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -89,7 +89,7 @@ class NumberFormatDemoState(
         initialText = numberFormatInitial.maxNumDecimalValues.toString(),
     ),
     val positiveSignTextFieldState: TextFieldState = TextFieldState(
-        initialText = numberFormatInitial.positiveSign ?: "",
+        initialText = numberFormatInitial.positiveSign.orEmpty(),
     ),
     val negativeSignTextFieldState: TextFieldState = TextFieldState(
         initialText = numberFormatInitial.negativeSign,
@@ -135,26 +135,29 @@ fun numberFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         NumberFormatDemoState(
-            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
-            minNumDecimalValuesTextFieldState = restore(map[MinNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            maxNumDecimalValuesTextFieldState = restore(map[MaxNumDecimalValuesTextFieldStateKey]!!) as TextFieldState,
-            positiveSignTextFieldState = restore(map[PositiveSignTextFieldStateKey]!!) as TextFieldState,
-            negativeSignTextFieldState = restore(map[NegativeSignTextFieldStateKey]!!) as TextFieldState,
-            groupingNumDigitsTextFieldState = restore(map[GroupingNumDigitsTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = map.restoreTextFieldState(DemoTextFieldStateKey),
+            minNumDecimalValuesTextFieldState = map.restoreTextFieldState(MinNumDecimalValuesTextFieldStateKey),
+            maxNumDecimalValuesTextFieldState = map.restoreTextFieldState(MaxNumDecimalValuesTextFieldStateKey),
+            positiveSignTextFieldState = map.restoreTextFieldState(PositiveSignTextFieldStateKey),
+            negativeSignTextFieldState = map.restoreTextFieldState(NegativeSignTextFieldStateKey),
+            groupingNumDigitsTextFieldState = map.restoreTextFieldState(GroupingNumDigitsTextFieldStateKey),
         )
     },
 )
+
+private fun Map<String, Any?>.restoreTextFieldState(key: String): TextFieldState =
+    restore(requireNotNull(this[key]) { "Missing $key" }) as TextFieldState
 
 @Composable
 fun rememberNumberFormatDemoControl(
     state: NumberFormatDemoState,
     onValueChange: (NumberFormat) -> Unit = { state.numberFormat = it },
 ): NumberFormatDemoControl {
-    val onValueChange by rememberUpdatedState(onValueChange)
-    return remember(state, onValueChange) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    return remember(state, currentOnValueChange) {
         NumberFormatDemoControl(
             state = state,
-            onValueChange = onValueChange,
+            onValueChange = currentOnValueChange,
         )
     }
 }

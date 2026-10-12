@@ -41,6 +41,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun ColorScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberColorScreenState(themeState = themeController)
     val control = rememberColorScreenControl(state = state, themeController = themeController)
@@ -56,6 +57,7 @@ fun ColorScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = ColorToken.entries.toList(),
@@ -77,7 +79,7 @@ fun ColorScreen(
     selectedColorToken?.let { colorToken ->
         ColorPickerDialog(
             colorToken = colorToken,
-            onColorSelected = {
+            onColorSelect = {
                 control.onColorSelected(color = it, colorToken = colorToken)
                 selectedColorToken = null
             },

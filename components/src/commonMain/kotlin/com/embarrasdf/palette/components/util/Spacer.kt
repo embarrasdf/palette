@@ -12,13 +12,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Spacer(
+    modifier: Modifier = Modifier,
     height: Dp = 0.dp,
     width: Dp = 0.dp,
 ) {
-    Spacer(modifier = Modifier.height(height).width(width))
+    Spacer(modifier = modifier.height(height).width(width))
 }
 
 @Composable
-fun Spacer(padding: PaddingValues) {
-    Spacer(modifier = Modifier.padding(padding))
+fun Spacer(
+    padding: PaddingValues,
+    modifier: Modifier = Modifier,
+) {
+    Spacer(modifier = modifier.padding(padding))
 }

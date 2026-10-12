@@ -40,19 +40,19 @@ fun DialogContent(
     DialogContent(
         title = title,
         message = message,
-        buttonRow = { onDismissRequest, modifier ->
+        buttonRow = { dismiss, rowModifier ->
             onConfirm?.let {
                 ConfirmCancelButtonRow(
                     onConfirm = it,
-                    onDismiss = onDismissRequest,
+                    onDismiss = dismiss,
                     style = style.buttonRowStyle,
-                    modifier = modifier,
+                    modifier = rowModifier,
                 )
             } ?: run {
                 ConfirmButtonRow(
-                    onConfirm = onDismissRequest,
+                    onConfirm = dismiss,
                     style = style.buttonRowStyle.buttonStyle,
-                    modifier = modifier,
+                    modifier = rowModifier,
                 )
             }
         },
@@ -64,20 +64,20 @@ fun DialogContent(
 
 @Composable
 fun ErrorDialogContent(
-    title: String = "Error",
     message: String,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    title: String = "Error",
     style: DialogContentStyle = DialogContentStyle(),
 ) {
     DialogContent(
         title = title,
         message = message,
-        buttonRow = { onDismissRequest, modifier ->
+        buttonRow = { dismiss, rowModifier ->
             ConfirmButtonRow(
-                onConfirm = onDismissRequest,
+                onConfirm = dismiss,
                 style = style.buttonRowStyle.buttonStyle,
-                modifier = modifier,
+                modifier = rowModifier,
             )
         },
         onDismissRequest = onDismissRequest,

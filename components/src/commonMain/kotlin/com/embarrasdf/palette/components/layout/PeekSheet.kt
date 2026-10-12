@@ -78,8 +78,8 @@ class PeekSheetState(
 
     val partialToFullProgress: Float get() {
         return anchoredDraggableState.progress(
-            PeekSheetAnchor.Peek,
-            PeekSheetAnchor.Expanded,
+            from = PeekSheetAnchor.Peek,
+            to = PeekSheetAnchor.Expanded,
         )
     }
 
@@ -148,11 +148,11 @@ fun rememberPeekSheetState(initialValue: PeekSheetAnchor = PeekSheetAnchor.Peek)
 @Composable
 fun PeekSheet(
     peekHeight: Dp,
+    bar: @Composable (progress: () -> Float) -> Unit,
     modifier: Modifier = Modifier,
     state: PeekSheetState = rememberPeekSheetState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     above: @Composable () -> Unit = {},
-    bar: @Composable (progress: () -> Float) -> Unit,
     content: @Composable () -> Unit = {},
 ) {
     trace(TraceName) {
@@ -198,5 +198,5 @@ private fun Modifier.modalBottomSheetAnchors(
             PeekSheetAnchor.Expanded at max(0f, fullHeight - size.height)
         }
     }
-    state.anchoredDraggableState.updateAnchors(newAnchors, state.targetValue)
+    state.anchoredDraggableState.updateAnchors(newAnchors = newAnchors, newTarget = state.targetValue)
 }

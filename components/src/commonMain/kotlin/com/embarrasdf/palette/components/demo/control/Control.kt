@@ -10,14 +10,14 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlin.enums.EnumEntries
 import androidx.compose.ui.graphics.Color as ComposeColor
 
-sealed class Control {
+sealed interface Control {
     data class Slider(
         val name: () -> String,
         val value: () -> Float,
         val onValueChange: (Float) -> Unit,
         val valueRange: () -> ClosedFloatingPointRange<Float> = { 0f..1f },
         val stepIncrement: Float? = null,
-    ) : Control() {
+    ) : Control {
         constructor(
             name: String,
             value: () -> Float,
@@ -39,7 +39,7 @@ sealed class Control {
         val selectedIndex: () -> Int,
         val onValueChange: (index: Int) -> Unit,
         val includeLabel: Boolean = true,
-    ) : Control() {
+    ) : Control {
         data class DropdownItem<T>(val name: String, val value: T)
     }
 
@@ -47,7 +47,7 @@ sealed class Control {
         val name: String,
         val value: () -> Boolean,
         val onValueChange: (Boolean) -> Unit,
-    ) : Control()
+    ) : Control
 
     data class TextField(
         val name: String,
@@ -57,7 +57,7 @@ sealed class Control {
         val keyboardOptions: () -> KeyboardOptions = { KeyboardOptions.Default },
         val inputTransformation: () -> InputTransformation? = { null },
         val onValueChange: (String) -> Unit = {},
-    ) : Control()
+    ) : Control
 
     data class CharField(
         val name: String,
@@ -65,29 +65,29 @@ sealed class Control {
         val includeLabel: Boolean = true,
         val enabled: () -> Boolean = { true },
         val onValueChange: (Char) -> Unit = {},
-    ) : Control()
+    ) : Control
 
     data class Button(
         val name: String,
         val onClick: () -> Unit,
         val enabled: () -> Boolean = { true },
         val modifier: Modifier = Modifier,
-    ) : Control()
+    ) : Control
 
     data class Color(
         val name: String,
         val color: () -> ComposeColor,
         val onColorChange: (ComposeColor) -> Unit,
-    ) : Control()
+    ) : Control
 
-    data class ControlRow(val controls: () -> ImmutableList<Control>) : Control()
+    data class ControlRow(val controls: () -> ImmutableList<Control>) : Control
 
     data class ControlColumn(
         val controls: () -> ImmutableList<Control>,
         val name: String? = null,
         val indent: Boolean = true,
         val expandedInitial: Boolean = false,
-    ) : Control()
+    ) : Control
 
     data class DynamicList<T>(
         val name: String,
@@ -99,7 +99,7 @@ sealed class Control {
         val includeLabel: Boolean = true,
         val expandedInitial: Boolean = true,
         val indent: Boolean = false,
-    ) : Control()
+    ) : Control
 }
 
 inline fun <T : Enum<T>> enumControl(

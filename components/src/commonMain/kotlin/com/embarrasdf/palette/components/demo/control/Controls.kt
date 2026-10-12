@@ -55,9 +55,9 @@ fun Controls(
             .padding(contentPadding),
     ) {
         var expanded by remember { mutableStateOf(expandedInitial) }
-        name?.let {
+        name?.let { headerName ->
             ExpandableHeader(
-                name = it,
+                name = headerName,
                 expanded = expanded,
                 onExpandedChange = { expanded = it },
                 style = controlsStyle.expandableHeader,
@@ -78,32 +78,40 @@ fun Controls(
                         },
                     ),
             ) {
-                when (control) {
-                    is Control.Button -> ButtonControl(control = control, style = controlsStyle.button)
-                    is Control.Color -> ColorControl(control = control, style = controlsStyle.color)
-                    is Control.Slider -> SliderControl(control = control, style = controlsStyle.slider)
-                    is Control.Dropdown<*> -> DropdownControlRow(control = control, style = controlsStyle.dropdown)
-                    is Control.Toggle -> ToggleControlRow(control = control, style = controlsStyle.toggle)
-                    is Control.CharField -> CharControl(control = control, style = controlsStyle.char)
-                    is Control.TextField -> TextFieldControl(control = control, style = controlsStyle.textField)
-                    is Control.DynamicList<*> -> DynamicListControl(control = control, controlsStyle = controlsStyle)
-                    is Control.ControlColumn -> {
-                        val controls by rememberUpdatedState(control.controls())
-                        Controls(
-                            controls = controls,
-                            controlsStyle = controlsStyle,
-                            name = control.name,
-                            indent = control.indent,
-                            expandedInitial = control.expandedInitial,
-                            contentPadding = PaddingValues(vertical = controlsStyle.verticalContentPadding),
-                        )
-                    }
-                    is Control.ControlRow -> {
-                        val controls by rememberUpdatedState(control.controls())
-                        ControlsRow(controls = controls, controlsStyle = controlsStyle)
-                    }
-                }
+                ColumnControl(control = control, controlsStyle = controlsStyle)
             }
+        }
+    }
+}
+
+@Composable
+private fun ColumnControl(
+    control: Control,
+    controlsStyle: ControlsStyle,
+) {
+    when (control) {
+        is Control.Button -> ButtonControl(control = control, style = controlsStyle.button)
+        is Control.Color -> ColorControl(control = control, style = controlsStyle.color)
+        is Control.Slider -> SliderControl(control = control, style = controlsStyle.slider)
+        is Control.Dropdown<*> -> DropdownControlRow(control = control, style = controlsStyle.dropdown)
+        is Control.Toggle -> ToggleControlRow(control = control, style = controlsStyle.toggle)
+        is Control.CharField -> CharControl(control = control, style = controlsStyle.char)
+        is Control.TextField -> TextFieldControl(control = control, style = controlsStyle.textField)
+        is Control.DynamicList<*> -> DynamicListControl(control = control, controlsStyle = controlsStyle)
+        is Control.ControlColumn -> {
+            val columnControls by rememberUpdatedState(control.controls())
+            Controls(
+                controls = columnControls,
+                controlsStyle = controlsStyle,
+                name = control.name,
+                indent = control.indent,
+                expandedInitial = control.expandedInitial,
+                contentPadding = PaddingValues(vertical = controlsStyle.verticalContentPadding),
+            )
+        }
+        is Control.ControlRow -> {
+            val rowControls by rememberUpdatedState(control.controls())
+            ControlsRow(controls = rowControls, controlsStyle = controlsStyle)
         }
     }
 }
@@ -124,7 +132,7 @@ fun ControlsRow(
         for (control in controls) {
             Box(
                 modifier = Modifier
-                    .then(if (equalWeight) Modifier.weight(1f, fill = false) else Modifier),
+                    .then(if (equalWeight) Modifier.weight(weight = 1f, fill = false) else Modifier),
             ) {
                 when (control) {
                     is Control.Button -> ButtonControl(control = control, style = controlsStyle.button)
@@ -136,9 +144,9 @@ fun ControlsRow(
                     is Control.TextField -> TextFieldControl(control = control, style = controlsStyle.textField)
                     is Control.DynamicList<*> -> DynamicListControl(control = control, controlsStyle = controlsStyle)
                     is Control.ControlColumn -> {
-                        val controls by rememberUpdatedState(control.controls())
+                        val columnControls by rememberUpdatedState(control.controls())
                         Controls(
-                            controls = controls,
+                            controls = columnControls,
                             controlsStyle = controlsStyle,
                             name = control.name,
                             indent = control.indent,
@@ -147,8 +155,8 @@ fun ControlsRow(
                         )
                     }
                     is Control.ControlRow -> {
-                        val controls by rememberUpdatedState(control.controls())
-                        Controls(controls = controls, controlsStyle = controlsStyle)
+                        val rowControls by rememberUpdatedState(control.controls())
+                        Controls(controls = rowControls, controlsStyle = controlsStyle)
                     }
                 }
             }
@@ -159,7 +167,7 @@ fun ControlsRow(
 @Preview
 @Composable
 private fun Preview() {
-    var expanded by remember { mutableStateOf(true) }
+    val expanded by remember { mutableStateOf(true) }
     Controls(
         controls = persistentListOf(
             Control.Slider(

@@ -32,7 +32,10 @@ fun ShapeToken.toShape(
 
 @Composable
 fun ShapeToken.toShape(): Shape {
-    return toShape(PaletteTheme.semantic.shape, PaletteTheme.primitive.shape)
+    return toShape(
+        shapeScheme = PaletteTheme.semantic.shape,
+        shapePrimitives = PaletteTheme.primitive.shape,
+    )
 }
 
 fun ShapeToken.toComposeShape(
@@ -44,5 +47,8 @@ fun ShapeToken.toComposeShape(
 
 @Composable
 fun ShapeToken.toComposeShape(): ComposeShape {
-    return toComposeShape(PaletteTheme.semantic.shape, PaletteTheme.primitive.shape)
+    return toComposeShape(
+        shapeScheme = PaletteTheme.semantic.shape,
+        shapePrimitives = PaletteTheme.primitive.shape,
+    )
 }

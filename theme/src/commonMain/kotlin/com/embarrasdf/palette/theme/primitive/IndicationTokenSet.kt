@@ -15,6 +15,8 @@ import com.embarrasdf.palette.modifiers.NoiseIndication
 import com.embarrasdf.palette.modifiers.PixelateIndication
 import com.embarrasdf.palette.modifiers.WarpIndication
 
+private const val ColorSplitAmount = 0.02f
+
 sealed interface IndicationTokenSet {
     fun toIndication(): Indication
 
@@ -38,8 +40,8 @@ sealed interface IndicationTokenSet {
     }
 
     data class ColorSplit(
-        val hoverAmount: Float = -0.02f,
-        val pressAmount: Float = 0.02f,
+        val hoverAmount: Float = -ColorSplitAmount,
+        val pressAmount: Float = ColorSplitAmount,
         val colorMode: ColorSplitMode = ColorSplitMode.RGB,
     ) : IndicationTokenSet {
         override fun toIndication(): Indication = ColorSplitIndication(

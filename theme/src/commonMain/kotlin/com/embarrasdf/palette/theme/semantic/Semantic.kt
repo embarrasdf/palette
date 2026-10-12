@@ -2,6 +2,7 @@ package com.embarrasdf.palette.theme.semantic
 
 import androidx.compose.foundation.Indication
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.embarrasdf.palette.theme.primitive.LocalPrimitiveTokens
@@ -18,6 +19,7 @@ import com.embarrasdf.palette.theme.semantic.typography.resolve
 object Semantic {
     val color: ColorScheme
         @Composable
+        @ReadOnlyComposable
         get() {
             val colors = LocalSemanticTokens.current.colors
             return if (LocalIsDarkMode.current) colors.dark else colors.light
@@ -40,14 +42,17 @@ object Semantic {
 
     val shape: ShapeScheme
         @Composable
+        @ReadOnlyComposable
         get() = LocalSemanticTokens.current.shapeScheme
 
     val dimension: Dimension
         @Composable
+        @ReadOnlyComposable
         get() = LocalSemanticTokens.current.dimension
 
     val interaction: InteractionScheme
         @Composable
+        @ReadOnlyComposable
         get() = LocalSemanticTokens.current.interaction
 
     val indication: Indication
@@ -56,9 +61,14 @@ object Semantic {
 
     val format: Formats
         @Composable
+        @ReadOnlyComposable
         get() = LocalSemanticTokens.current.formats
 }
 
+// Part of the theme's public API: PaletteTheme provides it and components read it.
+@Suppress("CompositionLocalAllowlist")
 val LocalSemanticTokens = staticCompositionLocalOf { SemanticTokens() }
 
+// Part of the theme's public API: PaletteTheme provides it and components read it.
+@Suppress("CompositionLocalAllowlist")
 val LocalIsDarkMode = staticCompositionLocalOf { false }

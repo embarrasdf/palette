@@ -5,6 +5,9 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import com.embarrasdf.palette.waitAndFindObject
 
+private const val FirstDragOffsetPx = 100
+private const val SecondDragOffsetPx = 200
+
 class ColorInvertPage(
     private val device: UiDevice,
 ) {
@@ -15,7 +18,7 @@ class ColorInvertPage(
     fun adjustColorInvert() {
         // One adjustment doesn't generate benchmark/profile frame data
         val amount = device.waitAndFindObject(By.desc("Amount"))
-        amount.drag(Point(amount.visibleCenter.x + 100, amount.visibleCenter.y))
-        amount.drag(Point(amount.visibleCenter.x + 200, amount.visibleCenter.y))
+        amount.drag(Point(amount.visibleCenter.x + FirstDragOffsetPx, amount.visibleCenter.y))
+        amount.drag(Point(amount.visibleCenter.x + SecondDragOffsetPx, amount.visibleCenter.y))
     }
 }

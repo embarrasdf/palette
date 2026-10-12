@@ -69,34 +69,38 @@ val TextStyleDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
             ComposeTextStyleDemoStateKey to save(
-                value.composeTextStyleDemoState,
-                ComposeTextStyleDemoStateSaver,
-                this,
+                value = value.composeTextStyleDemoState,
+                saver = ComposeTextStyleDemoStateSaver,
+                scope = this,
             ),
             TextFormatDemoStateKey to save(
-                value.textFormatDemoState,
-                textFormatDemoStateSaver(),
-                this,
+                value = value.textFormatDemoState,
+                saver = textFormatDemoStateSaver(),
+                scope = this,
             ),
             // Only persist a specified color; Color.Unspecified would round-trip to transparent.
-            ColorKey to save(value.color.takeIf { it.isSpecified }, ColorSaver, this),
+            ColorKey to save(value = value.color.takeIf { it.isSpecified }, saver = ColorSaver, scope = this),
         )
     },
     restore = { map ->
-        val composeTextStyleDemoState: ComposeTextStyleDemoState = restore(
-            map[ComposeTextStyleDemoStateKey],
-            ComposeTextStyleDemoStateSaver,
-        )!!
+        val composeTextStyleDemoState: ComposeTextStyleDemoState = requireNotNull(
+            restore(
+                value = map[ComposeTextStyleDemoStateKey],
+                saver = ComposeTextStyleDemoStateSaver,
+            ),
+        ) { "Missing $ComposeTextStyleDemoStateKey" }
 
-        val textFormatDemoState: TextFormatDemoState = restore(
-            map[TextFormatDemoStateKey],
-            textFormatDemoStateSaver(),
-        )!!
+        val textFormatDemoState: TextFormatDemoState = requireNotNull(
+            restore(
+                value = map[TextFormatDemoStateKey],
+                saver = textFormatDemoStateSaver(),
+            ),
+        ) { "Missing $TextFormatDemoStateKey" }
 
         TextStyleDemoState(
             textStyleInitial = TextStyle(
                 composeTextStyle = composeTextStyleDemoState.composeTextStyle.copy(
-                    color = restore(map[ColorKey], ColorSaver) ?: Color.Unspecified,
+                    color = restore(value = map[ColorKey], saver = ColorSaver) ?: Color.Unspecified,
                 ),
                 format = textFormatDemoState.textFormat,
             ),

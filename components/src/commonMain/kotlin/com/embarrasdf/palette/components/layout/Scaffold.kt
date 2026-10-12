@@ -16,10 +16,10 @@ data class ScaffoldStyle(
 
 @Composable
 fun Scaffold(
+    modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     floatingAction: @Composable () -> Unit = {},
     navigationBar: @Composable () -> Unit = {},
-    modifier: Modifier = Modifier,
     style: ScaffoldStyle = ScaffoldStyle(),
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -30,18 +30,24 @@ fun Scaffold(
         // Layout top bar on top of content to center content whether or not top bar exists.
         // Pass constraints to content with top bar height removed to allow to respect or ignore.
         SubcomposeLayout { constraints ->
-            val topBarPlaceables = subcompose(ScaffoldComponents.TopBar, topBar).fastMap {
+            val topBarPlaceables = subcompose(slotId = ScaffoldComponents.TopBar, content = topBar).fastMap {
                 it.measure(constraints)
             }
             val topBarHeight = topBarPlaceables.fastMaxOfOrNull { it.height } ?: 0
 
-            val navigationBar = subcompose(ScaffoldComponents.NavigationBar, navigationBar).fastMap {
+            val navigationBarPlaceables = subcompose(
+                slotId = ScaffoldComponents.NavigationBar,
+                content = navigationBar,
+            ).fastMap {
                 it.measure(constraints)
             }
-            val navigationBarHeight = navigationBar.fastMaxOfOrNull { it.height } ?: 0
-            val navigationBarWidth = navigationBar.maxOfOrNull { it.width } ?: 0
+            val navigationBarHeight = navigationBarPlaceables.fastMaxOfOrNull { it.height } ?: 0
+            val navigationBarWidth = navigationBarPlaceables.maxOfOrNull { it.width } ?: 0
 
-            val floatingActionPlaceables = subcompose(ScaffoldComponents.FloatingAction, floatingAction).fastMap {
+            val floatingActionPlaceables = subcompose(
+                slotId = ScaffoldComponents.FloatingAction,
+                content = floatingAction,
+            ).fastMap {
                 it.measure(constraints)
             }
             val floatingActionHeight = floatingActionPlaceables.fastMaxOfOrNull { it.height } ?: 0
@@ -57,7 +63,7 @@ fun Scaffold(
             layout(constraints.maxWidth, constraints.maxHeight) {
                 contentPlaceables.fastForEach { it.place(0, 0) }
                 topBarPlaceables.fastForEach { it.place(0, 0) }
-                navigationBar.fastForEach { it.place(0, constraints.maxHeight - it.height) }
+                navigationBarPlaceables.fastForEach { it.place(0, constraints.maxHeight - it.height) }
                 floatingActionPlaceables.fastForEach { it.place(navigationBarWidth, constraints.maxHeight - it.height) }
             }
         }

@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun IndicationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberIndicationScreenState(themeState = themeController)
     val control = rememberIndicationScreenControl(state = state, themeController = themeController)
@@ -49,6 +50,7 @@ fun IndicationScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         Demo(
             controls = control.controls,
@@ -94,13 +96,22 @@ private const val ButtonDemoStateKey = "buttonDemoState"
 fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            ButtonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this),
+            ButtonDemoStateKey to save(
+                value = state.buttonDemoState,
+                saver = ButtonDemoStateSaver,
+                scope = this,
+            ),
         )
     },
     restore = { map ->
         IndicationScreenState(
             themeState = themeState,
-            buttonDemoStateInitial = restore(map[ButtonDemoStateKey], ButtonDemoStateSaver)!!,
+            buttonDemoStateInitial = requireNotNull(
+                restore(
+                    value = map[ButtonDemoStateKey],
+                    saver = ButtonDemoStateSaver,
+                ),
+            ) { "Missing saved ButtonDemoState" },
         )
     },
 )
@@ -126,7 +137,12 @@ class IndicationScreenControl(
         selectedValue = { IndicationToken.Default.primitiveToken(state.interactionScheme) },
         onValueChange = { primitiveToken ->
             themeController.updateSemantic {
-                it.copy(interaction = it.interaction.copy(IndicationToken.Default, primitiveToken))
+                it.copy(
+                    interaction = it.interaction.copy(
+                        token = IndicationToken.Default,
+                        indicationPrimitiveToken = primitiveToken,
+                    ),
+                )
             }
         },
     )

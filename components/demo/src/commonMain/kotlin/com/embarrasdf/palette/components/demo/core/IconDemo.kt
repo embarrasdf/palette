@@ -48,9 +48,9 @@ enum class SizingType {
 
 @Composable
 fun IconDemo(
+    modifier: Modifier = Modifier,
     state: IconDemoState = rememberIconDemoState(),
     control: IconDemoControl = rememberIconDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -72,7 +72,7 @@ fun DemoScope.IconDemo(
         modifier = modifier
             .size(IconDemoContainerSize)
             .align(Alignment.Center)
-            .border(1.dp, PaletteTheme.semantic.color.outline),
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.outline),
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -126,7 +126,7 @@ val IconDemoStateSaver = mapSaverSafe(
             SizeTypeKey to value.sizeType,
             FixedSizeKey to value.fixedSize.value,
             ScaleKey to value.scale,
-            ColorKey to save(value.color, ColorSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
         )
     },
     restore = { map ->
@@ -134,7 +134,7 @@ val IconDemoStateSaver = mapSaverSafe(
             sizeTypeInitial = map[SizeTypeKey] as SizingType,
             fixedSizeInitial = (map[FixedSizeKey] as Float).dp,
             scaleInitial = map[ScaleKey] as Float,
-            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            colorInitial = requireNotNull(restore(value = map[ColorKey], saver = ColorSaver)) { "Missing $ColorKey" },
         )
     },
 )
@@ -182,8 +182,7 @@ class IconDemoControl(
             persistentListOf(
                 colorControl,
                 sizeTypeControl,
-                *sizeControls(state.sizeType).toTypedArray(),
-            )
+            ).addAll(sizeControls(state.sizeType))
         },
     )
 

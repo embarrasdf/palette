@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
@@ -44,10 +45,11 @@ fun CharControl(
 
     val textFieldState = rememberTextFieldState(initialText = value.toString())
 
-    LaunchedEffect(value) {
+    DisposableEffect(value) {
         textFieldState.edit {
-            replace(0, length, value.toString())
+            replace(start = 0, end = length, text = value.toString())
         }
+        onDispose {}
     }
 
     LaunchedEffect(textFieldState) {
@@ -68,7 +70,7 @@ fun CharControl(
             Text(
                 text = control.name,
                 style = style.labelStyle,
-                modifier = Modifier.weight(1f, fill = false),
+                modifier = Modifier.weight(weight = 1f, fill = false),
             )
             Spacer(modifier = Modifier.width(style.spacing))
         }
@@ -77,9 +79,9 @@ fun CharControl(
             style = style.textFieldStyle,
             inputTransformation = InputTransformation {
                 val text = asCharSequence().toString()
-                val newText = text.lastOrNull()?.toString() ?: ""
+                val newText = text.lastOrNull()?.toString().orEmpty()
                 if (text != newText) {
-                    replace(0, length, newText)
+                    replace(start = 0, end = length, text = newText)
                 }
             },
             lineLimits = TextFieldLineLimits.SingleLine,
@@ -90,7 +92,7 @@ fun CharControl(
 
 @Preview
 @Composable
-fun CharControlPreview() {
+private fun CharControlPreview() {
     CharControl(
         control = Control.CharField(
             name = "Label",

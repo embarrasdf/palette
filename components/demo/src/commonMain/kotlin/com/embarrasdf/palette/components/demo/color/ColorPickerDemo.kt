@@ -28,9 +28,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ColorPickerDemo(
+    modifier: Modifier = Modifier,
     state: ColorPickerDemoState = rememberColorPickerDemoState(),
     control: ColorPickerDemoControl = rememberColorPickerDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -94,13 +94,15 @@ private const val SpacingKey = "spacing"
 val ColorPickerDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            ColorKey to save(value.color, ColorSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
             SpacingKey to value.spacing.value,
         )
     },
     restore = { map ->
         ColorPickerDemoState(
-            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            colorInitial = requireNotNull(
+                restore(value = map[ColorKey], saver = ColorSaver),
+            ) { "Missing $ColorKey" },
             spacingInitial = (map[SpacingKey] as Float).dp,
         )
     },

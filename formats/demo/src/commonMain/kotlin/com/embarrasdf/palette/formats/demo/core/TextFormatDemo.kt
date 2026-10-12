@@ -30,9 +30,9 @@ import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextFormatDemo(
+    modifier: Modifier = Modifier,
     state: TextFormatDemoState = rememberTextFormatDemoState(),
     control: TextFormatDemoControl = rememberTextFormatDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -111,22 +111,25 @@ fun textFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         TextFormatDemoState(
-            demoTextFieldState = restore(map[DemoTextFieldStateKey]!!) as TextFieldState,
-            wordDelimiterTextFieldState = restore(map[WordDelimiterTextFieldStateKey]!!) as TextFieldState,
+            demoTextFieldState = map.restoreTextFieldState(DemoTextFieldStateKey),
+            wordDelimiterTextFieldState = map.restoreTextFieldState(WordDelimiterTextFieldStateKey),
         )
     },
 )
+
+private fun Map<String, Any?>.restoreTextFieldState(key: String): TextFieldState =
+    restore(requireNotNull(this[key]) { "Missing $key" }) as TextFieldState
 
 @Composable
 fun rememberTextFormatDemoControl(
     state: TextFormatDemoState,
     onValueChange: (TextFormat) -> Unit = { state.textFormat = it },
 ): TextFormatDemoControl {
-    val onValueChange by rememberUpdatedState(onValueChange)
-    return remember(state, onValueChange) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    return remember(state, currentOnValueChange) {
         TextFormatDemoControl(
             state = state,
-            onValueChange = onValueChange,
+            onValueChange = currentOnValueChange,
         )
     }
 }
@@ -148,7 +151,7 @@ class TextFormatDemoControl(
         selectedValue = { Capitalization.toKey(state.textFormat.capitalization) },
         onValueChange = { newKey ->
             val newState = state.textFormat.copy(
-                capitalization = Capitalization.fromKey(newKey, state.capitalizeFirstChar),
+                capitalization = Capitalization.fromKey(key = newKey, capitalizeFirstChar = state.capitalizeFirstChar),
             )
             onValueChange(newState)
         },

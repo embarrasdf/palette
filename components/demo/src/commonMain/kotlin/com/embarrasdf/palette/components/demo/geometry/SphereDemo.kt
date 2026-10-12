@@ -142,8 +142,8 @@ private const val PrecisionDegreeKey = "precisionDegree"
 val SphereDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            StrokeColorKey to save(value.strokeColor, ColorSaver, this),
-            OutlineStrokeColorKey to save(value.outlineStrokeColor, ColorSaver, this),
+            StrokeColorKey to save(value = value.strokeColor, saver = ColorSaver, scope = this),
+            OutlineStrokeColorKey to save(value = value.outlineStrokeColor, saver = ColorSaver, scope = this),
             FillKey to value.fill,
             OutlineKey to value.outline,
             RotationXKey to value.viewingAngle.rotationX,
@@ -158,8 +158,12 @@ val SphereDemoStateSaver = mapSaverSafe(
     },
     restore = { map ->
         SphereDemoState(
-            strokeColor = restore(map[StrokeColorKey], ColorSaver)!!,
-            outlineStrokeColor = restore(map[OutlineStrokeColorKey], ColorSaver)!!,
+            strokeColor = requireNotNull(
+                restore(value = map[StrokeColorKey], saver = ColorSaver),
+            ) { "Missing $StrokeColorKey" },
+            outlineStrokeColor = requireNotNull(
+                restore(value = map[OutlineStrokeColorKey], saver = ColorSaver),
+            ) { "Missing $OutlineStrokeColorKey" },
             fillInitial = map[FillKey] as Boolean,
             outlineInitial = map[OutlineKey] as Boolean,
             viewingAngleInitial = ViewingAngle(
@@ -271,6 +275,5 @@ class SphereDemoControl(
             numLongitudeLinesControl,
             precisionDegreeControl,
             strokeWidthControl,
-            *outlineControls.toTypedArray(),
-        )
+        ).addAll(outlineControls)
 }

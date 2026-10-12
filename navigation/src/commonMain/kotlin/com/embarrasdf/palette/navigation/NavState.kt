@@ -3,12 +3,12 @@ package com.embarrasdf.palette.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.json.Json
 import androidx.navigation3.runtime.NavKey as Navigation3NavKey
@@ -21,7 +21,7 @@ fun rememberNavState(
     buildSyntheticBackStack: Boolean = true,
     onWouldBecomeEmpty: () -> Unit = {},
 ): NavState {
-    val json = rememberNavKeyJson(navGraph, jsonConfig)
+    val json = rememberNavKeyJson(navGraph = navGraph, builder = jsonConfig)
 
     val initialBackStack = remember {
         if (initialDeeplink == null) return@remember listOf(navGraph.startRoute)
@@ -44,7 +44,7 @@ fun rememberNavState(
         NavState(
             backStack = backStack,
             navGraph = navGraph,
-            onWouldBecomeEmpty = currentOnWouldBecomeEmpty,
+            onWouldBecomeEmpty = { currentOnWouldBecomeEmpty() },
         )
     }
 }
@@ -123,7 +123,7 @@ class NavState(
                 }
 
                 // Otherwise, navigate to the parent with replace
-                navigate(parent, replace = true)
+                navigate(route = parent, replace = true)
                 return true
             }
 
@@ -147,16 +147,20 @@ private fun rememberNavBackStack(
     saver = listSaver(
         save = { list ->
             list.toList().map { key ->
-                json.encodeToString(PolymorphicSerializer(Navigation3NavKey::class), key)
+                json.encodeToString(
+                    serializer = PolymorphicSerializer(Navigation3NavKey::class),
+                    value = key,
+                )
             }
         },
         restore = { saved ->
             @Suppress("UNCHECKED_CAST")
-            mutableStateListOf(
-                *saved.map { s ->
-                    json.decodeFromString(PolymorphicSerializer(Navigation3NavKey::class), s) as NavKey
-                }.toTypedArray(),
-            )
+            saved.map { s ->
+                json.decodeFromString(
+                    deserializer = PolymorphicSerializer(Navigation3NavKey::class),
+                    string = s,
+                ) as NavKey
+            }.toMutableStateList()
         },
     ),
-) { mutableStateListOf(*initialBackStack.toTypedArray()) }
+) { initialBackStack.toMutableStateList() }

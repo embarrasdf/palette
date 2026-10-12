@@ -119,7 +119,7 @@ internal class AuthStatePreviewParameterProvider : PreviewParameterProvider<Auth
 
 @Preview
 @Composable
-fun PreviewAuthButton(@PreviewParameter(AuthStatePreviewParameterProvider::class) authState: AuthState) {
+private fun PreviewAuthButton(@PreviewParameter(AuthStatePreviewParameterProvider::class) authState: AuthState) {
     Surface {
         AuthButton(
             authState = authState,

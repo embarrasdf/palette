@@ -86,7 +86,7 @@ object CoreStyles {
         @Composable get() = TextFieldStyle(
             textStyle = text.bodyMedium,
             cursorBrush = SolidColor(PaletteTheme.semantic.color.primary),
-            borderStroke = BorderStroke(1.dp, PaletteTheme.semantic.color.outline),
+            borderStroke = BorderStroke(width = 1.dp, color = PaletteTheme.semantic.color.outline),
             contentPadding = PaddingValues(PaletteTheme.semantic.dimension.spacing.small),
         )
 }

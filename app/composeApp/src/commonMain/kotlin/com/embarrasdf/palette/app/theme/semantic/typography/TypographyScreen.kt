@@ -39,6 +39,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun TypographyScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTypographyScreenState(themeState = themeController)
     val control = rememberTypographyScreenControl(state = state, themeController = themeController)
@@ -52,6 +53,7 @@ fun TypographyScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = TypographyToken.entries.toList(),
@@ -107,18 +109,27 @@ class TypographyScreenState(
     fun tokenSet(token: TypographyToken): TypographyTokenSet = themeState.semantic.typography.tokens.getValue(token)
 }
 
-private val textFieldKey = "textField"
+private const val TextFieldKey = "textField"
 
 fun typographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            textFieldKey to save(state.textFieldState, TextFieldState.Saver, this),
+            TextFieldKey to save(
+                value = state.textFieldState,
+                saver = TextFieldState.Saver,
+                scope = this,
+            ),
         )
     },
     restore = { map ->
         TypographyScreenState(
             themeState = themeState,
-            textFieldState = restore(map[textFieldKey], TextFieldState.Saver)!!,
+            textFieldState = requireNotNull(
+                restore(
+                    value = map[TextFieldKey],
+                    saver = TextFieldState.Saver,
+                ),
+            ) { "Missing saved TextFieldState" },
         )
     },
 )
@@ -150,10 +161,8 @@ class TypographyScreenControl(
     private val tokenControls: List<Control.ControlColumn> =
         TypographyToken.entries.map { makeControlForToken(it) }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        textFieldControl,
-        *tokenControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = persistentListOf<Control>(textFieldControl)
+        .addAll(tokenControls)
 
     private fun makeControlForToken(token: TypographyToken): Control.ControlColumn {
         val fontFamilyControl = enumControl(
@@ -180,6 +189,22 @@ class TypographyScreenControl(
                 updateTokenSet(token) { it.copy(fontStyle = fontStyle) }
             },
         )
+        val metricControls = makeMetricControls(token)
+        return Control.ControlColumn(
+            name = token.name,
+            controls = {
+                persistentListOf<Control>(
+                    fontFamilyControl,
+                    fontWeightControl,
+                    fontStyleControl,
+                ).addAll(metricControls)
+            },
+            indent = true,
+            expandedInitial = false,
+        )
+    }
+
+    private fun makeMetricControls(token: TypographyToken): List<Control> {
         val fontSizeControl = Control.Slider(
             name = "Font size",
             value = { state.tokenSet(token).fontSize.value },
@@ -207,20 +232,10 @@ class TypographyScreenControl(
             valueRange = { -1f..2f },
             stepIncrement = 0.1f,
         )
-        return Control.ControlColumn(
-            name = token.name,
-            controls = {
-                persistentListOf(
-                    fontFamilyControl,
-                    fontWeightControl,
-                    fontStyleControl,
-                    fontSizeControl,
-                    lineHeightControl,
-                    letterSpacingControl,
-                )
-            },
-            indent = true,
-            expandedInitial = false,
+        return listOf(
+            fontSizeControl,
+            lineHeightControl,
+            letterSpacingControl,
         )
     }
 
@@ -230,7 +245,12 @@ class TypographyScreenControl(
     ) {
         themeController.updateSemantic {
             val current = it.typography.tokens.getValue(token)
-            it.copy(typography = it.typography.withTokenSet(token, transform(current)))
+            it.copy(
+                typography = it.typography.withTokenSet(
+                    token = token,
+                    tokenSet = transform(current),
+                ),
+            )
         }
     }
 }

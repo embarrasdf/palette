@@ -28,11 +28,13 @@ import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun BorderStyleScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberBorderStyleScreenState(themeState = themeController)
     val control = rememberBorderStyleScreenControl(state = state, themeController = themeController)
@@ -46,6 +48,7 @@ fun BorderStyleScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = BorderStyleToken.entries,
@@ -122,9 +125,7 @@ class BorderStyleScreenControl(
         )
     }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        *styleControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = styleControls.toPersistentList()
 }
 
 private fun makeControlForToken(

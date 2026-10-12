@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,8 +61,9 @@ fun DemoScope.TextDemo(
 ) {
     val text by state.text.collectAsState(initial = state.text.toString())
 
-    LaunchedEffect(control, this@TextDemo.maxWidth) {
+    DisposableEffect(control, this@TextDemo.maxWidth) {
         control.onSizeChanged(this@TextDemo.maxWidth)
+        onDispose { }
     }
     Text(
         text = text,
@@ -97,8 +98,8 @@ fun DemoScope.TextDemo(
             .then(
                 if (state.showBorder) {
                     Modifier.border(
-                        1.dp,
-                        PaletteTheme.semantic.color.primary,
+                        width = 1.dp,
+                        color = PaletteTheme.semantic.color.primary,
                     )
                 } else {
                     Modifier
@@ -221,7 +222,11 @@ private const val OverflowKey = "overflow"
 val TextDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            TextStyleDemoKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
+            TextStyleDemoKey to save(
+                value = value.textStyleDemoState,
+                saver = TextStyleDemoStateSaver,
+                scope = this,
+            ),
             TextAlignKey to value.textAlign.name,
             LineHeightAlignmentKey to value.lineHeightAlignment.name,
             LineHeightTrimKey to value.lineHeightTrim.name,
@@ -235,7 +240,9 @@ val TextDemoStateSaver = mapSaverSafe(
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = restore(map[TextStyleDemoKey], TextStyleDemoStateSaver)!!
+        val textStyleDemoState: TextStyleDemoState = requireNotNull(
+            restore(value = map[TextStyleDemoKey], saver = TextStyleDemoStateSaver),
+        ) { "Missing $TextStyleDemoKey" }
 
         TextDemoState(
             textStyleInitial = textStyleDemoState.textStyle,

@@ -20,7 +20,10 @@ actual fun createColorInvertShader(): ColorInvertShader {
 
 class ColorInvertShaderImpl : ColorInvertShader {
 
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var amount: Float = 0f
 
@@ -30,6 +33,6 @@ class ColorInvertShaderImpl : ColorInvertShader {
 
     override fun setAmount(amount: Float) {
         this.amount = amount
-        control.setFloatUniform(UniformAmount, amount)
+        control.setFloatUniform(name = UniformAmount, value = amount)
     }
 }

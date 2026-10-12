@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -41,15 +41,17 @@ fun SliderControl(
         verticalArrangement = Arrangement.spacedBy(style.spacing),
         modifier = modifier,
     ) {
-        val label by derivedStateOf {
-            val value = if (value % 1f == 0f) value.toInt() else value.toString()
-            "$name: $value"
+        val label by remember {
+            derivedStateOf {
+                val value = if (value % 1f == 0f) value.toInt() else value.toString()
+                "$name: $value"
+            }
         }
         Text(
             text = label,
             style = style.labelStyle,
         )
-        val steps = control.stepIncrement?.let { stepsForIncrement(valueRange, it) } ?: 0
+        val steps = control.stepIncrement?.let { stepsForIncrement(valueRange = valueRange, stepIncrement = it) } ?: 0
         Slider(
             value = value,
             onValueChange = control.onValueChange,
@@ -66,7 +68,7 @@ fun SliderControl(
 @Preview
 @Composable
 private fun Preview() {
-    var value by remember { mutableStateOf(0.5f) }
+    var value by remember { mutableFloatStateOf(0.5f) }
     val control = remember {
         Control.Slider(
             name = "Amount",

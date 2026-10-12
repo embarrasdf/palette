@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,9 +37,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ButtonDemo(
+    modifier: Modifier = Modifier,
     state: ButtonDemoState = rememberButtonDemoState(),
     control: ButtonDemoControl = rememberButtonDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -59,8 +59,9 @@ fun DemoScope.ButtonDemo(
     state: ButtonDemoState = rememberButtonDemoState(),
     control: ButtonDemoControl = rememberButtonDemoControl(state),
 ) {
-    LaunchedEffect(control, maxWidth) {
+    DisposableEffect(control, maxWidth) {
         control.onButtonSizeChanged(maxWidth)
+        onDispose { }
     }
     // A colored button container needs matching content color; the demo, as the caller, picks it
     // per variant — the same way content on a Surface is colored by whoever places it.
@@ -69,8 +70,9 @@ fun DemoScope.ButtonDemo(
         ButtonStyleToken.Secondary -> ColorToken.Secondary
         ButtonStyleToken.Tertiary -> ColorToken.Primary
     }.toColor()
-    LaunchedEffect(state.style, contentColor) {
+    DisposableEffect(state.style, contentColor) {
         state.textDemoState.textStyleDemoState.color = contentColor
+        onDispose { }
     }
     val style = state.buttonStyle ?: PaletteTheme.component.core.button[state.style]
     Button(
@@ -145,8 +147,8 @@ val ButtonDemoStateSaver = mapSaverSafe(
             StyleKey to value.style,
             MaxWidthKey to value.maxWidth.value,
             WidthKey to value.width.value,
-            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
-            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
+            ContentPaddingKey to save(value = value.contentPadding, saver = PaddingValuesSaver, scope = this),
+            TextDemoStateKey to save(value = value.textDemoState, saver = TextDemoStateSaver, scope = this),
         )
     },
     restore = { map ->
@@ -155,8 +157,12 @@ val ButtonDemoStateSaver = mapSaverSafe(
             styleInitial = map[StyleKey] as ButtonStyleToken,
             maxWidthInitial = (map[MaxWidthKey] as Float).dp,
             widthInitial = (map[WidthKey] as Float).dp,
-            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
-            textDemoState = restore(map[TextDemoStateKey], TextDemoStateSaver)!!,
+            contentPaddingInitial = requireNotNull(
+                restore(value = map[ContentPaddingKey], saver = PaddingValuesSaver),
+            ) { "Missing $ContentPaddingKey" },
+            textDemoState = requireNotNull(
+                restore(value = map[TextDemoStateKey], saver = TextDemoStateSaver),
+            ) { "Missing $TextDemoStateKey" },
         )
     },
 )

@@ -7,12 +7,12 @@ enum class GridCoordinateSystemType {
     Polar,
 }
 
-sealed class GridCoordinateSystem {
+sealed interface GridCoordinateSystem {
     data class Cartesian(
         val scaleX: GridScale,
         val scaleY: GridScale,
         val rotationDegrees: Float = 0f,
-    ) : GridCoordinateSystem() {
+    ) : GridCoordinateSystem {
         constructor(
             spacing: Dp,
             rotationDegrees: Float = 0f,
@@ -27,5 +27,5 @@ sealed class GridCoordinateSystem {
         val radiusScale: GridScale,
         val thetaRadians: Float,
         val rotationDegrees: Float = 0f,
-    ) : GridCoordinateSystem()
+    ) : GridCoordinateSystem
 }

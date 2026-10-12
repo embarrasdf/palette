@@ -12,7 +12,7 @@ class TextFormatInputTransformation(
 
         val formatted = textFormat.format(currentText)
         if (formatted != currentText) {
-            replace(0, length, formatted)
+            replace(start = 0, end = length, text = formatted)
         }
     }
 }

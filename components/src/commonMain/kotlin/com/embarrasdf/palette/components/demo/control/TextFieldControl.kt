@@ -58,7 +58,7 @@ fun TextFieldControl(
             Text(
                 text = control.name,
                 style = style.labelStyle,
-                modifier = Modifier.weight(1f, fill = false),
+                modifier = Modifier.weight(weight = 1f, fill = false),
             )
             Spacer(modifier = Modifier.width(style.spacing))
         }
@@ -74,7 +74,7 @@ fun TextFieldControl(
 
 @Preview
 @Composable
-fun TextFieldControlPreview() {
+private fun TextFieldControlPreview() {
     val textFieldState = rememberTextFieldState(initialText = "Text Field")
     TextFieldControl(
         control = Control.TextField(

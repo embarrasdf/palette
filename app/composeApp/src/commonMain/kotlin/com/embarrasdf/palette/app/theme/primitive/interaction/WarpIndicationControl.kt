@@ -9,8 +9,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 class WarpIndicationControl(
-    private val value: () -> IndicationTokenSet.Warp,
-    private val onValueChange: (IndicationTokenSet.Warp) -> Unit,
+    value: () -> IndicationTokenSet.Warp,
+    onValueChange: (IndicationTokenSet.Warp) -> Unit,
 ) {
     private val pressAmountControl = Control.Slider(
         name = "Press amount",

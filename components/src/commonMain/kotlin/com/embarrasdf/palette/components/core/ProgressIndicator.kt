@@ -13,11 +13,11 @@ fun IndeterminateProgressIndicator(
     modifier: Modifier = Modifier,
     style: ProgressIndicatorStyle = ProgressIndicatorStyle(),
 ) {
-    Text("...", style = style.textStyle, modifier = modifier)
+    Text(text = "...", style = style.textStyle, modifier = modifier)
 }
 
 @Preview
 @Composable
-fun PreviewIndeterminateProgressIndicator() {
+private fun PreviewIndeterminateProgressIndicator() {
     IndeterminateProgressIndicator()
 }

@@ -53,7 +53,7 @@ private class ShaderControlImpl(
     }
 
     private fun createRuntimeShader(shaderSource: String): RuntimeShader? {
-        if (Build.VERSION.SDK_INT < 33) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             return null
         }
         return RuntimeShader(shaderSource)

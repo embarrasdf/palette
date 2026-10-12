@@ -8,8 +8,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 class ColorInvertIndicationControl(
-    private val value: () -> IndicationTokenSet.ColorInvert,
-    private val onValueChange: (IndicationTokenSet.ColorInvert) -> Unit,
+    value: () -> IndicationTokenSet.ColorInvert,
+    onValueChange: (IndicationTokenSet.ColorInvert) -> Unit,
 ) {
     private val hoverAmountControl = Control.Slider(
         name = "Hover amount",

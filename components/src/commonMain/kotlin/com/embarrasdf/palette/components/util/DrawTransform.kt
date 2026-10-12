@@ -10,5 +10,5 @@ fun DrawTransform.rotate(
 ) {
     rotate(degrees, pivot)
     block()
-    rotate(-degrees, pivot)
+    rotate(degrees = -degrees, pivot = pivot)
 }

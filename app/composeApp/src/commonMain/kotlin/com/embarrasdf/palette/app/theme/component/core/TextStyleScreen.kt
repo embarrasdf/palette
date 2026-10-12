@@ -40,6 +40,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun TextStyleScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTextStyleScreenState(themeState = themeController)
     val control = rememberTextStyleScreenControl(state = state, themeController = themeController)
@@ -53,6 +54,7 @@ fun TextStyleScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = TextStyleToken.entries,
@@ -130,7 +132,11 @@ private const val SurfaceTokenKeyPrefix = "surfaceToken_"
 fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         val map = mutableMapOf<String, Any?>(
-            DemoTextFieldStateKey to save(state.demoTextFieldState, TextFieldState.Saver, this),
+            DemoTextFieldStateKey to save(
+                value = state.demoTextFieldState,
+                saver = TextFieldState.Saver,
+                scope = this,
+            ),
         )
         TextStyleToken.entries.forEach { token ->
             map[SurfaceTokenKeyPrefix + token.name] = state.surfaceToken(token).name
@@ -144,7 +150,12 @@ fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         }.toMap()
         TextStyleScreenState(
             themeState = themeState,
-            demoTextFieldState = restore(map[DemoTextFieldStateKey], TextFieldState.Saver)!!,
+            demoTextFieldState = requireNotNull(
+                restore(
+                    value = map[DemoTextFieldStateKey],
+                    saver = TextFieldState.Saver,
+                ),
+            ) { "Missing saved demo TextFieldState" },
             surfaceTokensInitial = surfaceTokens,
         )
     },
@@ -179,10 +190,8 @@ class TextStyleScreenControl(
         includeLabel = false,
     )
 
-    val controls: PersistentList<Control> = persistentListOf(
-        demoTextControl,
-        *textStyleControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = persistentListOf<Control>(demoTextControl)
+        .addAll(textStyleControls)
 }
 
 private fun makeControlForToken(
@@ -226,7 +235,7 @@ private fun makeControlForToken(
         values = { SurfaceStyleToken.entries },
         selectedValue = { state.surfaceToken(token) },
         onValueChange = { newValue ->
-            state.setSurfaceToken(token, newValue)
+            state.setSurfaceToken(token = token, value = newValue)
         },
     )
 

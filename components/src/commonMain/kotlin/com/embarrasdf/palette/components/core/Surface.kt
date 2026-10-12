@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +50,7 @@ fun Surface(
             .pointerInput(Unit) {},
         propagateMinConstraints = true,
     ) {
-        ShapeContent(style.shape, content)
+        ShapeContent(shape = style.shape, content = content)
     }
 }
 
@@ -87,7 +88,7 @@ fun Surface(
                 borderStyle = style.borderStyle,
             ),
     ) {
-        ShapeContent(style.shape, content)
+        ShapeContent(shape = style.shape, content = content)
     }
 }
 
@@ -96,18 +97,19 @@ private fun ShapeContent(
     shape: Shape,
     content: @Composable (PaddingValues) -> Unit,
 ) {
+    val movableContent = remember(content) { movableContentOf(content) }
     when (shape) {
         Shape.Circle, Shape.Diamond -> {
             BoxWithConstraints(contentAlignment = Alignment.Center) {
                 val inset: Dp = minOf(maxWidth, maxHeight) / 2 * (1f - (1f / sqrt(2f)))
-                content(PaddingValues(inset))
+                movableContent(PaddingValues(inset))
             }
         }
         Shape.Triangle -> {
             BoxWithConstraints(contentAlignment = Alignment.Center) {
                 // Largest axis-aligned rectangle inscribed in an equilateral triangle:
                 // horizontal inset = width / 4 on each side, top inset = height / 3
-                content(
+                movableContent(
                     PaddingValues(
                         start = maxWidth / 4,
                         end = maxWidth / 4,
@@ -125,16 +127,15 @@ private fun ShapeContent(
                 // measurement and can therefore be placed under IntrinsicSize.
                 val inset = shape.cornerRadius * (1f - (1f / sqrt(2f)))
                 Box(contentAlignment = Alignment.Center) {
-                    content(PaddingValues(inset))
+                    movableContent(PaddingValues(inset))
                 }
             } else {
-                content(PaddingValues(0.dp))
+                movableContent(PaddingValues(0.dp))
             }
         }
     }
 }
 
-@Composable
 private fun Modifier.surface(
     composeShape: androidx.compose.ui.graphics.Shape,
     backgroundColor: Color,
@@ -146,7 +147,7 @@ private fun Modifier.surface(
 
 @Preview
 @Composable
-private fun Preview(@PreviewParameter(BoolPreviewParameterProvider::class) isDarkTheme: Boolean) {
+private fun Preview() {
     Surface {
         Text("Hello world")
     }

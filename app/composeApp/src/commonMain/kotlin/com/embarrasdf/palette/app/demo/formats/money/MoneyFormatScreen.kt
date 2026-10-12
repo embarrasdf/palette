@@ -14,6 +14,7 @@ fun MoneyFormatScreen(
     format: MoneyFormat,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -23,6 +24,7 @@ fun MoneyFormatScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (format) {
             MoneyFormat.MoneyFormat -> MoneyFormatDemo(

@@ -8,8 +8,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 class PixelateIndicationControl(
-    private val value: () -> IndicationTokenSet.Pixelate,
-    private val onValueChange: (IndicationTokenSet.Pixelate) -> Unit,
+    value: () -> IndicationTokenSet.Pixelate,
+    onValueChange: (IndicationTokenSet.Pixelate) -> Unit,
 ) {
     private val hoverSubdivisionsControl = Control.Slider(
         name = "Hover subdivisions",

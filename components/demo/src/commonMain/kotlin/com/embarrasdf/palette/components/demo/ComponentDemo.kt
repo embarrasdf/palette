@@ -206,10 +206,14 @@ fun componentDemoStateSaver(
                 saver = CurveStitchDemoStateSaver,
                 scope = this,
             ),
-            GridDemoStateKey to save(value.gridDemoState, GridDemoStateSaver, this),
-            SphereDemoStateKey to save(value.sphereDemoState, SphereDemoStateSaver, this),
-            TextDemoStateKey to save(value.textDemoState, TextDemoStateSaver, this),
-            TextFieldDemoStateKey to save(value.textFieldDemoState, TextFieldDemoStateSaver, this),
+            GridDemoStateKey to save(value = value.gridDemoState, saver = GridDemoStateSaver, scope = this),
+            SphereDemoStateKey to save(value = value.sphereDemoState, saver = SphereDemoStateSaver, scope = this),
+            TextDemoStateKey to save(value = value.textDemoState, saver = TextDemoStateSaver, scope = this),
+            TextFieldDemoStateKey to save(
+                value = value.textFieldDemoState,
+                saver = TextFieldDemoStateSaver,
+                scope = this,
+            ),
         )
     },
     restore = { map ->
@@ -217,15 +221,27 @@ fun componentDemoStateSaver(
             density = density,
             color = color,
             componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
-            circleDemoStateInitial = restore(map[CircleDemoStateKey], circleDemoStateSaver(density = density))!!,
-            curveStitchDemoStateInitial = restore(
-                map[CurveStitchDemoStateKey],
-                CurveStitchDemoStateSaver,
-            )!!,
-            gridDemoStateInitial = restore(map[GridDemoStateKey], GridDemoStateSaver)!!,
-            sphereDemoStateInitial = restore(map[SphereDemoStateKey], SphereDemoStateSaver)!!,
-            textDemoStateInitial = restore(map[TextDemoStateKey], TextDemoStateSaver)!!,
-            textFieldDemoStateInitial = restore(map[TextFieldDemoStateKey], TextFieldDemoStateSaver)!!,
+            circleDemoStateInitial = requireNotNull(
+                restore(value = map[CircleDemoStateKey], saver = circleDemoStateSaver(density = density)),
+            ) { "Missing $CircleDemoStateKey" },
+            curveStitchDemoStateInitial = requireNotNull(
+                restore(
+                    value = map[CurveStitchDemoStateKey],
+                    saver = CurveStitchDemoStateSaver,
+                ),
+            ) { "Missing $CurveStitchDemoStateKey" },
+            gridDemoStateInitial = requireNotNull(
+                restore(value = map[GridDemoStateKey], saver = GridDemoStateSaver),
+            ) { "Missing $GridDemoStateKey" },
+            sphereDemoStateInitial = requireNotNull(
+                restore(value = map[SphereDemoStateKey], saver = SphereDemoStateSaver),
+            ) { "Missing $SphereDemoStateKey" },
+            textDemoStateInitial = requireNotNull(
+                restore(value = map[TextDemoStateKey], saver = TextDemoStateSaver),
+            ) { "Missing $TextDemoStateKey" },
+            textFieldDemoStateInitial = requireNotNull(
+                restore(value = map[TextFieldDemoStateKey], saver = TextFieldDemoStateSaver),
+            ) { "Missing $TextFieldDemoStateKey" },
         )
     },
 )

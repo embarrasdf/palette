@@ -17,7 +17,7 @@ fun ThemeButton(
         modifier = modifier,
     ) {
         Text(
-            "Theme",
+            text = "Theme",
             style = PaletteTheme.component.core.text.labelSmall,
         )
     }

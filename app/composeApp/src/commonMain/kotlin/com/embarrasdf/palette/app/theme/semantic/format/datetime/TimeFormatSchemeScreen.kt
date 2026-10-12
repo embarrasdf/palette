@@ -25,13 +25,14 @@ import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.format.datetime.TimeFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.datetime.TimeFormatToken
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.format
 
 @Composable
 fun TimeFormatSchemeScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTimeFormatSchemeScreenState(
         formats = themeController.semantic.formats,
@@ -50,6 +51,7 @@ fun TimeFormatSchemeScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = state.timeFormatsByToken.entries.toList(),
@@ -65,7 +67,7 @@ fun TimeFormatSchemeScreen(
                     .padding(horizontal = PaletteTheme.semantic.dimension.spacing.medium),
             ) {
                 DateTimeFormatDemo(
-                    state = state.dateTimeFormatDemoStateByToken[token]!!,
+                    state = state.dateTimeFormatDemoStateByToken.getValue(token),
                     format = { _, localDateTime, _ ->
                         localDateTime.time.format(format.toFormat())
                     },
@@ -103,7 +105,7 @@ class TimeFormatSchemeScreenState(
 
     val dateTimeFormatDemoStateByToken = TimeFormatToken.entries.associateWith {
         DateTimeFormatDemoState(
-            tokenInitial = timeFormatsByToken[it]!!,
+            tokenInitial = timeFormatsByToken.getValue(it),
         )
     }
 }
@@ -146,9 +148,7 @@ class TimeFormatSchemeScreenControl(
     val themeController: ThemeController,
     formatControlByToken: Map<TimeFormatToken, Control>,
 ) {
-    val controls: PersistentList<Control> = persistentListOf(
-        *formatControlByToken.values.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = formatControlByToken.values.toPersistentList()
 }
 
 @Composable
@@ -159,7 +159,7 @@ private fun makeControlForToken(
 ): Control {
     val demoControl = rememberDateTimeFormatDemoControl(
         entries = TimeFormatValue.entries,
-        state = state.dateTimeFormatDemoStateByToken[token]!!,
+        state = state.dateTimeFormatDemoStateByToken.getValue(token),
         onValueChange = { newValue ->
             themeController.updateSemantic {
                 it.copy(

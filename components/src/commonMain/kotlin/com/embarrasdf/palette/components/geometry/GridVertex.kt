@@ -92,40 +92,54 @@ fun DrawScope.drawVertex(
                     style = vertex.drawStyle,
                 )
             }
-            is GridVertex.Plus -> {
-                val size = vertex.size.toSize()
-                val halfPlusWidthPx = size.width / 2f
-                val halfPlusHeightPx = size.height / 2f
-                drawLine(
-                    color = vertex.color,
-                    start = Offset(x - halfPlusWidthPx, y),
-                    end = Offset(x + halfPlusWidthPx, y),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
-                )
-                drawLine(
-                    color = vertex.color,
-                    start = Offset(x, y - halfPlusHeightPx),
-                    end = Offset(x, y + halfPlusHeightPx),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
-                )
-            }
-            is GridVertex.X -> {
-                val size = vertex.size.toSize()
-                val halfXWidthPx = size.width / 2f
-                val halfXHeightPx = size.height / 2f
-                drawLine(
-                    color = vertex.color,
-                    start = Offset(x - halfXWidthPx, y - halfXHeightPx),
-                    end = Offset(x + halfXWidthPx, y + halfXHeightPx),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
-                )
-                drawLine(
-                    color = vertex.color,
-                    start = Offset(x - halfXWidthPx, y + halfXHeightPx),
-                    end = Offset(x + halfXWidthPx, y - halfXHeightPx),
-                    strokeWidth = with(density) { vertex.strokeWidth.toPx() },
-                )
-            }
+            is GridVertex.Plus -> drawPlusVertex(vertex = vertex, x = x, y = y, density = density)
+            is GridVertex.X -> drawXVertex(vertex = vertex, x = x, y = y, density = density)
         }
     }
+}
+
+private fun DrawScope.drawPlusVertex(
+    vertex: GridVertex.Plus,
+    x: Float,
+    y: Float,
+    density: Density,
+) {
+    val size = vertex.size.toSize()
+    val halfPlusWidthPx = size.width / 2f
+    val halfPlusHeightPx = size.height / 2f
+    drawLine(
+        color = vertex.color,
+        start = Offset(x - halfPlusWidthPx, y),
+        end = Offset(x + halfPlusWidthPx, y),
+        strokeWidth = with(density) { vertex.strokeWidth.toPx() },
+    )
+    drawLine(
+        color = vertex.color,
+        start = Offset(x, y - halfPlusHeightPx),
+        end = Offset(x, y + halfPlusHeightPx),
+        strokeWidth = with(density) { vertex.strokeWidth.toPx() },
+    )
+}
+
+private fun DrawScope.drawXVertex(
+    vertex: GridVertex.X,
+    x: Float,
+    y: Float,
+    density: Density,
+) {
+    val size = vertex.size.toSize()
+    val halfXWidthPx = size.width / 2f
+    val halfXHeightPx = size.height / 2f
+    drawLine(
+        color = vertex.color,
+        start = Offset(x - halfXWidthPx, y - halfXHeightPx),
+        end = Offset(x + halfXWidthPx, y + halfXHeightPx),
+        strokeWidth = with(density) { vertex.strokeWidth.toPx() },
+    )
+    drawLine(
+        color = vertex.color,
+        start = Offset(x - halfXWidthPx, y + halfXHeightPx),
+        end = Offset(x + halfXWidthPx, y - halfXHeightPx),
+        strokeWidth = with(density) { vertex.strokeWidth.toPx() },
+    )
 }

@@ -53,7 +53,7 @@ fun <T : CatalogItem> Catalog(
                 onClick = { onItemClick(item) },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(item.title, style = style.itemTextStyle)
+                Text(text = item.title, style = style.itemTextStyle)
             }
         }
         item {

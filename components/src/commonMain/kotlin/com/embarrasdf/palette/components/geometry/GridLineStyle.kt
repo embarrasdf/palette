@@ -20,14 +20,14 @@ private const val StrokeKey = "stroke"
 val GridLineStyleSaver: Saver<GridLineStyle, Any> = mapSaverSafe(
     save = { value ->
         mapOf(
-            ColorKey to save(value.color, ColorSaver, this),
-            StrokeKey to save(value.stroke, DrawStyleSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
+            StrokeKey to save(value = value.stroke, saver = DrawStyleSaver, scope = this),
         )
     },
     restore = { map ->
         GridLineStyle(
-            color = restore(map[ColorKey], ColorSaver)!!,
-            stroke = restore(map[StrokeKey], DrawStyleSaver)!!,
+            color = requireNotNull(restore(value = map[ColorKey], saver = ColorSaver)) { "Missing color" },
+            stroke = requireNotNull(restore(value = map[StrokeKey], saver = DrawStyleSaver)) { "Missing stroke" },
         )
     },
 )

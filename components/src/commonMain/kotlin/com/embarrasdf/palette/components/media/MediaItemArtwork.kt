@@ -32,7 +32,7 @@ fun MediaItemArtwork(
                 .alpha(if (isEnabled) 1f else style.disabledContentAlpha),
         )
     } else {
-        // TODO: fallback image
+        // Note: no fallback image yet; shows a text placeholder instead.
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
@@ -40,7 +40,7 @@ fun MediaItemArtwork(
                 .clearAndSetSemantics {},
         ) {
             Text(
-                "Art",
+                text = "Art",
                 style = style.fallbackTextStyle,
             )
         }

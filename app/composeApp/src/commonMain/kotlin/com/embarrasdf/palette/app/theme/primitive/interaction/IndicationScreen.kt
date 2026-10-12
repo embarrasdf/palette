@@ -3,7 +3,7 @@ package com.embarrasdf.palette.app.theme.primitive.interaction
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun IndicationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberPrimitiveIndicationScreenState(themeState = themeController)
     val buttonDemoState = rememberButtonDemoState(
@@ -57,8 +58,9 @@ fun IndicationScreen(
         PaletteTheme.component.core.button[buttonDemoState.style],
     )
     val tokenSet = state.tokenSet(state.subject)
-    LaunchedEffect(tokenSet, buttonDemoState.style) {
+    DisposableEffect(tokenSet, buttonDemoState.style) {
         buttonDemoControl.updateStyle(baseButtonStyle.copy(indication = tokenSet.toIndication()))
+        onDispose {}
     }
 
     Scaffold(
@@ -70,6 +72,7 @@ fun IndicationScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         Demo(
             controls = control.controls,
@@ -149,27 +152,27 @@ class PrimitiveIndicationScreenControl(
 
     private val colorInvertControl = ColorInvertIndicationControl(
         value = { tokenSet(IndicationPrimitiveToken.ColorInvert) },
-        onValueChange = { updateIndication(IndicationPrimitiveToken.ColorInvert, it) },
+        onValueChange = { updateIndication(token = IndicationPrimitiveToken.ColorInvert, tokenSet = it) },
     )
 
     private val colorSplitControl = ColorSplitIndicationControl(
         value = { tokenSet(IndicationPrimitiveToken.ColorSplit) },
-        onValueChange = { updateIndication(IndicationPrimitiveToken.ColorSplit, it) },
+        onValueChange = { updateIndication(token = IndicationPrimitiveToken.ColorSplit, tokenSet = it) },
     )
 
     private val noiseControl = NoiseIndicationControl(
         value = { tokenSet(IndicationPrimitiveToken.Noise) },
-        onValueChange = { updateIndication(IndicationPrimitiveToken.Noise, it) },
+        onValueChange = { updateIndication(token = IndicationPrimitiveToken.Noise, tokenSet = it) },
     )
 
     private val pixelateControl = PixelateIndicationControl(
         value = { tokenSet(IndicationPrimitiveToken.Pixelate) },
-        onValueChange = { updateIndication(IndicationPrimitiveToken.Pixelate, it) },
+        onValueChange = { updateIndication(token = IndicationPrimitiveToken.Pixelate, tokenSet = it) },
     )
 
     private val warpControl = WarpIndicationControl(
         value = { tokenSet(IndicationPrimitiveToken.Warp) },
-        onValueChange = { updateIndication(IndicationPrimitiveToken.Warp, it) },
+        onValueChange = { updateIndication(token = IndicationPrimitiveToken.Warp, tokenSet = it) },
     )
 
     private val buttonControls = Control.ControlColumn(

@@ -24,9 +24,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ModifierDemo(
-    demoModifier: Modifier,
     controls: PersistentList<Control>,
     modifier: Modifier = Modifier,
+    demoModifier: Modifier = Modifier,
     state: ModifierDemoState = rememberModifierDemoState(),
     control: ModifierDemoControl = rememberModifierDemoControl(state = state, modifierControls = controls),
 ) {
@@ -118,8 +118,5 @@ class ModifierDemoControl(
     )
 
     val controls
-        get() = persistentListOf(
-            *modifierControls.toTypedArray(),
-            componentDemoControls,
-        )
+        get() = modifierControls.add(componentDemoControls)
 }

@@ -46,13 +46,13 @@ fun Checkbox(
 
 @Preview
 @Composable
-private fun Preview(@PreviewParameter(BoolPreviewParameterProvider::class) isChecked: Boolean) {
+private fun Preview(@PreviewParameter(BoolPreviewParameterProvider::class) checkedInitial: Boolean) {
     Surface {
-        var isChecked by remember { mutableStateOf(isChecked) }
+        var isChecked by remember { mutableStateOf(checkedInitial) }
 
         Checkbox(
             isChecked = isChecked,
-            onCheckedChange = { isChecked = !it },
+            onCheckedChange = { checked -> isChecked = !checked },
         )
     }
 }

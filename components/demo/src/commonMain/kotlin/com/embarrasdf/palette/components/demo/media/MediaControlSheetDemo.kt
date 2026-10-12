@@ -1,5 +1,6 @@
 package com.embarrasdf.palette.components.demo.media
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -42,51 +43,68 @@ fun MediaControlSheetDemo(modifier: Modifier = Modifier) {
     val state = rememberPeekSheetState(initialValue = PeekSheetAnchor.Peek)
     val coroutineScope = rememberCoroutineScope()
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.horizontalPaddingValues()),
-    ) {
-        Text(text = "Current value ${state.currentValue}", style = PaletteTheme.component.core.text.labelLarge)
-        Text(text = "Target value ${state.targetValue}", style = PaletteTheme.component.core.text.labelLarge)
-    }
-
-    BoxWithConstraints(
+    Box(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        val maxHeight = constraints.maxHeight
-        MediaControlSheet(
-            mediaItem = mediaItem,
-            isPlaying = isPlaying,
-            onPlayPauseClick = { isPlaying = !isPlaying },
-            onControlBarClick = {
-                coroutineScope.launch {
-                    if (state.isExpanded) {
-                        state.peek()
-                    } else {
-                        state.expand()
-                    }
-                }
-            },
-            state = state,
-            style = PaletteTheme.component.media.mediaControlSheet,
-            expandedContentSize = DpSize(
-                width = Dp.Infinity,
-                height = with(LocalDensity.current) { maxHeight.toDp() / 2f },
-            ),
+        Column(
             modifier = Modifier
-                .padding(WindowInsets.safeDrawing.asPaddingValues().copy(top = 0.dp)),
+                .fillMaxSize()
+                .padding(WindowInsets.safeDrawing.horizontalPaddingValues()),
         ) {
-            Column(
+            Text(
+                text = "Current value ${state.currentValue}",
+                style = PaletteTheme.component.core.text.labelLarge,
+            )
+            Text(
+                text = "Target value ${state.targetValue}",
+                style = PaletteTheme.component.core.text.labelLarge,
+            )
+        }
+
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            val maxHeight = constraints.maxHeight
+            MediaControlSheet(
+                mediaItem = mediaItem,
+                isPlaying = isPlaying,
+                onPlayPauseClick = { isPlaying = !isPlaying },
+                onControlBarClick = {
+                    coroutineScope.launch {
+                        if (state.isExpanded) {
+                            state.peek()
+                        } else {
+                            state.expand()
+                        }
+                    }
+                },
+                state = state,
+                style = PaletteTheme.component.media.mediaControlSheet,
+                expandedContentSize = DpSize(
+                    width = Dp.Infinity,
+                    height = with(LocalDensity.current) { maxHeight.toDp() / 2f },
+                ),
                 modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        alpha = state.partialToFullProgress
-                    },
+                    .padding(WindowInsets.safeDrawing.asPaddingValues().copy(top = 0.dp)),
             ) {
-                Text(text = "Current value ${state.currentValue}", style = PaletteTheme.component.core.text.labelLarge)
-                Text(text = "Target value ${state.targetValue}", style = PaletteTheme.component.core.text.labelLarge)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer {
+                            alpha = state.partialToFullProgress
+                        },
+                ) {
+                    Text(
+                        text = "Current value ${state.currentValue}",
+                        style = PaletteTheme.component.core.text.labelLarge,
+                    )
+                    Text(
+                        text = "Target value ${state.targetValue}",
+                        style = PaletteTheme.component.core.text.labelLarge,
+                    )
+                }
             }
         }
     }

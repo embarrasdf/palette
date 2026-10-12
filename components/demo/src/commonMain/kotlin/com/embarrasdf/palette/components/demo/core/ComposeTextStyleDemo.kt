@@ -65,9 +65,9 @@ class ComposeTextStyleDemoState(
             fontFamily = fontFamily?.toComposeFontFamily(),
             fontWeight = fontWeight?.toComposeFontWeight(),
             fontStyle = fontStyle?.toComposeFontStyle(),
-            fontSize = fontSize?.let { TextUnit(it, TextUnitType.Sp) } ?: TextUnit.Unspecified,
-            lineHeight = lineHeight?.let { TextUnit(it, TextUnitType.Sp) } ?: TextUnit.Unspecified,
-            letterSpacing = letterSpacing?.let { TextUnit(it, TextUnitType.Sp) } ?: TextUnit.Unspecified,
+            fontSize = fontSize?.let { TextUnit(value = it, type = TextUnitType.Sp) } ?: TextUnit.Unspecified,
+            lineHeight = lineHeight?.let { TextUnit(value = it, type = TextUnitType.Sp) } ?: TextUnit.Unspecified,
+            letterSpacing = letterSpacing?.let { TextUnit(value = it, type = TextUnitType.Sp) } ?: TextUnit.Unspecified,
         )
     }
 }
