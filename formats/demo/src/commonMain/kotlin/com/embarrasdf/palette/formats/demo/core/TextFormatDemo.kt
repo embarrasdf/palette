@@ -2,7 +2,6 @@ package com.embarrasdf.palette.formats.demo.core
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.TextFieldState.Saver.restore
 import androidx.compose.foundation.text.input.TextFieldState.Saver.save
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -20,6 +19,7 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.formats.core.Capitalization
 import com.embarrasdf.palette.formats.core.TextFormat
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -111,14 +111,14 @@ fun textFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         TextFormatDemoState(
-            demoTextFieldState = map.restoreTextFieldState(DemoTextFieldStateKey),
-            wordDelimiterTextFieldState = map.restoreTextFieldState(WordDelimiterTextFieldStateKey),
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
+            wordDelimiterTextFieldState = map.requireRestore(
+                key = WordDelimiterTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
         )
     },
 )
-
-private fun Map<String, Any?>.restoreTextFieldState(key: String): TextFieldState =
-    restore(requireNotNull(this[key]) { "Missing $key" }) as TextFieldState
 
 @Composable
 fun rememberTextFormatDemoControl(

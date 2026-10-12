@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.TextFieldState.Saver.restore
 import androidx.compose.foundation.text.input.TextFieldState.Saver.save
 import androidx.compose.foundation.text.input.byValue
 import androidx.compose.runtime.Composable
@@ -24,6 +23,7 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.formats.core.IntGrouping
 import com.embarrasdf.palette.formats.core.NumberFormat
 import com.embarrasdf.palette.formats.core.format
@@ -135,18 +135,30 @@ fun numberFormatDemoStateSaver() = mapSaverSafe(
     },
     restore = { map ->
         NumberFormatDemoState(
-            demoTextFieldState = map.restoreTextFieldState(DemoTextFieldStateKey),
-            minNumDecimalValuesTextFieldState = map.restoreTextFieldState(MinNumDecimalValuesTextFieldStateKey),
-            maxNumDecimalValuesTextFieldState = map.restoreTextFieldState(MaxNumDecimalValuesTextFieldStateKey),
-            positiveSignTextFieldState = map.restoreTextFieldState(PositiveSignTextFieldStateKey),
-            negativeSignTextFieldState = map.restoreTextFieldState(NegativeSignTextFieldStateKey),
-            groupingNumDigitsTextFieldState = map.restoreTextFieldState(GroupingNumDigitsTextFieldStateKey),
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
+            minNumDecimalValuesTextFieldState = map.requireRestore(
+                key = MinNumDecimalValuesTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            maxNumDecimalValuesTextFieldState = map.requireRestore(
+                key = MaxNumDecimalValuesTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            positiveSignTextFieldState = map.requireRestore(
+                key = PositiveSignTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            negativeSignTextFieldState = map.requireRestore(
+                key = NegativeSignTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
+            groupingNumDigitsTextFieldState = map.requireRestore(
+                key = GroupingNumDigitsTextFieldStateKey,
+                saver = TextFieldState.Saver,
+            ),
         )
     },
 )
-
-private fun Map<String, Any?>.restoreTextFieldState(key: String): TextFieldState =
-    restore(requireNotNull(this[key]) { "Missing $key" }) as TextFieldState
 
 @Composable
 fun rememberNumberFormatDemoControl(
