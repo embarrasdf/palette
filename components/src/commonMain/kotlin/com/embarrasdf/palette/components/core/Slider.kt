@@ -104,17 +104,13 @@ fun Slider(
     state.onValueChange = onValueChange
     state.value = value
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    SideEffect(state) {
-        val snapped = snapValueToTick(
-            current = value,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        if (snapped != value) {
-            currentOnValueChange?.invoke(snapped)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     Slider(
         state = state,
@@ -150,17 +146,13 @@ fun Slider(
     state.onValueChange = onValueChange
     state.value = value
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    SideEffect(state) {
-        val snapped = snapValueToTick(
-            current = value,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        if (snapped != value) {
-            currentOnValueChange?.invoke(snapped)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     Slider(
         state = state,
@@ -292,22 +284,13 @@ fun RangeSlider(
     state.activeRangeStart = value.start
     state.activeRangeEnd = value.endInclusive
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    SideEffect(state) {
-        val snappedStart = snapValueToTick(
-            current = value.start,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        val snappedEnd = snapValueToTick(
-            current = value.endInclusive,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
-            currentOnValueChange?.invoke(snappedStart..snappedEnd)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     RangeSlider(
         state = state,
@@ -341,22 +324,13 @@ fun RangeSlider(
     state.activeRangeStart = value.start
     state.activeRangeEnd = value.endInclusive
 
-    val currentOnValueChange by rememberUpdatedState(onValueChange)
-    SideEffect(state) {
-        val snappedStart = snapValueToTick(
-            current = value.start,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        val snappedEnd = snapValueToTick(
-            current = value.endInclusive,
-            tickFractions = state.tickFractions,
-            valueRange = valueRange,
-        )
-        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
-            currentOnValueChange?.invoke(snappedStart..snappedEnd)
-        }
-    }
+    SnapToTickEffect(
+        key = state,
+        value = value,
+        tickFractions = state.tickFractions,
+        valueRange = valueRange,
+        onValueChange = onValueChange,
+    )
 
     RangeSlider(
         state = state,
@@ -444,6 +418,51 @@ fun RangeSlider(
             trackPlaceable.placeRelative(trackOffsetX, trackOffsetY)
             startThumbPlaceable.placeRelative(startThumbOffsetX, thumbOffsetY)
             endThumbPlaceable.placeRelative(endThumbOffsetX, thumbOffsetY)
+        }
+    }
+}
+
+// When the caller's value doesn't sit on a tick, reports it snapped to the nearest one. Runs again
+// only when [key] changes.
+@Composable
+private fun SnapToTickEffect(
+    key: Any,
+    value: Float,
+    tickFractions: FloatArray,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: ((Float) -> Unit)?,
+) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    SideEffect(key) {
+        val snapped = snapValueToTick(current = value, tickFractions = tickFractions, valueRange = valueRange)
+        if (snapped != value) {
+            currentOnValueChange?.invoke(snapped)
+        }
+    }
+}
+
+@Composable
+private fun SnapToTickEffect(
+    key: Any,
+    value: ClosedFloatingPointRange<Float>,
+    tickFractions: FloatArray,
+    valueRange: ClosedFloatingPointRange<Float>,
+    onValueChange: ((ClosedFloatingPointRange<Float>) -> Unit)?,
+) {
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    SideEffect(key) {
+        val snappedStart = snapValueToTick(
+            current = value.start,
+            tickFractions = tickFractions,
+            valueRange = valueRange,
+        )
+        val snappedEnd = snapValueToTick(
+            current = value.endInclusive,
+            tickFractions = tickFractions,
+            valueRange = valueRange,
+        )
+        if (snappedStart != value.start || snappedEnd != value.endInclusive) {
+            currentOnValueChange?.invoke(snappedStart..snappedEnd)
         }
     }
 }
