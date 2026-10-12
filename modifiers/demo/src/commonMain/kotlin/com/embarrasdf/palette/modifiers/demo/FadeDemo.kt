@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.modifiers.FadeSide
 import com.embarrasdf.palette.modifiers.bottomFade
@@ -168,9 +168,7 @@ val FadeDemoStateSaver = mapSaverSafe(
             fadeLengthInitial = (map[FadeLengthKey] as? Float)?.dp ?: 20.dp,
             showBorderInitial = map[ShowBorderKey] as? Boolean ?: false,
             widthInitial = (map[WidthKey] as? Float)?.dp ?: 0.dp,
-            borderColor = checkNotNull(restore(value = map[BorderColorKey], saver = ColorSaver)) {
-                "Missing saved border color"
-            },
+            borderColor = map.requireRestore(key = BorderColorKey, saver = ColorSaver),
         )
     },
 )
