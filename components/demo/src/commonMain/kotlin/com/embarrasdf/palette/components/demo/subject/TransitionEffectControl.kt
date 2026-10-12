@@ -56,46 +56,43 @@ fun transitionEffectControl(
             buildList<Control> {
                 add(typeControl)
                 add(animationControl)
-                when (effect) {
-                    is TransitionEffect.Fade -> Unit
-                    is TransitionEffect.Scale -> {
-                        add(
-                            Control.Slider(
-                                name = "Scale from",
-                                value = { effect.from },
-                                onValueChange = { onChange(effect.copy(from = it)) },
-                                valueRange = { 0f..1f },
-                            ),
-                        )
-                        add(
-                            Control.Slider(
-                                name = "Scale to",
-                                value = { effect.to },
-                                onValueChange = { onChange(effect.copy(to = it)) },
-                                valueRange = { 0f..1f },
-                            ),
-                        )
-                    }
-                    is TransitionEffect.Translate -> {
-                        add(
-                            enumControl(
-                                name = "Axis",
-                                values = { Axis.entries },
-                                selectedValue = { effect.axis },
-                                onValueChange = { onChange(effect.copy(axis = it)) },
-                            ),
-                        )
-                        add(
-                            Control.Slider(
-                                name = "Translate fraction",
-                                value = { effect.fraction },
-                                onValueChange = { onChange(effect.copy(fraction = it)) },
-                                valueRange = { 0f..1f },
-                            ),
-                        )
-                    }
-                }
+                addAll(effect.paramControls(onChange))
             }.toPersistentList()
         },
+    )
+}
+
+/** The controls for the params specific to the effect's type. */
+private fun TransitionEffect.paramControls(
+    onChange: (TransitionEffect) -> Unit,
+): List<Control> = when (this) {
+    is TransitionEffect.Fade -> emptyList()
+    is TransitionEffect.Scale -> listOf(
+        Control.Slider(
+            name = "Scale from",
+            value = { from },
+            onValueChange = { onChange(copy(from = it)) },
+            valueRange = { 0f..1f },
+        ),
+        Control.Slider(
+            name = "Scale to",
+            value = { to },
+            onValueChange = { onChange(copy(to = it)) },
+            valueRange = { 0f..1f },
+        ),
+    )
+    is TransitionEffect.Translate -> listOf(
+        enumControl(
+            name = "Axis",
+            values = { Axis.entries },
+            selectedValue = { axis },
+            onValueChange = { onChange(copy(axis = it)) },
+        ),
+        Control.Slider(
+            name = "Translate fraction",
+            value = { fraction },
+            onValueChange = { onChange(copy(fraction = it)) },
+            valueRange = { 0f..1f },
+        ),
     )
 }

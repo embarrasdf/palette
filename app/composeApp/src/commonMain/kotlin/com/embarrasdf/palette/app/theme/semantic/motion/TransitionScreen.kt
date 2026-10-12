@@ -41,11 +41,13 @@ import kotlinx.collections.immutable.persistentListOf
 fun TransitionScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTransitionScreenState()
     val control = rememberTransitionScreenControl(state = state, themeController = themeController)
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             DemoTopBar(
                 title = "Transition",

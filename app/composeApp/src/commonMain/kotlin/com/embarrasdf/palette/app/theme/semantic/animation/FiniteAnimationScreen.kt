@@ -36,11 +36,13 @@ import kotlinx.collections.immutable.persistentListOf
 fun FiniteAnimationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberFiniteAnimationScreenState(themeState = themeController)
     val control = rememberFiniteAnimationScreenControl(state = state, themeController = themeController)
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             DemoTopBar(
                 title = "Finite",

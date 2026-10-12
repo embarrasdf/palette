@@ -34,11 +34,13 @@ import kotlinx.collections.immutable.persistentListOf
 fun InfiniteAnimationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberInfiniteAnimationScreenState(themeState = themeController)
     val control = rememberInfiniteAnimationScreenControl(state = state, themeController = themeController)
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             DemoTopBar(
                 title = "Infinite",
