@@ -27,7 +27,7 @@ import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -135,7 +135,7 @@ val IconDemoStateSaver = mapSaverSafe(
             sizeTypeInitial = map[SizeTypeKey] as SizingType,
             fixedSizeInitial = (map[FixedSizeKey] as Float).dp,
             scaleInitial = map[ScaleKey] as Float,
-            colorInitial = requireNotNull(restore(value = map[ColorKey], saver = ColorSaver)) { "Missing $ColorKey" },
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
         )
     },
 )

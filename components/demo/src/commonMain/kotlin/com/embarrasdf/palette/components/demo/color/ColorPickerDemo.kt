@@ -20,7 +20,7 @@ import com.embarrasdf.palette.components.color.ColorPicker
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -100,9 +100,7 @@ val ColorPickerDemoStateSaver = mapSaverSafe(
     },
     restore = { map ->
         ColorPickerDemoState(
-            colorInitial = requireNotNull(
-                restore(value = map[ColorKey], saver = ColorSaver),
-            ) { "Missing $ColorKey" },
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
             spacingInitial = (map[SpacingKey] as Float).dp,
         )
     },

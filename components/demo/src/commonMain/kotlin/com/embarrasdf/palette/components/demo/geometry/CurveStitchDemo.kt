@@ -32,7 +32,7 @@ import com.embarrasdf.palette.components.geometry.CurveStitch
 import com.embarrasdf.palette.components.geometry.CurveStitchShape
 import com.embarrasdf.palette.components.geometry.CurveStitchStar
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.core.Surface
@@ -265,15 +265,9 @@ val CurveStitchDemoStateSaver = mapSaverSafe(
             currentDemoInitial = CurveStitchDemo.valueOf(map[CurrentDemoKey] as String),
             strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
             numLinesInitial = map[NumLinesKey] as Int,
-            angleStartOffsetInitial = requireNotNull(
-                restore(value = map[AngleStartOffsetKey], saver = OffsetSaver),
-            ) { "Missing $AngleStartOffsetKey" },
-            angleVertexOffsetInitial = requireNotNull(
-                restore(value = map[AngleVertexOffsetKey], saver = OffsetSaver),
-            ) { "Missing $AngleVertexOffsetKey" },
-            angleEndOffsetInitial = requireNotNull(
-                restore(value = map[AngleEndOffsetKey], saver = OffsetSaver),
-            ) { "Missing $AngleEndOffsetKey" },
+            angleStartOffsetInitial = map.requireRestore(key = AngleStartOffsetKey, saver = OffsetSaver),
+            angleVertexOffsetInitial = map.requireRestore(key = AngleVertexOffsetKey, saver = OffsetSaver),
+            angleEndOffsetInitial = map.requireRestore(key = AngleEndOffsetKey, saver = OffsetSaver),
             numPointsInitial = map[NumPointsKey] as Int,
             innerRadiusInitial = map[InnerRadiusKey] as Float,
             starInsidePointsInitial = map[StarInsidePointsKey] as Boolean,

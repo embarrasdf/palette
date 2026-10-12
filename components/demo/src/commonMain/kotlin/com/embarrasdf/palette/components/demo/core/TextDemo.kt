@@ -30,7 +30,7 @@ import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -239,9 +239,10 @@ val TextDemoStateSaver = mapSaverSafe(
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = requireNotNull(
-            restore(value = map[TextStyleDemoKey], saver = TextStyleDemoStateSaver),
-        ) { "Missing $TextStyleDemoKey" }
+        val textStyleDemoState: TextStyleDemoState = map.requireRestore(
+            key = TextStyleDemoKey,
+            saver = TextStyleDemoStateSaver,
+        )
 
         TextDemoState(
             textStyleInitial = textStyleDemoState.textStyle,

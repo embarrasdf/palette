@@ -17,7 +17,7 @@ import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.TextFormat
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -124,12 +124,7 @@ fun typographyScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     restore = { map ->
         TypographyScreenState(
             themeState = themeState,
-            textFieldState = requireNotNull(
-                restore(
-                    value = map[TextFieldKey],
-                    saver = TextFieldState.Saver,
-                ),
-            ) { "Missing saved TextFieldState" },
+            textFieldState = map.requireRestore(key = TextFieldKey, saver = TextFieldState.Saver),
         )
     },
 )

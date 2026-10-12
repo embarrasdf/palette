@@ -19,7 +19,7 @@ import com.embarrasdf.palette.components.demo.core.TextDemoControl
 import com.embarrasdf.palette.components.demo.core.TextDemoState
 import com.embarrasdf.palette.components.demo.core.TextDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.BorderStyleToken
@@ -133,12 +133,7 @@ fun buttonStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         ButtonStyleScreenState(
             themeState = themeState,
             textDemoStates = ButtonStyleToken.entries.associateWith { token ->
-                requireNotNull(
-                    restore(
-                        value = map[token.name],
-                        saver = TextDemoStateSaver,
-                    ),
-                ) { "Missing saved TextDemoState for ${token.name}" }
+                map.requireRestore(key = token.name, saver = TextDemoStateSaver)
             },
         )
     },

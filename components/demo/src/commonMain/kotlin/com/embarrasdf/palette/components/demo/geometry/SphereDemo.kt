@@ -21,7 +21,7 @@ import com.embarrasdf.palette.components.geometry.SphereStyle
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.ViewingAngle
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -159,12 +159,8 @@ val SphereDemoStateSaver = mapSaverSafe(
     },
     restore = { map ->
         SphereDemoState(
-            strokeColor = requireNotNull(
-                restore(value = map[StrokeColorKey], saver = ColorSaver),
-            ) { "Missing $StrokeColorKey" },
-            outlineStrokeColor = requireNotNull(
-                restore(value = map[OutlineStrokeColorKey], saver = ColorSaver),
-            ) { "Missing $OutlineStrokeColorKey" },
+            strokeColor = map.requireRestore(key = StrokeColorKey, saver = ColorSaver),
+            outlineStrokeColor = map.requireRestore(key = OutlineStrokeColorKey, saver = ColorSaver),
             fillInitial = map[FillKey] as Boolean,
             outlineInitial = map[OutlineKey] as Boolean,
             viewingAngleInitial = ViewingAngle(

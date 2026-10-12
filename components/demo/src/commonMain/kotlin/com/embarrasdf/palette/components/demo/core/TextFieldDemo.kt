@@ -38,7 +38,7 @@ import com.embarrasdf.palette.components.demo.util.KeyboardTypeSaver
 import com.embarrasdf.palette.components.demo.util.onlyDigits
 import com.embarrasdf.palette.components.util.PaddingValuesSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.format
 import com.embarrasdf.palette.theme.PaletteTheme
@@ -261,9 +261,7 @@ val TextFieldDemoStateSaver = mapSaverSafe(
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = requireNotNull(
-            restore(value = map[StyleKey], saver = TextStyleDemoStateSaver),
-        ) { "Missing $StyleKey" }
+        val textStyleDemoState: TextStyleDemoState = map.requireRestore(key = StyleKey, saver = TextStyleDemoStateSaver)
 
         TextFieldDemoState(
             initialText = map[TextKey] as String,
@@ -271,21 +269,18 @@ val TextFieldDemoStateSaver = mapSaverSafe(
             widthInitial = (map[WidthKey] as Float).dp,
             maxWidthInitial = (map[MaxWidthKey] as Float).dp,
             enabledInitial = map[EnabledKey] as Boolean,
-            keyboardTypeInitial = requireNotNull(
-                restore(value = map[KeyboardTypeKey], saver = KeyboardTypeSaver),
-            ) { "Missing $KeyboardTypeKey" },
-            keyboardCapitalizationInitial = requireNotNull(
-                restore(value = map[KeyboardCapitalizationKey], saver = KeyboardCapitalizationSaver),
-            ) { "Missing $KeyboardCapitalizationKey" },
+            keyboardTypeInitial = map.requireRestore(key = KeyboardTypeKey, saver = KeyboardTypeSaver),
+            keyboardCapitalizationInitial = map.requireRestore(
+                key = KeyboardCapitalizationKey,
+                saver = KeyboardCapitalizationSaver,
+            ),
             autoCorrectEnabledInitial = map[AutoCorrectEnabledKey] as Boolean,
             showKeyboardOnFocusInitial = map[ShowKeyboardOnFocusKey] as Boolean,
             lineLimitsInitial = LineLimits.valueOf(map[LineLimitsKey] as String),
             minHeightInLinesInitial = map[MinHeightInLinesKey] as Int,
             maxHeightInLinesInitial = map[MaxHeightInLinesKey] as Int,
             inputTransformationInitial = InputTransformations.valueOf(map[InputTransformationKey] as String),
-            contentPaddingInitial = requireNotNull(
-                restore(value = map[ContentPaddingKey], saver = PaddingValuesSaver),
-            ) { "Missing $ContentPaddingKey" },
+            contentPaddingInitial = map.requireRestore(key = ContentPaddingKey, saver = PaddingValuesSaver),
         )
     },
 )

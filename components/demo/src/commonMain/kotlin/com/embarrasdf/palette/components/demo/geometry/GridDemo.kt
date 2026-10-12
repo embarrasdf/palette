@@ -36,7 +36,7 @@ import com.embarrasdf.palette.components.geometry.GridVertexType
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.DrawStyleSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.core.Surface
@@ -212,37 +212,25 @@ val GridDemoStateSaver = mapSaverSafe(
     },
     restore = { value ->
         GridDemoState(
-            color = requireNotNull(restore(value = value[ColorKey], saver = ColorSaver)) { "Missing $ColorKey" },
-            density = requireNotNull(
-                restore(value = value[DensityKey], saver = DensitySaver),
-            ) { "Missing $DensityKey" },
+            color = value.requireRestore(key = ColorKey, saver = ColorSaver),
+            density = value.requireRestore(key = DensityKey, saver = DensitySaver),
             coordinateSystemTypeInitial = value[CoordinateSystemTypeKey] as GridCoordinateSystemType,
-            xGridScaleStateInitial = requireNotNull(
-                restore(
-                    value = value[XGridScaleStateKey],
-                    saver = CartesianGridScaleStateSaver,
-                ),
-            ) { "Missing $XGridScaleStateKey" },
-            yGridScaleStateInitial = requireNotNull(
-                restore(
-                    value = value[YGridScaleStateKey],
-                    saver = CartesianGridScaleStateSaver,
-                ),
-            ) { "Missing $YGridScaleStateKey" },
-            polarGridScaleStateInitial = requireNotNull(
-                restore(
-                    value = value[PolarGridScaleStateKey],
-                    saver = PolarGridScaleStateSaver,
-                ),
-            ) { "Missing $PolarGridScaleStateKey" },
-            vertexStateInitial = requireNotNull(
-                restore(value = value[VertexStateKey], saver = GridVertexStateSaver),
-            ) { "Missing $VertexStateKey" },
+            xGridScaleStateInitial = value.requireRestore(
+                key = XGridScaleStateKey,
+                saver = CartesianGridScaleStateSaver,
+            ),
+            yGridScaleStateInitial = value.requireRestore(
+                key = YGridScaleStateKey,
+                saver = CartesianGridScaleStateSaver,
+            ),
+            polarGridScaleStateInitial = value.requireRestore(
+                key = PolarGridScaleStateKey,
+                saver = PolarGridScaleStateSaver,
+            ),
+            vertexStateInitial = value.requireRestore(key = VertexStateKey, saver = GridVertexStateSaver),
             showLinesInitial = value[ShowLinesKey] as Boolean,
             strokeWidthPxInitial = value[StrokeWidthPxKey] as Float,
-            lineStyleInitial = requireNotNull(
-                restore(value = value[LineStyleKey], saver = GridLineStyleSaver),
-            ) { "Missing $LineStyleKey" },
+            lineStyleInitial = value.requireRestore(key = LineStyleKey, saver = GridLineStyleSaver),
             offsetXInitial = (value[OffsetXKey] as Float).dp,
             offsetYInitial = (value[OffsetYKey] as Float).dp,
             rotationDegreesInitial = value[RotationDegreesKey] as Float,
@@ -689,17 +677,11 @@ val GridVertexStateSaver = mapSaverSafe(
     },
     restore = { value ->
         GridVertexState(
-            density = requireNotNull(
-                restore(value = value[VertexDensityKey], saver = DensitySaver),
-            ) { "Missing $VertexDensityKey" },
+            density = value.requireRestore(key = VertexDensityKey, saver = DensitySaver),
             vertexTypeInitial = value[VertexTypeKey] as GridVertexType,
-            colorInitial = requireNotNull(
-                restore(value = value[VertexColorKey], saver = ColorSaver),
-            ) { "Missing $VertexColorKey" },
+            colorInitial = value.requireRestore(key = VertexColorKey, saver = ColorSaver),
             strokeWidthInitial = (value[VertexStrokeWidthKey] as Float).dp,
-            drawStyleInitial = requireNotNull(
-                restore(value = value[VertexDrawStyleKey], saver = DrawStyleSaver),
-            ) { "Missing $VertexDrawStyleKey" },
+            drawStyleInitial = value.requireRestore(key = VertexDrawStyleKey, saver = DrawStyleSaver),
             widthInitial = (value[VertexWidthKey] as Float).dp,
             heightInitial = (value[VertexHeightKey] as Float).dp,
             rotationDegreesInitial = value[VertexRotationDegreesKey] as Float,

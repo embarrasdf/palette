@@ -41,7 +41,7 @@ import com.embarrasdf.palette.components.demo.geometry.SphereDemoState
 import com.embarrasdf.palette.components.demo.geometry.SphereDemoStateSaver
 import com.embarrasdf.palette.components.demo.geometry.circleDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import kotlinx.collections.immutable.toPersistentList
@@ -221,27 +221,21 @@ fun componentDemoStateSaver(
             density = density,
             color = color,
             componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
-            circleDemoStateInitial = requireNotNull(
-                restore(value = map[CircleDemoStateKey], saver = circleDemoStateSaver(density = density)),
-            ) { "Missing $CircleDemoStateKey" },
-            curveStitchDemoStateInitial = requireNotNull(
-                restore(
-                    value = map[CurveStitchDemoStateKey],
-                    saver = CurveStitchDemoStateSaver,
-                ),
-            ) { "Missing $CurveStitchDemoStateKey" },
-            gridDemoStateInitial = requireNotNull(
-                restore(value = map[GridDemoStateKey], saver = GridDemoStateSaver),
-            ) { "Missing $GridDemoStateKey" },
-            sphereDemoStateInitial = requireNotNull(
-                restore(value = map[SphereDemoStateKey], saver = SphereDemoStateSaver),
-            ) { "Missing $SphereDemoStateKey" },
-            textDemoStateInitial = requireNotNull(
-                restore(value = map[TextDemoStateKey], saver = TextDemoStateSaver),
-            ) { "Missing $TextDemoStateKey" },
-            textFieldDemoStateInitial = requireNotNull(
-                restore(value = map[TextFieldDemoStateKey], saver = TextFieldDemoStateSaver),
-            ) { "Missing $TextFieldDemoStateKey" },
+            circleDemoStateInitial = map.requireRestore(
+                key = CircleDemoStateKey,
+                saver = circleDemoStateSaver(density = density),
+            ),
+            curveStitchDemoStateInitial = map.requireRestore(
+                key = CurveStitchDemoStateKey,
+                saver = CurveStitchDemoStateSaver,
+            ),
+            gridDemoStateInitial = map.requireRestore(key = GridDemoStateKey, saver = GridDemoStateSaver),
+            sphereDemoStateInitial = map.requireRestore(key = SphereDemoStateKey, saver = SphereDemoStateSaver),
+            textDemoStateInitial = map.requireRestore(key = TextDemoStateKey, saver = TextDemoStateSaver),
+            textFieldDemoStateInitial = map.requireRestore(
+                key = TextFieldDemoStateKey,
+                saver = TextFieldDemoStateSaver,
+            ),
         )
     },
 )

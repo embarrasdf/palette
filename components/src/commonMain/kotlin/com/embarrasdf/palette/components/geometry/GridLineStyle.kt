@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.DrawStyleSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 
 data class GridLineStyle(
@@ -26,8 +26,8 @@ val GridLineStyleSaver: Saver<GridLineStyle, Any> = mapSaverSafe(
     },
     restore = { map ->
         GridLineStyle(
-            color = requireNotNull(restore(value = map[ColorKey], saver = ColorSaver)) { "Missing color" },
-            stroke = requireNotNull(restore(value = map[StrokeKey], saver = DrawStyleSaver)) { "Missing stroke" },
+            color = map.requireRestore(key = ColorKey, saver = ColorSaver),
+            stroke = map.requireRestore(key = StrokeKey, saver = DrawStyleSaver),
         )
     },
 )

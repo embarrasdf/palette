@@ -26,7 +26,7 @@ import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.DrawStyleSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -113,10 +113,8 @@ fun circleDemoStateSaver(density: Density) = mapSaverSafe(
     restore = { map ->
         CircleDemoState(
             density = density,
-            colorInitial = requireNotNull(restore(value = map[ColorKey], saver = ColorSaver)) { "Missing $ColorKey" },
-            drawStyleInitial = requireNotNull(
-                restore(value = map[DrawStyleKey], saver = DrawStyleSaver),
-            ) { "Missing $DrawStyleKey" },
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
+            drawStyleInitial = map.requireRestore(key = DrawStyleKey, saver = DrawStyleSaver),
             strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
         )
     },

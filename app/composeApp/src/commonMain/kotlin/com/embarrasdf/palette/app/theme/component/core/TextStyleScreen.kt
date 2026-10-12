@@ -17,7 +17,7 @@ import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.SurfaceStyleToken
@@ -151,12 +151,7 @@ fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         }.toMap()
         TextStyleScreenState(
             themeState = themeState,
-            demoTextFieldState = requireNotNull(
-                restore(
-                    value = map[DemoTextFieldStateKey],
-                    saver = TextFieldState.Saver,
-                ),
-            ) { "Missing saved demo TextFieldState" },
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
             surfaceTokensInitial = surfaceTokens,
         )
     },

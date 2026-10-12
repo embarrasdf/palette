@@ -18,7 +18,7 @@ import com.embarrasdf.palette.components.demo.core.ButtonDemoControl
 import com.embarrasdf.palette.components.demo.core.ButtonDemoState
 import com.embarrasdf.palette.components.demo.core.ButtonDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
@@ -106,12 +106,7 @@ fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     restore = { map ->
         IndicationScreenState(
             themeState = themeState,
-            buttonDemoStateInitial = requireNotNull(
-                restore(
-                    value = map[ButtonDemoStateKey],
-                    saver = ButtonDemoStateSaver,
-                ),
-            ) { "Missing saved ButtonDemoState" },
+            buttonDemoStateInitial = map.requireRestore(key = ButtonDemoStateKey, saver = ButtonDemoStateSaver),
         )
     },
 )

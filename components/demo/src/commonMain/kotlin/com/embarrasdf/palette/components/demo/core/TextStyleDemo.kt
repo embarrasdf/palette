@@ -15,6 +15,7 @@ import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.restore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.demo.core.TextFormatDemoControl
@@ -83,19 +84,15 @@ val TextStyleDemoStateSaver = mapSaverSafe(
         )
     },
     restore = { map ->
-        val composeTextStyleDemoState: ComposeTextStyleDemoState = requireNotNull(
-            restore(
-                value = map[ComposeTextStyleDemoStateKey],
-                saver = ComposeTextStyleDemoStateSaver,
-            ),
-        ) { "Missing $ComposeTextStyleDemoStateKey" }
+        val composeTextStyleDemoState: ComposeTextStyleDemoState = map.requireRestore(
+            key = ComposeTextStyleDemoStateKey,
+            saver = ComposeTextStyleDemoStateSaver,
+        )
 
-        val textFormatDemoState: TextFormatDemoState = requireNotNull(
-            restore(
-                value = map[TextFormatDemoStateKey],
-                saver = textFormatDemoStateSaver(),
-            ),
-        ) { "Missing $TextFormatDemoStateKey" }
+        val textFormatDemoState: TextFormatDemoState = map.requireRestore(
+            key = TextFormatDemoStateKey,
+            saver = textFormatDemoStateSaver(),
+        )
 
         TextStyleDemoState(
             textStyleInitial = TextStyle(

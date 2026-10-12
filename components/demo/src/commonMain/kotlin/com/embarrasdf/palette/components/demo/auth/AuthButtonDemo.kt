@@ -20,7 +20,7 @@ import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
 import com.embarrasdf.palette.components.util.PaddingValuesSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.auth.AuthButtonStyleToken
@@ -111,9 +111,7 @@ val AuthButtonDemoStateSaver = mapSaverSafe(
         AuthButtonDemoState(
             authStateInitial = map[AuthStateKey] as AuthState,
             styleInitial = map[StyleKey] as AuthButtonStyleToken,
-            contentPaddingInitial = requireNotNull(
-                restore(value = map[ContentPaddingKey], saver = PaddingValuesSaver),
-            ) { "Missing $ContentPaddingKey" },
+            contentPaddingInitial = map.requireRestore(key = ContentPaddingKey, saver = PaddingValuesSaver),
         )
     },
 )

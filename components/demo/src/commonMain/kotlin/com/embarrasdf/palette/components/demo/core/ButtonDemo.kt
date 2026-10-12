@@ -26,7 +26,7 @@ import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.demo.control.paddingValuesControls
 import com.embarrasdf.palette.components.util.PaddingValuesSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.ButtonStyleToken
@@ -155,12 +155,8 @@ val ButtonDemoStateSaver = mapSaverSafe(
             styleInitial = map[StyleKey] as ButtonStyleToken,
             maxWidthInitial = (map[MaxWidthKey] as Float).dp,
             widthInitial = (map[WidthKey] as Float).dp,
-            contentPaddingInitial = requireNotNull(
-                restore(value = map[ContentPaddingKey], saver = PaddingValuesSaver),
-            ) { "Missing $ContentPaddingKey" },
-            textDemoState = requireNotNull(
-                restore(value = map[TextDemoStateKey], saver = TextDemoStateSaver),
-            ) { "Missing $TextDemoStateKey" },
+            contentPaddingInitial = map.requireRestore(key = ContentPaddingKey, saver = PaddingValuesSaver),
+            textDemoState = map.requireRestore(key = TextDemoStateKey, saver = TextDemoStateSaver),
         )
     },
 )

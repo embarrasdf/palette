@@ -38,12 +38,8 @@ val DrawStyleSaver: Saver<DrawStyle, Any> = mapSaverSafe(
             DrawStyleType.Stroke -> Stroke(
                 width = map[StrokeWidthKey] as Float,
                 miter = map[StrokeMiterKey] as Float,
-                cap = requireNotNull(restore(value = map[StrokeCapKey], saver = StrokeCapSaver)) {
-                    "Missing stroke cap"
-                },
-                join = requireNotNull(restore(value = map[StrokeJoinKey], saver = StrokeJoinSaver)) {
-                    "Missing stroke join"
-                },
+                cap = map.requireRestore(key = StrokeCapKey, saver = StrokeCapSaver),
+                join = map.requireRestore(key = StrokeJoinKey, saver = StrokeJoinSaver),
             )
         }
     },
