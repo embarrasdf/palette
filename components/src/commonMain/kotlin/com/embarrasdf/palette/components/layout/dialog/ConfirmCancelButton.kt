@@ -24,7 +24,7 @@ fun ConfirmButton(
         onClick = onConfirm,
         modifier = modifier,
     ) {
-        Text("OK", style = style.textStyle)
+        Text(text = "OK", style = style.textStyle)
     }
 }
 
@@ -39,7 +39,7 @@ fun CancelButton(
         onClick = onDismiss,
         modifier = modifier,
     ) {
-        Text("Cancel", style = style.textStyle)
+        Text(text = "Cancel", style = style.textStyle)
     }
 }
 

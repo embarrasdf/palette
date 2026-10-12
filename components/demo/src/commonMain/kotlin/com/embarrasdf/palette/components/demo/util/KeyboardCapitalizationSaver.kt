@@ -24,14 +24,7 @@ val KeyboardCapitalizationSaver = object : Saver<KeyboardCapitalization, Any> {
     }
 
     override fun restore(value: Any): KeyboardCapitalization? {
-        return try {
-            if (value is String) {
-                KeyboardCapitalizationEnum.valueOf(value).keyboardCapitalization
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            null
-        }
+        // Unknown names restore to null rather than throwing, like an absent value.
+        return KeyboardCapitalizationEnum.entries.find { it.name == value }?.keyboardCapitalization
     }
 }

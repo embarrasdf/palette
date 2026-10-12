@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -50,7 +51,7 @@ fun <T> DropdownControl(
 
     Column(modifier = modifier) {
         if (control.includeLabel) {
-            Text(control.name, style = style.labelStyle)
+            Text(text = control.name, style = style.labelStyle)
             Spacer(modifier = Modifier.height(style.labelSpacing))
         }
 
@@ -92,7 +93,7 @@ fun <T> DropdownControlRow(
                 text = control.name,
                 style = style.labelStyle,
                 softWrap = true,
-                modifier = Modifier.weight(1f, fill = false),
+                modifier = Modifier.weight(weight = 1f, fill = false),
             )
             Spacer(modifier = Modifier.width(style.rowSpacing))
         }
@@ -101,7 +102,7 @@ fun <T> DropdownControlRow(
             selectedValue = selectedValue,
             onClick = { isMenuExpanded = true },
             style = style,
-            modifier = Modifier.weight(1f, fill = false),
+            modifier = Modifier.weight(weight = 1f, fill = false),
         )
 
         DropdownControlMenu(
@@ -158,7 +159,7 @@ private fun <T> DropdownControlMenu(
 @Preview
 @Composable
 private fun DropdownControlPreview() {
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
     val control by remember {
         mutableStateOf(
             Control.Dropdown(
@@ -182,7 +183,7 @@ private fun DropdownControlPreview() {
 @Preview
 @Composable
 private fun DropdownControlRowPreview() {
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
     val control by remember {
         mutableStateOf(
             Control.Dropdown(

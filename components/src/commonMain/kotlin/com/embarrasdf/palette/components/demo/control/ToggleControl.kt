@@ -42,11 +42,11 @@ fun ToggleControl(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (includeTitle) {
-            Text(control.name, style = style.labelStyle)
+            Text(text = control.name, style = style.labelStyle)
             Spacer(modifier = Modifier.height(style.spacing))
         }
 
-        Checkbox(checked, onCheckedChange = control.onValueChange, style = style.checkboxStyle)
+        Checkbox(isChecked = checked, onCheckedChange = control.onValueChange, style = style.checkboxStyle)
     }
 }
 
@@ -65,7 +65,7 @@ fun ToggleControlRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (includeTitle) {
-            Text(control.name, style = style.labelStyle)
+            Text(text = control.name, style = style.labelStyle)
             Spacer(modifier = Modifier.height(style.spacing))
         }
 

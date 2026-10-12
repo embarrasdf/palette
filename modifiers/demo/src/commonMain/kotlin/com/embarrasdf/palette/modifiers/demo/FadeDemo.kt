@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.modifiers.FadeSide
 import com.embarrasdf.palette.modifiers.bottomFade
@@ -48,7 +48,7 @@ fun FadeDemo(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        LaunchedEffect(this@Demo.maxWidth) {
+        SideEffect(this@Demo.maxWidth) {
             control.onSizeChanged(this@Demo.maxWidth)
         }
         Column(
@@ -152,12 +152,14 @@ private const val ShowBorderKey = "showBorder"
 private const val BorderColorKey = "borderColor"
 private const val WidthKey = "width"
 
+private const val FadeLengthWidthDivisor = 4f
+
 val FadeDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
             FadeLengthKey to value.fadeLength.value,
             ShowBorderKey to value.showBorder,
-            BorderColorKey to save(value.borderColor, ColorSaver, this),
+            BorderColorKey to save(value = value.borderColor, saver = ColorSaver, scope = this),
             WidthKey to value.width.value,
         )
     },
@@ -166,7 +168,7 @@ val FadeDemoStateSaver = mapSaverSafe(
             fadeLengthInitial = (map[FadeLengthKey] as? Float)?.dp ?: 20.dp,
             showBorderInitial = map[ShowBorderKey] as? Boolean ?: false,
             widthInitial = (map[WidthKey] as? Float)?.dp ?: 0.dp,
-            borderColor = restore(map[BorderColorKey], ColorSaver)!!,
+            borderColor = map.requireRestore(key = BorderColorKey, saver = ColorSaver),
         )
     },
 )
@@ -200,7 +202,7 @@ class FadeDemoControl(
 
     fun onSizeChanged(width: Dp) {
         if (width > 0.dp) {
-            fadeLength.onValueChange(width.value / 4f)
+            fadeLength.onValueChange(width.value / FadeLengthWidthDivisor)
         }
         state.width = width
     }

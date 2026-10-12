@@ -21,6 +21,7 @@ fun DateTimeFormatScreen(
     format: DateTimeFormat,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -30,6 +31,7 @@ fun DateTimeFormatScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (format) {
             DateTimeFormat.Date -> DateTimeFormatDemo(

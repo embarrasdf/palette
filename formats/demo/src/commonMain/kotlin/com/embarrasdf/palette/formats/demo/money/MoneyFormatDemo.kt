@@ -30,9 +30,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun MoneyFormatDemo(
+    modifier: Modifier = Modifier,
     state: MoneyFormatDemoState = rememberMoneyFormatDemoState(),
     control: MoneyFormatDemoControl = rememberMoneyFormatDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -48,8 +48,8 @@ fun MoneyFormatDemo(
 
 @Composable
 fun DemoScope.MoneyFormatDemo(
-    state: MoneyFormatDemoState = rememberMoneyFormatDemoState(),
     modifier: Modifier = Modifier,
+    state: MoneyFormatDemoState = rememberMoneyFormatDemoState(),
 ) {
     Text(
         text = state.text,
@@ -75,7 +75,7 @@ class MoneyFormatDemoState(
     moneyFormatInitial: MoneyFormat = MoneyFormat(),
     val demoTextFieldState: TextFieldState = TextFieldState("12345678.90"),
     val currencySymbolTextFieldState: TextFieldState = TextFieldState(
-        initialText = moneyFormatInitial.currencySymbol ?: "",
+        initialText = moneyFormatInitial.currencySymbol.orEmpty(),
     ),
     val numberFormatDemoState: NumberFormatDemoState = NumberFormatDemoState(
         numberFormatInitial = moneyFormatInitial.numberFormat,

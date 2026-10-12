@@ -25,12 +25,13 @@ import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.format.core.NumberFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.core.NumberFormatToken
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun NumberFormatScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberNumberFormatScreenState(formats = themeController.semantic.formats)
     val control = rememberNumberFormatScreenControl(state = state, themeController = themeController)
@@ -44,6 +45,7 @@ fun NumberFormatScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = state.numberFormatsByToken.entries.toList(),
@@ -57,7 +59,7 @@ fun NumberFormatScreen(
                 label = token.name,
             ) {
                 NumberFormatDemo(
-                    state = state.numberFormatDemoStatesByToken[token]!!,
+                    state = state.numberFormatDemoStatesByToken.getValue(token),
                 )
             }
         }
@@ -92,7 +94,7 @@ class NumberFormatScreenState(
 
     val numberFormatDemoStatesByToken = NumberFormatToken.entries.associateWith { token ->
         NumberFormatDemoState(
-            numberFormatInitial = numberFormatsByToken[token]!!,
+            numberFormatInitial = numberFormatsByToken.getValue(token),
             demoTextFieldState = TextFieldState("12345678.90"),
         )
     }
@@ -136,9 +138,7 @@ class NumberFormatScreenControl(
     val themeController: ThemeController,
     formatControlByToken: Map<NumberFormatToken, Control>,
 ) {
-    val controls: PersistentList<Control> = persistentListOf(
-        *formatControlByToken.values.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = formatControlByToken.values.toPersistentList()
 }
 
 @Composable
@@ -148,7 +148,7 @@ private fun makeControlForToken(
     themeController: ThemeController,
 ): Control {
     val demoControl = rememberNumberFormatDemoControl(
-        state = state.numberFormatDemoStatesByToken[token]!!,
+        state = state.numberFormatDemoStatesByToken.getValue(token),
         onValueChange = { newValue ->
             themeController.updateSemantic {
                 it.copy(

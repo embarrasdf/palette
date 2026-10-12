@@ -21,12 +21,13 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun ModifierDemo(
-    demoModifier: Modifier,
     controls: PersistentList<Control>,
     modifier: Modifier = Modifier,
+    demoModifier: Modifier = Modifier,
     state: ModifierDemoState = rememberModifierDemoState(),
     control: ModifierDemoControl = rememberModifierDemoControl(state = state, modifierControls = controls),
 ) {
@@ -118,8 +119,8 @@ class ModifierDemoControl(
     )
 
     val controls
-        get() = persistentListOf(
-            *modifierControls.toTypedArray(),
-            componentDemoControls,
-        )
+        get() = buildList<Control> {
+            addAll(modifierControls)
+            add(componentDemoControls)
+        }.toPersistentList()
 }

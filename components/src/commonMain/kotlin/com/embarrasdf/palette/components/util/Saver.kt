@@ -35,5 +35,17 @@ inline fun <T : Saver<Original, Saveable>, Original, Saveable, reified Result> r
     return value?.let { with(saver) { restore(value) } as Result }
 }
 
+/**
+ * Restores the value saved under [key] with [saver], throwing if it's missing. Inside
+ * [mapSaverSafe], the throw makes the whole restore fall back to `onFailure`.
+ */
+@Suppress("UNCHECKED_CAST")
+inline fun <T : Saver<Original, Saveable>, Original, Saveable, reified Result> Map<String, Any?>.requireRestore(
+    key: String,
+    saver: T,
+): Result = requireNotNull(restore<T, Original, Saveable, Result>(value = this[key] as Saveable?, saver = saver)) {
+    "Missing saved value for \"$key\""
+}
+
 @PublishedApi
 internal interface NonNullValueClassSaver<Original, Saveable : Any> : Saver<Original, Saveable>

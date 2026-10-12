@@ -23,7 +23,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,7 +69,7 @@ fun DropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    offset: DpOffset = DpOffset(0.dp, 0.dp),
+    offset: DpOffset = DpOffset(x = 0.dp, y = 0.dp),
     scrollState: ScrollState = rememberScrollState(),
     style: DropdownMenuStyle = DropdownMenuStyle(),
     properties: PopupProperties = PopupProperties(focusable = true),
@@ -84,10 +83,13 @@ fun DropdownMenu(
         val density = LocalDensity.current
         val popupPositionProvider = remember(offset, density) {
             DropdownMenuPositionProvider(
-                offset,
-                density,
+                contentOffset = offset,
+                density = density,
             ) { parentBounds, menuBounds ->
-                transformOriginState.value = calculateTransformOrigin(parentBounds, menuBounds)
+                transformOriginState.value = calculateTransformOrigin(
+                    anchorBounds = parentBounds,
+                    menuBounds = menuBounds,
+                )
             }
         }
 
@@ -98,7 +100,7 @@ fun DropdownMenu(
         ) {
             DropdownMenuContent(
                 expandedState = expandedState,
-                transformOriginState = transformOriginState,
+                transformOriginProvider = { transformOriginState.value },
                 scrollState = scrollState,
                 style = style,
                 modifier = modifier,
@@ -111,14 +113,14 @@ fun DropdownMenu(
 @Composable
 internal fun DropdownMenuContent(
     expandedState: MutableTransitionState<Boolean>,
-    transformOriginState: MutableState<TransformOrigin>,
+    transformOriginProvider: () -> TransformOrigin,
     scrollState: ScrollState,
     modifier: Modifier = Modifier,
     style: DropdownMenuStyle = DropdownMenuStyle(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
     // Menu open/close animation.
-    val transition = rememberTransition(expandedState, "DropDownMenu")
+    val transition = rememberTransition(transitionState = expandedState, label = "DropDownMenu")
 
     val scale by transition.animateFloat(
         transitionSpec = {
@@ -158,15 +160,15 @@ internal fun DropdownMenuContent(
 
     Surface(
         style = style.surfaceStyle,
-        modifier = Modifier.graphicsLayer {
+        modifier = modifier.graphicsLayer {
             scaleX = scale
             scaleY = scale
             this.alpha = alpha
-            transformOrigin = transformOriginState.value
+            transformOrigin = transformOriginProvider()
         },
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(vertical = DropdownMenuVerticalPadding)
                 .width(IntrinsicSize.Max)
                 .verticalScroll(scrollState),
@@ -238,7 +240,7 @@ internal fun calculateTransformOrigin(
             (intersectionCenter - menuBounds.top).toFloat() / menuBounds.height
         }
     }
-    return TransformOrigin(pivotX, pivotY)
+    return TransformOrigin(pivotFractionX = pivotX, pivotFractionY = pivotY)
 }
 
 @Immutable
@@ -250,8 +252,8 @@ class MenuItemColors(
         textColor: Color = this.textColor,
         disabledTextColor: Color = this.disabledTextColor,
     ) = MenuItemColors(
-        textColor.takeOrElse { this.textColor },
-        disabledTextColor.takeOrElse { this.disabledTextColor },
+        textColor = textColor.takeOrElse { this.textColor },
+        disabledTextColor = disabledTextColor.takeOrElse { this.disabledTextColor },
     )
 
     @Composable

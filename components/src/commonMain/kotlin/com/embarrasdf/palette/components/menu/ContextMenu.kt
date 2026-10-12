@@ -15,8 +15,8 @@ import androidx.compose.ui.window.PopupProperties
 fun ContextMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-    offset: Offset = Offset.Zero,
     modifier: Modifier = Modifier,
+    offset: Offset = Offset.Zero,
     scrollState: ScrollState = rememberScrollState(),
     style: DropdownMenuStyle = DropdownMenuStyle(),
     properties: PopupProperties = PopupProperties(focusable = true),
@@ -24,7 +24,7 @@ fun ContextMenu(
 ) {
     val density = LocalDensity.current
     Box(
-        modifier = Modifier.absoluteOffset(
+        modifier = modifier.absoluteOffset(
             x = with(density) { offset.x.toDp() },
             y = with(density) { offset.y.toDp() },
         ),
@@ -32,7 +32,6 @@ fun ContextMenu(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = onDismissRequest,
-            modifier = modifier,
             scrollState = scrollState,
             style = style,
             properties = properties,

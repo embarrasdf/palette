@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,7 +50,7 @@ fun ColorPicker(
             color = color,
             style = style.colorDisplayStyle,
             modifier = Modifier
-                .weight(1f, fill = false)
+                .weight(weight = 1f, fill = false)
                 .semantics {
                     contentDescription = "Selected color"
                 },
@@ -64,8 +68,8 @@ fun ColorPicker(
 fun ColorPickerControls(
     color: Color,
     onColorChange: (Color) -> Unit,
-    colorSpace: ColorSpace = color.colorSpace,
     modifier: Modifier = Modifier,
+    colorSpace: ColorSpace = color.colorSpace,
     style: ColorPickerControlsStyle = ColorPickerControlsStyle(),
 ) {
     data class ColorComponentInfo(
@@ -147,7 +151,7 @@ private fun ColorSlider(
 @Preview
 @Composable
 private fun ColorPickerPreview() {
-    var color = Color(0xFF6200EE)
+    var color by remember { mutableStateOf(Color(0xFF6200EE)) }
     ColorPicker(
         color = color,
         onColorChange = { color = it },

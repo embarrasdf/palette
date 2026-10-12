@@ -1,6 +1,7 @@
 package com.embarrasdf.palette.theme.component.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import com.embarrasdf.palette.components.core.TextStyle
 import com.embarrasdf.palette.theme.component.LocalComponentTokens
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
@@ -8,20 +9,87 @@ import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
 import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 
 enum class TextStyleToken(val default: TextStyleTokenSet) {
-    Display(TextStyleTokenSet(TypographyToken.Display, TextFormatToken.Display, ColorToken.OnSurface)),
-    Headline(TextStyleTokenSet(TypographyToken.Headline, TextFormatToken.Headline, ColorToken.OnSurface)),
-    TitleLarge(TextStyleTokenSet(TypographyToken.TitleLarge, TextFormatToken.Title, ColorToken.OnSurface)),
-    TitleMedium(TextStyleTokenSet(TypographyToken.TitleMedium, TextFormatToken.Title, ColorToken.OnSurface)),
-    TitleSmall(TextStyleTokenSet(TypographyToken.TitleSmall, TextFormatToken.Title, ColorToken.OnSurface)),
-    BodyLarge(TextStyleTokenSet(TypographyToken.BodyLarge, TextFormatToken.Body, ColorToken.OnSurface)),
-    BodyMedium(TextStyleTokenSet(TypographyToken.BodyMedium, TextFormatToken.Body, ColorToken.OnSurface)),
-    BodySmall(TextStyleTokenSet(TypographyToken.BodySmall, TextFormatToken.Body, ColorToken.OnSurface)),
-    LabelLarge(TextStyleTokenSet(TypographyToken.LabelLarge, TextFormatToken.Label, ColorToken.OnSurface)),
-    LabelMedium(TextStyleTokenSet(TypographyToken.LabelMedium, TextFormatToken.Label, ColorToken.OnSurface)),
-    LabelSmall(TextStyleTokenSet(TypographyToken.LabelSmall, TextFormatToken.Label, ColorToken.OnSurface)),
+    Display(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.Display,
+            textFormatToken = TextFormatToken.Display,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    Headline(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.Headline,
+            textFormatToken = TextFormatToken.Headline,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    TitleLarge(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.TitleLarge,
+            textFormatToken = TextFormatToken.Title,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    TitleMedium(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.TitleMedium,
+            textFormatToken = TextFormatToken.Title,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    TitleSmall(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.TitleSmall,
+            textFormatToken = TextFormatToken.Title,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    BodyLarge(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.BodyLarge,
+            textFormatToken = TextFormatToken.Body,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    BodyMedium(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.BodyMedium,
+            textFormatToken = TextFormatToken.Body,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    BodySmall(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.BodySmall,
+            textFormatToken = TextFormatToken.Body,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    LabelLarge(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.LabelLarge,
+            textFormatToken = TextFormatToken.Label,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    LabelMedium(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.LabelMedium,
+            textFormatToken = TextFormatToken.Label,
+            color = ColorToken.OnSurface,
+        ),
+    ),
+    LabelSmall(
+        TextStyleTokenSet(
+            typographyToken = TypographyToken.LabelSmall,
+            textFormatToken = TextFormatToken.Label,
+            color = ColorToken.OnSurface,
+        ),
+    ),
 }
 
 @Composable
+@ReadOnlyComposable
 fun TextStyleToken.tokenSet(): TextStyleTokenSet = LocalComponentTokens.current.text.getValue(this)
 
 @Composable

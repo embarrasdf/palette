@@ -10,7 +10,7 @@ import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.allCaps
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -38,13 +38,14 @@ import com.embarrasdf.palette.components.demo.util.KeyboardTypeSaver
 import com.embarrasdf.palette.components.demo.util.onlyDigits
 import com.embarrasdf.palette.components.util.PaddingValuesSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.formats.core.format
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextFieldDemo(
@@ -72,16 +73,16 @@ fun DemoScope.TextFieldDemo(
     state: TextFieldDemoState = rememberTextFieldDemoState(),
     control: TextFieldDemoControl = rememberTextFieldDemoControl(state = state),
 ) {
-    LaunchedEffect(maxWidth) {
+    SideEffect(maxWidth) {
         control.onSizeChanged(maxWidth)
     }
 
-    LaunchedEffect(state.textStyleDemoState.textStyle.format) {
+    SideEffect(state.textStyleDemoState.textStyle.format) {
         val currentText = state.textFieldState.text.toString()
         val formatted = state.textStyleDemoState.textStyle.format.format(currentText)
         if (formatted != currentText) {
             state.textFieldState.edit {
-                replace(0, length, formatted)
+                replace(start = 0, end = length, text = formatted)
             }
         }
     }
@@ -243,8 +244,8 @@ val TextFieldDemoStateSaver = mapSaverSafe(
             WidthKey to value.width.value,
             MaxWidthKey to value.maxWidth.value,
             EnabledKey to value.enabled,
-            StyleKey to save(value.textStyleDemoState, TextStyleDemoStateSaver, this),
-            KeyboardTypeKey to save(value.keyboardType, KeyboardTypeSaver, this),
+            StyleKey to save(value = value.textStyleDemoState, saver = TextStyleDemoStateSaver, scope = this),
+            KeyboardTypeKey to save(value = value.keyboardType, saver = KeyboardTypeSaver, scope = this),
             KeyboardCapitalizationKey to save(
                 value = value.keyboardCapitalization,
                 saver = KeyboardCapitalizationSaver,
@@ -256,11 +257,11 @@ val TextFieldDemoStateSaver = mapSaverSafe(
             MinHeightInLinesKey to value.minHeightInLines,
             MaxHeightInLinesKey to value.maxHeightInLines,
             InputTransformationKey to value.inputTransformation.name,
-            ContentPaddingKey to save(value.contentPadding, PaddingValuesSaver, this),
+            ContentPaddingKey to save(value = value.contentPadding, saver = PaddingValuesSaver, scope = this),
         )
     },
     restore = { map ->
-        val textStyleDemoState: TextStyleDemoState = restore(map[StyleKey], TextStyleDemoStateSaver)!!
+        val textStyleDemoState: TextStyleDemoState = map.requireRestore(key = StyleKey, saver = TextStyleDemoStateSaver)
 
         TextFieldDemoState(
             initialText = map[TextKey] as String,
@@ -268,15 +269,18 @@ val TextFieldDemoStateSaver = mapSaverSafe(
             widthInitial = (map[WidthKey] as Float).dp,
             maxWidthInitial = (map[MaxWidthKey] as Float).dp,
             enabledInitial = map[EnabledKey] as Boolean,
-            keyboardTypeInitial = restore(map[KeyboardTypeKey], KeyboardTypeSaver)!!,
-            keyboardCapitalizationInitial = restore(map[KeyboardCapitalizationKey], KeyboardCapitalizationSaver)!!,
+            keyboardTypeInitial = map.requireRestore(key = KeyboardTypeKey, saver = KeyboardTypeSaver),
+            keyboardCapitalizationInitial = map.requireRestore(
+                key = KeyboardCapitalizationKey,
+                saver = KeyboardCapitalizationSaver,
+            ),
             autoCorrectEnabledInitial = map[AutoCorrectEnabledKey] as Boolean,
             showKeyboardOnFocusInitial = map[ShowKeyboardOnFocusKey] as Boolean,
             lineLimitsInitial = LineLimits.valueOf(map[LineLimitsKey] as String),
             minHeightInLinesInitial = map[MinHeightInLinesKey] as Int,
             maxHeightInLinesInitial = map[MaxHeightInLinesKey] as Int,
             inputTransformationInitial = InputTransformations.valueOf(map[InputTransformationKey] as String),
-            contentPaddingInitial = restore(map[ContentPaddingKey], PaddingValuesSaver)!!,
+            contentPaddingInitial = map.requireRestore(key = ContentPaddingKey, saver = PaddingValuesSaver),
         )
     },
 )
@@ -439,16 +443,16 @@ class TextFieldDemoControl(
         }
 
     val controls
-        get() = persistentListOf(
-            textFieldControl,
-            styleControls,
-            textStyleControls,
-            widthControl,
-            enabledControl,
-            *keyboardControls.toTypedArray(),
-            *lineControls.toTypedArray(),
-            inputTransformationControl,
-        )
+        get() = buildList<Control> {
+            add(textFieldControl)
+            add(styleControls)
+            add(textStyleControls)
+            add(widthControl)
+            add(enabledControl)
+            addAll(keyboardControls)
+            addAll(lineControls)
+            add(inputTransformationControl)
+        }.toPersistentList()
 
     fun onSizeChanged(width: Dp) {
         if (state.maxWidth == 0.dp) {

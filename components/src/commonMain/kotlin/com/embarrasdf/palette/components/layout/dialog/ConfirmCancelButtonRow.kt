@@ -36,7 +36,7 @@ fun ConfirmCancelButtonRow(
 
 @Preview
 @Composable
-fun ConfirmCancelButtonRowPreview() {
+private fun ConfirmCancelButtonRowPreview() {
     ConfirmCancelButtonRow(
         onConfirm = {},
         onDismiss = {},

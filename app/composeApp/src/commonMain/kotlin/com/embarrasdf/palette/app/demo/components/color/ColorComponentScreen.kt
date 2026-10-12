@@ -14,6 +14,7 @@ fun ColorComponentScreen(
     component: ColorComponent,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -23,6 +24,7 @@ fun ColorComponentScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (component) {
             ColorComponent.ColorPicker -> ColorPickerDemo(

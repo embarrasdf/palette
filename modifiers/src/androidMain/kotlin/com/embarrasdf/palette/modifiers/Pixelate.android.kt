@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RenderEffect
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.modifiers.preview.DemoCircle
-import com.embarrasdf.palette.modifiers.preview.ModifierPreview
 import org.intellij.lang.annotations.Language
 import kotlin.math.roundToInt
 
@@ -42,7 +42,10 @@ actual fun createPixelateShader(): PixelateShader {
 }
 
 class PixelateShaderImpl : PixelateShader {
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var subdivisions: Int = 0
 
@@ -52,18 +55,22 @@ class PixelateShaderImpl : PixelateShader {
 
     override fun setSubdivisions(subdivisions: Int) {
         this.subdivisions = subdivisions
-        control.setFloatUniform(UniformSubdivisionsName, subdivisions.toFloat())
+        control.setFloatUniform(name = UniformSubdivisionsName, value = subdivisions.toFloat())
     }
 
     override fun onRemeasured(
         width: Int,
         height: Int,
     ) {
-        control.setFloatUniform(UniformSizeName, width.toFloat(), height.toFloat())
+        control.setFloatUniform(
+            name = UniformSizeName,
+            value1 = width.toFloat(),
+            value2 = height.toFloat(),
+        )
     }
 }
 
-@ModifierPreview
+@Preview
 @Composable
 private fun Preview() {
     val range = 0f..100f

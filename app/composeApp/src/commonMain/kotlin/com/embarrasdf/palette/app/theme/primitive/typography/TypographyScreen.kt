@@ -21,8 +21,6 @@ import com.embarrasdf.palette.components.demo.core.rememberTextDemoState
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
-import com.embarrasdf.palette.theme.control.ThemeController
-import com.embarrasdf.palette.theme.control.rememberThemeController
 import com.embarrasdf.palette.theme.primitive.FontFamily
 import com.embarrasdf.palette.theme.primitive.FontStyle
 import com.embarrasdf.palette.theme.primitive.FontWeight
@@ -34,8 +32,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun TypographyScreen(
-    themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTypographyScreenState()
     val control = rememberTypographyScreenControl(state = state)
@@ -49,6 +47,7 @@ fun TypographyScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         Demo(
             controls = control.controls,
@@ -161,7 +160,6 @@ class TypographyScreenControl(
 private fun Preview() {
     PaletteTheme {
         TypographyScreen(
-            themeController = rememberThemeController(),
             onNavigateUp = {},
         )
     }

@@ -17,9 +17,11 @@ import com.embarrasdf.palette.components.core.IconStyle
 import com.embarrasdf.palette.components.core.Sizing
 import com.embarrasdf.palette.components.core.size
 
+private const val DefaultIconScale = 0.7f
+
 data class SkipButtonStyle(
     val buttonStyle: ButtonStyle = ButtonStyle(contentPadding = PaddingValues(0.dp)),
-    val iconStyle: IconStyle = IconStyle(size = Sizing.Scale(0.7f)),
+    val iconStyle: IconStyle = IconStyle(size = Sizing.Scale(DefaultIconScale)),
 )
 
 @Composable

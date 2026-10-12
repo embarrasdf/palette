@@ -39,6 +39,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun ShapeScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberShapeScreenState(themeState = themeController)
     val shapeDemoState = rememberShapeDemoState(state.subjectShape)
@@ -58,6 +59,7 @@ fun ShapeScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         Demo(
             controls = control.controls,
@@ -94,7 +96,10 @@ class ShapeScreenState(
         get() = themeState.semantic.shapeScheme
 
     val subjectShape: Shape
-        get() = subject.toShape(shapeScheme, themeState.primitive.shape)
+        get() = subject.toShape(
+            shapeScheme = shapeScheme,
+            shapePrimitives = themeState.primitive.shape,
+        )
 }
 
 private const val SubjectKey = "subject"

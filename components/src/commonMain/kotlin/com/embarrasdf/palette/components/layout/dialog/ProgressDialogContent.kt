@@ -15,8 +15,8 @@ data class ProgressDialogContentStyle(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun IndeterminateProgressDialogContent(
-    title: String = "",
     modifier: Modifier = Modifier,
+    title: String = "",
     style: ProgressDialogContentStyle = ProgressDialogContentStyle(),
 ) {
     DialogContent(

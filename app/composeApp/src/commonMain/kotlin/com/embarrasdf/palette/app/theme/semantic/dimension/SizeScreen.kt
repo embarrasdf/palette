@@ -28,12 +28,13 @@ import com.embarrasdf.palette.theme.semantic.dimension.SizeToken
 import com.embarrasdf.palette.theme.semantic.dimension.copy
 import com.embarrasdf.palette.theme.semantic.dimension.toSize
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun SizeScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberSizeScreenState(themeState = themeController)
     val control = rememberSizeScreenControl(state = state, themeController = themeController)
@@ -47,6 +48,7 @@ fun SizeScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = SizeToken.entries.toList(),
@@ -66,21 +68,21 @@ fun SizeScreen(
 
 @Composable
 fun SizeDemo(
-    modifier: Modifier = Modifier,
     size: SizeToken,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(
-            PaletteTheme.semantic.dimension.spacing.small,
-            Alignment.CenterVertically,
+            space = PaletteTheme.semantic.dimension.spacing.small,
+            alignment = Alignment.CenterVertically,
         ),
         modifier = modifier,
     ) {
         Box(
             modifier = Modifier
                 .size(size.toSize())
-                .border(1.dp, PaletteTheme.semantic.color.primary),
+                .border(width = 1.dp, color = PaletteTheme.semantic.color.primary),
         )
         Text(
             text = size.name,
@@ -148,5 +150,5 @@ class SizeScreenControl(
             valueRange = { 0f..96f },
             stepIncrement = 4f,
         )
-    }.let { persistentListOf(*it.toTypedArray()) }
+    }.toPersistentList()
 }

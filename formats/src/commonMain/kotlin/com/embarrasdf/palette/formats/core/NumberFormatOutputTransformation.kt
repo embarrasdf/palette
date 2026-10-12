@@ -20,7 +20,7 @@ class NumberFormatOutputTransformation(
 
                 val groupingSeparatorStr = intGrouping.separator.toString()
                 for (index in intPartEnd - intGrouping.numDigits downTo 1 step intGrouping.numDigits) {
-                    insert(index, groupingSeparatorStr)
+                    insert(index = index, text = groupingSeparatorStr)
                 }
             }
         }

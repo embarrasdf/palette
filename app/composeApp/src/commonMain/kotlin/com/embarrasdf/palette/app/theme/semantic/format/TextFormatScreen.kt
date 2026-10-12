@@ -25,12 +25,13 @@ import com.embarrasdf.palette.theme.semantic.format.core.TextFormatScheme
 import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
 import com.embarrasdf.palette.theme.semantic.format.core.update
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextFormatScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTextFormatScreenState(formats = themeController.semantic.formats)
     val control = rememberTextFormatScreenControl(state = state, themeController = themeController)
@@ -44,6 +45,7 @@ fun TextFormatScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = state.textFormatsByToken.entries.toList(),
@@ -57,7 +59,7 @@ fun TextFormatScreen(
                 label = token.name,
             ) {
                 TextFormatDemo(
-                    state = state.textFormatDemoStatesByToken[token]!!,
+                    state = state.textFormatDemoStatesByToken.getValue(token),
                 )
             }
         }
@@ -95,7 +97,7 @@ class TextFormatScreenState(
 
     val textFormatDemoStatesByToken = TextFormatToken.entries.associateWith { token ->
         TextFormatDemoState(
-            textFormatInitial = textFormatsByToken[token]!!,
+            textFormatInitial = textFormatsByToken.getValue(token),
             demoTextFieldState = TextFieldState("Sphinx of black quartz, judge my vow"),
         )
     }
@@ -139,9 +141,7 @@ class TextFormatScreenControl(
     val themeController: ThemeController,
     formatControlByToken: Map<TextFormatToken, Control>,
 ) {
-    val controls: PersistentList<Control> = persistentListOf(
-        *formatControlByToken.values.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = formatControlByToken.values.toPersistentList()
 }
 
 @Composable
@@ -151,7 +151,7 @@ private fun makeControlForToken(
     themeController: ThemeController,
 ): Control {
     val demoControl = rememberTextFormatDemoControl(
-        state = state.textFormatDemoStatesByToken[token]!!,
+        state = state.textFormatDemoStatesByToken.getValue(token),
         onValueChange = { newValue ->
             themeController.updateSemantic {
                 it.copy(

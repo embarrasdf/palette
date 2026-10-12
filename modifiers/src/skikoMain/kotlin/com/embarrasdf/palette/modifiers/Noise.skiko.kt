@@ -43,7 +43,10 @@ actual fun createNoiseShader(): NoiseShader {
 }
 
 class NoiseShaderImpl : NoiseShader {
-    private val control = createShaderControl(ShaderSource, UniformShaderName)
+    private val control = createShaderControl(
+        source = ShaderSource,
+        uniformName = UniformShaderName,
+    )
 
     private var amount: Float = 0f
 
@@ -60,12 +63,12 @@ class NoiseShaderImpl : NoiseShader {
             NoiseColorMode.RandomColorFilterBlack -> 1
             else -> 0
         }
-        control.setIntUniform(UniformColorEnabled, colorEnabled)
-        control.setIntUniform(UniformFilterBlack, filterBlack)
+        control.setIntUniform(name = UniformColorEnabled, value = colorEnabled)
+        control.setIntUniform(name = UniformFilterBlack, value = filterBlack)
     }
 
     override fun setAmount(amount: Float) {
         this.amount = amount
-        control.setFloatUniform(UniformAmount, amount)
+        control.setFloatUniform(name = UniformAmount, value = amount)
     }
 }

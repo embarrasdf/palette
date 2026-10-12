@@ -37,13 +37,21 @@ enum class FadeSide(val value: Int) {
 fun Modifier.bottomFade(
     length: Dp,
     borderColor: Color? = null,
-) = fade(FadeSide.Bottom, length, borderColor)
+) = fade(
+    side = FadeSide.Bottom,
+    length = length,
+    borderColor = borderColor,
+)
 
 fun Modifier.fade(
     side: FadeSide,
     length: Dp,
     borderColor: Color? = null,
-) = fade(side.value, length, borderColor)
+) = fade(
+    sides = side.value,
+    length = length,
+    borderColor = borderColor,
+)
 
 fun Modifier.fade(
     @FadeSideMask sides: Int,
@@ -59,44 +67,11 @@ fun Modifier.fade(
             val fadeLengthPx = length.toPx()
 
             for (side in fadeSides) {
-                val (brush, topLeft, size) = when (side) {
-                    FadeSide.Left -> Triple(
-                        Brush.horizontalGradient(
-                            listOf(Color.Transparent, Color.Black),
-                            startX = 0f,
-                            endX = fadeLengthPx,
-                        ),
-                        Offset(0f, 0f),
-                        Size(fadeLengthPx, size.height),
-                    )
-                    FadeSide.Top -> Triple(
-                        Brush.verticalGradient(
-                            listOf(Color.Transparent, Color.Black),
-                            startY = 0f,
-                            endY = fadeLengthPx,
-                        ),
-                        Offset(0f, 0f),
-                        Size(size.width, fadeLengthPx),
-                    )
-                    FadeSide.Right -> Triple(
-                        Brush.horizontalGradient(
-                            listOf(Color.Black, Color.Transparent),
-                            startX = size.width - fadeLengthPx,
-                            endX = size.width,
-                        ),
-                        Offset(size.width - fadeLengthPx, 0f),
-                        Size(fadeLengthPx, size.height),
-                    )
-                    FadeSide.Bottom -> Triple(
-                        Brush.verticalGradient(
-                            listOf(Color.Black, Color.Transparent),
-                            startY = size.height - fadeLengthPx,
-                            endY = size.height,
-                        ),
-                        Offset(0f, size.height - fadeLengthPx),
-                        Size(size.width, fadeLengthPx),
-                    )
-                }
+                val (brush, topLeft, size) = fadeRegion(
+                    side = side,
+                    fadeLengthPx = fadeLengthPx,
+                    size = size,
+                )
 
                 drawRect(
                     brush = brush,
@@ -116,3 +91,52 @@ fun Modifier.fade(
             }
         }
     }
+
+private data class FadeRegion(
+    val brush: Brush,
+    val topLeft: Offset,
+    val size: Size,
+)
+
+private fun fadeRegion(
+    side: FadeSide,
+    fadeLengthPx: Float,
+    size: Size,
+): FadeRegion = when (side) {
+    FadeSide.Left -> FadeRegion(
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color.Transparent, Color.Black),
+            startX = 0f,
+            endX = fadeLengthPx,
+        ),
+        topLeft = Offset(x = 0f, y = 0f),
+        size = Size(width = fadeLengthPx, height = size.height),
+    )
+    FadeSide.Top -> FadeRegion(
+        brush = Brush.verticalGradient(
+            colors = listOf(Color.Transparent, Color.Black),
+            startY = 0f,
+            endY = fadeLengthPx,
+        ),
+        topLeft = Offset(x = 0f, y = 0f),
+        size = Size(width = size.width, height = fadeLengthPx),
+    )
+    FadeSide.Right -> FadeRegion(
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color.Black, Color.Transparent),
+            startX = size.width - fadeLengthPx,
+            endX = size.width,
+        ),
+        topLeft = Offset(x = size.width - fadeLengthPx, y = 0f),
+        size = Size(width = fadeLengthPx, height = size.height),
+    )
+    FadeSide.Bottom -> FadeRegion(
+        brush = Brush.verticalGradient(
+            colors = listOf(Color.Black, Color.Transparent),
+            startY = size.height - fadeLengthPx,
+            endY = size.height,
+        ),
+        topLeft = Offset(x = 0f, y = size.height - fadeLengthPx),
+        size = Size(width = size.width, height = fadeLengthPx),
+    )
+}

@@ -56,7 +56,7 @@ fun ExpandableHeader(
                 text = name,
                 style = style.headerStyle,
                 modifier = Modifier
-                    .border(style.borderWidth, style.borderColor)
+                    .border(width = style.borderWidth, color = style.borderColor)
                     .padding(style.labelPadding),
             )
             ChevronIcon(

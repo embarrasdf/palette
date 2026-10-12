@@ -21,7 +21,7 @@ import com.embarrasdf.palette.components.util.toRadians
 import kotlin.math.cos
 import kotlin.math.sin
 
-sealed class SphereStyle {
+sealed interface SphereStyle {
     data class Grid(
         val numLatitudeLines: Int,
         val numLongitudeLines: Int,
@@ -30,7 +30,7 @@ sealed class SphereStyle {
         val outlineStrokeColor: Color? = strokeColor,
         val outlineStrokeWidth: Dp = strokeWidth,
         val faceColor: Color? = null,
-    ) : SphereStyle()
+    ) : SphereStyle
 }
 
 @Composable
@@ -197,7 +197,7 @@ fun GridSphere(
 
 @Preview
 @Composable
-fun GridSpherePreview() {
+private fun GridSpherePreview() {
     Surface {
         GridSphere(
             numLatitudeLines = 20,

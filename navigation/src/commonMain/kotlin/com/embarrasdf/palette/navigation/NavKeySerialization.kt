@@ -37,8 +37,8 @@ fun NavGraph.toSerializersModule(): SerializersModule = SerializersModule {
                 if (!node.isGraph) {
                     @Suppress("UNCHECKED_CAST")
                     subclass(
-                        node.navKeyClass as KClass<NavKey>,
-                        node.serializer as KSerializer<NavKey>,
+                        subclass = node.navKeyClass as KClass<NavKey>,
+                        serializer = node.serializer as KSerializer<NavKey>,
                     )
                 }
                 collect(node.children)

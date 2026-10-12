@@ -1,6 +1,7 @@
 package com.embarrasdf.palette.theme.component.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.theme.component.LocalComponentTokens
@@ -40,6 +41,7 @@ enum class BorderStyleToken(val default: BorderStyleTokenSet) {
 }
 
 @Composable
+@ReadOnlyComposable
 fun BorderStyleToken.tokenSet(): BorderStyleTokenSet = LocalComponentTokens.current.border.getValue(this)
 
 @Composable

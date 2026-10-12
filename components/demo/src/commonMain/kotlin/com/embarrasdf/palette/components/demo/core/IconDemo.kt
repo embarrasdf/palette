@@ -27,11 +27,12 @@ import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 private val IconDemoContainerSize = 240.dp
 
@@ -48,9 +49,9 @@ enum class SizingType {
 
 @Composable
 fun IconDemo(
+    modifier: Modifier = Modifier,
     state: IconDemoState = rememberIconDemoState(),
     control: IconDemoControl = rememberIconDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -72,7 +73,7 @@ fun DemoScope.IconDemo(
         modifier = modifier
             .size(IconDemoContainerSize)
             .align(Alignment.Center)
-            .border(1.dp, PaletteTheme.semantic.color.outline),
+            .border(width = 1.dp, color = PaletteTheme.semantic.color.outline),
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -126,7 +127,7 @@ val IconDemoStateSaver = mapSaverSafe(
             SizeTypeKey to value.sizeType,
             FixedSizeKey to value.fixedSize.value,
             ScaleKey to value.scale,
-            ColorKey to save(value.color, ColorSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
         )
     },
     restore = { map ->
@@ -134,7 +135,7 @@ val IconDemoStateSaver = mapSaverSafe(
             sizeTypeInitial = map[SizeTypeKey] as SizingType,
             fixedSizeInitial = (map[FixedSizeKey] as Float).dp,
             scaleInitial = map[ScaleKey] as Float,
-            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
         )
     },
 )
@@ -179,11 +180,11 @@ class IconDemoControl(
         indent = true,
         expandedInitial = true,
         controls = {
-            persistentListOf(
-                colorControl,
-                sizeTypeControl,
-                *sizeControls(state.sizeType).toTypedArray(),
-            )
+            buildList<Control> {
+                add(colorControl)
+                add(sizeTypeControl)
+                addAll(sizeControls(state.sizeType))
+            }.toPersistentList()
         },
     )
 

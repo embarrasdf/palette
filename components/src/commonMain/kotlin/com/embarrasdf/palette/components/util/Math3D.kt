@@ -22,7 +22,7 @@ fun rotatePoint3D(
     val x3 = x2 * cosZ - y1 * sinZ
     val y3 = x2 * sinZ + y1 * cosZ
 
-    return Point3D(x3, y3, z2)
+    return Point3D(x = x3, y = y3, z = z2)
 }
 
 data class ViewingAngle(

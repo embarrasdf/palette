@@ -32,9 +32,11 @@ fun CurveStitch(
     ) {
         val strokeWidthPx = strokeWidth.toPx()
         drawCurveStitch(
-            start = start,
-            vertex = vertex,
-            end = end,
+            angle = StitchAngle(
+                start = start,
+                vertex = vertex,
+                end = end,
+            ),
             numLines = numLines,
             strokeWidth = strokeWidthPx,
             color = color,
@@ -48,10 +50,10 @@ fun CurveStitchStar(
     numPoints: Int,
     strokeWidth: Dp,
     color: Color,
+    modifier: Modifier = Modifier,
     drawInsidePoints: Boolean = true,
     drawOutsidePoints: Boolean = true,
     innerRadius: Float = 0f,
-    modifier: Modifier = Modifier,
 ) {
     Canvas(
         modifier = modifier,
@@ -91,9 +93,11 @@ fun CurveStitchStar(
                 val end = vertices[(index + 2) % vertices.size]
 
                 drawCurveStitch(
-                    start = Offset(start.x / size.width, start.y / size.height),
-                    vertex = Offset(vertex.x / size.width, vertex.y / size.height),
-                    end = Offset(end.x / size.width, end.y / size.height),
+                    angle = StitchAngle(
+                        start = Offset(start.x / size.width, start.y / size.height),
+                        vertex = Offset(vertex.x / size.width, vertex.y / size.height),
+                        end = Offset(end.x / size.width, end.y / size.height),
+                    ),
                     numLines = numLines,
                     strokeWidth = strokeWidthPx,
                     color = color,
@@ -109,9 +113,11 @@ fun CurveStitchStar(
                 val end = vertices[(index + 2) % vertices.size]
 
                 drawCurveStitch(
-                    start = Offset(start.x / size.width, start.y / size.height),
-                    vertex = Offset(vertex.x / size.width, vertex.y / size.height),
-                    end = Offset(end.x / size.width, end.y / size.height),
+                    angle = StitchAngle(
+                        start = Offset(start.x / size.width, start.y / size.height),
+                        vertex = Offset(vertex.x / size.width, vertex.y / size.height),
+                        end = Offset(end.x / size.width, end.y / size.height),
+                    ),
                     numLines = numLines,
                     strokeWidth = strokeWidthPx,
                     color = color,
@@ -155,9 +161,11 @@ fun CurveStitchShape(
             val end = vertices[(i + 2) % vertices.size]
 
             drawCurveStitch(
-                start = Offset(start.x / size.width, start.y / size.height),
-                vertex = Offset(vertex.x / size.width, vertex.y / size.height),
-                end = Offset(end.x / size.width, end.y / size.height),
+                angle = StitchAngle(
+                    start = Offset(start.x / size.width, start.y / size.height),
+                    vertex = Offset(vertex.x / size.width, vertex.y / size.height),
+                    end = Offset(end.x / size.width, end.y / size.height),
+                ),
                 numLines = numLines,
                 strokeWidth = strokeWidthPx,
                 color = color,
@@ -166,14 +174,19 @@ fun CurveStitchShape(
     }
 }
 
+private data class StitchAngle(
+    val start: Offset,
+    val vertex: Offset,
+    val end: Offset,
+)
+
 private fun DrawScope.drawCurveStitch(
-    start: Offset,
-    vertex: Offset,
-    end: Offset,
+    angle: StitchAngle,
     numLines: Int,
     strokeWidth: Float,
     color: Color,
 ) {
+    val (start, vertex, end) = angle
     val path = Path()
     path.moveTo(start.x * size.width, start.y * size.height)
     path.lineTo(vertex.x * size.width, vertex.y * size.height)
@@ -196,7 +209,7 @@ private fun DrawScope.drawCurveStitch(
 
 @Preview
 @Composable
-fun CurveStitchPreview() {
+private fun CurveStitchPreview() {
     Surface {
         CurveStitch(
             start = Offset(0.1f, 0.1f),
@@ -212,7 +225,7 @@ fun CurveStitchPreview() {
 
 @Preview
 @Composable
-fun CurveStitchStarInnerRadius0Preview() {
+private fun CurveStitchStarInnerRadius0Preview() {
     Surface {
         CurveStitchStar(
             numLines = 12,
@@ -227,7 +240,7 @@ fun CurveStitchStarInnerRadius0Preview() {
 
 @Preview
 @Composable
-fun CurveStitchStarPreview() {
+private fun CurveStitchStarPreview() {
     Surface {
         CurveStitchStar(
             drawInsidePoints = true,
@@ -244,7 +257,7 @@ fun CurveStitchStarPreview() {
 
 @Preview
 @Composable
-fun CurveStitchStarInsideOnlyPreview() {
+private fun CurveStitchStarInsideOnlyPreview() {
     Surface {
         CurveStitchStar(
             drawOutsidePoints = false,
@@ -260,7 +273,7 @@ fun CurveStitchStarInsideOnlyPreview() {
 
 @Preview
 @Composable
-fun CurveStitchStarOutsideOnlyPreview() {
+private fun CurveStitchStarOutsideOnlyPreview() {
     Surface {
         CurveStitchStar(
             drawInsidePoints = false,
@@ -276,7 +289,7 @@ fun CurveStitchStarOutsideOnlyPreview() {
 
 @Preview
 @Composable
-fun CurveStitchShapePreview() {
+private fun CurveStitchShapePreview() {
     Surface {
         CurveStitchShape(
             numLines = 12,

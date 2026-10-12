@@ -17,7 +17,7 @@ import com.embarrasdf.palette.components.core.Text
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.component.core.SurfaceStyleToken
@@ -35,11 +35,13 @@ import com.embarrasdf.palette.theme.semantic.format.core.TextFormatToken
 import com.embarrasdf.palette.theme.semantic.typography.TypographyToken
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun TextStyleScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberTextStyleScreenState(themeState = themeController)
     val control = rememberTextStyleScreenControl(state = state, themeController = themeController)
@@ -53,6 +55,7 @@ fun TextStyleScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = TextStyleToken.entries,
@@ -130,7 +133,11 @@ private const val SurfaceTokenKeyPrefix = "surfaceToken_"
 fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         val map = mutableMapOf<String, Any?>(
-            DemoTextFieldStateKey to save(state.demoTextFieldState, TextFieldState.Saver, this),
+            DemoTextFieldStateKey to save(
+                value = state.demoTextFieldState,
+                saver = TextFieldState.Saver,
+                scope = this,
+            ),
         )
         TextStyleToken.entries.forEach { token ->
             map[SurfaceTokenKeyPrefix + token.name] = state.surfaceToken(token).name
@@ -144,7 +151,7 @@ fun textStyleScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
         }.toMap()
         TextStyleScreenState(
             themeState = themeState,
-            demoTextFieldState = restore(map[DemoTextFieldStateKey], TextFieldState.Saver)!!,
+            demoTextFieldState = map.requireRestore(key = DemoTextFieldStateKey, saver = TextFieldState.Saver),
             surfaceTokensInitial = surfaceTokens,
         )
     },
@@ -179,10 +186,10 @@ class TextStyleScreenControl(
         includeLabel = false,
     )
 
-    val controls: PersistentList<Control> = persistentListOf(
-        demoTextControl,
-        *textStyleControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = buildList<Control> {
+        add(demoTextControl)
+        addAll(textStyleControls)
+    }.toPersistentList()
 }
 
 private fun makeControlForToken(
@@ -226,7 +233,7 @@ private fun makeControlForToken(
         values = { SurfaceStyleToken.entries },
         selectedValue = { state.surfaceToken(token) },
         onValueChange = { newValue ->
-            state.setSurfaceToken(token, newValue)
+            state.setSurfaceToken(token = token, value = newValue)
         },
     )
 

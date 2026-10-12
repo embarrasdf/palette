@@ -33,8 +33,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun CurrencyAmountFieldDemo(
-    moneyFormat: MoneyFormat = PaletteTheme.semantic.format.moneyFormats.default,
     modifier: Modifier = Modifier,
+    moneyFormat: MoneyFormat = PaletteTheme.semantic.format.moneyFormats.default,
     textFieldState: TextFieldState = rememberTextFieldState(),
 ) {
     val text by snapshotFlow { textFieldState.text.toString() }
@@ -74,8 +74,8 @@ fun CurrencyAmountFieldDemo(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(
-                PaletteTheme.semantic.dimension.spacing.medium,
-                Alignment.CenterVertically,
+                space = PaletteTheme.semantic.dimension.spacing.medium,
+                alignment = Alignment.CenterVertically,
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier

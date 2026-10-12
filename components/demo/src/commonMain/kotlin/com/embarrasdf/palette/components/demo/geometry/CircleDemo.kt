@@ -26,7 +26,7 @@ import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.DrawStyleSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -44,7 +44,6 @@ fun CircleDemo(
     ) {
         CircleDemo(
             state = state,
-            modifier = modifier,
         )
     }
 }
@@ -59,7 +58,7 @@ fun DemoScope.CircleDemo(
             .fillMaxSize()
             .background(PaletteTheme.semantic.color.surface),
     ) {
-        drawCircle(state.color, style = state.drawStyle, radius = size.minDimension / 4f)
+        drawCircle(color = state.color, style = state.drawStyle, radius = size.minDimension / 4f)
     }
 }
 
@@ -106,16 +105,16 @@ private const val StrokeWidthKey = "strokeWidth"
 fun circleDemoStateSaver(density: Density) = mapSaverSafe(
     save = { value ->
         mapOf(
-            ColorKey to save(value.color, ColorSaver, this),
-            DrawStyleKey to save(value.drawStyle, DrawStyleSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
+            DrawStyleKey to save(value = value.drawStyle, saver = DrawStyleSaver, scope = this),
             StrokeWidthKey to value.strokeWidth.value,
         )
     },
     restore = { map ->
         CircleDemoState(
             density = density,
-            colorInitial = restore(map[ColorKey], ColorSaver)!!,
-            drawStyleInitial = restore(map[DrawStyleKey], DrawStyleSaver)!!,
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
+            drawStyleInitial = map.requireRestore(key = DrawStyleKey, saver = DrawStyleSaver),
             strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
         )
     },

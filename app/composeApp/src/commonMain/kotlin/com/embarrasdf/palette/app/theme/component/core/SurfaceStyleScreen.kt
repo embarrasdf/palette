@@ -25,12 +25,13 @@ import com.embarrasdf.palette.theme.control.ThemeState
 import com.embarrasdf.palette.theme.semantic.color.ColorToken
 import com.embarrasdf.palette.theme.semantic.shape.ShapeToken
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun SurfaceStyleScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberSurfaceStyleScreenState(themeState = themeController)
     val control = rememberSurfaceStyleScreenControl(state = state, themeController = themeController)
@@ -44,6 +45,7 @@ fun SurfaceStyleScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         DemoList(
             items = SurfaceStyleToken.entries,
@@ -121,9 +123,7 @@ class SurfaceStyleScreenControl(
         )
     }
 
-    val controls: PersistentList<Control> = persistentListOf(
-        *styleControls.toTypedArray(),
-    )
+    val controls: PersistentList<Control> = styleControls.toPersistentList()
 }
 
 private fun makeControlForToken(
@@ -186,11 +186,11 @@ private fun makeControlForToken(
             } else {
                 listOf(borderStyleToggleControl)
             }
-            persistentListOf(
-                colorControl,
-                shapeControl,
-                *borderControls.toTypedArray(),
-            )
+            buildList<Control> {
+                add(colorControl)
+                add(shapeControl)
+                addAll(borderControls)
+            }.toPersistentList()
         },
     )
 }

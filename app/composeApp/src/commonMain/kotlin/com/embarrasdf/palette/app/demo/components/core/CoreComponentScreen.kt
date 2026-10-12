@@ -17,6 +17,7 @@ fun CoreComponentScreen(
     component: CoreComponent,
     onNavigateUp: () -> Unit,
     onThemeClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -26,6 +27,7 @@ fun CoreComponentScreen(
                 onThemeClick = onThemeClick,
             )
         },
+        modifier = modifier,
     ) { innerPadding ->
         when (component) {
             CoreComponent.Button -> ButtonDemo(

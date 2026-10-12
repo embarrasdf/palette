@@ -20,7 +20,7 @@ import com.embarrasdf.palette.components.color.ColorPicker
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.util.ColorSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
@@ -28,9 +28,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ColorPickerDemo(
+    modifier: Modifier = Modifier,
     state: ColorPickerDemoState = rememberColorPickerDemoState(),
     control: ColorPickerDemoControl = rememberColorPickerDemoControl(state),
-    modifier: Modifier = Modifier,
 ) {
     Demo(
         controls = control.controls,
@@ -94,13 +94,13 @@ private const val SpacingKey = "spacing"
 val ColorPickerDemoStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            ColorKey to save(value.color, ColorSaver, this),
+            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
             SpacingKey to value.spacing.value,
         )
     },
     restore = { map ->
         ColorPickerDemoState(
-            colorInitial = restore(map[ColorKey], ColorSaver)!!,
+            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
             spacingInitial = (map[SpacingKey] as Float).dp,
         )
     },

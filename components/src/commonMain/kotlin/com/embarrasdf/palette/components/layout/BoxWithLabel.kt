@@ -38,7 +38,7 @@ fun BoxWithLabel(
             text = label,
             style = style.labelStyle,
             modifier = Modifier
-                .border(style.borderWidth, style.borderColor)
+                .border(width = style.borderWidth, color = style.borderColor)
                 .padding(style.labelPadding)
                 .align(Alignment.Start),
         )

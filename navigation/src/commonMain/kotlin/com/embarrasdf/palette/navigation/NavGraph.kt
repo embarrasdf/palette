@@ -71,48 +71,69 @@ private fun NavGraph.buildBackStack(dest: NavKey): List<NavKey> {
     return listOf(dest)
 }
 
-internal fun List<PathSegment>.toNavKey(navGraph: NavGraph): NavKey? {
-    fun matchRoute(
-        nodes: List<NavGraphNode>,
-        segmentIndex: Int,
-    ): NavKey? {
-        if (segmentIndex >= this.size) return null
+internal fun List<PathSegment>.toNavKey(navGraph: NavGraph): NavKey? = navGraph.matchRoute(
+    nodes = navGraph.nodes,
+    segments = this,
+    segmentIndex = 0,
+)
 
-        val segment = this[segmentIndex]
+private fun NavGraph.matchRoute(
+    nodes: List<NavGraphNode>,
+    segments: List<PathSegment>,
+    segmentIndex: Int,
+): NavKey? {
+    if (segmentIndex >= segments.size) return null
 
-        for (node in nodes) {
-            // Skip nodes with empty path segments - search their children directly
-            if (node.pathSegment.value.isEmpty() && node.children.isNotEmpty()) {
-                val childMatch = matchRoute(node.children, segmentIndex)
-                if (childMatch != null) return childMatch
-                continue
-            }
-
-            val isMatch = node.pathSegment == PathSegment.Wildcard || node.pathSegment == segment
-            if (!isMatch) continue
-
-            val parsed = node.parser(segment)
-
-            if (parsed != null) {
-                val isLastSegment = segmentIndex == this@toNavKey.size - 1
-                if (isLastSegment || node.children.isEmpty()) {
-                    return navGraph.resolve(parsed)
-                }
-            }
-
-            if (node.children.isNotEmpty()) {
-                val childMatch = matchRoute(node.children, segmentIndex + 1)
-                if (childMatch != null) return childMatch
-            }
-        }
-
-        return null
+    for (node in nodes) {
+        val match = matchNode(
+            node = node,
+            segments = segments,
+            segmentIndex = segmentIndex,
+        )
+        if (match != null) return match
     }
 
-    return matchRoute(
-        nodes = navGraph.nodes,
-        segmentIndex = 0,
-    )
+    return null
+}
+
+private fun NavGraph.matchNode(
+    node: NavGraphNode,
+    segments: List<PathSegment>,
+    segmentIndex: Int,
+): NavKey? {
+    val segment = segments[segmentIndex]
+
+    // Skip nodes with empty path segments - search their children directly
+    if (node.pathSegment.value.isEmpty() && node.children.isNotEmpty()) {
+        return matchRoute(
+            nodes = node.children,
+            segments = segments,
+            segmentIndex = segmentIndex,
+        )
+    }
+
+    val isMatch = node.pathSegment == PathSegment.Wildcard || node.pathSegment == segment
+    if (!isMatch) return null
+
+    val parsed = node.parser(segment)
+
+    if (parsed != null) {
+        val isLastSegment = segmentIndex == segments.size - 1
+        if (isLastSegment || node.children.isEmpty()) {
+            return resolve(parsed)
+        }
+    }
+
+    if (node.children.isNotEmpty()) {
+        val childMatch = matchRoute(
+            nodes = node.children,
+            segments = segments,
+            segmentIndex = segmentIndex + 1,
+        )
+        if (childMatch != null) return childMatch
+    }
+
+    return null
 }
 
 internal fun NavGraph.findNode(navKeyClass: KClass<out NavKey>): NavGraphNode? {

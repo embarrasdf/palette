@@ -25,5 +25,8 @@ fun IndicationToken.toIndication(
 
 @Composable
 fun IndicationToken.toIndication(): Indication {
-    return toIndication(PaletteTheme.semantic.interaction, PaletteTheme.primitive.indication)
+    return toIndication(
+        interactionScheme = PaletteTheme.semantic.interaction,
+        indicationPrimitives = PaletteTheme.primitive.indication,
+    )
 }

@@ -22,4 +22,6 @@ data class PrimitiveTokens(
         EasingPrimitiveToken.entries.associateWith { it.default },
 )
 
+// Part of the theme's public API: PaletteTheme provides it and components read it.
+@Suppress("CompositionLocalAllowlist")
 val LocalPrimitiveTokens = staticCompositionLocalOf { PrimitiveTokens() }

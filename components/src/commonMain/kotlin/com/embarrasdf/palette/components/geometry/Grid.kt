@@ -24,38 +24,38 @@ import kotlin.math.sin
 fun Grid(
     coordinateSystem: GridCoordinateSystem,
     lineStyle: GridLineStyle?,
-    vertex: GridVertex? = null,
     modifier: Modifier = Modifier,
+    vertex: GridVertex? = null,
     offset: Offset = Offset.Zero,
     clipToBounds: Boolean = true,
 ) {
     val density = LocalDensity.current
-    val modifier = if (clipToBounds) {
+    val gridModifier = if (clipToBounds) {
         modifier.then(Modifier.clipToBounds())
     } else {
         modifier
     }
     when (coordinateSystem) {
         is GridCoordinateSystem.Cartesian -> CartesianGrid(
-            xSpacing = { coordinateSystem.scaleX.scale(it, this) },
-            ySpacing = { coordinateSystem.scaleY.scale(it, this) },
+            xSpacing = { coordinateSystem.scaleX.scale(interval = it, density = this) },
+            ySpacing = { coordinateSystem.scaleY.scale(interval = it, density = this) },
             lineStyle = lineStyle,
-            modifier = modifier,
+            modifier = gridModifier,
             offset = offset,
             rotationDegrees = coordinateSystem.rotationDegrees,
-            drawVertex = vertex?.let { vertex ->
-                { x, y -> drawVertex(vertex, x, y, density) }
+            drawVertex = vertex?.let { gridVertex ->
+                { x, y -> drawVertex(vertex = gridVertex, x = x, y = y, density = density) }
             },
         )
         is GridCoordinateSystem.Polar -> PolarGrid(
-            radiusSpacing = { coordinateSystem.radiusScale.scale(it, this) },
+            radiusSpacing = { coordinateSystem.radiusScale.scale(interval = it, density = this) },
             theta = { coordinateSystem.thetaRadians },
             lineStyle = lineStyle,
-            modifier = modifier,
+            modifier = gridModifier,
             offset = offset,
             rotationDegrees = coordinateSystem.rotationDegrees,
-            drawVertex = vertex?.let { vertex ->
-                { x, y -> drawVertex(vertex, x, y, density) }
+            drawVertex = vertex?.let { gridVertex ->
+                { x, y -> drawVertex(vertex = gridVertex, x = x, y = y, density = density) }
             },
         )
     }
@@ -139,7 +139,7 @@ fun CartesianGrid(
             }
         }
 
-        drawVertex?.let { drawVertex ->
+        drawVertex?.let { drawVertexAt ->
             var x = offset.x
             var xInterval = 0
             // Positive X
@@ -148,7 +148,7 @@ fun CartesianGrid(
                 var yInterval = 0
                 // Positive Y
                 while (y <= size.height) {
-                    drawVertex(x, y)
+                    drawVertexAt(x, y)
                     y += ySpacing(yInterval)
                     yInterval += 1
                 }
@@ -157,7 +157,7 @@ fun CartesianGrid(
                 y = offset.y
                 yInterval = 0
                 while (y + offset.y >= 0f) {
-                    drawVertex(x, y)
+                    drawVertexAt(x, y)
                     y -= ySpacing(yInterval)
                     yInterval += 1
                 }
@@ -174,7 +174,7 @@ fun CartesianGrid(
                 var yInterval = 0
                 // Positive Y
                 while (y <= size.height) {
-                    drawVertex(x, y)
+                    drawVertexAt(x, y)
                     y += ySpacing(yInterval)
                     yInterval += 1
                 }
@@ -183,7 +183,7 @@ fun CartesianGrid(
                 y = offset.y
                 yInterval = 0
                 while (y + offset.y >= 0f) {
-                    drawVertex(x, y)
+                    drawVertexAt(x, y)
                     y -= ySpacing(yInterval)
                     yInterval += 1
                 }
@@ -263,7 +263,7 @@ fun PolarGrid(
             }
         }
 
-        drawVertex?.let { drawVertex ->
+        drawVertex?.let { drawVertexAt ->
             var currentRadius = radiusSpacingInitial
             var radiusInterval = 0
             while (currentRadius - radius <= precision) {
@@ -272,7 +272,7 @@ fun PolarGrid(
                 while (currentLineAngle < 2 * PI) {
                     val endX = centerX + currentRadius * cos(currentLineAngle)
                     val endY = centerY + currentRadius * sin(currentLineAngle)
-                    drawVertex(endX, endY)
+                    drawVertexAt(endX, endY)
                     currentLineAngle += theta(thetaInterval)
                     thetaInterval += 1
                 }
@@ -285,7 +285,7 @@ fun PolarGrid(
 
 @Preview
 @Composable
-fun CartesianGridPreview() {
+private fun CartesianGridPreview() {
     Surface {
         CartesianGrid(
             xSpacing = { 20.dp.toPx() },
@@ -302,7 +302,7 @@ fun CartesianGridPreview() {
 
 @Preview
 @Composable
-fun CartesianGridLogarithmicScalePreview() {
+private fun CartesianGridLogarithmicScalePreview() {
     Surface {
         Grid(
             coordinateSystem = GridCoordinateSystem.Cartesian(
@@ -320,7 +320,7 @@ fun CartesianGridLogarithmicScalePreview() {
 
 @Preview
 @Composable
-fun CartesianGridLogarithmicDecayScalePreview() {
+private fun CartesianGridLogarithmicDecayScalePreview() {
     Surface {
         Grid(
             coordinateSystem = GridCoordinateSystem.Cartesian(
@@ -338,7 +338,7 @@ fun CartesianGridLogarithmicDecayScalePreview() {
 
 @Preview
 @Composable
-fun CartesianGridExponentialScalePreview() {
+private fun CartesianGridExponentialScalePreview() {
     Surface {
         Grid(
             coordinateSystem = GridCoordinateSystem.Cartesian(
@@ -356,7 +356,7 @@ fun CartesianGridExponentialScalePreview() {
 
 @Preview
 @Composable
-fun CartesianGridExponentialDecayScalePreview() {
+private fun CartesianGridExponentialDecayScalePreview() {
     Surface {
         Grid(
             coordinateSystem = GridCoordinateSystem.Cartesian(
@@ -374,7 +374,7 @@ fun CartesianGridExponentialDecayScalePreview() {
 
 @Preview
 @Composable
-fun PolarGridPreview() {
+private fun PolarGridPreview() {
     Surface {
         PolarGrid(
             radiusSpacing = { 30.dp.toPx() },
@@ -390,7 +390,7 @@ fun PolarGridPreview() {
 
 @Preview
 @Composable
-fun OvalGridPreview() {
+private fun OvalGridPreview() {
     val coordinateSystem = GridCoordinateSystem.Cartesian(spacing = 20.dp)
     Surface {
         Grid(
@@ -409,7 +409,7 @@ fun OvalGridPreview() {
 
 @Preview
 @Composable
-fun RectGridPreview() {
+private fun RectGridPreview() {
     val coordinateSystem = GridCoordinateSystem.Cartesian(spacing = 20.dp)
     Surface {
         Grid(
@@ -428,7 +428,7 @@ fun RectGridPreview() {
 
 @Preview
 @Composable
-fun PlusGridPreview() {
+private fun PlusGridPreview() {
     val coordinateSystem = GridCoordinateSystem.Cartesian(spacing = 20.dp)
     Surface {
         Grid(

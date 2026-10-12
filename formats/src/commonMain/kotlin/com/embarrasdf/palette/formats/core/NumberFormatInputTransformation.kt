@@ -32,12 +32,12 @@ class NumberFormatInputTransformation(
         if (numSeparators > 1) {
             // Instead of rejecting changes with multiple decimals, recalculate according to the
             // first one.
-            replace(intPart.length + 1, length, decimalPart ?: "")
+            replace(start = intPart.length + 1, end = length, text = decimalPart.orEmpty())
         }
 
-        val filteredIntPart = filterIntPart(intPart, hasDecimalPart = decimalPart != null)
+        val filteredIntPart = filterIntPart(intPart = intPart, hasDecimalPart = decimalPart != null)
 
-        filterDecimalPart(decimalPart, startIndex = filteredIntPart.length + 1)
+        filterDecimalPart(decimalPart = decimalPart, startIndex = filteredIntPart.length + 1)
     }
 
     private fun TextFieldBuffer.filterChars() {
@@ -71,14 +71,14 @@ class NumberFormatInputTransformation(
         if (mutableIntPart.startsWith('0')) {
             // Allow single leading zero. Replace leading zero if followed by another digit.
             val newIntPart = normalizeIntegerPart(mutableIntPart)
-            replace(0, mutableIntPart.length, newIntPart)
+            replace(start = 0, end = mutableIntPart.length, text = newIntPart)
             mutableIntPart = newIntPart
         }
 
         if (mutableIntPart.isEmpty() && hasDecimalPart) {
             // Prefill 0 when only decimal part is entered
             val newIntPart = "0"
-            replace(0, mutableIntPart.length, newIntPart)
+            replace(start = 0, end = mutableIntPart.length, text = newIntPart)
             mutableIntPart = newIntPart
         }
 
@@ -95,9 +95,9 @@ class NumberFormatInputTransformation(
         if (decimalPart.length > maxNumDecimalValues) {
             // Replace chars one-by-one so the cursor advances as expected
             for (index in startIndex until min(maxNumDecimalValues, decimalPart.length)) {
-                replace(index, index + 1, decimalPart[index].toString())
+                replace(start = index, end = index + 1, text = decimalPart[index].toString())
             }
-            delete(startIndex + maxNumDecimalValues, length)
+            delete(start = startIndex + maxNumDecimalValues, end = length)
         }
     }
 }

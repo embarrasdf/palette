@@ -67,7 +67,7 @@ fun Button(
         modifier = modifier.semantics { role = Role.Button },
     ) { shapePadding ->
         Row(
-            Modifier
+            modifier = Modifier
                 .graphicsLayer {
                     alpha = if (enabled) 1f else style.disabledContentAlpha
                 }

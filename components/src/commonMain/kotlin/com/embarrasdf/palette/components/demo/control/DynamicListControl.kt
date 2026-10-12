@@ -55,7 +55,7 @@ fun <T> DynamicListControl(
 
         Column(
             verticalArrangement = Arrangement.spacedBy(style.spacing),
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .then(if (control.indent) Modifier.padding(start = style.indent) else Modifier),
         ) {

@@ -1,6 +1,6 @@
 package com.embarrasdf.palette.components
 
-// TODO: port to multiplatform-friendly string library
+// Note: these could move to a multiplatform-friendly string library.
 
 const val MediaControlBarContentDescription = "Media control bar"
 const val MediaControlBarStateDescriptionExpanded = "Expanded"

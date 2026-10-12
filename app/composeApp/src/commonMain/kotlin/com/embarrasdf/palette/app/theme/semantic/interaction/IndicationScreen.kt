@@ -18,7 +18,7 @@ import com.embarrasdf.palette.components.demo.core.ButtonDemoControl
 import com.embarrasdf.palette.components.demo.core.ButtonDemoState
 import com.embarrasdf.palette.components.demo.core.ButtonDemoStateSaver
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.requireRestore
 import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun IndicationScreen(
     themeController: ThemeController,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state = rememberIndicationScreenState(themeState = themeController)
     val control = rememberIndicationScreenControl(state = state, themeController = themeController)
@@ -49,6 +50,7 @@ fun IndicationScreen(
                 actions = {},
             )
         },
+        modifier = modifier,
     ) { paddingValues ->
         Demo(
             controls = control.controls,
@@ -94,13 +96,17 @@ private const val ButtonDemoStateKey = "buttonDemoState"
 fun indicationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
     save = { state ->
         mapOf(
-            ButtonDemoStateKey to save(state.buttonDemoState, ButtonDemoStateSaver, this),
+            ButtonDemoStateKey to save(
+                value = state.buttonDemoState,
+                saver = ButtonDemoStateSaver,
+                scope = this,
+            ),
         )
     },
     restore = { map ->
         IndicationScreenState(
             themeState = themeState,
-            buttonDemoStateInitial = restore(map[ButtonDemoStateKey], ButtonDemoStateSaver)!!,
+            buttonDemoStateInitial = map.requireRestore(key = ButtonDemoStateKey, saver = ButtonDemoStateSaver),
         )
     },
 )
@@ -126,7 +132,12 @@ class IndicationScreenControl(
         selectedValue = { IndicationToken.Default.primitiveToken(state.interactionScheme) },
         onValueChange = { primitiveToken ->
             themeController.updateSemantic {
-                it.copy(interaction = it.interaction.copy(IndicationToken.Default, primitiveToken))
+                it.copy(
+                    interaction = it.interaction.copy(
+                        token = IndicationToken.Default,
+                        indicationPrimitiveToken = primitiveToken,
+                    ),
+                )
             }
         },
     )

@@ -34,7 +34,7 @@ class NavGraphBuilder(
         childrenBuilder.children()
 
         val startRouteClass = start::class
-        require(childrenBuilder.nodes.findNode(startRouteClass) != null) {
+        requireNotNull(childrenBuilder.nodes.findNode(startRouteClass)) {
             "${T::class.simpleName} start (${startRouteClass.simpleName}) is not registered in this graph"
         }
 
