@@ -13,8 +13,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import com.embarrasdf.trace.trace
 
-private const val BottomShift = 3
-
 @Target(AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE)
 @Retention(AnnotationRetention.SOURCE)
 annotation class FadeSideMask
@@ -23,7 +21,7 @@ enum class FadeSide(val value: Int) {
     Left(1 shl 0), // 1
     Top(1 shl 1), // 2
     Right(1 shl 2), // 4
-    Bottom(1 shl BottomShift), // 8
+    Bottom(1 shl 3), // 8
     ;
 
     companion object {
