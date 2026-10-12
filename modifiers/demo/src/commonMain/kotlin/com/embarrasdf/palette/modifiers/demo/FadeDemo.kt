@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,9 +48,8 @@ fun FadeDemo(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        DisposableEffect(this@Demo.maxWidth) {
+        SideEffect(this@Demo.maxWidth) {
             control.onSizeChanged(this@Demo.maxWidth)
-            onDispose {}
         }
         Column(
             modifier = Modifier

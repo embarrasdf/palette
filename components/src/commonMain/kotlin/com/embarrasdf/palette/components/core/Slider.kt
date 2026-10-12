@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -105,7 +105,7 @@ fun Slider(
     state.value = value
 
     val currentOnValueChange by rememberUpdatedState(onValueChange)
-    DisposableEffect(state) {
+    SideEffect(state) {
         val snapped = snapValueToTick(
             current = value,
             tickFractions = state.tickFractions,
@@ -114,7 +114,6 @@ fun Slider(
         if (snapped != value) {
             currentOnValueChange?.invoke(snapped)
         }
-        onDispose {}
     }
 
     Slider(
@@ -152,7 +151,7 @@ fun Slider(
     state.value = value
 
     val currentOnValueChange by rememberUpdatedState(onValueChange)
-    DisposableEffect(state) {
+    SideEffect(state) {
         val snapped = snapValueToTick(
             current = value,
             tickFractions = state.tickFractions,
@@ -161,7 +160,6 @@ fun Slider(
         if (snapped != value) {
             currentOnValueChange?.invoke(snapped)
         }
-        onDispose {}
     }
 
     Slider(
@@ -295,7 +293,7 @@ fun RangeSlider(
     state.activeRangeEnd = value.endInclusive
 
     val currentOnValueChange by rememberUpdatedState(onValueChange)
-    DisposableEffect(state) {
+    SideEffect(state) {
         val snappedStart = snapValueToTick(
             current = value.start,
             tickFractions = state.tickFractions,
@@ -309,7 +307,6 @@ fun RangeSlider(
         if (snappedStart != value.start || snappedEnd != value.endInclusive) {
             currentOnValueChange?.invoke(snappedStart..snappedEnd)
         }
-        onDispose {}
     }
 
     RangeSlider(
@@ -345,7 +342,7 @@ fun RangeSlider(
     state.activeRangeEnd = value.endInclusive
 
     val currentOnValueChange by rememberUpdatedState(onValueChange)
-    DisposableEffect(state) {
+    SideEffect(state) {
         val snappedStart = snapValueToTick(
             current = value.start,
             tickFractions = state.tickFractions,
@@ -359,7 +356,6 @@ fun RangeSlider(
         if (snappedStart != value.start || snappedEnd != value.endInclusive) {
             currentOnValueChange?.invoke(snappedStart..snappedEnd)
         }
-        onDispose {}
     }
 
     RangeSlider(

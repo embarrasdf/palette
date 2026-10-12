@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,9 +59,8 @@ fun DemoScope.ButtonDemo(
     state: ButtonDemoState = rememberButtonDemoState(),
     control: ButtonDemoControl = rememberButtonDemoControl(state),
 ) {
-    DisposableEffect(control, maxWidth) {
+    SideEffect(key1 = control, key2 = maxWidth) {
         control.onButtonSizeChanged(maxWidth)
-        onDispose { }
     }
     // A colored button container needs matching content color; the demo, as the caller, picks it
     // per variant — the same way content on a Surface is colored by whoever places it.
@@ -70,9 +69,8 @@ fun DemoScope.ButtonDemo(
         ButtonStyleToken.Secondary -> ColorToken.Secondary
         ButtonStyleToken.Tertiary -> ColorToken.Primary
     }.toColor()
-    DisposableEffect(state.style, contentColor) {
+    SideEffect(key1 = state.style, key2 = contentColor) {
         state.textDemoState.textStyleDemoState.color = contentColor
-        onDispose { }
     }
     val style = state.buttonStyle ?: PaletteTheme.component.core.button[state.style]
     Button(

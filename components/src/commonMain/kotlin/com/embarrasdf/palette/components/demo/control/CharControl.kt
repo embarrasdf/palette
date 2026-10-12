@@ -10,8 +10,8 @@ import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
@@ -45,11 +45,10 @@ fun CharControl(
 
     val textFieldState = rememberTextFieldState(initialText = value.toString())
 
-    DisposableEffect(value) {
+    SideEffect(value) {
         textFieldState.edit {
             replace(start = 0, end = length, text = value.toString())
         }
-        onDispose {}
     }
 
     LaunchedEffect(textFieldState) {

@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -69,9 +69,8 @@ fun ButtonStyleScreen(
                 ButtonStyleToken.Secondary -> ColorToken.Secondary
                 ButtonStyleToken.Tertiary -> ColorToken.Primary
             }.toColor()
-            DisposableEffect(textDemoState, contentColor) {
+            SideEffect(key1 = textDemoState, key2 = contentColor) {
                 textDemoState.textStyleDemoState.color = contentColor
-                onDispose {}
             }
             Button(
                 style = PaletteTheme.component.core.button[style],

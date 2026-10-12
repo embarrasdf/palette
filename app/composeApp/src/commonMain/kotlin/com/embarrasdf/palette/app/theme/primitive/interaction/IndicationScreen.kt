@@ -3,7 +3,7 @@ package com.embarrasdf.palette.app.theme.primitive.interaction
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,9 +58,8 @@ fun IndicationScreen(
         PaletteTheme.component.core.button[buttonDemoState.style],
     )
     val tokenSet = state.tokenSet(state.subject)
-    DisposableEffect(tokenSet, buttonDemoState.style) {
+    SideEffect(key1 = tokenSet, key2 = buttonDemoState.style) {
         buttonDemoControl.updateStyle(baseButtonStyle.copy(indication = tokenSet.toIndication()))
-        onDispose {}
     }
 
     Scaffold(

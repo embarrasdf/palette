@@ -10,7 +10,7 @@ import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.allCaps
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -72,12 +72,11 @@ fun DemoScope.TextFieldDemo(
     state: TextFieldDemoState = rememberTextFieldDemoState(),
     control: TextFieldDemoControl = rememberTextFieldDemoControl(state = state),
 ) {
-    DisposableEffect(maxWidth) {
+    SideEffect(maxWidth) {
         control.onSizeChanged(maxWidth)
-        onDispose { }
     }
 
-    DisposableEffect(state.textStyleDemoState.textStyle.format) {
+    SideEffect(state.textStyleDemoState.textStyle.format) {
         val currentText = state.textFieldState.text.toString()
         val formatted = state.textStyleDemoState.textStyle.format.format(currentText)
         if (formatted != currentText) {
@@ -85,7 +84,6 @@ fun DemoScope.TextFieldDemo(
                 replace(start = 0, end = length, text = formatted)
             }
         }
-        onDispose { }
     }
 
     TextField(

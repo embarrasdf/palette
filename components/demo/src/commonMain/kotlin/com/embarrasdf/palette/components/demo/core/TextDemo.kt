@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,9 +61,8 @@ fun DemoScope.TextDemo(
 ) {
     val text by state.text.collectAsState(initial = state.text.toString())
 
-    DisposableEffect(control, this@TextDemo.maxWidth) {
+    SideEffect(key1 = control, key2 = this@TextDemo.maxWidth) {
         control.onSizeChanged(this@TextDemo.maxWidth)
-        onDispose { }
     }
     Text(
         text = text,
