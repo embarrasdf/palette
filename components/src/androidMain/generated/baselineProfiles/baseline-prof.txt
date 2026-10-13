@@ -293,6 +293,7 @@ PLcom/embarrasdf/palette/components/core/SliderStyle;->getColors()Lcom/embarrasd
 Lcom/embarrasdf/palette/components/core/SurfaceKt;
 HSPLcom/embarrasdf/palette/components/core/SurfaceKt;->$r8$lambda$kNR1hSLZQAv8P1hnD11ZplSvTSs(Landroidx/compose/ui/semantics/SemanticsPropertyReceiver;)Lkotlin/Unit;
 PLcom/embarrasdf/palette/components/core/SurfaceKt;->ShapeContent$lambda$1(Lkotlin/jvm/functions/Function3;Landroidx/compose/foundation/layout/BoxWithConstraintsScope;Landroidx/compose/runtime/Composer;I)Lkotlin/Unit;
+HSPLcom/embarrasdf/palette/components/core/SurfaceKt;->ShapeContent(Lcom/embarrasdf/palette/components/core/Shape;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 HSPLcom/embarrasdf/palette/components/core/SurfaceKt;->Surface$lambda$0$0(Landroidx/compose/ui/semantics/SemanticsPropertyReceiver;)Lkotlin/Unit;
 HSPLcom/embarrasdf/palette/components/core/SurfaceKt;->Surface(Landroidx/compose/ui/Modifier;Lcom/embarrasdf/palette/components/core/SurfaceStyle;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 HSPLcom/embarrasdf/palette/components/core/SurfaceKt;->Surface(Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lcom/embarrasdf/palette/components/core/SurfaceStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZZLandroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
