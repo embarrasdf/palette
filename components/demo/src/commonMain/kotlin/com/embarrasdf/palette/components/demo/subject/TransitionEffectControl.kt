@@ -63,9 +63,7 @@ fun transitionEffectControl(
 }
 
 /** The controls for the params specific to the effect's type. */
-private fun TransitionEffect.paramControls(
-    onChange: (TransitionEffect) -> Unit,
-): List<Control> = when (this) {
+private fun TransitionEffect.paramControls(onChange: (TransitionEffect) -> Unit): List<Control> = when (this) {
     is TransitionEffect.Fade -> emptyList()
     is TransitionEffect.Scale -> listOf(
         Control.Slider(
