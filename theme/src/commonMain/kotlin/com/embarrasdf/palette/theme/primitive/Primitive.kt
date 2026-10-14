@@ -1,5 +1,6 @@
 package com.embarrasdf.palette.theme.primitive
 
+import androidx.compose.animation.core.Easing
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import com.embarrasdf.palette.components.core.Shape
@@ -32,4 +33,8 @@ object Primitive {
         @Composable
         @ReadOnlyComposable
         get() = LocalPrimitiveTokens.current.indication
+
+    val easing: Map<EasingPrimitiveToken, Easing>
+        @Composable
+        get() = LocalPrimitiveTokens.current.easing
 }
