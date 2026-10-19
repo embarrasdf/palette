@@ -21,6 +21,12 @@ data object PrimitiveCatalogRoute : PrimitiveRoute {
 }
 
 @Serializable
+@SerialName("theme-primitive-animation")
+data object PrimitiveAnimationRoute : PrimitiveRoute {
+    override val pathSegment = "animation".toPathSegment()
+}
+
+@Serializable
 @SerialName("theme-primitive-typography")
 data object PrimitiveTypographyRoute : PrimitiveRoute {
     override val pathSegment = "typography".toPathSegment()
