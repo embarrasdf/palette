@@ -122,15 +122,14 @@ fun <T> AnimationSpec.Finite.DurationBased.toComposeSpec(
 }
 
 /** Resolves this repeating spec to a Compose [InfiniteRepeatableSpec]. */
-fun <T> AnimationSpec.Repeatable.toComposeSpec(
-    easings: Map<EasingPrimitiveToken, Easing>,
-): InfiniteRepeatableSpec<T> = infiniteRepeatable(
-    animation = animation.toComposeSpec(easings),
-    repeatMode = when (repeatMode) {
-        RepeatMode.Restart -> ComposeRepeatMode.Restart
-        RepeatMode.Reverse -> ComposeRepeatMode.Reverse
-    },
-)
+fun <T> AnimationSpec.Repeatable.toComposeSpec(easings: Map<EasingPrimitiveToken, Easing>): InfiniteRepeatableSpec<T> =
+    infiniteRepeatable(
+        animation = animation.toComposeSpec(easings),
+        repeatMode = when (repeatMode) {
+            RepeatMode.Restart -> ComposeRepeatMode.Restart
+            RepeatMode.Reverse -> ComposeRepeatMode.Reverse
+        },
+    )
 
 @Composable
 fun <T> AnimationSpec.Repeatable.toComposeSpec(): InfiniteRepeatableSpec<T> {
