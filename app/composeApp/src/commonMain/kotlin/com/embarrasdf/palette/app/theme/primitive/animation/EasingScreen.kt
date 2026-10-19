@@ -202,7 +202,6 @@ private fun EasingCurve.asType(type: EasingCurveType): EasingCurve = when (type)
         is EasingCurve.Cubic -> this
         is EasingCurve.Quadratic -> toCubic()
     }
-
     EasingCurveType.Quadratic -> when (this) {
         is EasingCurve.Cubic -> EasingCurve.Quadratic(x1 = x1, y1 = y1)
         is EasingCurve.Quadratic -> this
