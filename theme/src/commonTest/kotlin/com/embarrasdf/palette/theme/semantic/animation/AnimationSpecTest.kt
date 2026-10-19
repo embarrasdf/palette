@@ -4,6 +4,7 @@ import androidx.compose.animation.core.SnapSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.TweenSpec
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,7 +25,7 @@ class AnimationSpecTest {
         val spec = AnimationSpec.Tween(
             durationMillis = 500,
             delayMillis = 50,
-            easing = EasingPrimitiveToken.Emphasized,
+            easing = EasingValue.Preset(EasingPrimitiveToken.Emphasized),
         ).toComposeSpec<Float>(easings) as TweenSpec
 
         assertEquals(500, spec.durationMillis)

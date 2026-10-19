@@ -8,6 +8,7 @@ import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.FiniteAnimationSpecType
 import com.embarrasdf.palette.theme.semantic.animation.type
@@ -50,7 +51,7 @@ class FiniteAnimationSpecState(
             FiniteAnimationSpecType.Tween -> AnimationSpec.Tween(
                 durationMillis = durationMillis,
                 delayMillis = delayMillis,
-                easing = easing,
+                easing = EasingValue.Preset(easing),
             )
 
             FiniteAnimationSpecType.Snap -> AnimationSpec.Snap(
@@ -77,7 +78,8 @@ class FiniteAnimationSpecState(
                     is AnimationSpec.Snap -> spec.delayMillis
                     else -> 0
                 },
-                easingInitial = (spec as? AnimationSpec.Tween)?.easing ?: tweenDefaults.easing,
+                easingInitial = ((spec as? AnimationSpec.Tween)?.easing as? EasingValue.Preset)?.token
+                    ?: EasingPrimitiveToken.Standard,
             )
         }
     }

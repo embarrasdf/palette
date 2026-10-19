@@ -8,13 +8,14 @@ import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.RepeatMode
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 /**
- * Editable state for an [AnimationSpec.Infinite]. Models a [AnimationSpec.Repeatable] over a
+ * Editable state for an [AnimationSpec.Repeatable]. Models a [AnimationSpec.Repeatable] over a
  * [AnimationSpec.Tween] driver — the useful infinite case — exposing its duration, easing, and
  * repeat mode.
  */
@@ -31,21 +32,25 @@ class InfiniteAnimationSpecState(
     var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
-    val spec: AnimationSpec.Infinite
+    val spec: AnimationSpec.Repeatable
         get() = AnimationSpec.Repeatable(
-            animation = AnimationSpec.Tween(durationMillis = durationMillis, easing = easing),
+            animation = AnimationSpec.Tween(
+                durationMillis = durationMillis,
+                easing = EasingValue.Preset(easing),
+            ),
             repeatMode = repeatMode,
         )
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec.Infinite]. */
-        fun from(spec: AnimationSpec.Infinite): InfiniteAnimationSpecState {
+        /** Builds a state seeded from an existing [AnimationSpec.Repeatable]. */
+        fun from(spec: AnimationSpec.Repeatable): InfiniteAnimationSpecState {
             val repeatable = spec as? AnimationSpec.Repeatable
             val tween = repeatable?.animation as? AnimationSpec.Tween
             val tweenDefaults = AnimationSpec.Tween()
             return InfiniteAnimationSpecState(
                 durationMillisInitial = tween?.durationMillis ?: tweenDefaults.durationMillis,
-                easingInitial = tween?.easing ?: tweenDefaults.easing,
+                easingInitial = (tween?.easing as? EasingValue.Preset)?.token
+                    ?: EasingPrimitiveToken.Standard,
                 repeatModeInitial = repeatable?.repeatMode ?: RepeatMode.Restart,
             )
         }

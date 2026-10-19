@@ -13,13 +13,13 @@ import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.toComposeSpec
 
 /**
- * An [AnimationDemoSubject] driven continuously by an [AnimationSpec.Infinite], for observing a
+ * An [AnimationDemoSubject] driven continuously by an [AnimationSpec.Repeatable], for observing a
  * looping value animation in real time.
  */
 @Composable
 fun InfiniteAnimationDemoSubject(
     subject: AnimationDemoSubject,
-    spec: AnimationSpec.Infinite,
+    spec: AnimationSpec.Repeatable,
     modifier: Modifier = Modifier,
 ) {
     val easings = PaletteTheme.primitive.easing
