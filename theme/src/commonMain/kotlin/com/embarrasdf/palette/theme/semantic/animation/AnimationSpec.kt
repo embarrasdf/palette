@@ -126,16 +126,15 @@ fun <T> AnimationSpec.Finite.toComposeSpec(easings: Map<EasingPrimitiveToken, Ea
     }
 
 /** Resolves this finite repeating spec to a Compose [RepeatableSpec]. */
-fun <T> AnimationSpec.Repeatable.toComposeSpec(
-    easings: Map<EasingPrimitiveToken, EasingCurve>,
-): RepeatableSpec<T> = repeatable(
-    iterations = iterations,
-    animation = animation.toComposeSpec(easings),
-    repeatMode = when (repeatMode) {
-        RepeatMode.Restart -> ComposeRepeatMode.Restart
-        RepeatMode.Reverse -> ComposeRepeatMode.Reverse
-    },
-)
+fun <T> AnimationSpec.Repeatable.toComposeSpec(easings: Map<EasingPrimitiveToken, EasingCurve>): RepeatableSpec<T> =
+    repeatable(
+        iterations = iterations,
+        animation = animation.toComposeSpec(easings),
+        repeatMode = when (repeatMode) {
+            RepeatMode.Restart -> ComposeRepeatMode.Restart
+            RepeatMode.Reverse -> ComposeRepeatMode.Reverse
+        },
+    )
 
 @Composable
 fun <T> AnimationSpec.Repeatable.toComposeSpec(): RepeatableSpec<T> {

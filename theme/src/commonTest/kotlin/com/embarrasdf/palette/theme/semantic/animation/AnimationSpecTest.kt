@@ -4,12 +4,12 @@ import androidx.compose.animation.core.SnapSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.TweenSpec
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
-import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
 import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
 import com.embarrasdf.palette.theme.primitive.toEasing
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
 
 class AnimationSpecTest {
 
