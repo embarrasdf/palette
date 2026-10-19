@@ -15,7 +15,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 /**
- * Editable state for an [AnimationSpec.Repeatable]. Models a [AnimationSpec.Repeatable] over a
+ * Editable state for an [AnimationSpec.InfiniteRepeatable]. Models a looping spec over a
  * [AnimationSpec.Tween] driver — the useful infinite case — exposing its duration, easing, and
  * repeat mode.
  */
@@ -32,8 +32,8 @@ class InfiniteAnimationSpecState(
     var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
-    val spec: AnimationSpec.Repeatable
-        get() = AnimationSpec.Repeatable(
+    val spec: AnimationSpec.InfiniteRepeatable
+        get() = AnimationSpec.InfiniteRepeatable(
             animation = AnimationSpec.Tween(
                 durationMillis = durationMillis,
                 easing = EasingValue.Preset(easing),
@@ -42,16 +42,15 @@ class InfiniteAnimationSpecState(
         )
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec.Repeatable]. */
-        fun from(spec: AnimationSpec.Repeatable): InfiniteAnimationSpecState {
-            val repeatable = spec as? AnimationSpec.Repeatable
-            val tween = repeatable?.animation as? AnimationSpec.Tween
+        /** Builds a state seeded from an existing [AnimationSpec.InfiniteRepeatable]. */
+        fun from(spec: AnimationSpec.InfiniteRepeatable): InfiniteAnimationSpecState {
+            val tween = spec.animation as? AnimationSpec.Tween
             val tweenDefaults = AnimationSpec.Tween()
             return InfiniteAnimationSpecState(
                 durationMillisInitial = tween?.durationMillis ?: tweenDefaults.durationMillis,
                 easingInitial = (tween?.easing as? EasingValue.Preset)?.token
                     ?: EasingPrimitiveToken.Standard,
-                repeatModeInitial = repeatable?.repeatMode ?: RepeatMode.Restart,
+                repeatModeInitial = spec.repeatMode,
             )
         }
     }

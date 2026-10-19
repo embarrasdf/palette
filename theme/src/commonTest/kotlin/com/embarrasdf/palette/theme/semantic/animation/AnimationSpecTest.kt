@@ -4,6 +4,7 @@ import androidx.compose.animation.core.SnapSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.TweenSpec
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
 import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
 import com.embarrasdf.palette.theme.primitive.toEasing
@@ -51,5 +52,29 @@ class AnimationSpecTest {
             .toComposeSpec<Float>(easings) as SnapSpec
 
         assertEquals(120, spec.delay)
+    }
+
+    @Test
+    fun repeatableResolvesToFiniteRepeatableSpec() {
+        val spec = AnimationSpec.Repeatable(
+            iterations = 3,
+            animation = AnimationSpec.Tween(durationMillis = 250),
+            repeatMode = RepeatMode.Reverse,
+        ).toComposeSpec<Float>(easings)
+
+        assertEquals(3, spec.iterations)
+        assertEquals(ComposeRepeatMode.Reverse, spec.repeatMode)
+        assertEquals(250, (spec.animation as TweenSpec).durationMillis)
+    }
+
+    @Test
+    fun infiniteRepeatableResolvesToInfiniteRepeatableSpec() {
+        val spec = AnimationSpec.InfiniteRepeatable(
+            animation = AnimationSpec.Tween(durationMillis = 400),
+            repeatMode = RepeatMode.Restart,
+        ).toComposeSpec<Float>(easings)
+
+        assertEquals(ComposeRepeatMode.Restart, spec.repeatMode)
+        assertEquals(400, (spec.animation as TweenSpec).durationMillis)
     }
 }
