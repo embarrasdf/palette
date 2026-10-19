@@ -3,7 +3,6 @@ package com.embarrasdf.palette.theme.semantic.motion
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -16,6 +15,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.primitive.EasingCurve
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
 import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
@@ -69,7 +69,7 @@ typealias Transition = List<TransitionEffect>
 
 fun Transition.toEnter(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
     forward: Boolean,
 ): EnterTransition = fold(EnterTransition.None) { acc, effect ->
     acc + effect.toEnter(animationScheme, easings, forward)
@@ -77,7 +77,7 @@ fun Transition.toEnter(
 
 fun Transition.toExit(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
     forward: Boolean,
 ): ExitTransition = fold(ExitTransition.None) { acc, effect ->
     acc + effect.toExit(animationScheme, easings, forward)
@@ -85,7 +85,7 @@ fun Transition.toExit(
 
 fun Transition.toContentTransform(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
     forward: Boolean,
 ): ContentTransform = toEnter(animationScheme, easings, forward) togetherWith toExit(animationScheme, easings, forward)
 
@@ -98,7 +98,7 @@ fun Transition.toContentTransform(forward: Boolean): ContentTransform = toConten
 
 private fun TransitionEffect.toEnter(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
     forward: Boolean,
 ): EnterTransition {
     val spec = animation.toSpec(animationScheme)
@@ -119,7 +119,7 @@ private fun TransitionEffect.toEnter(
 
 private fun TransitionEffect.toExit(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
     forward: Boolean,
 ): ExitTransition {
     val spec = animation.toSpec(animationScheme)

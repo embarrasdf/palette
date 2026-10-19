@@ -1,6 +1,5 @@
 package com.embarrasdf.palette.app.theme.primitive.animation
 
-import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -18,11 +17,14 @@ import com.embarrasdf.palette.components.demo.subject.AnimationDemoSubject
 import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
+import com.embarrasdf.palette.theme.control.ThemeState
+import com.embarrasdf.palette.theme.primitive.EasingCurve
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.primitive.EasingValue
+import com.embarrasdf.palette.theme.primitive.toCubic
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun EasingScreen(
@@ -30,7 +32,7 @@ fun EasingScreen(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state = remember { EasingScreenState() }
+    val state = remember(themeController) { EasingScreenState(themeController) }
     val control = remember(state, themeController) { EasingScreenControl(state, themeController) }
 
     Scaffold(
@@ -62,22 +64,17 @@ fun EasingScreen(
     }
 }
 
-/**
- * Editable control points for each [EasingPrimitiveToken], seeded from its hard-coded defaults. The
- * curves are held per token so switching the selected token keeps each one's edits.
- */
+/** The editable control points per token, seeded from the current theme easing curves. */
 @Stable
-class EasingScreenState {
+class EasingScreenState(themeState: ThemeState) {
     var token by mutableStateOf(EasingPrimitiveToken.Standard)
         internal set
 
-    val curves = mutableStateMapOf<EasingPrimitiveToken, EasingValue.CubicBezier>().apply {
-        EasingPrimitiveToken.entries.forEach { token ->
-            put(token, EasingValue.CubicBezier(token.x1, token.y1, token.x2, token.y2))
-        }
+    val curves = mutableStateMapOf<EasingPrimitiveToken, EasingCurve>().apply {
+        putAll(themeState.primitive.easing)
     }
 
-    val active: EasingValue.CubicBezier
+    val active: EasingCurve
         get() = curves.getValue(token)
 }
 
@@ -86,12 +83,10 @@ class EasingScreenControl(
     val state: EasingScreenState,
     val themeController: ThemeController,
 ) {
-    private fun update(curve: EasingValue.CubicBezier) {
+    private fun set(curve: EasingCurve) {
         state.curves[state.token] = curve
         themeController.updatePrimitive {
-            it.copy(
-                easing = it.easing + (state.token to CubicBezierEasing(curve.x1, curve.y1, curve.x2, curve.y2)),
-            )
+            it.copy(easing = it.easing + (state.token to curve))
         }
     }
 
@@ -102,39 +97,114 @@ class EasingScreenControl(
         onValueChange = { state.token = it },
     )
 
+    private val curveControl = enumControl(
+        name = "Curve",
+        values = { EasingCurveType.entries },
+        selectedValue = { state.active.type },
+        onValueChange = { set(state.active.asType(it)) },
+    )
+
     private val point1XControl = Control.Slider(
         name = "P1 X",
-        value = { state.active.x1 },
-        onValueChange = { update(state.active.copy(x1 = it)) },
+        value = { state.active.point1X },
+        onValueChange = { set(state.active.withPoint1X(it)) },
         valueRange = { 0f..1f },
     )
 
     private val point1YControl = Control.Slider(
         name = "P1 Y",
-        value = { state.active.y1 },
-        onValueChange = { update(state.active.copy(y1 = it)) },
+        value = { state.active.point1Y },
+        onValueChange = { set(state.active.withPoint1Y(it)) },
         valueRange = { 0f..1f },
     )
 
     private val point2XControl = Control.Slider(
         name = "P2 X",
-        value = { state.active.x2 },
-        onValueChange = { update(state.active.copy(x2 = it)) },
+        value = { state.active.point2X },
+        onValueChange = { set(state.active.withPoint2X(it)) },
         valueRange = { 0f..1f },
     )
 
     private val point2YControl = Control.Slider(
         name = "P2 Y",
-        value = { state.active.y2 },
-        onValueChange = { update(state.active.copy(y2 = it)) },
+        value = { state.active.point2Y },
+        onValueChange = { set(state.active.withPoint2Y(it)) },
         valueRange = { 0f..1f },
     )
 
-    val controls: PersistentList<Control> = persistentListOf(
-        tokenControl,
-        point1XControl,
-        point1YControl,
-        point2XControl,
-        point2YControl,
-    )
+    val controls: PersistentList<Control>
+        get() = buildList {
+            add(tokenControl)
+            add(curveControl)
+            add(point1XControl)
+            add(point1YControl)
+            if (state.active is EasingCurve.Cubic) {
+                add(point2XControl)
+                add(point2YControl)
+            }
+        }.toPersistentList()
+}
+
+/** The curve shapes an [EasingCurve] can take, for the editor's type selector. */
+enum class EasingCurveType {
+    Cubic,
+    Quadratic,
+}
+
+private val EasingCurve.type: EasingCurveType
+    get() = when (this) {
+        is EasingCurve.Cubic -> EasingCurveType.Cubic
+        is EasingCurve.Quadratic -> EasingCurveType.Quadratic
+    }
+
+private val EasingCurve.point1X: Float
+    get() = when (this) {
+        is EasingCurve.Cubic -> x1
+        is EasingCurve.Quadratic -> x1
+    }
+
+private val EasingCurve.point1Y: Float
+    get() = when (this) {
+        is EasingCurve.Cubic -> y1
+        is EasingCurve.Quadratic -> y1
+    }
+
+private val EasingCurve.point2X: Float
+    get() = (this as? EasingCurve.Cubic)?.x2 ?: 0f
+
+private val EasingCurve.point2Y: Float
+    get() = (this as? EasingCurve.Cubic)?.y2 ?: 0f
+
+private fun EasingCurve.withPoint1X(value: Float): EasingCurve = when (this) {
+    is EasingCurve.Cubic -> copy(x1 = value)
+    is EasingCurve.Quadratic -> copy(x1 = value)
+}
+
+private fun EasingCurve.withPoint1Y(value: Float): EasingCurve = when (this) {
+    is EasingCurve.Cubic -> copy(y1 = value)
+    is EasingCurve.Quadratic -> copy(y1 = value)
+}
+
+private fun EasingCurve.withPoint2X(value: Float): EasingCurve = when (this) {
+    is EasingCurve.Cubic -> copy(x2 = value)
+    is EasingCurve.Quadratic -> this
+}
+
+private fun EasingCurve.withPoint2Y(value: Float): EasingCurve = when (this) {
+    is EasingCurve.Cubic -> copy(y2 = value)
+    is EasingCurve.Quadratic -> this
+}
+
+/** Converts a curve to [type], keeping the first control point and expanding a quadratic to its
+ *  exact cubic equivalent. */
+private fun EasingCurve.asType(type: EasingCurveType): EasingCurve = when (type) {
+    EasingCurveType.Cubic -> when (this) {
+        is EasingCurve.Cubic -> this
+        is EasingCurve.Quadratic -> toCubic()
+    }
+
+    EasingCurveType.Quadratic -> when (this) {
+        is EasingCurve.Cubic -> EasingCurve.Quadratic(x1 = x1, y1 = y1)
+        is EasingCurve.Quadratic -> this
+    }
 }

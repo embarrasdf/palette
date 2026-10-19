@@ -1,6 +1,5 @@
 package com.embarrasdf.palette.theme.semantic.motion.infinite
 
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.runtime.Composable
@@ -8,6 +7,7 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import com.embarrasdf.palette.theme.PaletteTheme
+import com.embarrasdf.palette.theme.primitive.EasingCurve
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
 import com.embarrasdf.palette.theme.semantic.animation.infinite.InfiniteAnimationToken
@@ -39,7 +39,7 @@ fun InfiniteEffect.type(): InfiniteEffectType = when (this) {
 @Composable
 fun InfiniteEffect.toModifier(
     animationScheme: AnimationScheme,
-    easings: Map<EasingPrimitiveToken, Easing>,
+    easings: Map<EasingPrimitiveToken, EasingCurve>,
 ): Modifier {
     val infiniteSpec = animation.toSpec(animationScheme)
     return when (this) {

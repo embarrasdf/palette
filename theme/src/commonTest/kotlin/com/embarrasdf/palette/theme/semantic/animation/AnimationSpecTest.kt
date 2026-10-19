@@ -6,6 +6,7 @@ import androidx.compose.animation.core.TweenSpec
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
+import com.embarrasdf.palette.theme.primitive.toEasing
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -30,7 +31,7 @@ class AnimationSpecTest {
 
         assertEquals(500, spec.durationMillis)
         assertEquals(50, spec.delay)
-        assertEquals(easings.getValue(EasingPrimitiveToken.Emphasized), spec.easing)
+        assertEquals(easings.getValue(EasingPrimitiveToken.Emphasized).toEasing(), spec.easing)
     }
 
     @Test
