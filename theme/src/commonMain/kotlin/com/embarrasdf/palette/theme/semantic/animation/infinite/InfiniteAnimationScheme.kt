@@ -4,13 +4,13 @@ import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 
 /** Infinite (non-terminating) value-animation presets — loops / ambient motion — keyed by tempo. */
 data class InfiniteAnimationScheme(
-    val default: AnimationSpec.InfiniteRepeatable = AnimationSpec.InfiniteRepeatable(
+    val default: AnimationSpec.Repeat.Infinite = AnimationSpec.Repeat.Infinite(
         animation = AnimationSpec.Tween(durationMillis = 1000),
     ),
-    val fast: AnimationSpec.InfiniteRepeatable = AnimationSpec.InfiniteRepeatable(
+    val fast: AnimationSpec.Repeat.Infinite = AnimationSpec.Repeat.Infinite(
         animation = AnimationSpec.Tween(durationMillis = 500),
     ),
-    val slow: AnimationSpec.InfiniteRepeatable = AnimationSpec.InfiniteRepeatable(
+    val slow: AnimationSpec.Repeat.Infinite = AnimationSpec.Repeat.Infinite(
         animation = AnimationSpec.Tween(durationMillis = 2000),
     ),
 )
@@ -19,7 +19,7 @@ val PaletteInfiniteAnimationScheme = InfiniteAnimationScheme()
 
 fun InfiniteAnimationScheme.copy(
     token: InfiniteAnimationToken,
-    spec: AnimationSpec.InfiniteRepeatable,
+    spec: AnimationSpec.Repeat.Infinite,
 ) = this.copy(
     default = if (token == InfiniteAnimationToken.Default) spec else this.default,
     fast = if (token == InfiniteAnimationToken.Fast) spec else this.fast,

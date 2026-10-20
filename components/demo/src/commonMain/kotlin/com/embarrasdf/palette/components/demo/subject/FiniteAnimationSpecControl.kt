@@ -7,8 +7,6 @@ import androidx.compose.runtime.setValue
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.restore
-import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
@@ -17,12 +15,13 @@ import com.embarrasdf.palette.theme.semantic.animation.RepeatMode
 import com.embarrasdf.palette.theme.semantic.animation.type
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 /**
- * Editable state for an [AnimationSpec.Finite]. Every parameter is retained across type switches (as
- * in `GridScaleState`) so toggling between spring/tween/snap/repeatable doesn't lose values. A
- * [FiniteAnimationSpecType.Repeatable] is edited as an iteration count and repeat mode over a nested
- * [driverState], its duration-based driver.
+ * Editable state for an [AnimationSpec.Finite]. A mechanism ([type]) is chosen among spring / tween /
+ * snap, and — for the duration-based mechanisms — [repeat] wraps it in an [AnimationSpec.Repeat.Finite]
+ * with [iterations] and [repeatMode]. Every parameter is retained across type switches (as in
+ * `GridScaleState`) so toggling doesn't lose values.
  */
 @Stable
 class FiniteAnimationSpecState(
@@ -32,9 +31,9 @@ class FiniteAnimationSpecState(
     durationMillisInitial: Int = AnimationSpec.DefaultDurationMillis,
     delayMillisInitial: Int = 0,
     easingInitial: EasingPrimitiveToken = EasingPrimitiveToken.Standard,
+    repeatInitial: Boolean = false,
     iterationsInitial: Int = AnimationSpec.DefaultIterations,
     repeatModeInitial: RepeatMode = RepeatMode.Restart,
-    val driverState: DurationBasedSpecState = DurationBasedSpecState(),
 ) {
     var type by mutableStateOf(typeInitial)
         internal set
@@ -48,12 +47,15 @@ class FiniteAnimationSpecState(
         internal set
     var easing by mutableStateOf(easingInitial)
         internal set
+    var repeat by mutableStateOf(repeatInitial)
+        internal set
     var iterations by mutableStateOf(iterationsInitial)
         internal set
     var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
-    val spec: AnimationSpec.Finite
+    /** The chosen mechanism, before any repeat wrapping. */
+    private val mechanism: AnimationSpec.Finite
         get() = when (type) {
             FiniteAnimationSpecType.Spring -> AnimationSpec.Spring(
                 dampingRatio = dampingRatio,
@@ -69,40 +71,48 @@ class FiniteAnimationSpecState(
             FiniteAnimationSpecType.Snap -> AnimationSpec.Snap(
                 delayMillis = delayMillis,
             )
+        }
 
-            FiniteAnimationSpecType.Repeatable -> AnimationSpec.Repeatable(
-                iterations = iterations,
-                animation = driverState.spec,
-                repeatMode = repeatMode,
-            )
+    val spec: AnimationSpec.Finite
+        get() {
+            val mechanism = mechanism
+            return if (repeat && mechanism is AnimationSpec.DurationBased) {
+                AnimationSpec.Repeat.Finite(
+                    animation = mechanism,
+                    iterations = iterations,
+                    repeatMode = repeatMode,
+                )
+            } else {
+                mechanism
+            }
         }
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec.Finite], keeping sensible defaults
-         *  for the parameters that variant does not carry. */
+        /** Builds a state seeded from an existing [AnimationSpec.Finite], unwrapping a repeat into
+         *  its mechanism and keeping sensible defaults for the parameters that variant does not carry. */
         fun from(spec: AnimationSpec.Finite): FiniteAnimationSpecState {
             val springDefaults = AnimationSpec.Spring()
             val tweenDefaults = AnimationSpec.Tween()
-            val repeatable = spec as? AnimationSpec.Repeatable
+            val repeat = spec as? AnimationSpec.Repeat.Finite
+            val mechanism: AnimationSpec.Finite = repeat?.animation ?: spec
             return FiniteAnimationSpecState(
-                typeInitial = spec.type(),
-                dampingRatioInitial = (spec as? AnimationSpec.Spring)?.dampingRatio
+                typeInitial = mechanism.type(),
+                dampingRatioInitial = (mechanism as? AnimationSpec.Spring)?.dampingRatio
                     ?: springDefaults.dampingRatio,
-                stiffnessInitial = (spec as? AnimationSpec.Spring)?.stiffness
+                stiffnessInitial = (mechanism as? AnimationSpec.Spring)?.stiffness
                     ?: springDefaults.stiffness,
-                durationMillisInitial = (spec as? AnimationSpec.Tween)?.durationMillis
+                durationMillisInitial = (mechanism as? AnimationSpec.Tween)?.durationMillis
                     ?: tweenDefaults.durationMillis,
-                delayMillisInitial = when (spec) {
-                    is AnimationSpec.Tween -> spec.delayMillis
-                    is AnimationSpec.Snap -> spec.delayMillis
+                delayMillisInitial = when (mechanism) {
+                    is AnimationSpec.Tween -> mechanism.delayMillis
+                    is AnimationSpec.Snap -> mechanism.delayMillis
                     else -> 0
                 },
-                easingInitial = ((spec as? AnimationSpec.Tween)?.easing as? EasingValue.Preset)?.token
+                easingInitial = ((mechanism as? AnimationSpec.Tween)?.easing as? EasingValue.Preset)?.token
                     ?: EasingPrimitiveToken.Standard,
-                iterationsInitial = repeatable?.iterations ?: AnimationSpec.DefaultIterations,
-                repeatModeInitial = repeatable?.repeatMode ?: RepeatMode.Restart,
-                driverState = repeatable?.let { DurationBasedSpecState.from(it.animation) }
-                    ?: DurationBasedSpecState(),
+                repeatInitial = repeat != null,
+                iterationsInitial = repeat?.iterations ?: AnimationSpec.DefaultIterations,
+                repeatModeInitial = repeat?.repeatMode ?: RepeatMode.Restart,
             )
         }
     }
@@ -114,9 +124,9 @@ private const val stiffnessKey = "stiffness"
 private const val durationMillisKey = "durationMillis"
 private const val delayMillisKey = "delayMillis"
 private const val easingKey = "easing"
+private const val repeatKey = "repeat"
 private const val iterationsKey = "iterations"
 private const val repeatModeKey = "repeatMode"
-private const val driverKey = "driver"
 
 val FiniteAnimationSpecStateSaver = mapSaverSafe(
     save = { value ->
@@ -127,9 +137,9 @@ val FiniteAnimationSpecStateSaver = mapSaverSafe(
             durationMillisKey to value.durationMillis,
             delayMillisKey to value.delayMillis,
             easingKey to value.easing,
+            repeatKey to value.repeat,
             iterationsKey to value.iterations,
             repeatModeKey to value.repeatMode,
-            driverKey to save(value.driverState, DurationBasedSpecStateSaver, this),
         )
     },
     restore = { value ->
@@ -140,16 +150,18 @@ val FiniteAnimationSpecStateSaver = mapSaverSafe(
             durationMillisInitial = value[durationMillisKey] as Int,
             delayMillisInitial = value[delayMillisKey] as Int,
             easingInitial = value[easingKey] as EasingPrimitiveToken,
+            repeatInitial = value[repeatKey] as Boolean,
             iterationsInitial = value[iterationsKey] as Int,
             repeatModeInitial = value[repeatModeKey] as RepeatMode,
-            driverState = restore(value[driverKey], DurationBasedSpecStateSaver)!!,
         )
     },
 )
 
 /**
- * Exposes controls for an [FiniteAnimationSpecState]. The type selector is always shown; the remaining
- * controls are those relevant to the currently selected type (the `GridScaleControl` pattern).
+ * Exposes controls for an [FiniteAnimationSpecState]. The type selector is always shown, followed by
+ * the controls relevant to the selected mechanism (the `GridScaleControl` pattern). For the
+ * duration-based mechanisms a "Repeat" toggle is shown last; enabling it reveals an indented column
+ * with the [AnimationSpec.Repeat.Finite] controls (spring can't be repeated, so no toggle there).
  */
 @Stable
 class FiniteAnimationSpecControl(
@@ -218,6 +230,15 @@ class FiniteAnimationSpecControl(
         },
     )
 
+    val repeatControl = Control.Toggle(
+        name = "Repeat",
+        value = { state.repeat },
+        onValueChange = {
+            state.repeat = it
+            onChanged?.invoke()
+        },
+    )
+
     val iterationsControl = Control.Slider(
         name = "Iterations",
         value = { state.iterations.toFloat() },
@@ -239,41 +260,37 @@ class FiniteAnimationSpecControl(
         },
     )
 
-    /** The nested duration-based driver repeated by a [FiniteAnimationSpecType.Repeatable]. */
-    private val driverControl = DurationBasedSpecControl(state.driverState, onChanged)
-
-    private val driverColumn = Control.ControlColumn(
-        name = "Animation",
-        expandedInitial = true,
+    private val repeatColumn = Control.ControlColumn(
         indent = true,
-        controls = { driverControl.controls },
+        expandedInitial = true,
+        controls = { persistentListOf(iterationsControl, repeatModeControl) },
     )
 
     val controls: PersistentList<Control>
-        get() = when (state.type) {
-            FiniteAnimationSpecType.Spring -> persistentListOf(
-                typeControl,
-                dampingRatioControl,
-                stiffnessControl,
-            )
+        get() = buildList {
+            add(typeControl)
+            when (state.type) {
+                FiniteAnimationSpecType.Spring -> {
+                    add(dampingRatioControl)
+                    add(stiffnessControl)
+                }
 
-            FiniteAnimationSpecType.Tween -> persistentListOf(
-                typeControl,
-                durationControl,
-                delayControl,
-                easingControl,
-            )
+                FiniteAnimationSpecType.Tween -> {
+                    add(durationControl)
+                    add(delayControl)
+                    add(easingControl)
+                }
 
-            FiniteAnimationSpecType.Snap -> persistentListOf(
-                typeControl,
-                delayControl,
-            )
-
-            FiniteAnimationSpecType.Repeatable -> persistentListOf(
-                typeControl,
-                iterationsControl,
-                repeatModeControl,
-                driverColumn,
-            )
-        }
+                FiniteAnimationSpecType.Snap -> {
+                    add(delayControl)
+                }
+            }
+            // Only duration-based mechanisms can be repeated.
+            if (state.type != FiniteAnimationSpecType.Spring) {
+                add(repeatControl)
+                if (state.repeat) {
+                    add(repeatColumn)
+                }
+            }
+        }.toPersistentList()
 }

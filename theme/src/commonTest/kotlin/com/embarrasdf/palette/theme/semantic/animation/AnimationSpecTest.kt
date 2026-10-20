@@ -1,5 +1,6 @@
 package com.embarrasdf.palette.theme.semantic.animation
 
+import androidx.compose.animation.core.RepeatableSpec
 import androidx.compose.animation.core.SnapSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.TweenSpec
@@ -9,6 +10,8 @@ import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
 import com.embarrasdf.palette.theme.primitive.toEasing
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
 
 class AnimationSpecTest {
@@ -16,11 +19,28 @@ class AnimationSpecTest {
     private val easings = PrimitiveTokens().easing
 
     @Test
-    fun typeMatchesTheVariant() {
+    fun typeMatchesTheMechanism() {
         assertEquals(FiniteAnimationSpecType.Spring, AnimationSpec.Spring().type())
         assertEquals(FiniteAnimationSpecType.Tween, AnimationSpec.Tween().type())
         assertEquals(FiniteAnimationSpecType.Snap, AnimationSpec.Snap().type())
-        assertEquals(FiniteAnimationSpecType.Repeatable, AnimationSpec.Repeatable().type())
+        // A finite repeat classifies as the mechanism it repeats.
+        assertEquals(
+            FiniteAnimationSpecType.Snap,
+            AnimationSpec.Repeat.Finite(animation = AnimationSpec.Snap()).type(),
+        )
+    }
+
+    @Test
+    fun hierarchyMarkers() {
+        val spring: AnimationSpec = AnimationSpec.Spring()
+        val tween: AnimationSpec = AnimationSpec.Tween()
+        val repeatFinite: AnimationSpec = AnimationSpec.Repeat.Finite()
+        val repeatInfinite: AnimationSpec = AnimationSpec.Repeat.Infinite()
+
+        assertTrue(spring is AnimationSpec.PhysicsBased)
+        assertTrue(tween is AnimationSpec.DurationBased)
+        assertTrue(repeatFinite is AnimationSpec.Finite)
+        assertFalse(repeatInfinite is AnimationSpec.Finite)
     }
 
     @Test
@@ -56,12 +76,12 @@ class AnimationSpecTest {
     }
 
     @Test
-    fun repeatableResolvesToFiniteRepeatableSpec() {
-        val spec = AnimationSpec.Repeatable(
-            iterations = 3,
+    fun repeatFiniteResolvesToRepeatableSpec() {
+        val spec = AnimationSpec.Repeat.Finite(
             animation = AnimationSpec.Tween(durationMillis = 250),
+            iterations = 3,
             repeatMode = RepeatMode.Reverse,
-        ).toComposeSpec<Float>(easings)
+        ).toComposeSpec<Float>(easings) as RepeatableSpec
 
         assertEquals(3, spec.iterations)
         assertEquals(ComposeRepeatMode.Reverse, spec.repeatMode)
@@ -69,8 +89,8 @@ class AnimationSpecTest {
     }
 
     @Test
-    fun infiniteRepeatableResolvesToInfiniteRepeatableSpec() {
-        val spec = AnimationSpec.InfiniteRepeatable(
+    fun repeatInfiniteResolvesToInfiniteRepeatableSpec() {
+        val spec = AnimationSpec.Repeat.Infinite(
             animation = AnimationSpec.Tween(durationMillis = 400),
             repeatMode = RepeatMode.Restart,
         ).toComposeSpec<Float>(easings)

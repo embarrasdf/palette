@@ -20,7 +20,7 @@ enum class DurationBasedSpecType {
 }
 
 /**
- * Editable state for an [AnimationSpec.Finite.DurationBased] — a [AnimationSpec.Tween] or
+ * Editable state for an [AnimationSpec.DurationBased] — a [AnimationSpec.Tween] or
  * [AnimationSpec.Snap]. Every parameter is retained across type switches so toggling between the
  * two does not lose values. Reused both as a stand-alone duration-based editor and as the driver of
  * a repeating spec.
@@ -41,7 +41,7 @@ class DurationBasedSpecState(
     var easing by mutableStateOf(easingInitial)
         internal set
 
-    val spec: AnimationSpec.Finite.DurationBased
+    val spec: AnimationSpec.DurationBased
         get() = when (type) {
             DurationBasedSpecType.Tween -> AnimationSpec.Tween(
                 durationMillis = durationMillis,
@@ -55,8 +55,8 @@ class DurationBasedSpecState(
         }
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec.Finite.DurationBased]. */
-        fun from(spec: AnimationSpec.Finite.DurationBased): DurationBasedSpecState {
+        /** Builds a state seeded from an existing [AnimationSpec.DurationBased]. */
+        fun from(spec: AnimationSpec.DurationBased): DurationBasedSpecState {
             val tweenDefaults = AnimationSpec.Tween()
             return DurationBasedSpecState(
                 typeInitial = when (spec) {

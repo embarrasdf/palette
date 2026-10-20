@@ -14,9 +14,9 @@ import com.embarrasdf.palette.theme.semantic.animation.RepeatMode
 import kotlinx.collections.immutable.PersistentList
 
 /**
- * Editable state for an [AnimationSpec.InfiniteRepeatable]: a [driverState] duration-based spec that
- * is looped, plus the [repeatMode] applied at the end of each iteration. The driver is shared with
- * the finite [AnimationSpec.Repeatable] editor — the two differ only in that the finite one also
+ * Editable state for an [AnimationSpec.Repeat.Infinite]: a [driverState] duration-based spec that is
+ * looped, plus the [repeatMode] applied at the end of each iteration. The driver is shared with the
+ * finite [AnimationSpec.Repeat.Finite] editor — the two differ only in that the finite one also
  * carries an iteration count.
  */
 @Stable
@@ -27,15 +27,15 @@ class InfiniteAnimationSpecState(
     var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
-    val spec: AnimationSpec.InfiniteRepeatable
-        get() = AnimationSpec.InfiniteRepeatable(
+    val spec: AnimationSpec.Repeat.Infinite
+        get() = AnimationSpec.Repeat.Infinite(
             animation = driverState.spec,
             repeatMode = repeatMode,
         )
 
     companion object {
-        /** Builds a state seeded from an existing [AnimationSpec.InfiniteRepeatable]. */
-        fun from(spec: AnimationSpec.InfiniteRepeatable): InfiniteAnimationSpecState {
+        /** Builds a state seeded from an existing [AnimationSpec.Repeat.Infinite]. */
+        fun from(spec: AnimationSpec.Repeat.Infinite): InfiniteAnimationSpecState {
             return InfiniteAnimationSpecState(
                 repeatModeInitial = spec.repeatMode,
                 driverState = DurationBasedSpecState.from(spec.animation),

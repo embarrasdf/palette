@@ -11,7 +11,7 @@ enum class InfiniteAnimationToken {
     Slow,
 }
 
-fun InfiniteAnimationToken.toSpec(animationScheme: AnimationScheme): AnimationSpec.InfiniteRepeatable {
+fun InfiniteAnimationToken.toSpec(animationScheme: AnimationScheme): AnimationSpec.Repeat.Infinite {
     return when (this) {
         InfiniteAnimationToken.Default -> animationScheme.infinite.default
         InfiniteAnimationToken.Fast -> animationScheme.infinite.fast
@@ -20,6 +20,6 @@ fun InfiniteAnimationToken.toSpec(animationScheme: AnimationScheme): AnimationSp
 }
 
 @Composable
-fun InfiniteAnimationToken.toSpec(): AnimationSpec.InfiniteRepeatable {
+fun InfiniteAnimationToken.toSpec(): AnimationSpec.Repeat.Infinite {
     return toSpec(PaletteTheme.semantic.animation)
 }
