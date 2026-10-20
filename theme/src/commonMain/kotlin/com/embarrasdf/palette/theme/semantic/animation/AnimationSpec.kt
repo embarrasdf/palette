@@ -97,16 +97,14 @@ enum class FiniteAnimationSpecType {
     Spring,
     Tween,
     Snap,
+    Repeatable,
 }
 
 fun AnimationSpec.Finite.type(): FiniteAnimationSpecType = when (this) {
     is AnimationSpec.Spring -> FiniteAnimationSpecType.Spring
     is AnimationSpec.Tween -> FiniteAnimationSpecType.Tween
     is AnimationSpec.Snap -> FiniteAnimationSpecType.Snap
-    // A Repeatable is a combinator, not a leaf mechanism; it classifies as the mechanism it
-    // repeats. The simple finite-spec editor only ever sees leaf mechanisms, so this exists for
-    // exhaustiveness.
-    is AnimationSpec.Repeatable -> animation.type()
+    is AnimationSpec.Repeatable -> FiniteAnimationSpecType.Repeatable
 }
 
 /**

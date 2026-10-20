@@ -7,17 +7,22 @@ import androidx.compose.runtime.setValue
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.primitive.EasingValue
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.FiniteAnimationSpecType
+import com.embarrasdf.palette.theme.semantic.animation.RepeatMode
 import com.embarrasdf.palette.theme.semantic.animation.type
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 /**
- * Editable state for an [AnimationSpec]. Every parameter is retained across type switches (as in
- * `GridScaleState`) so toggling between spring/tween/snap doesn't lose values.
+ * Editable state for an [AnimationSpec.Finite]. Every parameter is retained across type switches (as
+ * in `GridScaleState`) so toggling between spring/tween/snap/repeatable doesn't lose values. A
+ * [FiniteAnimationSpecType.Repeatable] is edited as an iteration count and repeat mode over a nested
+ * [driverState], its duration-based driver.
  */
 @Stable
 class FiniteAnimationSpecState(
@@ -27,6 +32,9 @@ class FiniteAnimationSpecState(
     durationMillisInitial: Int = AnimationSpec.DefaultDurationMillis,
     delayMillisInitial: Int = 0,
     easingInitial: EasingPrimitiveToken = EasingPrimitiveToken.Standard,
+    iterationsInitial: Int = AnimationSpec.DefaultIterations,
+    repeatModeInitial: RepeatMode = RepeatMode.Restart,
+    val driverState: DurationBasedSpecState = DurationBasedSpecState(),
 ) {
     var type by mutableStateOf(typeInitial)
         internal set
@@ -39,6 +47,10 @@ class FiniteAnimationSpecState(
     var delayMillis by mutableStateOf(delayMillisInitial)
         internal set
     var easing by mutableStateOf(easingInitial)
+        internal set
+    var iterations by mutableStateOf(iterationsInitial)
+        internal set
+    var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
     val spec: AnimationSpec.Finite
@@ -57,6 +69,12 @@ class FiniteAnimationSpecState(
             FiniteAnimationSpecType.Snap -> AnimationSpec.Snap(
                 delayMillis = delayMillis,
             )
+
+            FiniteAnimationSpecType.Repeatable -> AnimationSpec.Repeatable(
+                iterations = iterations,
+                animation = driverState.spec,
+                repeatMode = repeatMode,
+            )
         }
 
     companion object {
@@ -65,6 +83,7 @@ class FiniteAnimationSpecState(
         fun from(spec: AnimationSpec.Finite): FiniteAnimationSpecState {
             val springDefaults = AnimationSpec.Spring()
             val tweenDefaults = AnimationSpec.Tween()
+            val repeatable = spec as? AnimationSpec.Repeatable
             return FiniteAnimationSpecState(
                 typeInitial = spec.type(),
                 dampingRatioInitial = (spec as? AnimationSpec.Spring)?.dampingRatio
@@ -80,6 +99,10 @@ class FiniteAnimationSpecState(
                 },
                 easingInitial = ((spec as? AnimationSpec.Tween)?.easing as? EasingValue.Preset)?.token
                     ?: EasingPrimitiveToken.Standard,
+                iterationsInitial = repeatable?.iterations ?: AnimationSpec.DefaultIterations,
+                repeatModeInitial = repeatable?.repeatMode ?: RepeatMode.Restart,
+                driverState = repeatable?.let { DurationBasedSpecState.from(it.animation) }
+                    ?: DurationBasedSpecState(),
             )
         }
     }
@@ -91,6 +114,9 @@ private const val stiffnessKey = "stiffness"
 private const val durationMillisKey = "durationMillis"
 private const val delayMillisKey = "delayMillis"
 private const val easingKey = "easing"
+private const val iterationsKey = "iterations"
+private const val repeatModeKey = "repeatMode"
+private const val driverKey = "driver"
 
 val FiniteAnimationSpecStateSaver = mapSaverSafe(
     save = { value ->
@@ -101,6 +127,9 @@ val FiniteAnimationSpecStateSaver = mapSaverSafe(
             durationMillisKey to value.durationMillis,
             delayMillisKey to value.delayMillis,
             easingKey to value.easing,
+            iterationsKey to value.iterations,
+            repeatModeKey to value.repeatMode,
+            driverKey to save(value.driverState, DurationBasedSpecStateSaver, this),
         )
     },
     restore = { value ->
@@ -111,6 +140,9 @@ val FiniteAnimationSpecStateSaver = mapSaverSafe(
             durationMillisInitial = value[durationMillisKey] as Int,
             delayMillisInitial = value[delayMillisKey] as Int,
             easingInitial = value[easingKey] as EasingPrimitiveToken,
+            iterationsInitial = value[iterationsKey] as Int,
+            repeatModeInitial = value[repeatModeKey] as RepeatMode,
+            driverState = restore(value[driverKey], DurationBasedSpecStateSaver)!!,
         )
     },
 )
@@ -186,6 +218,37 @@ class FiniteAnimationSpecControl(
         },
     )
 
+    val iterationsControl = Control.Slider(
+        name = "Iterations",
+        value = { state.iterations.toFloat() },
+        onValueChange = {
+            state.iterations = it.toInt()
+            onChanged?.invoke()
+        },
+        valueRange = { 2f..10f },
+        stepIncrement = 1f,
+    )
+
+    val repeatModeControl = enumControl(
+        name = "Repeat mode",
+        values = { RepeatMode.entries },
+        selectedValue = { state.repeatMode },
+        onValueChange = {
+            state.repeatMode = it
+            onChanged?.invoke()
+        },
+    )
+
+    /** The nested duration-based driver repeated by a [FiniteAnimationSpecType.Repeatable]. */
+    private val driverControl = DurationBasedSpecControl(state.driverState, onChanged)
+
+    private val driverColumn = Control.ControlColumn(
+        name = "Animation",
+        expandedInitial = true,
+        indent = true,
+        controls = { driverControl.controls },
+    )
+
     val controls: PersistentList<Control>
         get() = when (state.type) {
             FiniteAnimationSpecType.Spring -> persistentListOf(
@@ -204,6 +267,13 @@ class FiniteAnimationSpecControl(
             FiniteAnimationSpecType.Snap -> persistentListOf(
                 typeControl,
                 delayControl,
+            )
+
+            FiniteAnimationSpecType.Repeatable -> persistentListOf(
+                typeControl,
+                iterationsControl,
+                repeatModeControl,
+                driverColumn,
             )
         }
 }

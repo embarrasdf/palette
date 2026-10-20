@@ -20,6 +20,7 @@ class AnimationSpecTest {
         assertEquals(FiniteAnimationSpecType.Spring, AnimationSpec.Spring().type())
         assertEquals(FiniteAnimationSpecType.Tween, AnimationSpec.Tween().type())
         assertEquals(FiniteAnimationSpecType.Snap, AnimationSpec.Snap().type())
+        assertEquals(FiniteAnimationSpecType.Repeatable, AnimationSpec.Repeatable().type())
     }
 
     @Test
