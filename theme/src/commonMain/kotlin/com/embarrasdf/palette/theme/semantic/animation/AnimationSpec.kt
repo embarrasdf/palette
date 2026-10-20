@@ -107,6 +107,22 @@ private fun RepeatMode.toCompose(): ComposeRepeatMode = when (this) {
     RepeatMode.Reverse -> ComposeRepeatMode.Reverse
 }
 
+/** Time one pass of this duration-based spec occupies, in milliseconds. */
+private val AnimationSpec.DurationBased.totalDurationMillis: Int
+    get() = when (this) {
+        is AnimationSpec.Tween -> durationMillis + delayMillis
+        is AnimationSpec.Snap -> delayMillis
+    }
+
+/**
+ * The driver to repeat, guaranteed to occupy a positive cycle. Compose's repeatable specs divide by
+ * the driver's duration, so a zero-duration driver — a default [AnimationSpec.Snap] (no delay) or a
+ * [AnimationSpec.Tween] with `durationMillis` 0 — would divide by zero. A driver that already spans a
+ * positive time (including a [AnimationSpec.Snap] with a delay, a real periodic strobe) is kept as-is.
+ */
+private fun AnimationSpec.DurationBased.repeatDriver(): AnimationSpec.DurationBased =
+    if (totalDurationMillis > 0) this else AnimationSpec.Tween(durationMillis = 1)
+
 /** The leaf mechanisms a finite spec presents as in a demo type selector. */
 enum class FiniteAnimationSpecType {
     Spring,
@@ -140,7 +156,7 @@ fun <T> AnimationSpec.Finite.toComposeSpec(easings: Map<EasingPrimitiveToken, Ea
         is AnimationSpec.Snap -> snap(delayMillis = delayMillis)
         is AnimationSpec.Repeat.Finite -> repeatable(
             iterations = iterations,
-            animation = animation.toComposeSpec(easings),
+            animation = animation.repeatDriver().toComposeSpec(easings),
             repeatMode = repeatMode.toCompose(),
         )
     }
@@ -166,7 +182,7 @@ fun <T> AnimationSpec.DurationBased.toComposeSpec(
 fun <T> AnimationSpec.Repeat.Infinite.toComposeSpec(
     easings: Map<EasingPrimitiveToken, EasingCurve>,
 ): InfiniteRepeatableSpec<T> = infiniteRepeatable(
-    animation = animation.toComposeSpec(easings),
+    animation = animation.repeatDriver().toComposeSpec(easings),
     repeatMode = repeatMode.toCompose(),
 )
 

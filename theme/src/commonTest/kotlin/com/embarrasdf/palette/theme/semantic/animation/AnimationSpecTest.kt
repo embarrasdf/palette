@@ -98,4 +98,22 @@ class AnimationSpecTest {
         assertEquals(ComposeRepeatMode.Restart, spec.repeatMode)
         assertEquals(400, (spec.animation as TweenSpec).durationMillis)
     }
+
+    @Test
+    fun repeatOverZeroDurationDriverFloorsToAPositiveCycle() {
+        // A default Snap has no delay, so its cycle is 0; repeating it would divide by zero.
+        val spec = AnimationSpec.Repeat.Infinite(animation = AnimationSpec.Snap())
+            .toComposeSpec<Float>(easings)
+
+        assertEquals(1, (spec.animation as TweenSpec).durationMillis)
+    }
+
+    @Test
+    fun repeatOverDelayedSnapIsPreserved() {
+        // A snap with a delay already spans positive time (a periodic strobe), so it is kept as-is.
+        val spec = AnimationSpec.Repeat.Infinite(animation = AnimationSpec.Snap(delayMillis = 500))
+            .toComposeSpec<Float>(easings)
+
+        assertEquals(500, (spec.animation as SnapSpec).delay)
+    }
 }
