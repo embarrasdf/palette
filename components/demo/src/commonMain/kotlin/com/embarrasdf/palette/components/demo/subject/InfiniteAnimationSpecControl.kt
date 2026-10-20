@@ -7,102 +7,71 @@ import androidx.compose.runtime.setValue
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
 import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
-import com.embarrasdf.palette.theme.primitive.EasingValue
+import com.embarrasdf.palette.components.util.restore
+import com.embarrasdf.palette.components.util.save
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
 import com.embarrasdf.palette.theme.semantic.animation.RepeatMode
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 
 /**
- * Editable state for an [AnimationSpec.InfiniteRepeatable]. Models a looping spec over a
- * [AnimationSpec.Tween] driver — the useful infinite case — exposing its duration, easing, and
- * repeat mode.
+ * Editable state for an [AnimationSpec.InfiniteRepeatable]: a [driverState] duration-based spec that
+ * is looped, plus the [repeatMode] applied at the end of each iteration. The driver is shared with
+ * the finite [AnimationSpec.Repeatable] editor — the two differ only in that the finite one also
+ * carries an iteration count.
  */
 @Stable
 class InfiniteAnimationSpecState(
-    durationMillisInitial: Int = AnimationSpec.Tween().durationMillis,
-    easingInitial: EasingPrimitiveToken = EasingPrimitiveToken.Standard,
     repeatModeInitial: RepeatMode = RepeatMode.Restart,
+    val driverState: DurationBasedSpecState = DurationBasedSpecState(),
 ) {
-    var durationMillis by mutableStateOf(durationMillisInitial)
-        internal set
-    var easing by mutableStateOf(easingInitial)
-        internal set
     var repeatMode by mutableStateOf(repeatModeInitial)
         internal set
 
     val spec: AnimationSpec.InfiniteRepeatable
         get() = AnimationSpec.InfiniteRepeatable(
-            animation = AnimationSpec.Tween(
-                durationMillis = durationMillis,
-                easing = EasingValue.Preset(easing),
-            ),
+            animation = driverState.spec,
             repeatMode = repeatMode,
         )
 
     companion object {
         /** Builds a state seeded from an existing [AnimationSpec.InfiniteRepeatable]. */
         fun from(spec: AnimationSpec.InfiniteRepeatable): InfiniteAnimationSpecState {
-            val tween = spec.animation as? AnimationSpec.Tween
-            val tweenDefaults = AnimationSpec.Tween()
             return InfiniteAnimationSpecState(
-                durationMillisInitial = tween?.durationMillis ?: tweenDefaults.durationMillis,
-                easingInitial = (tween?.easing as? EasingValue.Preset)?.token
-                    ?: EasingPrimitiveToken.Standard,
                 repeatModeInitial = spec.repeatMode,
+                driverState = DurationBasedSpecState.from(spec.animation),
             )
         }
     }
 }
 
-private const val durationMillisKey = "durationMillis"
-private const val easingKey = "easing"
 private const val repeatModeKey = "repeatMode"
+private const val driverKey = "driver"
 
 val InfiniteAnimationSpecStateSaver = mapSaverSafe(
     save = { value ->
         mapOf(
-            durationMillisKey to value.durationMillis,
-            easingKey to value.easing,
             repeatModeKey to value.repeatMode,
+            driverKey to save(value.driverState, DurationBasedSpecStateSaver, this),
         )
     },
     restore = { value ->
         InfiniteAnimationSpecState(
-            durationMillisInitial = value[durationMillisKey] as Int,
-            easingInitial = value[easingKey] as EasingPrimitiveToken,
             repeatModeInitial = value[repeatModeKey] as RepeatMode,
+            driverState = restore(value[driverKey], DurationBasedSpecStateSaver)!!,
         )
     },
 )
 
-/** Exposes controls for an [InfiniteAnimationSpecState]: duration, easing, and repeat mode. */
+/**
+ * Exposes controls for an [InfiniteAnimationSpecState]: the shared duration-based driver editor plus
+ * a repeat-mode control.
+ */
 @Stable
 class InfiniteAnimationSpecControl(
     val state: InfiniteAnimationSpecState,
     val onChanged: (() -> Unit)? = null,
 ) {
-    val durationControl = Control.Slider(
-        name = "Duration (ms)",
-        value = { state.durationMillis.toFloat() },
-        onValueChange = {
-            state.durationMillis = it.toInt()
-            onChanged?.invoke()
-        },
-        valueRange = { 0f..3000f },
-        stepIncrement = 50f,
-    )
-
-    val easingControl = enumControl(
-        name = "Easing",
-        values = { EasingPrimitiveToken.entries },
-        selectedValue = { state.easing },
-        onValueChange = {
-            state.easing = it
-            onChanged?.invoke()
-        },
-    )
+    private val driverControl = DurationBasedSpecControl(state.driverState, onChanged)
 
     val repeatModeControl = enumControl(
         name = "Repeat mode",
@@ -114,9 +83,6 @@ class InfiniteAnimationSpecControl(
         },
     )
 
-    val controls: PersistentList<Control> = persistentListOf(
-        durationControl,
-        easingControl,
-        repeatModeControl,
-    )
+    val controls: PersistentList<Control>
+        get() = driverControl.controls.add(repeatModeControl)
 }
