@@ -27,7 +27,7 @@ import com.embarrasdf.palette.theme.components.demo.Demo
 import com.embarrasdf.palette.theme.components.layout.Scaffold
 import com.embarrasdf.palette.theme.control.ThemeController
 import com.embarrasdf.palette.theme.control.ThemeState
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
+import com.embarrasdf.palette.theme.semantic.animation.finite.FiniteAnimationToken
 import com.embarrasdf.palette.theme.semantic.animation.finite.copy
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -82,7 +82,7 @@ fun rememberFiniteAnimationScreenState(
             defaultState = FiniteAnimationSpecState.from(finite.default),
             fastState = FiniteAnimationSpecState.from(finite.fast),
             slowState = FiniteAnimationSpecState.from(finite.slow),
-            tokenInitial = AnimationToken.Default,
+            tokenInitial = FiniteAnimationToken.Default,
             demoSubjectState = AnimationDemoSubjectState(),
         )
     }
@@ -94,16 +94,16 @@ class FiniteAnimationScreenState(
     val defaultState: FiniteAnimationSpecState,
     val fastState: FiniteAnimationSpecState,
     val slowState: FiniteAnimationSpecState,
-    tokenInitial: AnimationToken,
+    tokenInitial: FiniteAnimationToken,
     val demoSubjectState: AnimationDemoSubjectState,
 ) {
     var token by mutableStateOf(tokenInitial)
         internal set
 
-    fun specState(token: AnimationToken): FiniteAnimationSpecState = when (token) {
-        AnimationToken.Default -> defaultState
-        AnimationToken.Fast -> fastState
-        AnimationToken.Slow -> slowState
+    fun specState(token: FiniteAnimationToken): FiniteAnimationSpecState = when (token) {
+        FiniteAnimationToken.Default -> defaultState
+        FiniteAnimationToken.Fast -> fastState
+        FiniteAnimationToken.Slow -> slowState
     }
 
     val activeSpecState: FiniteAnimationSpecState
@@ -132,7 +132,7 @@ fun FiniteAnimationScreenStateSaver(themeState: ThemeState) = mapSaverSafe(
             defaultState = restore(map[defaultKey], FiniteAnimationSpecStateSaver)!!,
             fastState = restore(map[fastKey], FiniteAnimationSpecStateSaver)!!,
             slowState = restore(map[slowKey], FiniteAnimationSpecStateSaver)!!,
-            tokenInitial = map[tokenKey] as AnimationToken,
+            tokenInitial = map[tokenKey] as FiniteAnimationToken,
             demoSubjectState = restore(map[demoSubjectKey], AnimationDemoSubjectStateSaver)!!,
         )
     }
@@ -153,7 +153,7 @@ class FiniteAnimationScreenControl(
     val state: FiniteAnimationScreenState,
     val themeController: ThemeController,
 ) {
-    private fun specControl(token: AnimationToken): FiniteAnimationSpecControl {
+    private fun specControl(token: FiniteAnimationToken): FiniteAnimationSpecControl {
         val specState = state.specState(token)
         return FiniteAnimationSpecControl(
             state = specState,
@@ -169,12 +169,12 @@ class FiniteAnimationScreenControl(
         )
     }
 
-    private val specControls: Map<AnimationToken, FiniteAnimationSpecControl> =
-        AnimationToken.entries.associateWith { specControl(it) }
+    private val specControls: Map<FiniteAnimationToken, FiniteAnimationSpecControl> =
+        FiniteAnimationToken.entries.associateWith { specControl(it) }
 
     val tokenControl = enumControl(
         name = "Token",
-        values = { AnimationToken.entries },
+        values = { FiniteAnimationToken.entries },
         selectedValue = { state.token },
         onValueChange = { state.token = it },
     )

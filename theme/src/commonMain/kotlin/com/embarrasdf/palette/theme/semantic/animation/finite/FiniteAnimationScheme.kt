@@ -1,7 +1,6 @@
 package com.embarrasdf.palette.theme.semantic.animation.finite
 
 import com.embarrasdf.palette.theme.semantic.animation.AnimationSpec
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
 
 /**
  * Named value-animation presets built from finite (terminating) specs.
@@ -15,10 +14,10 @@ data class FiniteAnimationScheme(
 val PaletteFiniteAnimationScheme = FiniteAnimationScheme()
 
 fun FiniteAnimationScheme.copy(
-    token: AnimationToken,
+    token: FiniteAnimationToken,
     spec: AnimationSpec.Finite,
 ) = this.copy(
-    default = if (token == AnimationToken.Default) spec else this.default,
-    fast = if (token == AnimationToken.Fast) spec else this.fast,
-    slow = if (token == AnimationToken.Slow) spec else this.slow,
+    default = if (token == FiniteAnimationToken.Default) spec else this.default,
+    fast = if (token == FiniteAnimationToken.Fast) spec else this.fast,
+    slow = if (token == FiniteAnimationToken.Slow) spec else this.slow,
 )

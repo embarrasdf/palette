@@ -2,7 +2,7 @@ package com.embarrasdf.palette.components.demo.subject
 
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
+import com.embarrasdf.palette.theme.semantic.animation.finite.FiniteAnimationToken
 import com.embarrasdf.palette.theme.semantic.motion.Axis
 import com.embarrasdf.palette.theme.semantic.motion.TransitionEffect
 import com.embarrasdf.palette.theme.semantic.motion.TransitionEffectType
@@ -19,7 +19,7 @@ private fun TransitionEffect.withType(type: TransitionEffectType): TransitionEff
     TransitionEffectType.Translate -> TransitionEffect.Translate(animation = animation)
 }
 
-private fun TransitionEffect.withAnimation(token: AnimationToken): TransitionEffect = when (this) {
+private fun TransitionEffect.withAnimation(token: FiniteAnimationToken): TransitionEffect = when (this) {
     is TransitionEffect.Fade -> copy(animation = token)
     is TransitionEffect.Scale -> copy(animation = token)
     is TransitionEffect.Translate -> copy(animation = token)
@@ -43,7 +43,7 @@ fun transitionEffectControl(
 
     val animationControl = enumControl(
         name = "Animation",
-        values = { AnimationToken.entries },
+        values = { FiniteAnimationToken.entries },
         selectedValue = { effect.animation },
         onValueChange = { onChange(effect.withAnimation(it)) },
     )

@@ -18,9 +18,9 @@ import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.primitive.EasingCurve
 import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
 import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
-import com.embarrasdf.palette.theme.semantic.animation.AnimationToken
+import com.embarrasdf.palette.theme.semantic.animation.finite.FiniteAnimationToken
+import com.embarrasdf.palette.theme.semantic.animation.finite.toSpec
 import com.embarrasdf.palette.theme.semantic.animation.toComposeSpec
-import com.embarrasdf.palette.theme.semantic.animation.toSpec
 
 /** The axis a [TransitionEffect.Translate] moves along. */
 enum class Axis {
@@ -33,22 +33,22 @@ enum class Axis {
  * effects composed into one [Transition] can run at independent speeds.
  */
 sealed interface TransitionEffect {
-    val animation: AnimationToken
+    val animation: FiniteAnimationToken
 
     data class Fade(
-        override val animation: AnimationToken = AnimationToken.Default,
+        override val animation: FiniteAnimationToken = FiniteAnimationToken.Default,
     ) : TransitionEffect
 
     data class Scale(
         val from: Float = 0.9f,
         val to: Float = 0.9f,
-        override val animation: AnimationToken = AnimationToken.Default,
+        override val animation: FiniteAnimationToken = FiniteAnimationToken.Default,
     ) : TransitionEffect
 
     data class Translate(
         val axis: Axis = Axis.X,
         val fraction: Float = 0.2f,
-        override val animation: AnimationToken = AnimationToken.Default,
+        override val animation: FiniteAnimationToken = FiniteAnimationToken.Default,
     ) : TransitionEffect
 }
 
