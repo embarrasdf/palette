@@ -1,0 +1,119 @@
+package com.embarrasdf.palette.theme.semantic.animation
+
+import androidx.compose.animation.core.RepeatableSpec
+import androidx.compose.animation.core.SnapSpec
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.TweenSpec
+import com.embarrasdf.palette.theme.primitive.EasingPrimitiveToken
+import com.embarrasdf.palette.theme.primitive.EasingValue
+import com.embarrasdf.palette.theme.primitive.PrimitiveTokens
+import com.embarrasdf.palette.theme.primitive.toEasing
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import androidx.compose.animation.core.RepeatMode as ComposeRepeatMode
+
+class AnimationSpecTest {
+
+    private val easings = PrimitiveTokens().easing
+
+    @Test
+    fun typeMatchesTheMechanism() {
+        assertEquals(FiniteAnimationSpecType.Spring, AnimationSpec.Spring().type())
+        assertEquals(FiniteAnimationSpecType.Tween, AnimationSpec.Tween().type())
+        assertEquals(FiniteAnimationSpecType.Snap, AnimationSpec.Snap().type())
+        // A finite repeat classifies as the mechanism it repeats.
+        assertEquals(
+            FiniteAnimationSpecType.Snap,
+            AnimationSpec.Repeat.Finite(animation = AnimationSpec.Snap()).type(),
+        )
+    }
+
+    @Test
+    fun hierarchyMarkers() {
+        val spring: AnimationSpec = AnimationSpec.Spring()
+        val tween: AnimationSpec = AnimationSpec.Tween()
+        val repeatFinite: AnimationSpec = AnimationSpec.Repeat.Finite()
+        val repeatInfinite: AnimationSpec = AnimationSpec.Repeat.Infinite()
+
+        assertTrue(spring is AnimationSpec.PhysicsBased)
+        assertTrue(tween is AnimationSpec.DurationBased)
+        assertTrue(repeatFinite is AnimationSpec.Finite)
+        assertFalse(repeatInfinite is AnimationSpec.Finite)
+    }
+
+    @Test
+    fun tweenResolvesEasingThroughThePrimitiveMap() {
+        val spec = AnimationSpec.Tween(
+            durationMillis = 500,
+            delayMillis = 50,
+            easing = EasingValue.Preset(EasingPrimitiveToken.Emphasized),
+        ).toComposeSpec<Float>(easings) as TweenSpec
+
+        assertEquals(500, spec.durationMillis)
+        assertEquals(50, spec.delay)
+        assertEquals(easings.getValue(EasingPrimitiveToken.Emphasized).toEasing(), spec.easing)
+    }
+
+    @Test
+    fun springResolvesToSpringSpec() {
+        val spec = AnimationSpec.Spring(
+            dampingRatio = 0.5f,
+            stiffness = 800f,
+        ).toComposeSpec<Float>(easings) as SpringSpec
+
+        assertEquals(0.5f, spec.dampingRatio)
+        assertEquals(800f, spec.stiffness)
+    }
+
+    @Test
+    fun snapResolvesToSnapSpec() {
+        val spec = AnimationSpec.Snap(delayMillis = 120)
+            .toComposeSpec<Float>(easings) as SnapSpec
+
+        assertEquals(120, spec.delay)
+    }
+
+    @Test
+    fun repeatFiniteResolvesToRepeatableSpec() {
+        val spec = AnimationSpec.Repeat.Finite(
+            animation = AnimationSpec.Tween(durationMillis = 250),
+            iterations = 3,
+            repeatMode = RepeatMode.Reverse,
+        ).toComposeSpec<Float>(easings) as RepeatableSpec
+
+        assertEquals(3, spec.iterations)
+        assertEquals(ComposeRepeatMode.Reverse, spec.repeatMode)
+        assertEquals(250, (spec.animation as TweenSpec).durationMillis)
+    }
+
+    @Test
+    fun repeatInfiniteResolvesToInfiniteRepeatableSpec() {
+        val spec = AnimationSpec.Repeat.Infinite(
+            animation = AnimationSpec.Tween(durationMillis = 400),
+            repeatMode = RepeatMode.Restart,
+        ).toComposeSpec<Float>(easings)
+
+        assertEquals(ComposeRepeatMode.Restart, spec.repeatMode)
+        assertEquals(400, (spec.animation as TweenSpec).durationMillis)
+    }
+
+    @Test
+    fun repeatOverZeroDurationDriverFloorsToAPositiveCycle() {
+        // A default Snap has no delay, so its cycle is 0; repeating it would divide by zero.
+        val spec = AnimationSpec.Repeat.Infinite(animation = AnimationSpec.Snap())
+            .toComposeSpec<Float>(easings)
+
+        assertEquals(1, (spec.animation as TweenSpec).durationMillis)
+    }
+
+    @Test
+    fun repeatOverDelayedSnapIsPreserved() {
+        // A snap with a delay already spans positive time (a periodic strobe), so it is kept as-is.
+        val spec = AnimationSpec.Repeat.Infinite(animation = AnimationSpec.Snap(delayMillis = 500))
+            .toComposeSpec<Float>(easings)
+
+        assertEquals(500, (spec.animation as SnapSpec).delay)
+    }
+}

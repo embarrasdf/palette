@@ -3,6 +3,7 @@ package com.embarrasdf.palette.app.theme.primitive.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import com.embarrasdf.palette.app.navigation.catalogEntry
 import com.embarrasdf.palette.app.theme.primitive.PrimitiveItem
+import com.embarrasdf.palette.app.theme.primitive.animation.EasingScreen
 import com.embarrasdf.palette.app.theme.primitive.interaction.navigation.PrimitiveInteractionGraph
 import com.embarrasdf.palette.app.theme.primitive.interaction.navigation.primitiveInteractionEntryProvider
 import com.embarrasdf.palette.app.theme.primitive.interaction.navigation.primitiveInteractionNavGraph
@@ -18,6 +19,7 @@ fun NavGraphBuilder.primitiveNavGraph() = navGraph(
     start = PrimitiveCatalogRoute,
 ) {
     route(PrimitiveCatalogRoute)
+    route(PrimitiveAnimationRoute)
     route(PrimitiveTypographyRoute)
     route(PrimitiveShapeRoute)
     primitiveInteractionNavGraph()
@@ -30,14 +32,22 @@ fun EntryProviderScope<NavKey>.primitiveEntryProvider(
     catalogEntry<PrimitiveCatalogRoute, PrimitiveItem>(
         onItemClick = { item ->
             when (item) {
-                PrimitiveItem.Typography -> navController.navigate(PrimitiveTypographyRoute)
-                PrimitiveItem.Shape -> navController.navigate(PrimitiveShapeRoute)
+                PrimitiveItem.Animation -> navController.navigate(PrimitiveAnimationRoute)
                 PrimitiveItem.Interaction -> navController.navigate(PrimitiveInteractionGraph)
+                PrimitiveItem.Shape -> navController.navigate(PrimitiveShapeRoute)
+                PrimitiveItem.Typography -> navController.navigate(PrimitiveTypographyRoute)
             }
         },
         title = "Primitive",
         onNavigateUp = navController::goBack,
     )
+
+    entry<PrimitiveAnimationRoute> {
+        EasingScreen(
+            themeController = themeController,
+            onNavigateUp = navController::goBack,
+        )
+    }
 
     entry<PrimitiveTypographyRoute> {
         TypographyScreen(

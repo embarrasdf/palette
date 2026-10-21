@@ -17,6 +17,8 @@ data class PrimitiveTokens(
         ShapePrimitiveToken.entries.associateWith { it.default },
     val indication: Map<IndicationPrimitiveToken, IndicationTokenSet> =
         IndicationPrimitiveToken.entries.associateWith { it.default },
+    val easing: Map<EasingPrimitiveToken, EasingCurve> =
+        EasingPrimitiveToken.entries.associateWith { it.defaultCurve },
 )
 
 // Part of the theme's public API: PaletteTheme provides it and components read it.
