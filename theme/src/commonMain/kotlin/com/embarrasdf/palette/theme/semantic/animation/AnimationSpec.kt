@@ -31,8 +31,8 @@ import androidx.compose.animation.core.Spring as ComposeSpring
  * both mechanism families are [Finite]. [Repeat] is a combinator that loops a [DurationBased] spec:
  * [Repeat.Finite] repeats a fixed number of times and then settles (so it too is [Finite]), while
  * [Repeat.Infinite] loops forever and so is the one spec that never settles. Velocity-based,
- * target-less specs (fling / friction) are intentionally *not* part of this hierarchy; see
- * [DecaySpec].
+ * target-less specs (fling / friction) are intentionally *not* part of this hierarchy — they would
+ * be a separate decay spec, which is not modeled yet.
  */
 sealed interface AnimationSpec {
 

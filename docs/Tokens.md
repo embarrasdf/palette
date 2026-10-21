@@ -62,6 +62,7 @@ exposed through `PaletteTheme.primitive`:
 - `PaletteTheme.primitive.fontStyle` — `Map<FontStyle, ComposeFontStyle>`
 - `PaletteTheme.primitive.shape` — `Map<ShapePrimitiveToken, Shape>`
 - `PaletteTheme.primitive.indication` — `Map<IndicationPrimitiveToken, IndicationTokenSet>`
+- `PaletteTheme.primitive.easing` — `Map<EasingPrimitiveToken, EasingCurve>`
 
 The map form keeps primitives editable (e.g. the `RoundRect` shape's corner radius, or an indication's
 amount and colour mode) and in one place. Requirements for a new primitive family:
@@ -163,6 +164,49 @@ Requirements for a new `*TokenSet`:
 This is why `PrimitiveTokens.indication`, `SemanticTypography.tokens`, `ShapeScheme`,
 `InteractionScheme`, and `ComponentTokens` all read the same way: a map of tokens to selections or
 parameters that resolves on read.
+
+## Value hierarchies
+
+Most token values are a flat choice — an enum selecting a primitive, or a `*TokenSet` bundle
+([Token sets](#token-sets)). A few are richer: the value is itself a **sealed type hierarchy** whose
+variants carry different capabilities. The animation specs are the worked example throughout
+(`AnimationSpec`: `Tween`/`Snap`/`Spring` mechanisms, a `Repeat` combinator, and a `Finite` "settles"
+marker), but the principles apply to any token whose value is a hierarchy rather than a flat
+selection.
+
+- **Model the concept; mirror roles, not names.** When the value maps onto a framework type, mirror
+  the framework's *roles and relationships* but name them for Palette's model, collapsing or splitting
+  where that reads more clearly. *Animation:* `DurationBased` mirrors Compose's
+  `DurationBasedAnimationSpec`, but `Repeat` is one concept where Compose has two separate specs
+  (`RepeatableSpec` / `InfiniteRepeatableSpec`).
+
+- **Make a crosscutting capability a marker interface, not a branch.** A property consumers must be
+  able to *require* SHOULD be a marker interface that cuts across the taxonomy — so unrelated variants
+  can share it and a consumer can demand it in a signature — rather than a node in the tree.
+  *Animation:* `Finite` marks the specs that settle; both mechanism families and the finite repeat
+  implement it, and a transition asks for a `Finite`.
+
+- **Prefer a sealed hierarchy over a generic when variants differ in capability.** Kotlin has no
+  conditional conformance, so a generic (`Repeat<Count>`) cannot make one instantiation carry a marker
+  while another does not. A sealed type lets each variant choose its own supertypes, so SHOULD be
+  preferred when that distinction matters. *Animation:* `Repeat.Finite` is `Finite` (it settles after
+  N iterations) while `Repeat.Infinite` is not — a generic could not express that split.
+
+- **Group a combinator; don't flatten it among the leaves.** A variant that *wraps* another SHOULD be
+  its own (sealed) type under its own name, not listed as a peer of the leaf variants it composes — the
+  type should show the composition, and an editor SHOULD present it as an orthogonal axis (a toggle),
+  not as a peer in a flat type picker. *Animation:* `Repeat` is distinct from `Tween`/`Snap`/`Spring`;
+  its editor is a mechanism selector plus a "Repeat" toggle.
+
+- **Keep markers honest; move an unexpressible guarantee to the boundary.** A marker MUST be applied
+  only to variants that genuinely have the capability — never one that would lie. Where the value type
+  cannot state a guarantee statically, enforce it at the consumption boundary instead, often the
+  *token* that selects the value. *Animation:* a finite repeat is honestly `Finite`, and transitions
+  reference `FiniteAnimationToken`, so a non-settling spec cannot be wired into a transition at all.
+
+- **Keep a misfit out of the hierarchy.** A value that breaks the family's root contract belongs in a
+  parallel type, not forced under a marker it does not satisfy. *Animation:* a velocity-driven,
+  target-less decay would be a separate spec rather than an `AnimationSpec`.
 
 ## Editing tokens
 
