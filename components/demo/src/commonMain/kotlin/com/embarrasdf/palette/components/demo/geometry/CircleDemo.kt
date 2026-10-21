@@ -5,29 +5,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.components.util.ColorSaver
-import com.embarrasdf.palette.components.util.DrawStyleSaver
-import com.embarrasdf.palette.components.util.mapSaverSafe
-import com.embarrasdf.palette.components.util.requireRestore
-import com.embarrasdf.palette.components.util.save
+import com.embarrasdf.palette.components.demo.state.DemoSavers
+import com.embarrasdf.palette.components.demo.state.DemoState
+import com.embarrasdf.palette.components.demo.state.demoStateSaver
+import com.embarrasdf.palette.components.demo.state.rememberDemoState
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.persistentListOf
@@ -65,15 +58,10 @@ fun DemoScope.CircleDemo(
 @Composable
 fun rememberCircleDemoState(color: Color = PaletteTheme.semantic.color.primary): CircleDemoState {
     val density = LocalDensity.current
-    return rememberSaveable(
-        density,
-        saver = circleDemoStateSaver(
-            density = density,
-        ),
-    ) {
+    return rememberDemoState(density) {
         CircleDemoState(
-            colorInitial = color,
             density = density,
+            colorInitial = color,
         )
     }
 }
@@ -82,43 +70,24 @@ fun rememberCircleDemoState(color: Color = PaletteTheme.semantic.color.primary):
 class CircleDemoState(
     val density: Density,
     colorInitial: Color,
-    drawStyleInitial: DrawStyle = Fill,
-    strokeWidthInitial: Dp = 2.dp,
-) {
-    var color by mutableStateOf(colorInitial)
+) : DemoState() {
+    var color by saveable(colorInitial)
         internal set
 
-    var drawStyle by mutableStateOf(drawStyleInitial)
+    var drawStyle by saveable(initial = Fill, saver = DemoSavers.DrawStyle)
         internal set
 
-    var strokeWidth by mutableStateOf(strokeWidthInitial)
+    var strokeWidth by saveable(2.dp)
         internal set
 
     val strokeWidthPx
         get() = with(density) { strokeWidth.toPx() }
 }
 
-private const val ColorKey = "color"
-private const val DrawStyleKey = "drawStyle"
-private const val StrokeWidthKey = "strokeWidth"
-
-fun circleDemoStateSaver(density: Density) = mapSaverSafe(
-    save = { value ->
-        mapOf(
-            ColorKey to save(value = value.color, saver = ColorSaver, scope = this),
-            DrawStyleKey to save(value = value.drawStyle, saver = DrawStyleSaver, scope = this),
-            StrokeWidthKey to value.strokeWidth.value,
-        )
-    },
-    restore = { map ->
-        CircleDemoState(
-            density = density,
-            colorInitial = map.requireRestore(key = ColorKey, saver = ColorSaver),
-            drawStyleInitial = map.requireRestore(key = DrawStyleKey, saver = DrawStyleSaver),
-            strokeWidthInitial = (map[StrokeWidthKey] as Float).dp,
-        )
-    },
-)
+fun circleDemoStateSaver(
+    density: Density,
+    color: Color,
+) = demoStateSaver { CircleDemoState(density = density, colorInitial = color) }
 
 @Composable
 fun rememberCircleDemoControl(state: CircleDemoState = rememberCircleDemoState()): CircleDemoControl {

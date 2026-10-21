@@ -5,13 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.components.core.RangeSlider
@@ -19,7 +13,9 @@ import com.embarrasdf.palette.components.core.Slider
 import com.embarrasdf.palette.components.demo.DemoScope
 import com.embarrasdf.palette.components.demo.control.Control
 import com.embarrasdf.palette.components.demo.control.enumControl
-import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.demo.state.DemoSavers
+import com.embarrasdf.palette.components.demo.state.DemoState
+import com.embarrasdf.palette.components.demo.state.rememberDemoState
 import com.embarrasdf.palette.theme.PaletteTheme
 import com.embarrasdf.palette.theme.components.demo.Demo
 import kotlinx.collections.immutable.toPersistentList
@@ -108,84 +104,29 @@ fun DemoScope.SliderDemo(
 }
 
 @Composable
-fun rememberSliderDemoState(): SliderDemoState = rememberSaveable(
-    saver = SliderDemoStateSaver,
-) { SliderDemoState() }
+fun rememberSliderDemoState(): SliderDemoState = rememberDemoState { SliderDemoState() }
 
 private val DefaultSnapValues = listOf(0f, 0.25f, 0.5f, 0.75f, 1f)
 
 @Stable
-class SliderDemoState(
-    sliderTypeInitial: SliderType = SliderType.Continuous,
-    valueInitial: Float = 0.5f,
-    rangeStartInitial: Float = 0.25f,
-    rangeEndInitial: Float = 0.75f,
-    stepsInitial: Int = 0,
-    enabledInitial: Boolean = true,
-    stepModeInitial: StepMode = StepMode.Uniform,
-    snapValuesInitial: List<Float> = DefaultSnapValues,
-) {
-    var sliderType by mutableStateOf(sliderTypeInitial)
+class SliderDemoState : DemoState() {
+    var sliderType by saveable(SliderType.Continuous)
         internal set
-    var value by mutableFloatStateOf(valueInitial)
+    var value by saveable(0.5f)
         internal set
-    var rangeStart by mutableFloatStateOf(rangeStartInitial)
+    var rangeStart by saveable(0.25f)
         internal set
-    var rangeEnd by mutableFloatStateOf(rangeEndInitial)
+    var rangeEnd by saveable(0.75f)
         internal set
-    var steps by mutableIntStateOf(stepsInitial)
+    var steps by saveable(0)
         internal set
-    var enabled by mutableStateOf(enabledInitial)
+    var enabled by saveable(true)
         internal set
-    var stepMode by mutableStateOf(stepModeInitial)
+    var stepMode by saveable(StepMode.Uniform)
         internal set
-    var snapValues by mutableStateOf(snapValuesInitial)
+    var snapValues by saveable(initial = DefaultSnapValues, saver = DemoSavers.FloatList)
         internal set
 }
-
-private const val SliderTypeKey = "sliderType"
-private const val ValueKey = "value"
-private const val RangeStartKey = "rangeStart"
-private const val RangeEndKey = "rangeEnd"
-private const val StepsKey = "steps"
-private const val EnabledKey = "enabled"
-private const val StepModeKey = "stepMode"
-private const val SnapValuesKey = "snapValues"
-
-val SliderDemoStateSaver = mapSaverSafe(
-    save = { value ->
-        mapOf(
-            SliderTypeKey to value.sliderType.name,
-            ValueKey to value.value,
-            RangeStartKey to value.rangeStart,
-            RangeEndKey to value.rangeEnd,
-            StepsKey to value.steps,
-            EnabledKey to value.enabled,
-            StepModeKey to value.stepMode.name,
-            SnapValuesKey to value.snapValues.joinToString(","),
-        )
-    },
-    restore = { map ->
-        SliderDemoState(
-            sliderTypeInitial = runCatching {
-                SliderType.valueOf(map[SliderTypeKey] as String)
-            }.getOrDefault(SliderType.Continuous),
-            valueInitial = map[ValueKey] as Float,
-            rangeStartInitial = map[RangeStartKey] as Float,
-            rangeEndInitial = map[RangeEndKey] as Float,
-            stepsInitial = map[StepsKey] as Int,
-            enabledInitial = map[EnabledKey] as Boolean,
-            stepModeInitial = runCatching {
-                StepMode.valueOf(map[StepModeKey] as String)
-            }.getOrDefault(StepMode.Uniform),
-            snapValuesInitial = runCatching {
-                (map[SnapValuesKey] as String)
-                    .split(",")
-                    .map { it.toFloat() }
-            }.getOrDefault(DefaultSnapValues),
-        )
-    },
-)
 
 @Composable
 fun rememberSliderDemoControl(state: SliderDemoState): SliderDemoControl = remember(state) { SliderDemoControl(state) }

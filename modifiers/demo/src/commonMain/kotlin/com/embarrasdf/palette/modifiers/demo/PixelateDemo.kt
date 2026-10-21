@@ -1,19 +1,17 @@
 package com.embarrasdf.palette.modifiers.demo
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import com.embarrasdf.palette.components.demo.control.Control
-import com.embarrasdf.palette.components.util.mapSaverSafe
+import com.embarrasdf.palette.components.demo.state.DemoState
+import com.embarrasdf.palette.components.demo.state.rememberDemoState
 import com.embarrasdf.palette.modifiers.pixelate
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun PixelateDemo(modifier: Modifier = Modifier) {
-    val modifierState = rememberSaveable(saver = PixelateStateSaver) { PixelateState() }
+    val modifierState = rememberDemoState { PixelateState() }
 
     ModifierDemo(
         demoModifier = Modifier.pixelate(
@@ -33,23 +31,7 @@ fun PixelateDemo(modifier: Modifier = Modifier) {
     )
 }
 
-private class PixelateState(
-    subdivisionsInitial: Int = 0,
-) {
-    var subdivisions: Int by mutableStateOf(subdivisionsInitial)
+@Stable
+private class PixelateState : DemoState() {
+    var subdivisions by saveable(0)
 }
-
-private const val SubdivisionsKey = "subdivisions"
-
-private val PixelateStateSaver = mapSaverSafe(
-    save = {
-        mapOf(
-            SubdivisionsKey to it.subdivisions,
-        )
-    },
-    restore = {
-        PixelateState(
-            subdivisionsInitial = it[SubdivisionsKey] as Int,
-        )
-    },
-)

@@ -198,7 +198,7 @@ fun componentDemoStateSaver(
             DemoTypeKey to value.demoType,
             CircleDemoStateKey to save(
                 value = value.circleDemoState,
-                saver = circleDemoStateSaver(density = density),
+                saver = circleDemoStateSaver(density = density, color = color),
                 scope = this,
             ),
             CurveStitchDemoStateKey to save(
@@ -223,7 +223,7 @@ fun componentDemoStateSaver(
             componentDemoTypeInitial = map[DemoTypeKey] as ComponentDemoType,
             circleDemoStateInitial = map.requireRestore(
                 key = CircleDemoStateKey,
-                saver = circleDemoStateSaver(density = density),
+                saver = circleDemoStateSaver(density = density, color = color),
             ),
             curveStitchDemoStateInitial = map.requireRestore(
                 key = CurveStitchDemoStateKey,
