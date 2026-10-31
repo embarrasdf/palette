@@ -27,3 +27,5 @@ jobs:
     with:
       screenshot-tests: true
       lfs: true
+    secrets:
+      embarrassdf-bot-private-key: ${{ secrets.EMBARRASSDF_BOT_PRIVATE_KEY }}

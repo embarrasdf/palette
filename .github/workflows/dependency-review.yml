@@ -1,0 +1,31 @@
+name: Dependency review
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number
+        required: true
+
+jobs:
+  review:
+    name: Dependency review
+    # Only CI runs on pull requests, and only /dependency-review comments on them.
+    if: >
+      (github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request') ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request &&
+        startsWith(github.event.comment.body, '/dependency-review')) ||
+      github.event_name == 'workflow_dispatch'
+    uses: embarrasdf/devops/.github/workflows/dependency-review.yml@main
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: read
+    secrets:
+      claude-code-oauth-token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      embarrassdf-bot-private-key: ${{ secrets.EMBARRASSDF_BOT_PRIVATE_KEY }}
