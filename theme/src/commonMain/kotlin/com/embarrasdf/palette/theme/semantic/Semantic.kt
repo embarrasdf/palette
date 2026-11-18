@@ -6,17 +6,24 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.embarrasdf.palette.theme.primitive.LocalPrimitiveTokens
+import com.embarrasdf.palette.theme.semantic.animation.AnimationScheme
 import com.embarrasdf.palette.theme.semantic.color.ColorScheme
 import com.embarrasdf.palette.theme.semantic.dimension.Dimension
 import com.embarrasdf.palette.theme.semantic.format.Formats
 import com.embarrasdf.palette.theme.semantic.interaction.IndicationToken
 import com.embarrasdf.palette.theme.semantic.interaction.InteractionScheme
 import com.embarrasdf.palette.theme.semantic.interaction.toIndication
+import com.embarrasdf.palette.theme.semantic.motion.MotionScheme
 import com.embarrasdf.palette.theme.semantic.shape.ShapeScheme
 import com.embarrasdf.palette.theme.semantic.typography.Typography
 import com.embarrasdf.palette.theme.semantic.typography.resolve
 
 object Semantic {
+    val animation: AnimationScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.animation
+
     val color: ColorScheme
         @Composable
         @ReadOnlyComposable
@@ -24,6 +31,35 @@ object Semantic {
             val colors = LocalSemanticTokens.current.colors
             return if (LocalIsDarkMode.current) colors.dark else colors.light
         }
+
+    val dimension: Dimension
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.dimension
+
+    val format: Formats
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.formats
+
+    val indication: Indication
+        @Composable
+        get() = IndicationToken.Default.toIndication()
+
+    val interaction: InteractionScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.interaction
+
+    val motion: MotionScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.motion
+
+    val shape: ShapeScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSemanticTokens.current.shapeScheme
 
     val typography: Typography
         @Composable
@@ -39,30 +75,6 @@ object Semantic {
                 semantic.typography.resolve(primitive)
             }
         }
-
-    val shape: ShapeScheme
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalSemanticTokens.current.shapeScheme
-
-    val dimension: Dimension
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalSemanticTokens.current.dimension
-
-    val interaction: InteractionScheme
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalSemanticTokens.current.interaction
-
-    val indication: Indication
-        @Composable
-        get() = IndicationToken.Default.toIndication()
-
-    val format: Formats
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalSemanticTokens.current.formats
 }
 
 // Part of the theme's public API: PaletteTheme provides it and components read it.

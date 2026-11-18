@@ -32,4 +32,8 @@ object Primitive {
         @Composable
         @ReadOnlyComposable
         get() = LocalPrimitiveTokens.current.indication
+
+    val easing: Map<EasingPrimitiveToken, EasingCurve>
+        @Composable
+        get() = LocalPrimitiveTokens.current.easing
 }
